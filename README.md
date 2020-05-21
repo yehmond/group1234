@@ -1,4 +1,4 @@
-#Reservation System - Group1234
+# Reservation System - Group1234
 ## Project Description
 Our project will be a reservation app for barbershops/salons. The application will have two user roles: 
 an owner and a customer. An owner will be able to create a barbershop on the site and input capacity/time 
@@ -38,7 +38,9 @@ system where users can review barbershops/barbers.
 4. Persist information to backend database
 
 ### Sketches of Prototype
-TODO
+![pt1](./prototypes/pt1.png)
+![pt2](./prototypes/pt2.PNG)
+![pt2](./prototypes/pt3.PNG)
 
 
 ##
