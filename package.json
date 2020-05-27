@@ -16,14 +16,17 @@
         "@types/react": "^16.9.0",
         "@types/react-dom": "^16.9.0",
         "@types/react-redux": "^7.1.8",
+        "add": "^2.0.6",
         "moment": "^2.26.0",
         "react": "^16.13.1",
         "react-dom": "^16.13.1",
         "react-redux": "^7.2.0",
         "react-router-dom": "^5.2.0",
         "react-scripts": "3.4.1",
+        "react-text-loop": "^2.3.0",
         "redux": "^4.0.5",
-        "typescript": "~3.7.2"
+        "typescript": "~3.7.2",
+        "yarn": "^1.22.4"
     },
     "scripts": {
         "start": "react-scripts start",

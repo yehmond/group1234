@@ -1,11 +1,11 @@
 import React from "react";
 import "./App.css";
-import SearchBar from "./component/SearchBar";
+import Home from "./pages/Home";
 
 function App(): JSX.Element {
     return (
         <>
-            <SearchBar />
+            <Home />
         </>
     );
 }
