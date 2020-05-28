@@ -4,12 +4,20 @@ import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import { MuiThemeProvider } from "@material-ui/core";
 import { appTheme } from "./styles/globalTheme";
+import { Provider } from "react-redux";
+import { createStore } from "redux";
+import reducers from "./reducers";
+import { composeWithDevTools } from "redux-devtools-extension";
+
+const store = createStore(reducers, composeWithDevTools());
 
 ReactDOM.render(
     <React.StrictMode>
-        <MuiThemeProvider theme={appTheme}>
-            <App />
-        </MuiThemeProvider>
+        <Provider store={store}>
+            <MuiThemeProvider theme={appTheme}>
+                <App />
+            </MuiThemeProvider>
+        </Provider>
     </React.StrictMode>,
     document.getElementById("root")
 );
