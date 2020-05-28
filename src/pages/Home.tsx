@@ -1,9 +1,9 @@
 import React from "react";
 import SearchBar from "../component/SearchBar";
-import { Theme, makeStyles } from "@material-ui/core";
+import { makeStyles, Theme } from "@material-ui/core";
 import FlippingText from "../component/FlippingText";
 import Recommendations from "../component/Recommendations";
-import cover from "../images/home-cover.jpg";
+import cover from "../images/home-cover1.jpg";
 
 const useStyles = makeStyles((theme: Theme) => ({
     background: {
@@ -17,7 +17,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     container: {
         padding: "1rem",
         minHeight: "25rem",
-        position: "relative",
         display: "block",
     },
     titleContainer: {
@@ -25,6 +24,9 @@ const useStyles = makeStyles((theme: Theme) => ({
         justifyContent: "center",
         alignItems: "center",
         margin: "1rem",
+        [theme.breakpoints.down("sm")]: {
+            fontSize: "0.85rem",
+        },
     },
     discover: {
         width: "50%",

@@ -8,45 +8,45 @@ import MomentUtils from "@date-io/moment";
 import { TextField, Button, makeStyles, Theme } from "@material-ui/core";
 import { MaterialUiPickersDate } from "@material-ui/pickers/typings/date";
 import Autocomplete from "@material-ui/lab/Autocomplete";
+import clsx from "clsx";
 
 type DateType = Date | MaterialUiPickersDate;
-
+const DEFAULT_SEARCH_TEXT = "Vancouver";
 const useStyles = makeStyles((theme: Theme) => ({
     container: {
         display: "flex",
         flexWrap: "wrap",
-        justifyContent: "center",
         alignItems: "center",
-        padding: "1rem 0.5rem",
+        padding: "1rem",
         borderRadius: "5px",
-        width: "85%",
+        width: "fit-content",
         maxWidth: "1080px",
         margin: "0 auto",
-        [theme.breakpoints.down("sm")]: {
-            width: "100%",
-        },
-        backgroundColor: "rgba(0,0,0,0.85)",
+        backgroundColor: "rgba(0,0,0,0.75)",
     },
     pickerContainer: {
-        display: "flex",
-        flexWrap: "wrap",
         backgroundColor: "#fff",
         borderRadius: "5px",
         padding: "0.5rem 0.25rem",
         margin: "auto 0.25rem",
+        [theme.breakpoints.down("sm")]: {
+            width: "100%",
+            marginBottom: "1rem",
+        },
     },
     input: {
         margin: "0.25rem",
         height: "3.25rem",
         [theme.breakpoints.down("sm")]: {
-            Width: "100%",
-            marginTop: "1rem",
+            width: "calc(100% - 0.5rem)",
         },
+    },
+    location: {
+        minWidth: "15rem",
     },
 }));
 
 export default function SearchBar(): JSX.Element {
-    const DEFAULT_SEARCH_TEXT = "Vancouver";
     const [selectedDate, setDateChange] = useState<DateType>(new Date());
     const [selectedTime, setSelectedTime] = useState<DateType>(new Date());
     const [selectedText, setSelectedText] = useState<string | null>(
@@ -85,7 +85,7 @@ export default function SearchBar(): JSX.Element {
 
                 <div className={classes.pickerContainer}>
                     <Autocomplete
-                        className={`${classes.input}`}
+                        className={clsx(classes.input, classes.location)}
                         autoHighlight
                         freeSolo
                         value={selectedText}
@@ -96,7 +96,6 @@ export default function SearchBar(): JSX.Element {
                             "🍩 Doughnut",
                             "🍫 Chocolate",
                         ]}
-                        style={{ width: 300 }}
                         renderInput={(params) => (
                             <TextField
                                 {...params}
