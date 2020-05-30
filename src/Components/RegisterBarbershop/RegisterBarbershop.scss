@@ -1,0 +1,42 @@
+#rbs-page-content {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  padding: 2vh 2vw;
+  align-items: center;
+
+  h1 {
+    padding: 1vh 0;
+  }
+
+  .form-fields {
+    display: grid;
+    grid-template-columns: auto;
+
+    .MuiFormControl-root {
+      margin: 5px 5px;
+    }
+
+  }
+}
+
+.two-fields-inline {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-column-gap: 10px;
+  max-width: 700px;
+
+}
+
+.field-regular {
+    width:100%;
+    max-width: 700px;
+  }
+
+.field-small {
+  width:100%;
+  max-width: 340px;
+}
+
+#rbs-province-select {
+  margin-right: 0;
+}
