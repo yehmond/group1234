@@ -1,57 +1,84 @@
-import { MenuItem, MenuProps, Select, TextField } from "@material-ui/core";
+import { Chip, MenuItem, MenuProps, TextField } from "@material-ui/core";
 import React from "react";
-import { WrappedFieldInputProps, WrappedFieldMetaProps } from "redux-form";
+import { Autocomplete } from "@material-ui/lab";
+import { DropzoneArea } from "material-ui-dropzone";
 
-// constants
-export const PROVINCES = ['AB', 'BC', 'MB', 'NB', 'NL', 'NT', 'NS', 'NU', 'ON', 'PE', 'QC', 'SK', 'YT'];
-
-// reusable form components
+// interface for relevant fieldProps passed to the functional components
 interface FieldProps {
     // for all field
-    label: string;
+    label?: string;
     placeholder?: string;
     fieldWidth?: string;
-    input: WrappedFieldInputProps;
-    meta: WrappedFieldMetaProps;
-    // for select dropdowns
+    required?: boolean;
     id?: string;
+    // for select dropdowns
     options?: string[];
-    menuProps?: MenuProps;
+    // for textfield
+    multiline?: boolean;
 }
 
-export function renderTextField (props: FieldProps): JSX.Element {
-    console.log(props);
-    return (
-    <TextField
-        label = {props.label}
-        placeholder = {props.placeholder}
-        error = {props.meta.touched && props.meta.invalid}
-        helperText={props.meta.touched && props.meta.error}
-        className={'field-' + props.fieldWidth}
-        {...props.input}
-    >
-    </TextField>
-    );
-}
-
-
-
-export function renderSelect (props: FieldProps): JSX.Element {
+// function component to render a textfield
+export function RenderTextfield(props: FieldProps): JSX.Element {
     return (
         <TextField
-            label = {props.label}
-            placeholder = {props.placeholder}
+            label={props.label}
+            required = {props.required}
+            placeholder={props.placeholder}
+            multiline = {props.multiline}
+            rows = {4}
+            // error={}
+            // helperText={}
+            className={"field-" + props.fieldWidth}
+        />
+    );
+}
+
+// function component to render a select
+export function RenderSelect(props: FieldProps): JSX.Element {
+    return (
+        <TextField
+            label={props.label}
+            placeholder={props.placeholder}
             select
+            required = {props.required}
             id={props.id}
-            error = {props.meta.touched && props.meta.error}
-            className={'textfield-' + props.fieldWidth}
-            {...props.input}
+            // error={}
+            // helperText={}
+            className={"field-" + props.fieldWidth}
         >
-            {props.options && props.options.map((option)=> {
-            return (
-                <MenuItem key={option}>{option}</MenuItem>
-            )})
-        }
+            {props.options &&
+                props.options.map((option) => {
+                    return <MenuItem key={option} value={option}>{option}</MenuItem>;
+                })}
         </TextField>
     );
+}
+
+// function component to render an autocomplete
+export function RenderAutocomplete(props: FieldProps): JSX.Element {
+    return(
+        <Autocomplete
+            multiple
+            id={props.id}
+            freeSolo
+            options={props.options as string[]}
+            className={"field-" + props.fieldWidth}
+            renderTags={(value: string[], getTagProps) =>
+                value.map((option: string, index: number) => (
+                    <Chip variant="outlined" label={option} {...getTagProps({ index })} />
+                ))
+            }
+            renderInput={(params) => (
+                <TextField {...params} label="Services" placeholder="Add Another" />
+            )}
+        />)
+}
+
+export function RenderDropzone(): JSX.Element{
+    return (
+        <DropzoneArea
+            acceptedFiles={['image/*']}
+            dropzoneText={"Drag and drop an image here or click"}/>
+    )
+
 }

@@ -2,13 +2,14 @@ import React from "react";
 import NavBar from "./components/NavBar/NavBar";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "./App.scss";
+import RegisterBarbershopContainer from "./components/RegisterBarbershop/RegisterBarbershopContainer";
 
 function App(): JSX.Element {
     return (
         <Router>
             <NavBar />
             <Switch>
-                <Route path="/"></Route>
+                <Route path="/"><RegisterBarbershopContainer/></Route>
                 <Route path="/browse"></Route>
                 <Route path="/about"></Route>
                 <Route path="/signin"></Route>
