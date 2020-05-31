@@ -9,7 +9,7 @@ function App(): JSX.Element {
         <Router>
             <NavBar />
             <Switch>
-                <Route path="/">
+                <Route exact path="/">
                     <Home />
                 </Route>
                 <Route path="/browse"></Route>

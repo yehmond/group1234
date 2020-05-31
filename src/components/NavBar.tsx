@@ -15,9 +15,9 @@ import { AuthState } from "../types/authActionTypes";
 import { Link } from "react-router-dom";
 import NavDrawer from "./NavDrawer";
 
-interface RootState {
+type RootState = {
     authState: AuthState;
-}
+};
 
 const useStyles = makeStyles((theme: Theme) => {
     return createStyles({
@@ -28,7 +28,6 @@ const useStyles = makeStyles((theme: Theme) => {
             flexGrow: 1,
         },
         menuButton: {
-            marginRight: theme.spacing(2),
             display: "none",
             [theme.breakpoints.down("xs")]: {
                 display: "inline",
@@ -49,20 +48,20 @@ const useStyles = makeStyles((theme: Theme) => {
 
 const links = {
     guest: {
-        Browse: "/browse",
-        About: "/about",
+        "Browse": "/browse",
+        "About": "/about",
         "Sign in": "/signin",
         "Sign up": "/signup",
     },
     customer: {
         "My Reservations": "/reservations",
-        Browse: "/browse",
-        About: "/about",
+        "Browse": "/browse",
+        "About": "/about",
     },
     owner: {
         "My Stores": "/stores",
-        Browse: "/browse",
-        About: "/about",
+        "Browse": "/browse",
+        "About": "/about",
     },
 };
 
@@ -72,7 +71,7 @@ export default function MenuAppBar(): JSX.Element {
     const [drawerIsOpen, setDrawer] = useState(false);
     const authState = useSelector((state: RootState) => state.authState);
     const dispatch = useDispatch();
-    let displayedLinks;
+    let displayedLinks: { [key: string]: string };
     switch (authState.role) {
         case "CUSTOMER":
             displayedLinks = links.customer;
@@ -127,7 +126,7 @@ export default function MenuAppBar(): JSX.Element {
                         }
                         return (
                             <Link
-                                to="/reservations"
+                                to={`${displayedLinks[text]}`}
                                 className={classes.link}
                                 key={idx}
                             >
@@ -137,8 +136,9 @@ export default function MenuAppBar(): JSX.Element {
                             </Link>
                         );
                     })}
+
                     {authState.isLoggedIn && (
-                        <div>
+                        <>
                             <IconButton
                                 aria-label="account of current user"
                                 aria-controls="menu-appbar"
@@ -172,7 +172,7 @@ export default function MenuAppBar(): JSX.Element {
                                     Sign out
                                 </MenuItem>
                             </Menu>
-                        </div>
+                        </>
                     )}
                 </Toolbar>
             </AppBar>
