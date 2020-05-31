@@ -1,10 +1,9 @@
 import { connect } from "react-redux";
-import RegisterBarbershopForm from "./RegisterBarbershopForm";
+import RBSMain from "./RBSMain";
 
 interface RBStateToProps {}
 
-interface RBDispatchToProps {
-}
+interface RBDispatchToProps {}
 
 export type RBProps = RBStateToProps & RBDispatchToProps;
 
@@ -13,11 +12,10 @@ const mapStateToProps = (): RBStateToProps => {
 };
 
 const mapDispatchToProps = (): RBDispatchToProps => {
-    return {
-    } as RBDispatchToProps;
+    return {} as RBDispatchToProps;
 };
 
 export default connect<RBStateToProps, RBDispatchToProps, {}, {}>(
     mapStateToProps,
     mapDispatchToProps
-)(RegisterBarbershopForm);
+)(RBSMain);

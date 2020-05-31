@@ -1,10 +1,12 @@
-#rbs-page-content {
+.rbs-page-content {
     display: grid;
     grid-template-rows: auto 1fr;
     padding: 2vh 4vw;
     align-items: center;
 
-    h1, h4 {
+
+    h1,
+    h4 {
         padding: 1vh 0;
     }
 
@@ -49,4 +51,3 @@
 .divider {
     height: auto;
 }
-

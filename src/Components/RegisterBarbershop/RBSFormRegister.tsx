@@ -1,19 +1,20 @@
-import { RenderAutocomplete, RenderDropzone, RenderSelect, RenderTextfield } from "./FormHelpers";
+import {
+    RenderAutocomplete,
+    RenderDropzone,
+    RenderSelect,
+    RenderTextfield,
+} from "./FormHelpers";
 import React, { Component } from "react";
 import { Button } from "@material-ui/core";
 import { PROVINCES, SERVICES_OFFERED } from "./constants";
 import { RBProps } from "./RegisterBarbershopContainer";
-import './RegisterBarbershop.scss';
+import "./RBS.scss";
 
-class RegisterBarbershopForm extends Component<{}, RBProps> {
-
-    constructor(props: RBProps) {
-        super(props);
-    }
+class RBSFormRegister extends Component<{}, RBProps> {
 
     render() {
         return (
-            <div id="rbs-page-content">
+            <div className="rbs-page-content">
                 <h1>Add Barbershop</h1>
                 <div id="form-content">
                     <form>
@@ -61,8 +62,8 @@ class RegisterBarbershopForm extends Component<{}, RBProps> {
                                 multiline={true}
                             />
                             <h4>Upload Some Photos</h4>
-                                <div className='field-regular'>
-                            <RenderDropzone/>
+                            <div className="field-regular">
+                                <RenderDropzone />
                             </div>
                         </div>
                         <div className="inline-buttons">
@@ -70,13 +71,15 @@ class RegisterBarbershopForm extends Component<{}, RBProps> {
                             <Button
                                 variant="contained"
                                 color="primary"
-                                type="button">
-                                Submit
+                                type="button"
+                            >
+                                Next
                             </Button>
                             <Button
                                 variant="contained"
                                 color="primary"
-                                type="button">
+                                type="button"
+                            >
                                 Clear
                             </Button>
                         </div>
@@ -87,4 +90,4 @@ class RegisterBarbershopForm extends Component<{}, RBProps> {
     }
 }
 
-export default RegisterBarbershopForm;
+export default RBSFormRegister;

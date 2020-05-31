@@ -1,4 +1,4 @@
-import { Chip, MenuItem, MenuProps, TextField } from "@material-ui/core";
+import { Chip, MenuItem, TextField } from "@material-ui/core";
 import React from "react";
 import { Autocomplete } from "@material-ui/lab";
 import { DropzoneArea } from "material-ui-dropzone";
@@ -22,10 +22,10 @@ export function RenderTextfield(props: FieldProps): JSX.Element {
     return (
         <TextField
             label={props.label}
-            required = {props.required}
+            required={props.required}
             placeholder={props.placeholder}
-            multiline = {props.multiline}
-            rows = {4}
+            multiline={props.multiline}
+            rows={4}
             // error={}
             // helperText={}
             className={"field-" + props.fieldWidth}
@@ -40,7 +40,7 @@ export function RenderSelect(props: FieldProps): JSX.Element {
             label={props.label}
             placeholder={props.placeholder}
             select
-            required = {props.required}
+            required={props.required}
             id={props.id}
             // error={}
             // helperText={}
@@ -48,7 +48,11 @@ export function RenderSelect(props: FieldProps): JSX.Element {
         >
             {props.options &&
                 props.options.map((option) => {
-                    return <MenuItem key={option} value={option}>{option}</MenuItem>;
+                    return (
+                        <MenuItem key={option} value={option}>
+                            {option}
+                        </MenuItem>
+                    );
                 })}
         </TextField>
     );
@@ -56,7 +60,7 @@ export function RenderSelect(props: FieldProps): JSX.Element {
 
 // function component to render an autocomplete
 export function RenderAutocomplete(props: FieldProps): JSX.Element {
-    return(
+    return (
         <Autocomplete
             multiple
             id={props.id}
@@ -65,20 +69,29 @@ export function RenderAutocomplete(props: FieldProps): JSX.Element {
             className={"field-" + props.fieldWidth}
             renderTags={(value: string[], getTagProps) =>
                 value.map((option: string, index: number) => (
-                    <Chip variant="outlined" label={option} {...getTagProps({ index })} />
+                    <Chip
+                        variant="outlined"
+                        label={option}
+                        {...getTagProps({ index })}
+                    />
                 ))
             }
             renderInput={(params) => (
-                <TextField {...params} label="Services" placeholder="Add Another" />
+                <TextField
+                    {...params}
+                    label="Services"
+                    placeholder="Add Another"
+                />
             )}
-        />)
+        />
+    );
 }
 
-export function RenderDropzone(): JSX.Element{
+export function RenderDropzone(): JSX.Element {
     return (
         <DropzoneArea
-            acceptedFiles={['image/*']}
-            dropzoneText={"Drag and drop an image here or click"}/>
-    )
-
+            acceptedFiles={["image/*"]}
+            dropzoneText={"Drag and drop an image here or click"}
+        />
+    );
 }

@@ -9,11 +9,14 @@ function App(): JSX.Element {
         <Router>
             <NavBar />
             <Switch>
-                <Route path="/"><RegisterBarbershopContainer/></Route>
+                <Route exact path="/"></Route>
                 <Route path="/browse"></Route>
                 <Route path="/about"></Route>
                 <Route path="/signin"></Route>
                 <Route path="/signup"></Route>
+                <Route path="/createshop">
+                    <RegisterBarbershopContainer currentStep={0} />
+                </Route>
             </Switch>
         </Router>
     );

@@ -12,11 +12,11 @@ import { composeWithDevTools } from "redux-devtools-extension";
 const store = createStore(reducers, composeWithDevTools());
 
 ReactDOM.render(
-        <Provider store={store}>
-            <MuiThemeProvider theme={appTheme}>
-                <App />
-            </MuiThemeProvider>
-        </Provider>,
+    <Provider store={store}>
+        <MuiThemeProvider theme={appTheme}>
+            <App />
+        </MuiThemeProvider>
+    </Provider>,
     document.getElementById("root")
 );
 

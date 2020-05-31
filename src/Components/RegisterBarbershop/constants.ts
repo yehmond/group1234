@@ -17,9 +17,15 @@ export const PROVINCES = [
 
 // to be expanded
 export const SERVICES_OFFERED = [
-    'Haircut',
-    'Shaving',
-    'Hair color',
-    'Eyebrows',
-    'Nails',
+    "Haircut",
+    "Shaving",
+    "Hair color",
+    "Eyebrows",
+    "Nails",
+];
+
+export const ADD_BARBERSHOP_STEPS = [
+    "Enter Barbershop Details",
+    "Input Hours",
+    "Confirm"
 ]
