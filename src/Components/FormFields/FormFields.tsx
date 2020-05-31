@@ -3,6 +3,10 @@ import React from "react";
 import { Autocomplete } from "@material-ui/lab";
 import { DropzoneArea } from "material-ui-dropzone";
 
+/**
+ * This file contains functional presentational components that can be reused across forms
+ */
+
 // interface for relevant fieldProps passed to the functional components
 interface FieldProps {
     // for all field

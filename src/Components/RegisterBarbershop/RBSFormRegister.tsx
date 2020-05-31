@@ -3,15 +3,14 @@ import {
     RenderDropzone,
     RenderSelect,
     RenderTextfield,
-} from "./FormHelpers";
+} from "../FormFields/FormFields";
 import React, { Component } from "react";
 import { Button } from "@material-ui/core";
-import { PROVINCES, SERVICES_OFFERED } from "./constants";
+import { PROVINCES, SERVICES_OFFERED } from "../../types/constants";
 import { RBProps } from "./RegisterBarbershopContainer";
 import "./RBS.scss";
 
 class RBSFormRegister extends Component<{}, RBProps> {
-
     render() {
         return (
             <div className="rbs-page-content">

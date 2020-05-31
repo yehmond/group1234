@@ -27,5 +27,5 @@ export const SERVICES_OFFERED = [
 export const ADD_BARBERSHOP_STEPS = [
     "Enter Barbershop Details",
     "Input Hours",
-    "Confirm"
-]
+    "Confirm",
+];

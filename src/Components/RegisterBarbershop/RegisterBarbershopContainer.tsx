@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import RBSMain from "./RBSMain";
+import RBSMain from "../../pages/RBSMain";
 
 interface RBStateToProps {}
 
