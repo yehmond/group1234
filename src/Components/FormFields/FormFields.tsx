@@ -15,10 +15,13 @@ interface FieldProps {
     fieldWidth?: string;
     required?: boolean;
     id?: string;
+    disabled?: boolean;
     // for select dropdowns
     options?: string[];
     // for textfield
     multiline?: boolean;
+    // for time picker
+    defaultValue?: string;
 }
 
 // function component to render a textfield
@@ -91,6 +94,24 @@ export function RenderAutocomplete(props: FieldProps): JSX.Element {
     );
 }
 
+export function RenderTimePicker(props: FieldProps): JSX.Element {
+    return (
+        <TextField
+            label={props.label}
+            type="time"
+            defaultValue={props.defaultValue}
+            required
+            disabled={props.disabled}
+            InputLabelProps={{
+                shrink: true,
+            }}
+            inputProps={{
+                step: 1800, // 5 min
+            }}
+        />
+    );
+}
+
 export function RenderDropzone(): JSX.Element {
     return (
         <DropzoneArea
@@ -99,3 +120,4 @@ export function RenderDropzone(): JSX.Element {
         />
     );
 }
+

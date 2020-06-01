@@ -1,29 +1,21 @@
 import React, { Component } from "react";
-import StepperHeader from "../components/Stepper/StepperHeader";
-import { ADD_BARBERSHOP_STEPS } from "../types/constants";
 import { Switch, Route } from "react-router-dom";
 import RBSFormRegister from "../components/RegisterBarbershop/RBSFormRegister";
+import { RBProps } from "../components/RegisterBarbershop/RBSContainer";
+import RBSHours from "../components/RegisterBarbershop/RBSHours";
 
-interface RBSMainProps {
-    currentStep: number;
-}
-
-class RBSMain extends Component<RBSMainProps, {}> {
+class RBSMain extends Component<{}, RBProps> {
     render() {
         return (
-            <div>
-                <StepperHeader
-                    currentStep={this.props.currentStep}
-                    stepLabels={ADD_BARBERSHOP_STEPS}
-                />
                 <Switch>
                     <Route path="/createshop/register">
                         <RBSFormRegister />
                     </Route>
-                    <Route path="/createshop/hours"></Route>
+                    <Route path="/createshop/hours">
+                        <RBSHours/>
+                    </Route>
                     <Route path="/createshop/confirm"></Route>
                 </Switch>
-            </div>
         );
     }
 }

@@ -15,6 +15,8 @@ export const PROVINCES = [
     "YK",
 ];
 
+export const DAYS_OF_WEEK = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+
 // to be expanded
 export const SERVICES_OFFERED = [
     "Haircut",

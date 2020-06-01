@@ -11,14 +11,12 @@ export const LineConnector = withStyles({
     },
     active: {
         "& $line": {
-            backgroundImage:
-                "linear-gradient(#303f9f, #303f9f, #303f9f)",
+            backgroundImage: "linear-gradient(#303f9f, #303f9f, #303f9f)",
         },
     },
     completed: {
         "& $line": {
-            backgroundImage:
-                "linear-gradient(#303f9f, #303f9f, #303f9f)",
+            backgroundImage: "linear-gradient(#303f9f, #303f9f, #303f9f)",
         },
     },
     line: {
@@ -42,12 +40,10 @@ const stepIconStyles = makeStyles({
         alignItems: "center",
     },
     active: {
-        backgroundImage:
-            "linear-gradient(#303f9f, #303f9f, #303f9f)",
+        backgroundImage: "linear-gradient(#303f9f, #303f9f, #303f9f)",
     },
     completed: {
-        backgroundImage:
-            "linear-gradient(#303f9f, #303f9f, #303f9f)",
+        backgroundImage: "linear-gradient(#303f9f, #303f9f, #303f9f)",
     },
 });
 
@@ -56,9 +52,9 @@ export function StepIcon(props: StepIconProps) {
     const { active, completed } = props;
 
     const icons: { [index: string]: React.ReactElement } = {
-        1: <AddBox/>,
-        2: <Schedule/>,
-        3: <CheckBox/>,
+        1: <AddBox />,
+        2: <Schedule />,
+        3: <CheckBox />,
     };
 
     return (
