@@ -1,0 +1,82 @@
+import React from "react";
+import { Theme, makeStyles } from "@material-ui/core";
+import HomeCard from "./HomeCard";
+
+const useStyles = makeStyles((theme: Theme) => ({
+    grid: {
+        display: "grid",
+        marginTop: "1rem",
+        marginBottom: "4rem",
+        gridTemplateColumns: "repeat(4, 23%)",
+        justifyContent: "space-between",
+        [theme.breakpoints.down("md")]: {
+            gridTemplateColumns: "repeat(3, 31%)",
+        },
+        [theme.breakpoints.down("sm")]: {
+            gridTemplateColumns: "repeat(2, 48.5%)",
+        },
+        [theme.breakpoints.down("xs")]: {
+            gridTemplateColumns: "100%",
+        },
+    },
+    container: {
+        maxWidth: "1200px",
+        margin: "0 auto",
+        padding: "3rem 1rem",
+    },
+}));
+
+const mockShops: {
+    id: string;
+    name: string;
+    services: string[];
+    cost: number;
+    rating: number;
+}[] = [];
+for (let i = 0; i < 12; i++) {
+    mockShops.push({
+        id: "1",
+        name: "Citrus Hair Salon",
+        services: ["Hair Salon", "Day Spa", "Waxing"],
+        cost: 4,
+        rating: 5,
+    });
+}
+
+export default function Recommendations(): JSX.Element {
+    const classes = useStyles();
+    return (
+        <div className={classes.container}>
+            <h1>Available Now</h1>
+            <div className={classes.grid}>
+                {mockShops.map(({ id, name, services, cost, rating }) => {
+                    return (
+                        <HomeCard
+                            key={id}
+                            shopId={id}
+                            name={name}
+                            services={services}
+                            cost={cost}
+                            rating={rating}
+                        />
+                    );
+                })}
+            </div>
+            <h1>Recommended</h1>
+            <div className={classes.grid}>
+                {mockShops.map(({ id, name, services, cost, rating }) => {
+                    return (
+                        <HomeCard
+                            key={id}
+                            shopId={id}
+                            name={name}
+                            services={services}
+                            cost={cost}
+                            rating={rating}
+                        />
+                    );
+                })}
+            </div>
+        </div>
+    );
+}

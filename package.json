@@ -3,8 +3,11 @@
     "version": "0.1.0",
     "private": true,
     "dependencies": {
+        "@date-io/moment": "1.x",
         "@material-ui/core": "^4.10.0",
         "@material-ui/icons": "^4.9.1",
+        "@material-ui/lab": "^4.0.0-alpha.54",
+        "@material-ui/pickers": "^3.2.10",
         "@testing-library/jest-dom": "^4.2.4",
         "@testing-library/react": "^9.3.2",
         "@testing-library/user-event": "^7.1.2",
@@ -14,14 +17,18 @@
         "@types/react-dom": "^16.9.0",
         "@types/react-redux": "^7.1.8",
         "@types/react-router-dom": "^5.1.5",
+        "clsx": "^1.1.0",
+        "moment": "^2.26.0",
         "node-sass": "^4.14.1",
         "react": "^16.13.1",
         "react-dom": "^16.13.1",
         "react-redux": "^7.2.0",
         "react-router-dom": "^5.2.0",
         "react-scripts": "3.4.1",
+        "react-text-loop": "^2.3.0",
         "redux": "^4.0.5",
-        "typescript": "~3.7.2"
+        "typescript": "~3.7.2",
+        "yarn": "^1.22.4"
     },
     "scripts": {
         "start": "react-scripts start",
