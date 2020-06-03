@@ -15,7 +15,15 @@ export const PROVINCES = [
     "YK",
 ];
 
-export const DAYS_OF_WEEK = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+export const DAYS_OF_WEEK = [
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+    "Sunday",
+];
 
 // to be expanded
 export const SERVICES_OFFERED = [
@@ -31,3 +39,6 @@ export const ADD_BARBERSHOP_STEPS = [
     "Input Hours",
     "Confirm",
 ];
+
+export const DEFAULT_FROM = "08:00";
+export const DEFAULT_TO = "17:00";

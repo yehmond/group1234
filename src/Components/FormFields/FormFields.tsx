@@ -11,6 +11,7 @@ import { DropzoneArea } from "material-ui-dropzone";
 interface FieldProps {
     // for all field
     label?: string;
+    name?: string;
     placeholder?: string;
     fieldWidth?: string;
     required?: boolean;
@@ -22,16 +23,20 @@ interface FieldProps {
     multiline?: boolean;
     // for time picker
     defaultValue?: string;
+    // handle change
+    handleChange?: (event: any, values?: any) => void;
 }
 
 // function component to render a textfield
 export function RenderTextfield(props: FieldProps): JSX.Element {
     return (
         <TextField
+            name={props.name}
             label={props.label}
             required={props.required}
             placeholder={props.placeholder}
             multiline={props.multiline}
+            onChange={props.handleChange}
             rows={4}
             // error={}
             // helperText={}
@@ -44,10 +49,13 @@ export function RenderTextfield(props: FieldProps): JSX.Element {
 export function RenderSelect(props: FieldProps): JSX.Element {
     return (
         <TextField
+            name={props.name}
             label={props.label}
             placeholder={props.placeholder}
             select
             required={props.required}
+            onChange={props.handleChange}
+            defaultValue={''}
             id={props.id}
             // error={}
             // helperText={}
@@ -73,6 +81,7 @@ export function RenderAutocomplete(props: FieldProps): JSX.Element {
             id={props.id}
             freeSolo
             options={props.options as string[]}
+            onChange={props.handleChange}
             className={"field-" + props.fieldWidth}
             renderTags={(value: string[], getTagProps) =>
                 value.map((option: string, index: number) => (
@@ -97,27 +106,32 @@ export function RenderAutocomplete(props: FieldProps): JSX.Element {
 export function RenderTimePicker(props: FieldProps): JSX.Element {
     return (
         <TextField
+            name={props.name}
             label={props.label}
             type="time"
             defaultValue={props.defaultValue}
             required
+            onChange={props.handleChange}
             disabled={props.disabled}
             InputLabelProps={{
                 shrink: true,
             }}
             inputProps={{
-                step: 1800, // 5 min
+                step: 1800, // 30 min increment
             }}
         />
     );
 }
 
-export function RenderDropzone(): JSX.Element {
+export function RenderDropzone(props: FieldProps): JSX.Element {
     return (
+        <div>
+        <h4>{props.label}</h4>
         <DropzoneArea
             acceptedFiles={["image/*"]}
             dropzoneText={"Drag and drop an image here or click"}
+            onChange={props.handleChange}
         />
+        </div>
     );
 }
-
