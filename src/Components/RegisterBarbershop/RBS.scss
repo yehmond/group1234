@@ -24,6 +24,17 @@
     }
 }
 
+.one-button {
+    width: 100%;
+    max-width: 700px;
+    padding: 20px 0;
+    display: grid;
+    grid-template-columns: 5fr 1fr;
+    grid-column-gap: 10px;
+    align-items: flex-end;
+    justify-content: center;
+}
+
 .inline-buttons {
     width: 100%;
     max-width: 700px;
@@ -41,4 +52,26 @@
 
 .divider {
     height: auto;
+}
+
+
+.dropdown-container {
+    padding: 1vh 0;
+
+    .header-and-icon {
+        display: grid;
+        grid-template-columns: 1fr 1fr 2fr;
+        margin-left: 3vw;
+    }
+
+    #drop-icon {
+        font-size: 2rem;
+        margin-bottom: 1vh;
+        color: #3f51b5;
+    }
+
+}
+
+#confirm-subtitle {
+    padding: 1vh 0 2vh 0;
 }

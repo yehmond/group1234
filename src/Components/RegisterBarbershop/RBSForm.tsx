@@ -16,9 +16,11 @@ import "./RBS.scss";
 import "../FormFields/Fields.scss";
 import { Link } from "react-router-dom";
 import StepperHeader from "../Stepper/StepperHeader";
+import { Barbershop } from "../../types/barbershop";
 
 interface RBSFormProps {
     nextPage: (state: RBSFormState) => void;
+    barbershop: Barbershop
 }
 
 export interface RBSFormState {
@@ -30,23 +32,25 @@ export interface RBSFormState {
     province: string;
     phoneNumber: string;
     website: string;
+    description: string;
     servicesOffered: string[];
     photos: File[];
 }
 
 class RBSForm extends Component<RBSFormProps, RBSFormState> {
-    constructor(props: any) {
+    constructor(props: RBSFormProps) {
         super(props);
         this.state = {
-            address: "",
-            city: "",
-            name: "",
-            photos: [],
-            province: "",
-            servicesOffered: [],
-            website: "",
-            phoneNumber: "",
-            price: 0,
+            address: this.props.barbershop.address,
+            city: this.props.barbershop.city,
+            name: this.props.barbershop.name,
+            photos: this.props.barbershop.photos,
+            province: this.props.barbershop.province,
+            servicesOffered: this.props.barbershop.servicesOffered,
+            website: this.props.barbershop.website,
+            phoneNumber: this.props.barbershop.phoneNumber,
+            price: this.props.barbershop.price,
+            description: this.props.barbershop.description
         };
         this.handleTextChange = this.handleTextChange.bind(this);
         this.handleAutoCompleteChange = this.handleAutoCompleteChange.bind(
@@ -99,12 +103,14 @@ class RBSForm extends Component<RBSFormProps, RBSFormState> {
                                 name="name"
                                 required={true}
                                 label="Barbershop Name"
+                                value={this.state.name}
                                 placeholder="Name of Barbershop"
                                 fieldWidth="regular"
                                 handleChange={this.handleTextChange}
                             />
                             <RenderTextfield
                                 name="address"
+                                value={this.state.address}
                                 required={true}
                                 label="Street Address"
                                 placeholder="Street Address"
@@ -114,6 +120,7 @@ class RBSForm extends Component<RBSFormProps, RBSFormState> {
                             <div className="two-fields-inline">
                                 <RenderTextfield
                                     name="city"
+                                    value={this.state.city}
                                     required={true}
                                     label="City"
                                     placeholder="City"
@@ -122,6 +129,7 @@ class RBSForm extends Component<RBSFormProps, RBSFormState> {
                                 />
                                 <RenderSelect
                                     name="province"
+                                    value={this.state.province}
                                     required={true}
                                     id="rbs-province-select"
                                     label="Province"
@@ -134,6 +142,7 @@ class RBSForm extends Component<RBSFormProps, RBSFormState> {
                             <div className="two-fields-inline">
                                 <RenderTextfield
                                     name="website"
+                                    value={this.state.website}
                                     required={true}
                                     label="Website"
                                     placeholder="website"
@@ -143,6 +152,7 @@ class RBSForm extends Component<RBSFormProps, RBSFormState> {
 
                                 <RenderTextfield
                                     name="phoneNumber"
+                                    value={this.state.phoneNumber}
                                     required={true}
                                     label="Phone Number"
                                     placeholder="Phone Number"
@@ -153,6 +163,7 @@ class RBSForm extends Component<RBSFormProps, RBSFormState> {
 
                             <RenderAutocomplete
                                 id="servicesOffered"
+                                value={this.state.servicesOffered}
                                 label="Services Offered"
                                 fieldWidth="regular"
                                 placeholder="Services Offered"
@@ -162,6 +173,7 @@ class RBSForm extends Component<RBSFormProps, RBSFormState> {
                             <RenderTextfield
                                 name="description"
                                 required={true}
+                                value={this.state.description}
                                 label="Description"
                                 placeholder="Write an enticing description"
                                 fieldWidth="regular"
@@ -171,6 +183,7 @@ class RBSForm extends Component<RBSFormProps, RBSFormState> {
                             <RenderRating
                                 label="Price Level"
                                 name="price"
+                                value={this.state.price}
                                 handleChange={this.handleTextChange}
                             />
                             <div className="field-regular">
@@ -178,10 +191,13 @@ class RBSForm extends Component<RBSFormProps, RBSFormState> {
                                     name="photos"
                                     label="Upload Some Photos"
                                     handleChange={this.handleDropZoneChange}
+                                    value={this.state.photos.map(file => {
+                                        return file.type
+                                    })}
                                 />
                             </div>
                         </div>
-                        <div className="inline-buttons">
+                        <div className="one-button">
                             <div className="divider"></div>
                             <Button
                                 variant="contained"
@@ -192,13 +208,6 @@ class RBSForm extends Component<RBSFormProps, RBSFormState> {
                                 onClick={this.handleSubmit}
                             >
                                 Next
-                            </Button>
-                            <Button
-                                variant="contained"
-                                color="primary"
-                                type="button"
-                            >
-                                Clear
                             </Button>
                         </div>
                     </form>

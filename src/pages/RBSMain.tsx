@@ -23,30 +23,22 @@ class RBSMain extends Component<{}, RBSMainState> {
 
     public addFormParameters(state: RBSFormState): void {
         this.setState(
-            { barbershop: Object.assign({}, this.state.barbershop, state) },
-            () => {
-                console.log(this.state);
-            }
-        );
+            { barbershop: Object.assign({}, this.state.barbershop, state)});
     }
 
     public addHoursParameters(state: RBSHoursState): void {
         this.setState(
-            { barbershop: Object.assign({}, this.state.barbershop, state) },
-            () => {
-                console.log(this.state);
-            }
-        );
+            { barbershop: Object.assign({}, this.state.barbershop, state) });
     }
 
     render() {
         return (
             <Switch>
                 <Route path="/createshop/register">
-                    <RBSForm nextPage={this.addFormParameters} />
+                    <RBSForm nextPage={this.addFormParameters} barbershop={this.state.barbershop} />
                 </Route>
                 <Route path="/createshop/hours">
-                    <RBSHours nextPage={this.addHoursParameters} />
+                    <RBSHours barbershop={this.state.barbershop} nextPage={this.addHoursParameters} />
                 </Route>
                 <Route path="/createshop/confirm">
                     <RBSConfirm barbershop={this.state.barbershop} />

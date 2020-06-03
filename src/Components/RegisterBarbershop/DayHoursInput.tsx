@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import "./Fields.scss";
-import { RenderTimePicker } from "./FormFields";
+import "../FormFields/Fields.scss";
+import { RenderTimePicker } from "../FormFields/FormFields";
 import { Checkbox, FormControlLabel } from "@material-ui/core";
 import { Day } from "../../types/barbershop";
 import { DEFAULT_FROM, DEFAULT_TO } from "../../types/constants";
@@ -11,38 +11,42 @@ interface FormTimeFieldsProps {
 }
 
 interface FormTimeFieldState {
-    isOpen: boolean;
+    day: Day;
 }
 
 class DayHoursInput extends Component<FormTimeFieldsProps, FormTimeFieldState> {
     constructor(props: FormTimeFieldsProps) {
         super(props);
-        this.state = { isOpen: true };
-        this.props.day.isOpen = this.state.isOpen;
-        this.props.day.from = DEFAULT_FROM;
-        this.props.day.to = DEFAULT_TO;
+        this.state = {day: this.props.day };
         this.toggleClosed = this.toggleClosed.bind(this);
         this.handleChangeClose = this.handleChangeClose.bind(this);
         this.handleChangeOpen = this.handleChangeOpen.bind(this);
     }
 
     public toggleClosed(): void {
-        let prevChecked = this.state.isOpen;
-        this.setState({ isOpen: !prevChecked });
-        this.props.day.isOpen = !prevChecked;
-        if (prevChecked) {
-            this.props.day.from = "";
-            this.props.day.to = "";
-        }
+        let prevChecked = this.state.day.isOpen;
+        this.setState({ day: { ...this.state.day, isOpen: !prevChecked } }, () => {
+            if (prevChecked) {
+                this.setState({ day: { ...this.state.day, from: '', to: '' } }, this.bindStateToProps)
+            } else {
+                this.setState({ day: { ...this.state.day, from: DEFAULT_FROM, to: DEFAULT_TO }}, this.bindStateToProps)
+            }
+        });
     }
 
     public handleChangeOpen(event: React.BaseSyntheticEvent): void {
-        this.props.day.from = event.target.value;
+        this.setState({ day: { ...this.state.day, from: event.target.value} }, this.bindStateToProps)
     }
 
     public handleChangeClose(event: React.BaseSyntheticEvent): void {
-        this.props.day.to = event.target.value;
-        console.log(this.props.day);
+        this.setState({ day: { ...this.state.day, to: event.target.value} }, this.bindStateToProps
+        );
+    }
+
+    public bindStateToProps(){
+        this.props.day.isOpen = this.state.day.isOpen;
+        this.props.day.from = this.state.day.from;
+        this.props.day.to = this.state.day.to;
     }
 
     render() {
@@ -50,21 +54,22 @@ class DayHoursInput extends Component<FormTimeFieldsProps, FormTimeFieldState> {
             <div className="time-input-container">
                 <h2>{this.props.dayOfWeek}</h2>
                 <RenderTimePicker
-                    disabled={!this.state.isOpen}
-                    defaultValue={DEFAULT_FROM}
+                    disabled={!this.state.day.isOpen}
+                    value={this.state.day.from}
                     handleChange={this.handleChangeOpen}
                 />
                 <p>To</p>
                 <RenderTimePicker
-                    disabled={!this.state.isOpen}
+                    disabled={!this.state.day.isOpen}
                     handleChange={this.handleChangeClose}
-                    defaultValue={DEFAULT_TO}
+                    value={this.state.day.to}
                 />
                 <FormControlLabel
                     control={
                         <Checkbox
                             onChange={this.toggleClosed}
                             name="checkedB"
+                            checked={!this.state.day.isOpen}
                             color="primary"
                         />
                     }

@@ -11,6 +11,7 @@ import MonetizationOnIcon from "@material-ui/icons/MonetizationOn";
 // interface for relevant fieldProps passed to the functional components
 interface FieldProps {
     // for all field
+    value?: any;
     label?: string;
     name?: string;
     placeholder?: string;
@@ -39,6 +40,7 @@ export function RenderTextfield(props: FieldProps): JSX.Element {
             multiline={props.multiline}
             onChange={props.handleChange}
             rows={4}
+            value={props.value}
             // error={}
             // helperText={}
             className={"field-" + props.fieldWidth}
@@ -58,6 +60,7 @@ export function RenderSelect(props: FieldProps): JSX.Element {
             onChange={props.handleChange}
             defaultValue={""}
             id={props.id}
+            value={props.value}
             // error={}
             // helperText={}
             className={"field-" + props.fieldWidth}
@@ -83,6 +86,7 @@ export function RenderAutocomplete(props: FieldProps): JSX.Element {
             freeSolo
             options={props.options as string[]}
             onChange={props.handleChange}
+            value={props.value}
             className={"field-" + props.fieldWidth}
             renderTags={(value: string[], getTagProps) =>
                 value.map((option: string, index: number) => (
@@ -112,6 +116,7 @@ export function RenderTimePicker(props: FieldProps): JSX.Element {
             type="time"
             defaultValue={props.defaultValue}
             required
+            value={props.value}
             onChange={props.handleChange}
             disabled={props.disabled}
             InputLabelProps={{
@@ -132,6 +137,7 @@ export function RenderDropzone(props: FieldProps): JSX.Element {
                 acceptedFiles={["image/*"]}
                 dropzoneText={"Drag and drop an image here or click"}
                 onChange={props.handleChange}
+                initialFiles={props.value}
             />
         </div>
     );
@@ -143,12 +149,10 @@ export function RenderRating(props: FieldProps): JSX.Element {
             <p>Price Level</p>
             <Rating
                 name={props.name}
-                getLabelText={(value: number) =>
-                    `${value} Heart${value !== 1 ? "s" : ""}`
-                }
                 precision={1}
                 onChange={props.handleChange}
                 max={4}
+                value={parseInt(props.value)}
                 size="large"
                 icon={<MonetizationOnIcon fontSize="inherit" />}
             />

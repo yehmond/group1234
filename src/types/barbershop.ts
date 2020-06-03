@@ -1,4 +1,5 @@
 import { Guid } from "guid-typescript";
+import { DEFAULT_FROM, DEFAULT_TO } from "./constants";
 
 export interface Barbershop {
     id: Guid;
@@ -10,6 +11,8 @@ export interface Barbershop {
     servicesOffered: string[];
     // price as a scale from 1-4
     price: number;
+    website: string;
+    phoneNumber: string;
     photos: File[];
     // weekdays index from 0-6, beginning on Monday
     hours: Day[];
@@ -24,22 +27,24 @@ export interface Day {
 export function initializeHours(): Day[] {
     let hours: Day[] = [];
     for (let i = 0; i < 7; i++) {
-        hours.push({} as Day);
+        hours.push({isOpen: true, from: DEFAULT_FROM, to: DEFAULT_TO});
     }
     return hours;
 }
 
 export function initializeBarbershop(): Barbershop {
     return {
-        address: "",
-        city: "",
-        description: "",
-        hours: [],
-        price: 0,
         id: Guid.create(),
         name: "",
-        photos: [],
+        address: "",
+        city: "",
         province: "",
+        website: "",
+        phoneNumber: "",
+        description: "",
+        hours: initializeHours(),
+        price: 0,
+        photos: [],
         servicesOffered: [],
     };
 }

@@ -2,10 +2,10 @@ import React, { Component } from "react";
 import StepperHeader from "../Stepper/StepperHeader";
 import { ADD_BARBERSHOP_STEPS, DAYS_OF_WEEK } from "../../types/constants";
 import "./RBS.scss";
-import DayHoursInput from "../FormFields/DayHoursInput";
+import DayHoursInput from "./DayHoursInput";
 import { Button } from "@material-ui/core";
 import { Link } from "react-router-dom";
-import { Day, initializeHours } from "../../types/barbershop";
+import { Barbershop, Day } from "../../types/barbershop";
 
 export interface RBSHoursState {
     hours: Day[];
@@ -13,17 +13,22 @@ export interface RBSHoursState {
 
 interface RBSHoursProps {
     nextPage: (state: RBSHoursState) => void;
+    barbershop: Barbershop;
 }
 
 class RBSHours extends Component<RBSHoursProps, RBSHoursState> {
     constructor(props: any) {
         super(props);
-        this.state = { hours: initializeHours() };
+        this.state = { hours: this.props.barbershop.hours};
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     public handleSubmit(): void {
         this.props.nextPage(this.state);
+    }
+
+    public handleChange(): void {
+
     }
 
     render() {
@@ -61,8 +66,10 @@ class RBSHours extends Component<RBSHoursProps, RBSHoursState> {
                                 variant="contained"
                                 color="primary"
                                 type="button"
+                                component={Link}
+                                to={"/createshop/register"}
                             >
-                                Clear
+                                Back
                             </Button>
                         </div>
                     </form>
