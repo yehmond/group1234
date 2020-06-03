@@ -7,7 +7,7 @@ import { DEFAULT_FROM, DEFAULT_TO } from "../../types/constants";
 
 interface FormTimeFieldsProps {
     dayOfWeek: string;
-    day: Day
+    day: Day;
 }
 
 interface FormTimeFieldState {
@@ -15,7 +15,6 @@ interface FormTimeFieldState {
 }
 
 class DayHoursInput extends Component<FormTimeFieldsProps, FormTimeFieldState> {
-
     constructor(props: FormTimeFieldsProps) {
         super(props);
         this.state = { isOpen: true };
@@ -29,7 +28,7 @@ class DayHoursInput extends Component<FormTimeFieldsProps, FormTimeFieldState> {
 
     public toggleClosed(): void {
         let prevChecked = this.state.isOpen;
-        this.setState({isOpen: !prevChecked});
+        this.setState({ isOpen: !prevChecked });
         this.props.day.isOpen = !prevChecked;
         if (prevChecked) {
             this.props.day.from = "";

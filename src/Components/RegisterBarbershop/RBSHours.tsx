@@ -7,18 +7,24 @@ import { Button } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import { Day, initializeHours } from "../../types/barbershop";
 
-interface RBSHoursState {
+export interface RBSHoursState {
     hours: Day[];
 }
 
+interface RBSHoursProps {
+    nextPage: (state: RBSHoursState) => void;
+}
 
-class RBSHours extends Component<{}, RBSHoursState> {
-
+class RBSHours extends Component<RBSHoursProps, RBSHoursState> {
     constructor(props: any) {
         super(props);
-        this.state = {hours: initializeHours()};
+        this.state = { hours: initializeHours() };
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
+    public handleSubmit(): void {
+        this.props.nextPage(this.state);
+    }
 
     render() {
         return (
@@ -30,8 +36,14 @@ class RBSHours extends Component<{}, RBSHoursState> {
                 <div className="rbs-page-content">
                     <h1>Hours of Operation</h1>
                     <form className="hours-fields">
-                        {DAYS_OF_WEEK.map((day,index) => {
-                            return <DayHoursInput day = {this.state.hours[index]} dayOfWeek={day}  key={day}/>;
+                        {DAYS_OF_WEEK.map((day, index) => {
+                            return (
+                                <DayHoursInput
+                                    day={this.state.hours[index]}
+                                    dayOfWeek={day}
+                                    key={day}
+                                />
+                            );
                         })}
                         <div className="inline-buttons long">
                             <div className="divider"></div>
@@ -41,9 +53,7 @@ class RBSHours extends Component<{}, RBSHoursState> {
                                 type="button"
                                 component={Link}
                                 to={"/createshop/confirm"}
-                                onClick={() => {
-                                    console.log(this.state.hours)
-                                }}
+                                onClick={this.handleSubmit}
                             >
                                 Next
                             </Button>

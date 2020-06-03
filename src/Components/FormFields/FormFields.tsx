@@ -1,7 +1,8 @@
 import { Chip, MenuItem, TextField } from "@material-ui/core";
 import React from "react";
-import { Autocomplete } from "@material-ui/lab";
+import { Autocomplete, Rating } from "@material-ui/lab";
 import { DropzoneArea } from "material-ui-dropzone";
+import MonetizationOnIcon from "@material-ui/icons/MonetizationOn";
 
 /**
  * This file contains functional presentational components that can be reused across forms
@@ -55,7 +56,7 @@ export function RenderSelect(props: FieldProps): JSX.Element {
             select
             required={props.required}
             onChange={props.handleChange}
-            defaultValue={''}
+            defaultValue={""}
             id={props.id}
             // error={}
             // helperText={}
@@ -126,12 +127,31 @@ export function RenderTimePicker(props: FieldProps): JSX.Element {
 export function RenderDropzone(props: FieldProps): JSX.Element {
     return (
         <div>
-        <h4>{props.label}</h4>
-        <DropzoneArea
-            acceptedFiles={["image/*"]}
-            dropzoneText={"Drag and drop an image here or click"}
-            onChange={props.handleChange}
-        />
+            <h4>{props.label}</h4>
+            <DropzoneArea
+                acceptedFiles={["image/*"]}
+                dropzoneText={"Drag and drop an image here or click"}
+                onChange={props.handleChange}
+            />
+        </div>
+    );
+}
+
+export function RenderRating(props: FieldProps): JSX.Element {
+    return (
+        <div className="two-fields-inline rating-container">
+            <p>Price Level</p>
+            <Rating
+                name={props.name}
+                getLabelText={(value: number) =>
+                    `${value} Heart${value !== 1 ? "s" : ""}`
+                }
+                precision={1}
+                onChange={props.handleChange}
+                max={4}
+                size="large"
+                icon={<MonetizationOnIcon fontSize="inherit" />}
+            />
         </div>
     );
 }

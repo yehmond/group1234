@@ -1,9 +1,8 @@
 .time-input-container {
     display: grid;
-    grid-template-columns: minmax(150px, 0.5fr) minmax(100px, 0.75fr) 25px minmax(
-            100px,
-            0.75fr
-        ) 1fr;
+    grid-template-columns:
+        minmax(150px, 0.5fr) minmax(100px, 0.75fr) 25px minmax(100px, 0.75fr)
+        1fr;
     grid-column-gap: 10px;
     align-items: center;
     justify-content: center;
@@ -32,4 +31,20 @@
 .field-small {
     width: 100%;
     max-width: 340px;
+}
+
+.rating-container {
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.42);
+
+    p {
+        color: rgba(0, 0, 0, 0.54);
+    }
+
+    .MuiRating-root {
+        color: #7986cb;
+        justify-self: flex-end;
+    }
+
 }

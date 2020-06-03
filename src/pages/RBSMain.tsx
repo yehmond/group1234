@@ -1,30 +1,56 @@
 import React, { Component } from "react";
 import { Switch, Route } from "react-router-dom";
-import RBSForm from "../components/RegisterBarbershop/RBSForm";
-import RBSHours from "../components/RegisterBarbershop/RBSHours";
+import RBSForm, {
+    RBSFormState,
+} from "../components/RegisterBarbershop/RBSForm";
+import RBSHours, {
+    RBSHoursState,
+} from "../components/RegisterBarbershop/RBSHours";
 import { Barbershop, initializeBarbershop } from "../types/barbershop";
+import RBSConfirm from "../components/RegisterBarbershop/RBSConfirm";
 
 interface RBSMainState {
     barbershop: Barbershop;
 }
 
-class RBSMain extends Component<{},RBSMainState> {
-
+class RBSMain extends Component<{}, RBSMainState> {
     constructor(props: any) {
         super(props);
-        this.state ={barbershop: initializeBarbershop()};
+        this.state = { barbershop: initializeBarbershop() };
+        this.addFormParameters = this.addFormParameters.bind(this);
+        this.addHoursParameters = this.addHoursParameters.bind(this);
+    }
+
+    public addFormParameters(state: RBSFormState): void {
+        this.setState(
+            { barbershop: Object.assign({}, this.state.barbershop, state) },
+            () => {
+                console.log(this.state);
+            }
+        );
+    }
+
+    public addHoursParameters(state: RBSHoursState): void {
+        this.setState(
+            { barbershop: Object.assign({}, this.state.barbershop, state) },
+            () => {
+                console.log(this.state);
+            }
+        );
     }
 
     render() {
         return (
             <Switch>
                 <Route path="/createshop/register">
-                    <RBSForm bs = {this.state.barbershop} />
+                    <RBSForm nextPage={this.addFormParameters} />
                 </Route>
                 <Route path="/createshop/hours">
-                    <RBSHours />
+                    <RBSHours nextPage={this.addHoursParameters} />
                 </Route>
-                <Route path="/createshop/confirm"></Route>
+                <Route path="/createshop/confirm">
+                    <RBSConfirm barbershop={this.state.barbershop} />
+                </Route>
             </Switch>
         );
     }

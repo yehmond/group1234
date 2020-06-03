@@ -1,6 +1,7 @@
 import {
     RenderAutocomplete,
     RenderDropzone,
+    RenderRating,
     RenderSelect,
     RenderTextfield,
 } from "../FormFields/FormFields";
@@ -15,17 +16,17 @@ import "./RBS.scss";
 import "../FormFields/Fields.scss";
 import { Link } from "react-router-dom";
 import StepperHeader from "../Stepper/StepperHeader";
-import { Barbershop } from "../../types/barbershop";
 
 interface RBSFormProps {
-    bs: Barbershop;
+    nextPage: (state: RBSFormState) => void;
 }
 
-interface RBSFormState{
+export interface RBSFormState {
     // relevant field for this barbershop
     name: string;
     address: string;
     city: string;
+    price: number;
     province: string;
     phoneNumber: string;
     website: string;
@@ -34,31 +35,54 @@ interface RBSFormState{
 }
 
 class RBSForm extends Component<RBSFormProps, RBSFormState> {
-
     constructor(props: any) {
         super(props);
-        this.state ={ address: "", city: "", name: "", photos: [], province: "", servicesOffered: [], website: "", phoneNumber: ""};
+        this.state = {
+            address: "",
+            city: "",
+            name: "",
+            photos: [],
+            province: "",
+            servicesOffered: [],
+            website: "",
+            phoneNumber: "",
+            price: 0,
+        };
         this.handleTextChange = this.handleTextChange.bind(this);
-        this.handleAutoCompleteChange = this.handleAutoCompleteChange.bind(this);
+        this.handleAutoCompleteChange = this.handleAutoCompleteChange.bind(
+            this
+        );
         this.handleDropZoneChange = this.handleDropZoneChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     public handleTextChange(event: React.BaseSyntheticEvent): void {
-        const { target: { name, value } } = event;
-        this.setState({[name]: value}as Pick<RBSFormState, keyof RBSFormState>)
+        const {
+            target: { name, value },
+        } = event;
+        this.setState({ [name]: value } as Pick<
+            RBSFormState,
+            keyof RBSFormState
+        >);
     }
 
-    public handleAutoCompleteChange(event: React.ChangeEvent, values: string[]): void{
-        this.setState({servicesOffered: values} as Pick<RBSFormState, keyof RBSFormState>);
+    public handleAutoCompleteChange(
+        event: React.ChangeEvent,
+        values: string[]
+    ): void {
+        this.setState({ servicesOffered: values } as Pick<
+            RBSFormState,
+            keyof RBSFormState
+        >);
     }
 
-    public handleDropZoneChange(files: File[]) : void{
-        this.setState({photos: files});
+    public handleDropZoneChange(files: File[]): void {
+        this.setState({ photos: files });
     }
 
     public handleSubmit(): void {
+        this.props.nextPage(this.state);
     }
-
 
     render() {
         return (
@@ -116,6 +140,7 @@ class RBSForm extends Component<RBSFormProps, RBSFormState> {
                                     fieldWidth="small"
                                     handleChange={this.handleTextChange}
                                 />
+
                                 <RenderTextfield
                                     name="phoneNumber"
                                     required={true}
@@ -125,6 +150,7 @@ class RBSForm extends Component<RBSFormProps, RBSFormState> {
                                     handleChange={this.handleTextChange}
                                 />
                             </div>
+
                             <RenderAutocomplete
                                 id="servicesOffered"
                                 label="Services Offered"
@@ -140,6 +166,11 @@ class RBSForm extends Component<RBSFormProps, RBSFormState> {
                                 placeholder="Write an enticing description"
                                 fieldWidth="regular"
                                 multiline={true}
+                                handleChange={this.handleTextChange}
+                            />
+                            <RenderRating
+                                label="Price Level"
+                                name="price"
                                 handleChange={this.handleTextChange}
                             />
                             <div className="field-regular">
@@ -158,7 +189,7 @@ class RBSForm extends Component<RBSFormProps, RBSFormState> {
                                 type="button"
                                 component={Link}
                                 to={"/createshop/hours"}
-                                onClick = {this.handleSubmit}
+                                onClick={this.handleSubmit}
                             >
                                 Next
                             </Button>

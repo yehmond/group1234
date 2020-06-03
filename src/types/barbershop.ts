@@ -7,8 +7,10 @@ export interface Barbershop {
     city: string;
     province: string;
     description: string;
-    services: string[];
-    photos: File[]
+    servicesOffered: string[];
+    // price as a scale from 1-4
+    price: number;
+    photos: File[];
     // weekdays index from 0-6, beginning on Monday
     hours: Day[];
 }
@@ -21,7 +23,7 @@ export interface Day {
 
 export function initializeHours(): Day[] {
     let hours: Day[] = [];
-    for(let i = 0; i < 7; i++){
+    for (let i = 0; i < 7; i++) {
         hours.push({} as Day);
     }
     return hours;
@@ -33,12 +35,11 @@ export function initializeBarbershop(): Barbershop {
         city: "",
         description: "",
         hours: [],
+        price: 0,
         id: Guid.create(),
         name: "",
         photos: [],
         province: "",
-        services: []
-
+        servicesOffered: [],
     };
 }
-
