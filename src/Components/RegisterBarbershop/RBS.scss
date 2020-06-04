@@ -1,9 +1,8 @@
 .rbs-page-content {
     display: grid;
     grid-template-rows: auto 1fr;
-    padding: 2vh 4vw;
     align-items: center;
-    margin-bottom: 200px;
+    padding: 2vh 4vw 10vh;
 
     h1,
     h4 {
@@ -54,22 +53,18 @@
     height: auto;
 }
 
-
 .dropdown-container {
-    padding: 1vh 0;
+    padding: 2vh 0;
 
     .header-and-icon {
-        display: grid;
-        grid-template-columns: 1fr 1fr 2fr;
-        margin-left: 3vw;
+        display: inline;
+        vertical-align: middle;
     }
+}
 
-    #drop-icon {
-        font-size: 2rem;
-        margin-bottom: 1vh;
-        color: #3f51b5;
-    }
-
+#drop-icon {
+    font-size: 2rem;
+    color: #3f51b5;
 }
 
 #confirm-subtitle {

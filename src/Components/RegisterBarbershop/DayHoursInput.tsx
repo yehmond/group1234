@@ -17,7 +17,7 @@ interface FormTimeFieldState {
 class DayHoursInput extends Component<FormTimeFieldsProps, FormTimeFieldState> {
     constructor(props: FormTimeFieldsProps) {
         super(props);
-        this.state = {day: this.props.day };
+        this.state = { day: this.props.day };
         this.toggleClosed = this.toggleClosed.bind(this);
         this.handleChangeClose = this.handleChangeClose.bind(this);
         this.handleChangeOpen = this.handleChangeOpen.bind(this);
@@ -25,25 +25,45 @@ class DayHoursInput extends Component<FormTimeFieldsProps, FormTimeFieldState> {
 
     public toggleClosed(): void {
         let prevChecked = this.state.day.isOpen;
-        this.setState({ day: { ...this.state.day, isOpen: !prevChecked } }, () => {
-            if (prevChecked) {
-                this.setState({ day: { ...this.state.day, from: '', to: '' } }, this.bindStateToProps)
-            } else {
-                this.setState({ day: { ...this.state.day, from: DEFAULT_FROM, to: DEFAULT_TO }}, this.bindStateToProps)
+        this.setState(
+            { day: { ...this.state.day, isOpen: !prevChecked } },
+            () => {
+                if (prevChecked) {
+                    this.setState(
+                        { day: { ...this.state.day, from: "", to: "" } },
+                        this.bindStateToProps
+                    );
+                } else {
+                    this.setState(
+                        {
+                            day: {
+                                ...this.state.day,
+                                from: DEFAULT_FROM,
+                                to: DEFAULT_TO,
+                            },
+                        },
+                        this.bindStateToProps
+                    );
+                }
             }
-        });
-    }
-
-    public handleChangeOpen(event: React.BaseSyntheticEvent): void {
-        this.setState({ day: { ...this.state.day, from: event.target.value} }, this.bindStateToProps)
-    }
-
-    public handleChangeClose(event: React.BaseSyntheticEvent): void {
-        this.setState({ day: { ...this.state.day, to: event.target.value} }, this.bindStateToProps
         );
     }
 
-    public bindStateToProps(){
+    public handleChangeOpen(event: React.BaseSyntheticEvent): void {
+        this.setState(
+            { day: { ...this.state.day, from: event.target.value } },
+            this.bindStateToProps
+        );
+    }
+
+    public handleChangeClose(event: React.BaseSyntheticEvent): void {
+        this.setState(
+            { day: { ...this.state.day, to: event.target.value } },
+            this.bindStateToProps
+        );
+    }
+
+    public bindStateToProps() {
         this.props.day.isOpen = this.state.day.isOpen;
         this.props.day.from = this.state.day.from;
         this.props.day.to = this.state.day.to;

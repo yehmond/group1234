@@ -17,10 +17,11 @@ import "../FormFields/Fields.scss";
 import { Link } from "react-router-dom";
 import StepperHeader from "../Stepper/StepperHeader";
 import { Barbershop } from "../../types/barbershop";
+import _ from "lodash";
 
 interface RBSFormProps {
     nextPage: (state: RBSFormState) => void;
-    barbershop: Barbershop
+    barbershop: Barbershop;
 }
 
 export interface RBSFormState {
@@ -50,7 +51,7 @@ class RBSForm extends Component<RBSFormProps, RBSFormState> {
             website: this.props.barbershop.website,
             phoneNumber: this.props.barbershop.phoneNumber,
             price: this.props.barbershop.price,
-            description: this.props.barbershop.description
+            description: this.props.barbershop.description,
         };
         this.handleTextChange = this.handleTextChange.bind(this);
         this.handleAutoCompleteChange = this.handleAutoCompleteChange.bind(
@@ -58,6 +59,7 @@ class RBSForm extends Component<RBSFormProps, RBSFormState> {
         );
         this.handleDropZoneChange = this.handleDropZoneChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.isFormValid = this.isFormValid.bind(this);
     }
 
     public handleTextChange(event: React.BaseSyntheticEvent): void {
@@ -86,6 +88,10 @@ class RBSForm extends Component<RBSFormProps, RBSFormState> {
 
     public handleSubmit(): void {
         this.props.nextPage(this.state);
+    }
+
+    public isFormValid(): boolean {
+        return _.some(_.omit(this.state, 'photos'), _.isEmpty);
     }
 
     render() {
@@ -191,8 +197,8 @@ class RBSForm extends Component<RBSFormProps, RBSFormState> {
                                     name="photos"
                                     label="Upload Some Photos"
                                     handleChange={this.handleDropZoneChange}
-                                    value={this.state.photos.map(file => {
-                                        return file.type
+                                    value={this.state.photos.map((file) => {
+                                        return file.type;
                                     })}
                                 />
                             </div>
@@ -204,6 +210,7 @@ class RBSForm extends Component<RBSFormProps, RBSFormState> {
                                 color="primary"
                                 type="button"
                                 component={Link}
+                                disabled = {this.isFormValid()}
                                 to={"/createshop/hours"}
                                 onClick={this.handleSubmit}
                             >

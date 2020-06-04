@@ -27,7 +27,7 @@ export interface Day {
 export function initializeHours(): Day[] {
     let hours: Day[] = [];
     for (let i = 0; i < 7; i++) {
-        hours.push({isOpen: true, from: DEFAULT_FROM, to: DEFAULT_TO});
+        hours.push({ isOpen: true, from: DEFAULT_FROM, to: DEFAULT_TO });
     }
     return hours;
 }

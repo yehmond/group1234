@@ -19,7 +19,7 @@ interface RBSHoursProps {
 class RBSHours extends Component<RBSHoursProps, RBSHoursState> {
     constructor(props: any) {
         super(props);
-        this.state = { hours: this.props.barbershop.hours};
+        this.state = { hours: this.props.barbershop.hours };
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
@@ -27,9 +27,6 @@ class RBSHours extends Component<RBSHoursProps, RBSHoursState> {
         this.props.nextPage(this.state);
     }
 
-    public handleChange(): void {
-
-    }
 
     render() {
         return (
@@ -57,20 +54,21 @@ class RBSHours extends Component<RBSHoursProps, RBSHoursState> {
                                 color="primary"
                                 type="button"
                                 component={Link}
-                                to={"/createshop/confirm"}
-                                onClick={this.handleSubmit}
+                                to={"/createshop/register"}
                             >
-                                Next
+                                Back
                             </Button>
                             <Button
                                 variant="contained"
                                 color="primary"
                                 type="button"
                                 component={Link}
-                                to={"/createshop/register"}
+                                to={"/createshop/confirm"}
+                                onClick={this.handleSubmit}
                             >
-                                Back
+                                Next
                             </Button>
+
                         </div>
                     </form>
                 </div>
