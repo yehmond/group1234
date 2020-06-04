@@ -151,7 +151,7 @@ export function RenderRating(props: FieldProps): JSX.Element {
                 name={props.name}
                 precision={1}
                 onChange={props.handleChange}
-                max={4}
+                max={5}
                 value={parseInt(props.value)}
                 size="large"
                 icon={<MonetizationOnIcon fontSize="inherit" />}

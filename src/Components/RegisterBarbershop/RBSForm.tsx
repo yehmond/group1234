@@ -91,7 +91,7 @@ class RBSForm extends Component<RBSFormProps, RBSFormState> {
     }
 
     public isFormValid(): boolean {
-        return _.some(_.omit(this.state, 'photos'), _.isEmpty);
+        return _.some(_.omit(this.state, "photos"), _.isEmpty);
     }
 
     render() {
@@ -210,7 +210,7 @@ class RBSForm extends Component<RBSFormProps, RBSFormState> {
                                 color="primary"
                                 type="button"
                                 component={Link}
-                                disabled = {this.isFormValid()}
+                                disabled={this.isFormValid()}
                                 to={"/createshop/hours"}
                                 onClick={this.handleSubmit}
                             >

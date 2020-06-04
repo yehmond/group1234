@@ -27,7 +27,6 @@ class RBSHours extends Component<RBSHoursProps, RBSHoursState> {
         this.props.nextPage(this.state);
     }
 
-
     render() {
         return (
             <div>
@@ -68,7 +67,6 @@ class RBSHours extends Component<RBSHoursProps, RBSHoursState> {
                             >
                                 Next
                             </Button>
-
                         </div>
                     </form>
                 </div>

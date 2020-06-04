@@ -29,7 +29,7 @@ class RBSConfirm extends PureComponent<RBSConfirmProps, RBSConfirmState> {
                 "photos",
                 "hours",
                 "price",
-                "description"
+                "description",
             ]),
             isHoursDisp: false,
         };
