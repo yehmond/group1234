@@ -4,13 +4,11 @@ type StoreId = {
     id: string;
 };
 
-export default function StorePicture({id}: StoreId): JSX.Element {
+export default function StorePicture({ id }: StoreId): JSX.Element {
     return (
         <>
             <div>
-                <h3>
-                    StorePicture
-                </h3>
+                <h3>StorePicture</h3>
             </div>
         </>
     );

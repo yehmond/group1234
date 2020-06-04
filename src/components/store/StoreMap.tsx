@@ -4,13 +4,11 @@ type StoreId = {
     id: string;
 };
 
-export default function StoreMap({id}: StoreId): JSX.Element {
+export default function StoreMap({ id }: StoreId): JSX.Element {
     return (
         <>
             <div>
-                <h3>
-                    StoreMap
-                </h3>
+                <h3>StoreMap</h3>
             </div>
         </>
     );
