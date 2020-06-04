@@ -1,0 +1,32 @@
+.paper-container {
+    max-width: 1000px;
+    margin-left: 2vw;
+
+    .summary-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-column-gap: 10px;
+        margin: 1vh 1vw;
+
+        .indent {
+            padding-left: 1vw;
+        }
+
+        h3 {
+            display: grid;
+            align-self: center;
+        }
+
+        .MuiPaper-root {
+            display: grid;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .MuiChip-root {
+            margin: 1vh 0;
+            width: fit-content;
+            font-size: 0.9rem;
+        }
+    }
+}
