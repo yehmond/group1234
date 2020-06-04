@@ -22,11 +22,7 @@ class SummaryRenderer extends PureComponent<SummaryRendererProps, {}> {
                         <div>
                             {this.props.value.map((val, index) => {
                                 return (
-                                    <Chip
-                                        key={index}
-                                        label={val}
-                                        color="primary"
-                                    />
+                                    <Chip key={index} label={val} color="primary" />
                                 );
                             })}
                         </div>

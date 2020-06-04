@@ -54,9 +54,7 @@ class RBSForm extends Component<RBSFormProps, RBSFormState> {
             description: this.props.barbershop.description,
         };
         this.handleTextChange = this.handleTextChange.bind(this);
-        this.handleAutoCompleteChange = this.handleAutoCompleteChange.bind(
-            this
-        );
+        this.handleAutoCompleteChange = this.handleAutoCompleteChange.bind(this);
         this.handleDropZoneChange = this.handleDropZoneChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.isFormValid = this.isFormValid.bind(this);
@@ -66,10 +64,7 @@ class RBSForm extends Component<RBSFormProps, RBSFormState> {
         const {
             target: { name, value },
         } = event;
-        this.setState({ [name]: value } as Pick<
-            RBSFormState,
-            keyof RBSFormState
-        >);
+        this.setState({ [name]: value } as Pick<RBSFormState, keyof RBSFormState>);
     }
 
     public handleAutoCompleteChange(
@@ -97,10 +92,7 @@ class RBSForm extends Component<RBSFormProps, RBSFormState> {
     render() {
         return (
             <div>
-                <StepperHeader
-                    currentStep={0}
-                    stepLabels={ADD_BARBERSHOP_STEPS}
-                />
+                <StepperHeader currentStep={0} stepLabels={ADD_BARBERSHOP_STEPS} />
                 <div className="rbs-page-content">
                     <h1>Add Barbershop</h1>
                     <form>

@@ -50,15 +50,12 @@ class RBSConfirm extends PureComponent<RBSConfirmProps, RBSConfirmState> {
     render() {
         return (
             <div>
-                <StepperHeader
-                    currentStep={2}
-                    stepLabels={ADD_BARBERSHOP_STEPS}
-                />
+                <StepperHeader currentStep={2} stepLabels={ADD_BARBERSHOP_STEPS} />
                 <div className="rbs-page-content">
                     <h1>Summary</h1>
                     <p id="confirm-subtitle">
-                        Please confirm that the fields below are accurate;
-                        please go back if necessary.
+                        Please confirm that the fields below are accurate; please go
+                        back if necessary.
                     </p>
                     {Object.keys(this.state.clonedBS).map((key) => {
                         return (

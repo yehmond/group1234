@@ -30,10 +30,7 @@ class RBSHours extends Component<RBSHoursProps, RBSHoursState> {
     render() {
         return (
             <div>
-                <StepperHeader
-                    currentStep={1}
-                    stepLabels={ADD_BARBERSHOP_STEPS}
-                />
+                <StepperHeader currentStep={1} stepLabels={ADD_BARBERSHOP_STEPS} />
                 <div className="rbs-page-content">
                     <h1>Hours of Operation</h1>
                     <form className="hours-fields">

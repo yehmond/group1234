@@ -1,11 +1,7 @@
 import React, { Component } from "react";
 import { Switch, Route } from "react-router-dom";
-import RBSForm, {
-    RBSFormState,
-} from "../components/RegisterBarbershop/RBSForm";
-import RBSHours, {
-    RBSHoursState,
-} from "../components/RegisterBarbershop/RBSHours";
+import RBSForm, { RBSFormState } from "../components/RegisterBarbershop/RBSForm";
+import RBSHours, { RBSHoursState } from "../components/RegisterBarbershop/RBSHours";
 import { Barbershop, initializeBarbershop } from "../types/barbershop";
 import RBSConfirm from "../components/RegisterBarbershop/RBSConfirm";
 

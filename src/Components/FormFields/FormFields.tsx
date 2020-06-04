@@ -98,11 +98,7 @@ export function RenderAutocomplete(props: FieldProps): JSX.Element {
                 ))
             }
             renderInput={(params) => (
-                <TextField
-                    {...params}
-                    label="Services"
-                    placeholder="Add Another"
-                />
+                <TextField {...params} label="Services" placeholder="Add Another" />
             )}
         />
     );
