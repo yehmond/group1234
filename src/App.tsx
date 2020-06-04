@@ -1,6 +1,8 @@
 import React from "react";
+import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
+import "./App.scss";
+import RBSMain from "./pages/RBSMain";
 import NavBar from "./components/NavBar";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "./App.scss";
 import Home from "./pages/Home";
 import StorePage from "./pages/StorePage";
@@ -18,6 +20,10 @@ function App(): JSX.Element {
                 <Route path="/about"></Route>
                 <Route path="/signin"></Route>
                 <Route path="/signup"></Route>
+                <Route path="/createshop">
+                    <Redirect to="/createshop/register" />
+                    <RBSMain />
+                </Route>
             </Switch>
         </Router>
     );
