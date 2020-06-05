@@ -1,14 +1,14 @@
 import React from "react";
 
-type StoreId = {
-    id: string;
+type StoreDescription = {
+    description: string;
 };
 
-export default function StoreDescription({ id }: StoreId): JSX.Element {
+export default function StoreDescription({ description }: StoreDescription): JSX.Element {
     return (
         <>
             <div>
-                <h3>StoreDescription</h3>
+                <h3>{ description }</h3>
             </div>
         </>
     );

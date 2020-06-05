@@ -8,7 +8,7 @@ export default function StoreSchedule({ id }: StoreId): JSX.Element {
     return (
         <>
             <div>
-                <h3>StoreSchedule</h3>
+                <h3>SCHEDULE TODO</h3>
             </div>
         </>
     );

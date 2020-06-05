@@ -1,14 +1,16 @@
 import React from "react";
+import { Theme, makeStyles } from "@material-ui/core";
 
-type StoreId = {
-    id: string;
+type StoreName = {
+    name: string;
+    photos: File[];
 };
 
-export default function StoreName({ id }: StoreId): JSX.Element {
+export default function StoreName({ name, photos }: StoreName): JSX.Element {
     return (
         <>
             <div>
-                <h3>StoreName</h3>
+                <h3>{ name }</h3>
             </div>
         </>
     );

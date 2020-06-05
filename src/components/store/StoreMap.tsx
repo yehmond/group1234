@@ -1,14 +1,16 @@
 import React from "react";
 
-type StoreId = {
-    id: string;
+type StoreMap = {
+    address: string;
+    city: string;
+    province: string;
 };
 
-export default function StoreMap({ id }: StoreId): JSX.Element {
+export default function StoreMap({ address, city, province }: StoreMap): JSX.Element {
     return (
         <>
             <div>
-                <h3>StoreMap</h3>
+                <h3>{ address }, { city }, { province }</h3>
             </div>
         </>
     );

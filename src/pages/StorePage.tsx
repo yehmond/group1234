@@ -1,22 +1,28 @@
 import React from "react";
+import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
 import { useParams } from "react-router-dom";
-import StoreName from "../components/store/StoreName";
-import StorePicture from "../components/store/StorePicture";
-import StoreDescription from "../components/store/StoreDescription";
-import StoreSchedule from "../components/store/StoreSchedule";
-import StoreMap from "../components/store/StoreMap";
-import StoreReviews from "../components/store/StoreReviews";
+import StoreName from "../components/Store/StoreName";
+import StoreDescription from "../components/Store/StoreDescription";
+import StoreSchedule from "../components/Store/StoreSchedule";
+import StoreMap from "../components/Store/StoreMap";
+import StoreReviews from "../components/Store/StoreReviews";
+import { getStore } from "../actions/storeActions";
 
 export default function StorePage(): JSX.Element {
-    let id: string = useParams();
+    const dispatch: any = useDispatch();
+    const id: string = useParams();
+    
+    dispatch(getStore(id));
+
+    const store = useSelector( (state: RootStateOrAny) => state.stores[0]);
+    console.log(store);
 
     return (
         <>
-            <StoreName id={id} />
-            <StorePicture id={id} />
-            <StoreDescription id={id} />
+            <StoreName name={store.name} photos={store.photos} />
+            <StoreDescription description={store.description} />
             <StoreSchedule id={id} />
-            <StoreMap id={id} />
+            <StoreMap address={store.address} city={store.city} province={store.province} />
             <StoreReviews id={id} />
         </>
     );
