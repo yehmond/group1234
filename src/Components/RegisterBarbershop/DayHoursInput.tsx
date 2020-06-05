@@ -3,7 +3,7 @@ import "../FormFields/Fields.scss";
 import { RenderTimePicker } from "../FormFields/FormFields";
 import { Checkbox, FormControlLabel } from "@material-ui/core";
 import { Day } from "../../types/barbershop";
-import { DEFAULT_FROM, DEFAULT_TO } from "../../types/constants";
+import { DEFAULT_FROM, DEFAULT_TO } from "../../utils/constants";
 
 interface FormTimeFieldsProps {
     dayOfWeek: string;

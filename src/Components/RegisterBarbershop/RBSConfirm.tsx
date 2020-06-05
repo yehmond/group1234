@@ -3,11 +3,11 @@ import ExpandMore from "@material-ui/icons/ArrowDropDownCircle";
 import ExpandLess from "@material-ui/icons/ArrowDropUp";
 import { Barbershop, Day } from "../../types/barbershop";
 import StepperHeader from "../Stepper/StepperHeader";
-import { ADD_BARBERSHOP_STEPS, DAYS_OF_WEEK } from "../../types/constants";
+import { ADD_BARBERSHOP_STEPS, DAYS_OF_WEEK } from "../../utils/constants";
 import "./RBS.scss";
 import SummaryRenderer from "../SummaryRenderer/SummaryRenderer";
 import _ from "lodash";
-import { convert24HrTo12Hr } from "../../types/utils";
+import { convert24HrTo12Hr } from "../../utils/utils";
 import { Button } from "@material-ui/core";
 import { Link } from "react-router-dom";
 

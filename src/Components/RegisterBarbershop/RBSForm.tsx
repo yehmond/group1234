@@ -11,7 +11,7 @@ import {
     ADD_BARBERSHOP_STEPS,
     PROVINCES,
     SERVICES_OFFERED,
-} from "../../types/constants";
+} from "../../utils/constants";
 import "./RBS.scss";
 import "../FormFields/Fields.scss";
 import { Link } from "react-router-dom";
