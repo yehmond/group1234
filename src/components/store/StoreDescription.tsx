@@ -8,7 +8,7 @@ export default function StoreDescription({ description }: StoreDescription): JSX
     return (
         <>
             <div>
-                <h3>{ description }</h3>
+                <h3>{description}</h3>
             </div>
         </>
     );

@@ -11,10 +11,10 @@ import { getStore } from "../actions/storeActions";
 export default function StorePage(): JSX.Element {
     const dispatch: any = useDispatch();
     const id: string = useParams();
-    
+
     dispatch(getStore(id));
 
-    const store = useSelector( (state: RootStateOrAny) => state.stores[0]);
+    const store = useSelector((state: RootStateOrAny) => state.stores[0]);
     console.log(store);
 
     return (
@@ -22,7 +22,11 @@ export default function StorePage(): JSX.Element {
             <StoreName name={store.name} photos={store.photos} />
             <StoreDescription description={store.description} />
             <StoreSchedule id={id} />
-            <StoreMap address={store.address} city={store.city} province={store.province} />
+            <StoreMap
+                address={store.address}
+                city={store.city}
+                province={store.province}
+            />
             <StoreReviews id={id} />
         </>
     );

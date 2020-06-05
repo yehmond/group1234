@@ -4,7 +4,7 @@ import storeReducer from "./storeReducer";
 
 const rootReducer = combineReducers({
     authState: authReducer,
-    stores: storeReducer
+    stores: storeReducer,
 });
 
 export default rootReducer;

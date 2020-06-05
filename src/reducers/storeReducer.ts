@@ -1,8 +1,5 @@
 import { Guid } from "guid-typescript";
-import {
-    GET_STORE,
-    StoreTypes,
-} from "../types/storeActionTypes"
+import { GET_STORE, StoreTypes } from "../types/storeActionTypes";
 import { Barbershop, initializeHours } from "../types/barbershop";
 
 const initState: Array<Barbershop> = [];
@@ -29,9 +26,7 @@ export default function storeReducer(
                 servicesOffered: [],
             };
             // TODO implement backend function
-            return [
-                placeholder
-            ]
+            return [placeholder];
 
         default:
             return initialState;
