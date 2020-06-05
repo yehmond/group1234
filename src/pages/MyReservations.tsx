@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme: Theme) =>
             width: "50%",
             marginLeft: "17rem",
             marginTop: "4rem",
-        }
+        },
     })
 );
 

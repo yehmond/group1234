@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         header: {
             paddingBottom: "3rem",
-        }
+        },
     })
 );
 
