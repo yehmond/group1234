@@ -5,15 +5,18 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
 import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
-import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import Add from '@material-ui/icons/Add';
 import Typography from "@material-ui/core/Typography";
 import { withStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import { Tab, Tabs } from "@material-ui/core";
+import { IconButton, InputAdornment, Tab, Tabs } from "@material-ui/core";
 import { USER_TYPES } from "../../types/authActionTypes";
-import './signup.scss';
+import "./signup.scss";
 import _ from "lodash";
 import { validateEmail } from "../../utils/utils";
+import { Visibility, VisibilityOff } from "@material-ui/icons";
+import PasswordStrengthBar from "react-password-strength-bar/dist";
+import { MIN_PASSWORD_LENGTH } from "../../utils/constants";
 
 interface SignUpState {
     fName: string;
@@ -24,6 +27,7 @@ interface SignUpState {
     password: string;
     passwordError: boolean;
     passwordHelper: string;
+    showPassword: boolean;
     userType: USER_TYPES;
 }
 
@@ -31,16 +35,16 @@ interface SignUpState {
 const useStyles = (theme: any) => ({
     paper: {
         marginTop: theme.spacing(8),
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
     },
     avatar: {
         margin: theme.spacing(1),
         backgroundColor: theme.palette.secondary.main,
     },
     form: {
-        width: '100%',
+        width: "100%",
         marginTop: theme.spacing(3),
     },
     submit: {
@@ -49,15 +53,25 @@ const useStyles = (theme: any) => ({
 });
 
 class SignUp extends Component<{}, SignUpState> {
-
-    constructor(props:any) {
+    constructor(props: any) {
         super(props);
-        this.state = { email: "", lName: "", password: "", userType: USER_TYPES.CUSTOMER, fName: " " , passwordError: false,
-        passwordHelper: '', emailError: false, emailHelper:''}
+        this.state = {
+            email: "",
+            lName: "",
+            password: "",
+            userType: USER_TYPES.CUSTOMER,
+            fName: " ",
+            passwordError: false,
+            passwordHelper: "",
+            emailError: false,
+            emailHelper: "",
+            showPassword: false
+        };
         this.handleChange = this.handleChange.bind(this);
         this.handleTabChange = this.handleTabChange.bind(this);
         this.areFieldsFilled = this.areFieldsFilled.bind(this);
         this.submitSignUp = this.submitSignUp.bind(this);
+        this.handleClickShowPassword = this.handleClickShowPassword.bind(this);
     }
 
     public handleChange(event: React.BaseSyntheticEvent) {
@@ -67,65 +81,90 @@ class SignUp extends Component<{}, SignUpState> {
         this.setState({ [name]: value } as Pick<SignUpState, keyof SignUpState>);
     }
 
-    public handleTabChange(event:React.BaseSyntheticEvent, value: USER_TYPES) {
-        this.setState({userType: value}, () => {
+    public handleTabChange(event: React.BaseSyntheticEvent, value: USER_TYPES) {
+        this.setState({ userType: value }, () => {
             console.log(this.state);
-        })
+        });
     }
+
+    public handleClickShowPassword(){
+        const isPasswordShown = this.state.showPassword;
+        this.setState({showPassword: !isPasswordShown});
+    }
+
 
     public areFieldsFilled(): boolean {
-        return _.some(_.omit(this.state, 'passwordHelper', 'passwordError', 'emailError','emailHelper'), _.isEmpty);
+        return _.some(
+            _.omit(
+                this.state,
+                "passwordHelper",
+                "passwordError",
+                "emailError",
+                "emailHelper",
+                "showPassword"
+            ),
+            _.isEmpty
+        );
     }
 
-    public areFieldsValid(): boolean  {
+    public areFieldsValid(): boolean {
         let invalid = false;
         // validate email
-        if(!validateEmail(this.state.email)){
-            this.setState({emailError: true, emailHelper: 'Pleas enter a valid email'});
+        if (!validateEmail(this.state.email)) {
+            this.setState({
+                emailError: true,
+                emailHelper: "Pleas enter a valid email",
+            });
             invalid = true;
         }
         // validate password
-        if(!this.isValidPassword()) {
+        if (!this.isValidPassword()) {
             invalid = true;
         }
         // if any fields are invalid return
-        return invalid
+        return invalid;
     }
 
     public submitSignUp(): void {
-        if(this.areFieldsValid()){
+        if (this.areFieldsValid()) {
             // do something
         }
     }
 
     public isValidPassword(): boolean {
         const currPassword = this.state.password;
-        if (currPassword.length < 8) {
-            this.setState({passwordHelper: "Your password must be at least 8 characters", passwordError: true});
-            return false;
-        }
-        if (currPassword.search(/[a-z]/i) < 0) {
-            this.setState({passwordHelper: "Your password must contain at least one letter.", passwordError: true});
-            return false;
-        }
-        if (currPassword.search(/[0-9]/) < 0) {
-            this.setState({passwordHelper: "Your password must contain at least one digit.", passwordError: true});
+        if (currPassword.length < MIN_PASSWORD_LENGTH || currPassword.search(/[a-z]/i) < 0 || currPassword.search(/[0-9]/) < 0) {
+            this.setState({
+                passwordHelper: "Your password must be at least " + MIN_PASSWORD_LENGTH  +" characters with at least one letter and one digit",
+                passwordError: true,
+            });
             return false;
         }
         return true;
     }
 
+    public showPasswordIcon(): React.ReactNode {
+        return (<InputAdornment position="end">
+                <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={this.handleClickShowPassword}
+                    edge="end"
+                >
+                    {this.state.showPassword ? <Visibility /> : <VisibilityOff />}
+                </IconButton>
+            </InputAdornment>);
+    }
 
     render() {
         // @ts-ignore
-        const {classes} = this.props;
+        const { classes } = this.props;
 
         return (
             <Container component="main" maxWidth="xs">
-                <CssBaseline/>
+                <CssBaseline />
                 <div className={classes.paper}>
                     <Avatar className={classes.avatar}>
-                        <LockOutlinedIcon/>
+                        <Add />
                     </Avatar>
                     <Typography component="h1" variant="h5">
                         Sign up
@@ -164,8 +203,8 @@ class SignUp extends Component<{}, SignUpState> {
                                     label="Email Address"
                                     name="email"
                                     autoComplete="email"
-                                    helperText= {this.state.emailHelper}
-                                    error = {this.state.emailError}
+                                    helperText={this.state.emailHelper}
+                                    error={this.state.emailError}
                                 />
                             </Grid>
                             <Grid item xs={12}>
@@ -176,17 +215,27 @@ class SignUp extends Component<{}, SignUpState> {
                                     fullWidth
                                     name="password"
                                     label="Password"
-                                    type="password"
+                                    type={this.state.showPassword? 'text': 'password'}
                                     autoComplete="current-password"
                                     helperText={this.state.passwordHelper}
-                                    error = {this.state.passwordError}
+                                    error={this.state.passwordError}
+                                    InputProps = {{
+                                        endAdornment: this.showPasswordIcon()
+                                    }}
                                 />
+                                <PasswordStrengthBar password={this.state.password} minLength={MIN_PASSWORD_LENGTH}/>
                             </Grid>
                             <Grid item xs={12}>
-                                <Tabs value={this.state.userType} onChange={this.handleTabChange}
-                                            centered>
-                                    <Tab label="Customer" value={USER_TYPES.CUSTOMER}/>
-                                    <Tab label="Owner" value={USER_TYPES.OWNER}/>
+                                <Tabs
+                                    value={this.state.userType}
+                                    onChange={this.handleTabChange}
+                                    centered
+                                >
+                                    <Tab
+                                        label="Customer"
+                                        value={USER_TYPES.CUSTOMER}
+                                    />
+                                    <Tab label="Owner" value={USER_TYPES.OWNER} />
                                 </Tabs>
                             </Grid>
                         </Grid>
@@ -197,7 +246,7 @@ class SignUp extends Component<{}, SignUpState> {
                             color="primary"
                             className={classes.submit}
                             disabled={this.areFieldsFilled()}
-                            onClick = {this.submitSignUp}
+                            onClick={this.submitSignUp}
                         >
                             Sign Up
                         </Button>
@@ -216,4 +265,4 @@ class SignUp extends Component<{}, SignUpState> {
 }
 
 // @ts-ignore
-export default withStyles(useStyles)(SignUp)
+export default withStyles(useStyles)(SignUp);

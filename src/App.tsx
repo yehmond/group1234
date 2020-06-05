@@ -19,10 +19,10 @@ function App(): JSX.Element {
                 <Route path="/browse"></Route>
                 <Route path="/about"></Route>
                 <Route path="/signin">
-                    <SignInPage/>
+                    <SignInPage />
                 </Route>
                 <Route path="/signup">
-                    <SignUpPage/>
+                    <SignUpPage />
                 </Route>
                 <Route path="/createshop">
                     <Redirect to="/createshop/register" />

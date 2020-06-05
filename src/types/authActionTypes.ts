@@ -8,8 +8,8 @@ export const LOGIN_CUSTOMER = "LOGIN_CUSTOMER";
 export const LOGOUT = "LOGOUT";
 
 export enum USER_TYPES {
-    CUSTOMER ='CUSTOMER',
-    OWNER ='OWNER'
+    CUSTOMER = "CUSTOMER",
+    OWNER = "OWNER",
 }
 
 interface LoginOwnerAction {
