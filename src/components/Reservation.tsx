@@ -35,10 +35,10 @@ const useStyles = makeStyles((theme: Theme) =>
             marginRight: theme.spacing(1),
         },
         schedule: {
-           margin: "5rem",
-           textAlign: "center",
-           backgroundColor: "rgb(239, 235, 242)",
-           padding: "3rem",
+            margin: "5rem",
+            textAlign: "center",
+            backgroundColor: "rgb(239, 235, 242)",
+            padding: "3rem",
         },
         textInput: {
             paddingRight: "3rem",
