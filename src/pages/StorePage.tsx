@@ -1,5 +1,4 @@
 import React from "react";
-import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
 import { useParams } from "react-router-dom";
 import StoreName from "../components/Store/StoreName";
 import StoreDescription from "../components/Store/StoreDescription";
@@ -9,12 +8,11 @@ import StoreReviews from "../components/Store/StoreReviews";
 import { getStore } from "../actions/storeActions";
 
 export default function StorePage(): JSX.Element {
-    const dispatch: any = useDispatch();
+    // const dispatch: any = useDispatch();
+    // dispatch(getStore(id));
+    // const store = useSelector((state: RootStateOrAny) => state.stores[0]);
     const id: string = useParams();
-
-    dispatch(getStore(id));
-
-    const store = useSelector((state: RootStateOrAny) => state.stores[0]);
+    const store = getStore(id);
     console.log(store);
 
     return (

@@ -1,7 +1,8 @@
 import React from "react";
-import { createStore } from "redux";
+import { createStore, applyMiddleware } from "redux";
 import { Provider } from "react-redux";
 import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
+import thunk from "redux-thunk";
 import "./App.scss";
 import RBSMain from "./pages/RBSMain";
 import NavBar from "./components/NavBar";
@@ -10,7 +11,7 @@ import Home from "./pages/Home";
 import StorePage from "./pages/StorePage";
 import rootReducer from "./reducers";
 
-const store = createStore(rootReducer);
+const store = createStore(rootReducer, applyMiddleware(thunk));
 
 function App(): JSX.Element {
     return (
