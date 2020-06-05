@@ -8,6 +8,13 @@ import TextField from "@material-ui/core/TextField";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
+        wrapper: {
+            margin: "5rem",
+            padding: "5rem",
+            alignItems: "center",
+            textAlign: "center",
+            backgroundColor: "rgb(237, 250, 255)",
+        },
         formControl: {
             margin: theme.spacing(1),
             minWidth: 120,
@@ -16,12 +23,26 @@ const useStyles = makeStyles((theme: Theme) =>
             marginTop: theme.spacing(2),
         },
         container: {
-            display: "flex",
-            flexWrap: "wrap",
+            display: "block",
+            padding: "1rem",
+            minHeight: "8rem",
+            alignItems: "center",
+            textAlign: "center",
+            paddingRight: "3rem",
         },
         textField: {
             marginLeft: theme.spacing(1),
             marginRight: theme.spacing(1),
+        },
+        schedule: {
+           margin: "5rem",
+           textAlign: "center",
+           backgroundColor: "rgb(239, 235, 242)",
+           padding: "3rem",
+        },
+        textInput: {
+            paddingRight: "3rem",
+            marginTop: "2rem",
         },
     })
 );
@@ -30,27 +51,27 @@ export default function Reservation(): JSX.Element {
     const classes = useStyles();
 
     return (
-        <div id="wrapper">
+        <div className={classes.wrapper}>
             {/* TODO: this.props.shopname */}
             <h1>Make Your Reservation With Tony&apos;s Barbershop!</h1>
 
-            <div id="row">
-                <FormControl id="name">
+            <div className={classes.container}>
+                <FormControl id="name" className={classes.textInput}>
                     <InputLabel htmlFor="customer_name">Full Name</InputLabel>
                     <Input id="customer_name" />
                 </FormControl>
-                <FormControl id="phone">
+                <FormControl id="phone" className={classes.textInput}>
                     <InputLabel htmlFor="customer_phone">Phone Number</InputLabel>
                     <Input id="customer_phone" />
                 </FormControl>
-                <FormControl id="email">
+                <FormControl id="email" className={classes.textInput}>
                     <InputLabel htmlFor="customer_email">Email Address</InputLabel>
                     <Input id="customer_email" />
                 </FormControl>
             </div>
 
             <body>
-                <form id="ava_time" className={classes.container} noValidate>
+                <form className={classes.container} noValidate>
                     <TextField
                         id="datetime-local"
                         label="Available Time Slot"
@@ -64,14 +85,14 @@ export default function Reservation(): JSX.Element {
                 </form>
             </body>
 
-            <div id="row">
+            <div>
                 {/* TODO: submit form */}
                 <Button variant="contained" color="primary">
                     Reserve!
                 </Button>
             </div>
 
-            <div id="schedule">
+            <div className={classes.schedule}>
                 {/* TODO: show schedule */}
                 <h1>Schedule Used to Reserve</h1>
             </div>
