@@ -18,7 +18,7 @@ function App(): JSX.Element {
                 <Route path="/signin"></Route>
                 <Route path="/signup"></Route>
                 <Route path="/reservations">
-                    <MyReservations/>
+                    <MyReservations />
                 </Route>
             </Switch>
         </Router>
