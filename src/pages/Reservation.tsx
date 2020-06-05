@@ -68,7 +68,7 @@ export default function Reservation(): JSX.Element {
             <div id="row">
                 {/* TODO: submit form */}
                 <Button variant="contained" color="primary">
-                  Reserve!
+                    Reserve!
                 </Button>
             </div>
 

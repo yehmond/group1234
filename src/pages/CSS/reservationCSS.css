@@ -1,16 +1,16 @@
 body {
-	font-family: 'Montserrat', sans-serif;
-	color: black;
-    font-size: 1.0em;
+    font-family: "Montserrat", sans-serif;
+    color: black;
+    font-size: 1em;
     text-align: center;
 }
 
 #wrapper {
-	margin: 0 auto;
-	width: 960px;
-	text-align: left;
-	color: #000;
-    background-color:rgb(237, 250, 255);
+    margin: 0 auto;
+    width: 960px;
+    text-align: left;
+    color: #000;
+    background-color: rgb(237, 250, 255);
     margin-top: 50px;
     padding: 20px;
     padding-top: 40px;
