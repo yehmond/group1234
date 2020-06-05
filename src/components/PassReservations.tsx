@@ -1,6 +1,6 @@
 import React from "react";
-// import "./CSS/myReservationCSS.css";
 import MaterialTable, { Column } from "material-table";
+import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 
 interface Row {
     time: string;
@@ -13,7 +13,25 @@ interface TableState {
     passdata: Row[];
 }
 
+const useStyles = makeStyles((theme: Theme) =>
+    createStyles({
+        wrapper: {
+            margin: "5rem",
+            paddingLeft: "3rem",
+            paddingRight: "3rem",
+            paddingBottom: "5rem",
+            alignItems: "center",
+            textAlign: "center",
+            backgroundColor: "rgb(237, 250, 255)",
+        },
+        header: {
+            paddingBottom: "3rem",
+        }
+    })
+);
+
 export default function MyReservations(): JSX.Element {
+    const classes = useStyles();
     const [state, setState] = React.useState<TableState>({
         columns: [
             { title: "Time", field: "time" },
@@ -35,14 +53,14 @@ export default function MyReservations(): JSX.Element {
     });
 
     return (
-        <div id="wrapper">
+        <div className={classes.wrapper}>
             <link
                 rel="stylesheet"
                 href="https://fonts.googleapis.com/icon?family=Material+Icons"
             />
 
-            <div id="row">
-                <h2>Pass Reservations</h2>
+            <div>
+                <h2 className={classes.header}>Pass Reservations</h2>
                 <MaterialTable
                     title="Pass Reservations Details"
                     columns={state.columns}
