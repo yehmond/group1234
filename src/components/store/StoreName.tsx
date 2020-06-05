@@ -12,7 +12,7 @@ interface StyleProps {
 }
 
 const useStyles = makeStyles<Theme, StyleProps>((theme: Theme) => ({
-    background: props => ({
+    background: (props) => ({
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",
         backgroundImage: `url(${props.image})`,
@@ -38,8 +38,8 @@ const useStyles = makeStyles<Theme, StyleProps>((theme: Theme) => ({
         width: "50%",
         textAlign: "center",
         margin: "8rem",
-        fontSize: "4rem"
-    }
+        fontSize: "4rem",
+    },
 }));
 
 export default function StoreName({ name, photos }: StoreName): JSX.Element {
