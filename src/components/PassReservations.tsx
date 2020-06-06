@@ -22,7 +22,6 @@ const useStyles = makeStyles((theme: Theme) =>
             paddingBottom: "5rem",
             alignItems: "center",
             textAlign: "center",
-            backgroundColor: "rgb(237, 250, 255)",
         },
         header: {
             paddingBottom: "3rem",

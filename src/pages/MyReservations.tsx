@@ -6,15 +6,15 @@ import CurrentReservation from "./../components/CurrentReservation";
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         wrapper: {
-            margin: "5rem",
-            paddingTop: "4rem",
+            margin: "3rem",
+            paddingTop: "3rem",
             alignItems: "center",
             textAlign: "center",
-            backgroundColor: "rgb(237, 250, 255)",
+            fontFamily: "Palatino",
         },
         hLine: {
             width: "50%",
-            marginLeft: "17rem",
+            marginLeft: "17.5rem",
             marginTop: "4rem",
         },
     })
