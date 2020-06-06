@@ -42,3 +42,4 @@ export const ADD_BARBERSHOP_STEPS = [
 
 export const DEFAULT_FROM = "08:00";
 export const DEFAULT_TO = "17:00";
+export const MIN_PASSWORD_LENGTH = 6;

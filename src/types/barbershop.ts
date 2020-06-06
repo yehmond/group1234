@@ -1,5 +1,5 @@
 import { Guid } from "guid-typescript";
-import { DEFAULT_FROM, DEFAULT_TO } from "./constants";
+import { DEFAULT_FROM, DEFAULT_TO } from "../utils/constants";
 
 export interface Barbershop {
     id: Guid;
