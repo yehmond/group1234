@@ -1,30 +1,45 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import StoreName from "../components/Store/StoreName";
 import StoreDescription from "../components/Store/StoreDescription";
 import StoreSchedule from "../components/Store/StoreSchedule";
 import StoreMap from "../components/Store/StoreMap";
 import StoreReviews from "../components/Store/StoreReviews";
-import { getStore } from "../actions/storeActions";
+import { getStore } from "../api/store";
+import { initializeBarbershop } from "../types/barbershop";
+import { makeStyles, Theme } from "@material-ui/core";
+
+const useStyles = makeStyles((theme: Theme) => ({
+    container: {
+        display: "grid",
+        gridTemplateColumns: "0.5fr 1.5fr",
+        margin: "2%"
+    }
+}));
 
 export default function StorePage(): JSX.Element {
-    // const dispatch: any = useDispatch();
-    // dispatch(getStore(id));
-    // const store = useSelector((state: RootStateOrAny) => state.stores[0]);
     const id: string = useParams();
-    const store = getStore(id);
-    console.log(store);
+    const classes = useStyles();
+    const [store] = useState(initializeBarbershop());
+
+    useEffect(() => {
+        getStore(id);
+    }, [id]);
 
     return (
         <>
             <StoreName name={store.name} photos={store.photos} />
-            <StoreDescription description={store.description} />
-            <StoreSchedule id={id} />
-            <StoreMap
-                address={store.address}
-                city={store.city}
-                province={store.province}
-            />
+            <div className={classes.container}>
+                <div>
+                    <StoreMap
+                        address={store.address}
+                        city={store.city}
+                        province={store.province}
+                    />
+                    <StoreSchedule id={id} />
+                </div>
+                <StoreDescription description={store.description} />
+            </div>
             <StoreReviews id={id} />
         </>
     );

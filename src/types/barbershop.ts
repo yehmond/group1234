@@ -2,7 +2,7 @@ import { Guid } from "guid-typescript";
 import { DEFAULT_FROM, DEFAULT_TO } from "./constants";
 
 export interface Barbershop {
-    id: Guid;
+    id: string;
     name: string;
     address: string;
     city: string;
@@ -33,15 +33,16 @@ export function initializeHours(): Day[] {
 }
 
 export function initializeBarbershop(): Barbershop {
+    // TODO placeholder
     return {
-        id: Guid.create(),
-        name: "",
-        address: "",
-        city: "",
-        province: "",
-        website: "",
-        phoneNumber: "",
-        description: "",
+        id: Guid.create().toString(),
+        name: "Name",
+        address: "123456 Address",
+        city: "Vancouver",
+        province: "BC",
+        website: "www.website.com",
+        phoneNumber: "7781234567",
+        description: "This is a description",
         hours: initializeHours(),
         price: 0,
         photos: [],

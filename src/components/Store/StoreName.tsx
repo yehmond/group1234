@@ -43,7 +43,7 @@ const useStyles = makeStyles<Theme, StyleProps>((theme: Theme) => ({
 }));
 
 export default function StoreName({ name, photos }: StoreName): JSX.Element {
-    // TODO add backend for image fetching
+    // TODO add logic for depuzzling images
     const styleProps: StyleProps = { image: cover };
     const classes = useStyles(styleProps);
 
