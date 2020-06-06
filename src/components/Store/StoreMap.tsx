@@ -14,15 +14,15 @@ const useStyles = makeStyles((theme: Theme) => ({
         padding: "1.5rem",
         margin: "2%",
         width: "90%",
-        height: "20rem"
+        height: "20rem",
     },
     container: {
         backgroundColor: "rgba(255,255,255,0.8)",
         width: "100%",
-        height: "100%"
+        height: "100%",
     },
     mapContainer: {
-        padding: "0.1rem"
+        padding: "0.1rem",
     },
 }));
 

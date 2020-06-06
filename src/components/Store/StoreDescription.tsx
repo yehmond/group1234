@@ -13,14 +13,13 @@ const useStyles = makeStyles((theme: Theme) => ({
         padding: "1.5rem",
         margin: "2%",
         width: "90%",
-
     },
     container: {
         backgroundColor: "rgba(255,255,255,0.8)",
-        width: "100%"
+        width: "100%",
     },
     descriptionContainer: {
-        padding: "0.1rem"
+        padding: "0.1rem",
     },
     description: {
         width: "50%",

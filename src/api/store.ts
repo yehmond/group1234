@@ -14,4 +14,3 @@ export async function addStore(store: Barbershop) {
 export async function removeStore(id: string) {
     // placeholder
 }
-

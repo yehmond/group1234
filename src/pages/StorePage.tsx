@@ -13,8 +13,8 @@ const useStyles = makeStyles((theme: Theme) => ({
     container: {
         display: "grid",
         gridTemplateColumns: "0.5fr 1.5fr",
-        margin: "2%"
-    }
+        margin: "2%",
+    },
 }));
 
 export default function StorePage(): JSX.Element {
