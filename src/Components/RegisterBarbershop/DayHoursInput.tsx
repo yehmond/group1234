@@ -3,7 +3,7 @@ import "../FormFields/Fields.scss";
 import { RenderTimePicker } from "../FormFields/FormFields";
 import { Checkbox, FormControlLabel } from "@material-ui/core";
 import { Day } from "../../types/barbershop";
-import { DEFAULT_FROM, DEFAULT_TO } from "../../types/constants";
+import { DEFAULT_FROM, DEFAULT_TO } from "../../utils/constants";
 
 interface FormTimeFieldsProps {
     dayOfWeek: string;
@@ -24,7 +24,7 @@ class DayHoursInput extends Component<FormTimeFieldsProps, FormTimeFieldState> {
     }
 
     public toggleClosed(): void {
-        let prevChecked = this.state.day.isOpen;
+        const prevChecked = this.state.day.isOpen;
         this.setState({ day: { ...this.state.day, isOpen: !prevChecked } }, () => {
             if (prevChecked) {
                 this.setState(

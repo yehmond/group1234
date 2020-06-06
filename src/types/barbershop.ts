@@ -1,5 +1,5 @@
 import { Guid } from "guid-typescript";
-import { DEFAULT_FROM, DEFAULT_TO } from "./constants";
+import { DEFAULT_FROM, DEFAULT_TO } from "../utils/constants";
 
 export interface Barbershop {
     id: string;
@@ -25,7 +25,7 @@ export interface Day {
 }
 
 export function initializeHours(): Day[] {
-    let hours: Day[] = [];
+    const hours: Day[] = [];
     for (let i = 0; i < 7; i++) {
         hours.push({ isOpen: true, from: DEFAULT_FROM, to: DEFAULT_TO });
     }

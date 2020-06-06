@@ -6,6 +6,10 @@ import NavBar from "./components/NavBar";
 import "./App.scss";
 import Home from "./pages/Home";
 import StorePage from "./pages/StorePage";
+import MyReservations from "./pages/MyReservations";
+import Reservation from "./pages/Reservation";
+import SignUpPage from "./pages/SignUpPage";
+import SignInPage from "./pages/SignInPage";
 
 function App(): JSX.Element {
     return (
@@ -18,8 +22,24 @@ function App(): JSX.Element {
                 <Route path="/browse"></Route>
                 <Route path="/store/:id" component={StorePage} />
                 <Route path="/about"></Route>
-                <Route path="/signin"></Route>
-                <Route path="/signup"></Route>
+                <Route path="/signin">
+                    <SignInPage/>
+                </Route>
+                <Route path="/signup">
+                    <SignUpPage/>
+                </Route>
+                <Route path="/reservations">
+                    <MyReservations />
+                </Route>
+                <Route path="/reservation">
+                    <Reservation />
+                </Route>
+                <Route path="/signin">
+                    <SignInPage />
+                </Route>
+                <Route path="/signup">
+                    <SignUpPage />
+                </Route>
                 <Route path="/createshop">
                     <Redirect to="/createshop/register" />
                     <RBSMain />

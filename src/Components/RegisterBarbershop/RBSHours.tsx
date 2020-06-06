@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import StepperHeader from "../Stepper/StepperHeader";
-import { ADD_BARBERSHOP_STEPS, DAYS_OF_WEEK } from "../../types/constants";
+import { ADD_BARBERSHOP_STEPS, DAYS_OF_WEEK } from "../../utils/constants";
 import "./RBS.scss";
 import DayHoursInput from "./DayHoursInput";
 import { Button } from "@material-ui/core";

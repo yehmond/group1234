@@ -26,7 +26,7 @@ export default function StoreInsertReview(): JSX.Element {
             <div className={classes.outline}>
                 <div className={classes.container}>
                     <div className={classes.reviewContainer}>
-                        <textarea placeholder={"Insert review here..."}></textarea>
+                        <textarea placeholder={"Insert review here..."}> TODO</textarea>
                     </div>
                 </div>
             </div>

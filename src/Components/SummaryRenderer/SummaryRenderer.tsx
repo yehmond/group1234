@@ -8,7 +8,7 @@ interface SummaryRendererProps {
     indented: boolean;
 }
 
-class SummaryRenderer extends PureComponent<SummaryRendererProps, {}> {
+class SummaryRenderer extends PureComponent<SummaryRendererProps> {
     render() {
         return (
             <div className="paper-container">
