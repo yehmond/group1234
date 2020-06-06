@@ -35,7 +35,6 @@ const useStyles = makeStyles<Theme, StyleProps>((theme: Theme) => ({
         },
     },
     name: {
-        width: "50%",
         textAlign: "center",
         margin: "8rem",
         fontSize: "4rem",

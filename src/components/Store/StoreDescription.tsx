@@ -12,7 +12,6 @@ const useStyles = makeStyles((theme: Theme) => ({
         borderRadius: "0.4rem",
         padding: "1.5rem",
         margin: "2%",
-        width: "90%",
     },
     container: {
         backgroundColor: "rgba(255,255,255,0.8)",

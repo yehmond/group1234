@@ -1,4 +1,5 @@
 import React from "react";
+import { GoogleMap, withGoogleMap, withScriptjs } from "react-google-maps"
 import { makeStyles, Theme } from "@material-ui/core";
 
 type StoreMap = {
@@ -13,7 +14,6 @@ const useStyles = makeStyles((theme: Theme) => ({
         borderRadius: "0.4rem",
         padding: "1.5rem",
         margin: "2%",
-        width: "90%",
         height: "20rem",
     },
     container: {
@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
 }));
 
-export default function StoreMap({
+function StoreMap({
     address,
     city,
     province,
@@ -37,12 +37,13 @@ export default function StoreMap({
             <div className={classes.outline}>
                 <div className={classes.container}>
                     <div className={classes.mapContainer}>
-                        <h3>
-                            {address}, {city}, {province}
-                        </h3>
+                        <GoogleMap defaultZoom={8} defaultCenter={{ lat: 49.2606, lon: 123.2460 }}>
+                        </GoogleMap>
                     </div>
                 </div>
-            </div>
+            </div>>
         </>
     );
 }
+
+export default  withScriptjs(withGoogleMap(StoreMap));

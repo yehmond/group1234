@@ -18,7 +18,6 @@ const useStyles = makeStyles((theme: Theme) => ({
         borderRadius: "0.4rem",
         padding: "1.5rem",
         margin: "2%",
-        width: "90%",
         height: "60rem",
     },
     container: {
@@ -51,10 +50,10 @@ export default function StoreSchedule({ id }: StoreId): JSX.Element {
             <div className={classes.outline}>
                 <div className={classes.container}>
                     <div className={classes.scheduleContainer}>
-                        <Paper>
+                        <Paper className={classes.scheduleContainer}>
                             <Scheduler data={schedulerData}>
                                 <ViewState currentDate={currentDate} />
-                                <DayView startDayHour={9} endDayHour={14} />
+                                <DayView startDayHour={0} endDayHour={24} />
                                 <Appointments />
                             </Scheduler>
                         </Paper>

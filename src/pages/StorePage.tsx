@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 export default function StorePage(): JSX.Element {
-    const id: string = useParams();
+    const { id } = useParams();
     const classes = useStyles();
     const [store] = useState(initializeBarbershop());
 
@@ -32,6 +32,10 @@ export default function StorePage(): JSX.Element {
             <div className={classes.container}>
                 <div>
                     <StoreMap
+                        googleMapURL="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places"
+                        loadingElement={<div style={{ height: `16rem` }} />}
+                        containerElement={<div style={{ height: `16rem` }} />}
+                        mapElement={<div style={{ height: `16rem` }} />}
                         address={store.address}
                         city={store.city}
                         province={store.province}

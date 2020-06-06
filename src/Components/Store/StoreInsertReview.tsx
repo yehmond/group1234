@@ -1,11 +1,5 @@
 import React from "react";
 import { makeStyles, Theme } from "@material-ui/core";
-import StoreInsertReview from "./StoreInsertReview";
-import StoreComment from "./StoreComment";
-
-type StoreId = {
-    id: string;
-};
 
 const useStyles = makeStyles((theme: Theme) => ({
     outline: {
@@ -13,6 +7,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         borderRadius: "0.4rem",
         padding: "1.5rem",
         margin: "2%",
+        height: "20rem",
     },
     container: {
         backgroundColor: "rgba(255,255,255,0.8)",
@@ -22,23 +17,17 @@ const useStyles = makeStyles((theme: Theme) => ({
     reviewContainer: {
         padding: "0.1rem",
     },
-    name: {
-        textAlign: "center",
-        margin: "1rem",
-        fontSize: "2rem",
-    },
 }));
 
-export default function StoreReviews({ id }: StoreId): JSX.Element {
+export default function StoreInsertReview(): JSX.Element {
     const classes = useStyles();
     return (
         <>
             <div className={classes.outline}>
                 <div className={classes.container}>
-                    <div className={classes.reviewContainer}></div>
-                        <h1 className={classes.name}>Reviews and Comments</h1>
-                        <StoreInsertReview />
-                        <StoreComment />
+                    <div className={classes.reviewContainer}>
+                        <textarea placeholder={"Insert review here..."}></textarea>
+                    </div>
                 </div>
             </div>
         </>
