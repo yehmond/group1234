@@ -20,8 +20,12 @@ function App(): JSX.Element {
                 </Route>
                 <Route path="/browse"></Route>
                 <Route path="/about"></Route>
-                <Route path="/signin"></Route>
-                <Route path="/signup"></Route>
+                <Route path="/signin">
+                    <SignInPage />
+                </Route>
+                <Route path="/signup">
+                    <SignUpPage />
+                </Route>
                 <Route path="/reservations">
                     <MyReservations />
                 </Route>
