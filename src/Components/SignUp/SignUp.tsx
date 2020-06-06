@@ -5,7 +5,7 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
 import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
-import Add from '@material-ui/icons/Add';
+import Add from "@material-ui/icons/Add";
 import Typography from "@material-ui/core/Typography";
 import { withStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
@@ -65,7 +65,7 @@ class SignUp extends Component<{}, SignUpState> {
             passwordHelper: "",
             emailError: false,
             emailHelper: "",
-            showPassword: false
+            showPassword: false,
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleTabChange = this.handleTabChange.bind(this);
@@ -87,11 +87,10 @@ class SignUp extends Component<{}, SignUpState> {
         });
     }
 
-    public handleClickShowPassword(){
+    public handleClickShowPassword() {
         const isPasswordShown = this.state.showPassword;
-        this.setState({showPassword: !isPasswordShown});
+        this.setState({ showPassword: !isPasswordShown });
     }
-
 
     public areFieldsFilled(): boolean {
         return _.some(
@@ -133,9 +132,16 @@ class SignUp extends Component<{}, SignUpState> {
 
     public isValidPassword(): boolean {
         const currPassword = this.state.password;
-        if (currPassword.length < MIN_PASSWORD_LENGTH || currPassword.search(/[a-z]/i) < 0 || currPassword.search(/[0-9]/) < 0) {
+        if (
+            currPassword.length < MIN_PASSWORD_LENGTH ||
+            currPassword.search(/[a-z]/i) < 0 ||
+            currPassword.search(/[0-9]/) < 0
+        ) {
             this.setState({
-                passwordHelper: "Your password must be at least " + MIN_PASSWORD_LENGTH  +" characters with at least one letter and one digit",
+                passwordHelper:
+                    "Your password must be at least " +
+                    MIN_PASSWORD_LENGTH +
+                    " characters with at least one letter and one digit",
                 passwordError: true,
             });
             return false;
@@ -144,7 +150,8 @@ class SignUp extends Component<{}, SignUpState> {
     }
 
     public showPasswordIcon(): React.ReactNode {
-        return (<InputAdornment position="end">
+        return (
+            <InputAdornment position="end">
                 <IconButton
                     aria-label="toggle password visibility"
                     onClick={this.handleClickShowPassword}
@@ -152,7 +159,8 @@ class SignUp extends Component<{}, SignUpState> {
                 >
                     {this.state.showPassword ? <Visibility /> : <VisibilityOff />}
                 </IconButton>
-            </InputAdornment>);
+            </InputAdornment>
+        );
     }
 
     render() {
@@ -215,15 +223,22 @@ class SignUp extends Component<{}, SignUpState> {
                                     fullWidth
                                     name="password"
                                     label="Password"
-                                    type={this.state.showPassword? 'text': 'password'}
+                                    type={
+                                        this.state.showPassword
+                                            ? "text"
+                                            : "password"
+                                    }
                                     autoComplete="current-password"
                                     helperText={this.state.passwordHelper}
                                     error={this.state.passwordError}
-                                    InputProps = {{
-                                        endAdornment: this.showPasswordIcon()
+                                    InputProps={{
+                                        endAdornment: this.showPasswordIcon(),
                                     }}
                                 />
-                                <PasswordStrengthBar password={this.state.password} minLength={MIN_PASSWORD_LENGTH}/>
+                                <PasswordStrengthBar
+                                    password={this.state.password}
+                                    minLength={MIN_PASSWORD_LENGTH}
+                                />
                             </Grid>
                             <Grid item xs={12}>
                                 <Tabs
