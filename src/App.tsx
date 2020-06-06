@@ -5,6 +5,7 @@ import RBSMain from "./pages/RBSMain";
 import NavBar from "./components/NavBar";
 import "./App.scss";
 import Home from "./pages/Home";
+import Reservation from "./pages/Reservation";
 import SignUpPage from "./pages/SignUpPage";
 import SignInPage from "./pages/SignInPage";
 
@@ -18,6 +19,9 @@ function App(): JSX.Element {
                 </Route>
                 <Route path="/browse"></Route>
                 <Route path="/about"></Route>
+                <Route path="/reservation">
+                    <Reservation />
+                </Route>
                 <Route path="/signin">
                     <SignInPage />
                 </Route>
