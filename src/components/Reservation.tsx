@@ -9,10 +9,11 @@ import TextField from "@material-ui/core/TextField";
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         wrapper: {
-            margin: "5rem",
-            padding: "5rem",
+            margin: "3rem",
+            padding: "3rem",
             alignItems: "center",
             textAlign: "center",
+            fontFamily: "Palatino",
         },
         formControl: {
             margin: theme.spacing(1),
