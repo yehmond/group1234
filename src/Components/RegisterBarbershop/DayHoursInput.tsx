@@ -24,7 +24,7 @@ class DayHoursInput extends Component<FormTimeFieldsProps, FormTimeFieldState> {
     }
 
     public toggleClosed(): void {
-        let prevChecked = this.state.day.isOpen;
+        const prevChecked = this.state.day.isOpen;
         this.setState({ day: { ...this.state.day, isOpen: !prevChecked } }, () => {
             if (prevChecked) {
                 this.setState(
