@@ -13,7 +13,6 @@ const useStyles = makeStyles((theme: Theme) =>
             padding: "5rem",
             alignItems: "center",
             textAlign: "center",
-            backgroundColor: "rgb(237, 250, 255)",
         },
         formControl: {
             margin: theme.spacing(1),
@@ -44,6 +43,9 @@ const useStyles = makeStyles((theme: Theme) =>
             paddingRight: "3rem",
             marginTop: "2rem",
         },
+        reserveHeader: {
+
+        },
     })
 );
 
@@ -53,7 +55,9 @@ export default function Reservation(): JSX.Element {
     return (
         <div className={classes.wrapper}>
             {/* TODO: this.props.shopname */}
-            <h1>Make Your Reservation With Tony&apos;s Barbershop!</h1>
+            <div className={classes.reserveHeader}>
+                <h1>Make Your Reservation With Tony&apos;s Barbershop!</h1>
+            </div>
 
             <div className={classes.container}>
                 <FormControl id="name" className={classes.textInput}>
@@ -92,6 +96,7 @@ export default function Reservation(): JSX.Element {
                 </Button>
             </div>
 
+            
             <div className={classes.schedule}>
                 {/* TODO: show schedule */}
                 <h1>Schedule Used to Reserve</h1>
