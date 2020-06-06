@@ -12,8 +12,7 @@ const useStyles = makeStyles((theme: Theme) =>
             margin: "3rem",
             padding: "3rem",
             alignItems: "center",
-            textAlign: "center",
-            fontFamily: "Palatino",
+            textAlign: "center"
         },
         formControl: {
             margin: theme.spacing(1),
@@ -91,7 +90,7 @@ export default function Reservation(): JSX.Element {
             <div>
                 {/* TODO: submit form */}
                 <Button variant="contained" color="primary">
-                    Reserve!
+                    Reserve
                 </Button>
             </div>
 
