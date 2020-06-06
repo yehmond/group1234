@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme: Theme) =>
             margin: "3rem",
             padding: "3rem",
             alignItems: "center",
-            textAlign: "center"
+            textAlign: "center",
         },
         formControl: {
             margin: theme.spacing(1),

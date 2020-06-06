@@ -1,6 +1,6 @@
 export function convert24HrTo12Hr(time: string) {
     let hours = parseInt(time.substr(0, 2));
-    let minutes = time.substr(3);
+    const minutes = time.substr(3);
     //it is pm if hours from 12 onwards
     const suffix = hours >= 12 ? "PM" : "AM";
     //only -12 from hours if it is greater than 12 (if not back at mid night)
