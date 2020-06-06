@@ -10,7 +10,7 @@ import Menu from "@material-ui/core/Menu";
 import MenuIcon from "@material-ui/icons/Menu";
 import Button from "@material-ui/core/Button";
 import { useDispatch, useSelector } from "react-redux";
-import { logout } from "../actions/authActions";
+import { logout } from "../../actions/authActions";
 import { Link } from "react-router-dom";
 import NavDrawer from "./NavDrawer";
 

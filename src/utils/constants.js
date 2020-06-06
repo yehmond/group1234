@@ -25,7 +25,6 @@ export const DAYS_OF_WEEK = [
     "Sunday",
 ];
 
-// to be expanded
 export const SERVICES_OFFERED = [
     "Haircut",
     "Shaving",

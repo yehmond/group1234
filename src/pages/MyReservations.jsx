@@ -1,7 +1,7 @@
 import React from "react";
 import { createStyles, makeStyles } from "@material-ui/core/styles";
-import PassReservations from "../components/PassReservations";
-import CurrentReservation from "../components/CurrentReservation";
+import PassReservations from "../components/Reservation/PastReservations";
+import CurrentReservation from "../components/Reservation/CurrentReservation";
 
 const useStyles = makeStyles(() =>
     createStyles({

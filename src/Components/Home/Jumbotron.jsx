@@ -2,7 +2,7 @@ import React from "react";
 import SearchBar from "./SearchBar";
 import { makeStyles } from "@material-ui/core";
 import FlippingText from "./FlippingText";
-import cover from "../images/home-cover.jpg";
+import cover from "../../images/home-cover.jpg";
 
 const useStyles = makeStyles((theme) => ({
     background: {
