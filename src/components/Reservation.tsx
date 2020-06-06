@@ -43,9 +43,7 @@ const useStyles = makeStyles((theme: Theme) =>
             paddingRight: "3rem",
             marginTop: "2rem",
         },
-        reserveHeader: {
-
-        },
+        reserveHeader: {},
     })
 );
 
@@ -96,7 +94,6 @@ export default function Reservation(): JSX.Element {
                 </Button>
             </div>
 
-            
             <div className={classes.schedule}>
                 {/* TODO: show schedule */}
                 <h1>Schedule Used to Reserve</h1>
