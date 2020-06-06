@@ -1,0 +1,72 @@
+.rbs-page-content {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    align-items: center;
+    padding: 2vh 4vw 10vh;
+
+    h1,
+    h4 {
+        padding: 1vh 0;
+    }
+
+    .form-fields {
+        display: grid;
+        grid-template-columns: auto;
+
+        .MuiFormControl-root {
+            margin: 5px 5px;
+        }
+    }
+
+    .hours-fields {
+        max-width: 700px;
+    }
+}
+
+.one-button {
+    width: 100%;
+    max-width: 700px;
+    padding: 20px 0;
+    display: grid;
+    grid-template-columns: 5fr 1fr;
+    grid-column-gap: 10px;
+    align-items: flex-end;
+    justify-content: center;
+}
+
+.inline-buttons {
+    width: 100%;
+    max-width: 700px;
+    padding: 20px 0;
+    display: grid;
+    grid-template-columns: 4fr 1fr 1fr;
+    grid-column-gap: 10px;
+    align-items: flex-end;
+    justify-content: center;
+}
+
+.inline-buttons.long {
+    max-width: 900px;
+}
+
+.divider {
+    height: auto;
+}
+
+.dropdown-container {
+    padding: 2vh 0;
+
+    .header-and-icon {
+        display: inline;
+        vertical-align: middle;
+    }
+}
+
+#drop-icon {
+    font-size: 2rem;
+    color: #3f51b5;
+}
+
+#confirm-subtitle {
+    padding: 1vh 0 2vh 0;
+}
