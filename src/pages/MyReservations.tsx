@@ -10,7 +10,6 @@ const useStyles = makeStyles((theme: Theme) =>
             paddingTop: "3rem",
             alignItems: "center",
             textAlign: "center",
-            fontFamily: "Palatino",
         },
         hLine: {
             width: "50%",
