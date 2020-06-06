@@ -46,9 +46,3 @@ system where users can review barbershops/barbers.
 2. Users can select a specific time slot of choice
 3. Users can edit a timeslot after selection
 4. Persist information to backend database
-
-## Sketches of Prototype
-
-![pt1](./prototypes/pt1.png)
-![pt2](./prototypes/pt2.PNG)
-![pt2](./prototypes/pt3.PNG)

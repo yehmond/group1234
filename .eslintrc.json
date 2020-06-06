@@ -7,25 +7,24 @@
     "extends": [
         "eslint:recommended",
         "plugin:prettier/recommended",
-        "plugin:react/recommended",
-        "plugin:@typescript-eslint/eslint-recommended",
-        "plugin:@typescript-eslint/recommended"
+        "plugin:react/recommended"
     ],
     "globals": {
         "Atomics": "readonly",
         "SharedArrayBuffer": "readonly"
     },
-    "parser": "@typescript-eslint/parser",
     "parserOptions": {
         "ecmaFeatures": {
             "jsx": true
         },
-        "ecmaVersion": 11
+        "ecmaVersion": 11,
+        "sourceType": "module"
     },
-    "plugins": ["react", "@typescript-eslint"],
+    "plugins": ["react"],
     "rules": {
         "no-console": "warn",
-        "no-non-null-assertion": "off"
+        "no-non-null-assertion": "off",
+        "react/prop-types": "off"
     },
     "settings": {
         "react": {
