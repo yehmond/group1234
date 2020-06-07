@@ -18,7 +18,7 @@ const useStyles = makeStyles(() =>
     })
 );
 
-export default function MyReservations() {
+export default function CurrentReservations() {
     const classes = useStyles();
     const [state, setState] = React.useState({
         columns: [

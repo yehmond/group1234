@@ -1,6 +1,6 @@
 import React from "react";
 import { createStyles, makeStyles } from "@material-ui/core/styles";
-import PassReservations from "../components/Reservation/PastReservations";
+import PastReservations from "../components/Reservation/PastReservations";
 import CurrentReservation from "../components/Reservation/CurrentReservation";
 
 const useStyles = makeStyles(() =>
@@ -27,7 +27,7 @@ export default function MyReservations() {
             <hr className={classes.hLine}></hr>
 
             <CurrentReservation />
-            <PassReservations />
+            <PastReservations />
         </div>
     );
 }
