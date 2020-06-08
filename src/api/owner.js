@@ -9,6 +9,12 @@
 /* Include files */
 const axios = require("axios").default;
 
+/* Local constants */
+const instance = axios.create({
+    // TODO abstract baseURL
+    baseURL: "http://localhost:5000/api"
+});
+
 /*************
  *
  * Name:     getStoreById
@@ -24,11 +30,27 @@ const axios = require("axios").default;
  *
  **************/
 async function getStoreById(store_id) {
-    // TODO
+
+    if (store_id.length === 0) {
+        alert("owner/getStoreById: store_id is invalid");
+        throw Error("owner/getStoreById: store_id is invalid");
+    }
+
+    try {
+        const response = await instance.get("/owner/store/" + store_id);
+        console.log(response);
+        return response.data;
+    } catch (error) {
+        if (error.response) {
+            // TODO error handling
+            console.log(error.response.status);
+            console.log(error.response.data);
+        }
+    }
 }
 
 /*************
- * 
+ *
  * Name:     getBarberReservations
  *
  * Purpose:  Returns detailed reservations
@@ -43,11 +65,31 @@ async function getStoreById(store_id) {
  *
  **************/
 async function getBarberReservations(store_id, barber_id) {
-    // TODO
+
+    if (store_id.length === 0) {
+        alert("owner/getBarberReservations: store_id is invalid");
+        throw Error("owner/getBarberReservations: store_id is invalid");
+    }
+    if (barber_id.length === 0) {
+        alert("owner/getBarberReservations: barber_id is invalid");
+        throw Error("owner/getBarberReservations: barber_id is invalid");
+    }
+
+    try {
+        const response = await instance.get("/owner/barber/" + store_id + "/" + barber_id);
+        console.log(response);
+        return response.data;
+    } catch (error) {
+        if (error.response) {
+            // TODO error handling
+            console.log(error.response.status);
+            console.log(error.response.data);
+        }
+    }
 }
 
 /*************
- * 
+ *
  * Name:     registerStore
  *
  * Purpose:  Returns store_id of the newly added store
@@ -61,12 +103,23 @@ async function getBarberReservations(store_id, barber_id) {
  *
  **************/
 async function registerStore(store) {
-    // TODO
+
+    // TODO need to change the param into params
+    try {
+        const response = await instance.post("/owner/store/", store);
+        console.log(response);
+        return response.data;
+    } catch (error) {
+        if (error.response) {
+            // TODO error handling
+            console.log(error.response.status);
+            console.log(error.response.data);
+        }
+    }
 }
 
 module.exports = {
     getStoreById,
     getBarberReservations,
-    registerStore
-}
-
+    registerStore,
+};
