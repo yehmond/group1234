@@ -43,7 +43,7 @@
     }
 
     .MuiRating-root {
-        color: #7986cb;
+        color: var(--primary);
         justify-self: flex-end;
     }
 }

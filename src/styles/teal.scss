@@ -1,0 +1,13 @@
+
+// these colours are tied to the colours in the globalTheme.js
+// can be used in other scss/css files via var(--name-of-variable)
+:root {
+  --primary: rgba(0, 136, 122, 1);
+  --primary-light: rgba(77, 184, 169, 1);
+  --primary-dark: rgba(0, 90, 78, 1);
+  --secondary: rgba(214, 150, 55, 1);
+  --secondary-light: rgba(255, 199, 102, 1);
+  --secondary-dark: rgba(160, 104, 0, 1);
+  --error: rgba(247, 28, 12, 1);
+  --main-bg: white;
+}
