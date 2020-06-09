@@ -12,12 +12,12 @@ export const LineConnector = withStyles({
     },
     active: {
         "& $line": {
-            backgroundColor: 'rgba(0, 136, 122, 1)'
+            backgroundColor: "rgba(0, 136, 122, 1)",
         },
     },
     completed: {
         "& $line": {
-            backgroundColor: 'rgba(0, 136, 122, 1)'
+            backgroundColor: "rgba(0, 136, 122, 1)",
         },
     },
     line: {
@@ -41,10 +41,10 @@ const stepIconStyles = makeStyles({
         alignItems: "center",
     },
     active: {
-        backgroundColor: 'rgba(0, 136, 122, 1)'
+        backgroundColor: "rgba(0, 136, 122, 1)",
     },
     completed: {
-        backgroundColor: 'rgba(0, 136, 122, 1)'
+        backgroundColor: "rgba(0, 136, 122, 1)",
     },
 });
 

@@ -8,7 +8,7 @@ import { Provider } from "react-redux";
 import { createStore } from "redux";
 import reducers from "./reducers";
 import { composeWithDevTools } from "redux-devtools-extension";
-import './styles/teal.scss';
+import "./styles/teal.scss";
 
 const store = createStore(reducers, composeWithDevTools());
 

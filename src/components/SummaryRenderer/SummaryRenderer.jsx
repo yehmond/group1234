@@ -7,23 +7,22 @@ class SummaryRenderer extends Component {
         return (
             <div className="paper-container">
                 <div className="summary-container">
-                        <h4 className={this.props.indented ? "indent" : ""}>
-                            {this.props.displayKey}
-                        </h4>
+                    <h4 className={this.props.indented ? "indent" : ""}>
+                        {this.props.displayKey}
+                    </h4>
                     {Array.isArray(this.props.value) && (
                         <div>
                             {this.props.value.map((val, index) => {
                                 return (
                                     <Paper key={index}>
-                                    <h3>{val}</h3>
-                                </Paper>
+                                        <h3>{val}</h3>
+                                    </Paper>
                                 );
                             })}
                         </div>
                     )}
                     {!Array.isArray(this.props.value) && (
                         <Paper>
-
                             <h3>{this.props.value}</h3>
                         </Paper>
                     )}
