@@ -5,18 +5,19 @@ import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
 
 // styling from https://material-ui.com/components/steppers/
+
 export const LineConnector = withStyles({
     alternativeLabel: {
         top: 22,
     },
     active: {
         "& $line": {
-            backgroundImage: "linear-gradient(#303f9f, #303f9f, #303f9f)",
+            backgroundColor: "rgba(0, 136, 122, 1)",
         },
     },
     completed: {
         "& $line": {
-            backgroundImage: "linear-gradient(#303f9f, #303f9f, #303f9f)",
+            backgroundColor: "rgba(0, 136, 122, 1)",
         },
     },
     line: {
@@ -40,10 +41,10 @@ const stepIconStyles = makeStyles({
         alignItems: "center",
     },
     active: {
-        backgroundImage: "linear-gradient(#303f9f, #303f9f, #303f9f)",
+        backgroundColor: "rgba(0, 136, 122, 1)",
     },
     completed: {
-        backgroundImage: "linear-gradient(#303f9f, #303f9f, #303f9f)",
+        backgroundColor: "rgba(0, 136, 122, 1)",
     },
 });
 
