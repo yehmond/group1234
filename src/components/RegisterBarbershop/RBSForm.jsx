@@ -4,7 +4,7 @@ import {
     RenderRating,
     RenderSelect,
     RenderTextfield,
-} from "../FormFields/FormFields";
+} from "./FormFields/FormFields";
 import React, { Component } from "react";
 import { Button } from "@material-ui/core";
 import {
@@ -13,7 +13,7 @@ import {
     SERVICES_OFFERED,
 } from "../../utils/constants";
 import "./RBS.scss";
-import "../FormFields/Fields.scss";
+import "./FormFields/Fields.scss";
 import { Link } from "react-router-dom";
 import StepperHeader from "../Stepper/StepperHeader";
 import _ from "lodash";

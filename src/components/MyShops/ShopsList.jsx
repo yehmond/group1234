@@ -1,6 +1,6 @@
 import React from "react";
+import StoreCard from "./StoreCard";
 import { makeStyles } from "@material-ui/core";
-import HomeCard from "./HomeCard";
 
 const useStyles = makeStyles((theme) => ({
     grid: {
@@ -27,46 +27,25 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const mockShops = [];
-for (let i = 0; i < 12; i++) {
+for (let i = 0; i < 4; i++) {
     mockShops.push({
         id: i,
-        name: "Citrus Hair Salon",
-        services: ["Hair Salon", "Day Spa", "Waxing"],
-        cost: 4,
-        rating: 5,
+        name: "Billy's Barbershop",
     });
 }
 
-export default function Recommendations() {
+export default function ShopsList() {
     const classes = useStyles();
     return (
         <div className={classes.container}>
-            <h1>Available Now</h1>
+            <h1>My Shops</h1>
             <div className={classes.grid}>
-                {mockShops.map(({ id, name, services, cost, rating }) => {
+                {mockShops.map(({ id, name}) => {
                     return (
-                        <HomeCard
+                        <StoreCard
                             key={id}
-                            shopId={id}
+                            shopID={id}
                             name={name}
-                            services={services}
-                            cost={cost}
-                            rating={rating}
-                        />
-                    );
-                })}
-            </div>
-            <h1>Recommended</h1>
-            <div className={classes.grid}>
-                {mockShops.map(({ id, name, services, cost, rating }) => {
-                    return (
-                        <HomeCard
-                            key={id}
-                            shopId={id}
-                            name={name}
-                            services={services}
-                            cost={cost}
-                            rating={rating}
                         />
                     );
                 })}

@@ -9,6 +9,7 @@ import MyReservations from "./pages/MyReservations";
 import Reservation from "./pages/Reservation";
 import SignUpPage from "./pages/SignUpPage";
 import SignInPage from "./pages/SignInPage";
+import MyShops from "./pages/MyShops";
 
 function App() {
     return (
@@ -35,6 +36,9 @@ function App() {
                 <Route path="/createshop">
                     <Redirect to="/createshop/register" />
                     <RBSMain />
+                </Route>
+                <Route  path="/stores">
+                    <MyShops/>
                 </Route>
             </Switch>
         </Router>
