@@ -4,7 +4,7 @@ import {
     RenderRating,
     RenderSelect,
     RenderTextfield,
-} from "./FormFields/FormFields";
+} from "../FormFields/FormFields";
 import React, { Component } from "react";
 import { Button } from "@material-ui/core";
 import {
@@ -12,8 +12,8 @@ import {
     PROVINCES,
     SERVICES_OFFERED,
 } from "../../utils/constants";
-import "./RBS.scss";
-import "./FormFields/Fields.scss";
+import "../FormFields/Forms.scss";
+import "../FormFields/Fields.scss";
 import { Link } from "react-router-dom";
 import StepperHeader from "../Stepper/StepperHeader";
 import _ from "lodash";
@@ -67,7 +67,7 @@ class RBSForm extends Component {
         return (
             <div>
                 <StepperHeader currentStep={0} stepLabels={ADD_BARBERSHOP_STEPS} />
-                <div className="rbs-page-content">
+                <div className="page-content">
                     <h1>Add Barbershop</h1>
                     <form>
                         <div className="form-fields">

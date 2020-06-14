@@ -31,6 +31,7 @@ export const SERVICES_OFFERED = [
     "Hair color",
     "Eyebrows",
     "Nails",
+    "Waxing"
 ];
 
 export const ADD_BARBERSHOP_STEPS = [
@@ -42,3 +43,5 @@ export const ADD_BARBERSHOP_STEPS = [
 export const DEFAULT_FROM = "08:00";
 export const DEFAULT_TO = "17:00";
 export const MIN_PASSWORD_LENGTH = 6;
+
+export const TIMESLOT_VALUES = [15, 30, 45, 60, 90, 120];

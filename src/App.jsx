@@ -37,8 +37,8 @@ function App() {
                     <Redirect to="/createshop/register" />
                     <RBSMain />
                 </Route>
-                <Route  path="/stores">
-                    <MyShops/>
+                <Route path="/stores">
+                    <MyShops />
                 </Route>
             </Switch>
         </Router>

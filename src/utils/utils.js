@@ -14,3 +14,11 @@ export function validateEmail(email) {
     const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(String(email).toLowerCase());
 }
+
+export function initializeHours() {
+    const hours = [];
+    for (let i = 0; i < 7; i++) {
+        hours.push({ isOpen: true, from: "08:00", to: "17:00" });
+    }
+    return hours;
+}

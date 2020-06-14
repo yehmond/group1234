@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import "./FormFields/Fields.scss";
-import { RenderTimePicker } from "./FormFields/FormFields";
+import "../FormFields/Fields.scss";
+import { RenderTimePicker } from "../FormFields/FormFields";
 import { Checkbox, FormControlLabel } from "@material-ui/core";
 import { DEFAULT_FROM, DEFAULT_TO } from "../../utils/constants";
 
@@ -80,7 +80,7 @@ class DayHoursInput extends Component {
                             color="primary"
                         />
                     }
-                    label="Closed?"
+                    label={this.props.label}
                 />
             </div>
         );

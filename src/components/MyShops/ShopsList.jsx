@@ -40,14 +40,8 @@ export default function ShopsList() {
         <div className={classes.container}>
             <h1>My Shops</h1>
             <div className={classes.grid}>
-                {mockShops.map(({ id, name}) => {
-                    return (
-                        <StoreCard
-                            key={id}
-                            shopID={id}
-                            name={name}
-                        />
-                    );
+                {mockShops.map(({ id, name }) => {
+                    return <StoreCard key={id} shopID={id} name={name} />;
                 })}
             </div>
         </div>

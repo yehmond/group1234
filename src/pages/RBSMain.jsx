@@ -4,6 +4,7 @@ import { Switch, Route } from "react-router-dom";
 import RBSForm from "../components/RegisterBarbershop/RBSForm";
 import RBSHours from "../components/RegisterBarbershop/RBSHours";
 import RBSConfirm from "../components/RegisterBarbershop/RBSConfirm";
+import { initializeHours } from "../utils/utils";
 
 class RBSMain extends Component {
     constructor(props) {
@@ -23,20 +24,14 @@ class RBSMain extends Component {
             website: "",
             phoneNumber: "",
             description: "",
-            hours: this.initializeHours(),
+            hours: initializeHours(),
             price: 0,
             photos: [],
             servicesOffered: [],
         };
     }
 
-    initializeHours() {
-        const hours = [];
-        for (let i = 0; i < 7; i++) {
-            hours.push({ isOpen: true, from: "08:00", to: "17:00" });
-        }
-        return hours;
-    }
+
 
     addFormParameters(state) {
         this.setState({
