@@ -25,6 +25,8 @@ export const DAYS_OF_WEEK = [
     "Sunday",
 ];
 
+export const PRICE_RANGE = [1, 2, 3];
+
 export const SERVICES_OFFERED = [
     "Haircut",
     "Shaving",

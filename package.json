@@ -39,7 +39,7 @@
     },
     "husky": {
         "hooks": {
-            "pre-commit": "yarn lint --no-error-on-unmatched-pattern && yarn prettier-write"
+            "pre-commit": "yarn lint --no-error-on-unmatched-pattern"
         }
     },
     "eslintConfig": {

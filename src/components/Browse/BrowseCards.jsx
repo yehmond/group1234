@@ -8,10 +8,10 @@ import Typography from "@material-ui/core/Typography";
 import salonPic from "../../images/salon.png";
 import Chip from "@material-ui/core/Chip";
 import { useHistory } from "react-router-dom";
+import { useWindowSize } from "../../utils/utils";
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        width: "80%",
         display: "flex",
         minHeight: "9rem",
         margin: "1rem",
@@ -20,20 +20,26 @@ const useStyles = makeStyles((theme) => ({
         display: "flex",
     },
     content: {
-        flex: "1 0 auto",
+        flex: "1 1 auto",
+        flexWrap: "wrap",
     },
     cover: {
-        minWidth: "9rem",
-        minHeight: "9rem",
+        width: "12rem",
+        height: "12rem",
+        [theme.breakpoints.down("xs")]: {
+            width: "100%",
+            height: "7rem",
+        },
     },
     chip: {
         margin: theme.spacing(0.5),
     },
 }));
 
-export default function BrowseCards({ id, name, services, cost, rating }) {
+export default function BrowseCards({ id, name, services, cost, rating, address }) {
     const classes = useStyles();
     const history = useHistory();
+    const size = useWindowSize();
 
     let dollarSigns = "";
     for (let i = 0; i < cost; i++) {
@@ -49,18 +55,31 @@ export default function BrowseCards({ id, name, services, cost, rating }) {
         history.push(`/store/${id}`);
     }
 
-    return (
-        <Card className={classes.root}>
-            <CardActionArea onClick={handleClickArea} className={classes.action}>
-                <CardContent className={classes.content}>
-                    <Typography component="h5" variant="h5">
-                        {name}
-                    </Typography>
-                    <Typography variant="body2" color="textSecondary" component="p">
-                        {dollarSigns} · {ratingStars}
-                    </Typography>
-                    <br />
-                    <Typography variant="body2" color="textPrimary" component="p">
+    if (size.width > 600) {
+        return (
+            <Card className={classes.root}>
+                <CardActionArea
+                    onClick={handleClickArea}
+                    className={classes.action}
+                >
+                    <CardMedia
+                        component="img"
+                        className={classes.cover}
+                        image={salonPic}
+                        title="Salon"
+                    />
+                    <CardContent className={classes.content}>
+                        <Typography component="h5" variant="h5">
+                            {name}
+                        </Typography>
+                        <Typography
+                            variant="body2"
+                            color="textSecondary"
+                            component="p"
+                        >
+                            {dollarSigns} · {ratingStars}
+                        </Typography>
+                        <br />
                         {services.map((service, idx) => {
                             return (
                                 <Chip
@@ -71,14 +90,44 @@ export default function BrowseCards({ id, name, services, cost, rating }) {
                                 />
                             );
                         })}
-                    </Typography>
-                </CardContent>
-                <div className={classes.controls}></div>
+                        <Typography
+                            variant="body2"
+                            color="textSecondary"
+                            component="p"
+                        >
+                            {address}
+                        </Typography>
+                    </CardContent>
+                </CardActionArea>
+            </Card>
+        );
+    }
+
+    return (
+        <Card className={classes.root}>
+            <CardActionArea onClick={handleClickArea}>
                 <CardMedia
+                    component="img"
                     className={classes.cover}
                     image={salonPic}
-                    title="Salon"
+                    title={name}
                 />
+                <CardContent>
+                    <Typography gutterBottom variant="h5" component="h2">
+                        {name}
+                    </Typography>
+                    <Typography variant="body2" color="textPrimary" component="p">
+                        {services.map((service, idx) => {
+                            if (idx === services.length - 1) {
+                                return service;
+                            }
+                            return service + " | ";
+                        })}
+                    </Typography>
+                    <Typography variant="body2" color="textSecondary" component="p">
+                        {dollarSigns} · {ratingStars}
+                    </Typography>
+                </CardContent>
             </CardActionArea>
         </Card>
     );

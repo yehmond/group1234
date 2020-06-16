@@ -1,24 +1,50 @@
 import React from "react";
-import Radio from "@material-ui/core/Radio";
-import RadioGroup from "@material-ui/core/RadioGroup";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormControl from "@material-ui/core/FormControl";
-import FormLabel from "@material-ui/core/FormLabel";
+import FormGroup from "@material-ui/core/FormGroup";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Checkbox from "@material-ui/core/Checkbox";
+import Typography from "@material-ui/core/Typography";
+import { useDispatch } from "react-redux";
+import { setService } from "../../actions/filterActions";
+import { SERVICES_OFFERED } from "../../utils/constants";
 
 export default function ServiceFilter() {
+    const dispatch = useDispatch();
+    const [serviceState, setServiceState] = React.useState(
+        Object.fromEntries(SERVICES_OFFERED.map((service) => [service, false]))
+    );
+
+    const handleChange = (event) => {
+        const newServiceState = {
+            ...serviceState,
+            [event.target.name]: event.target.checked,
+        };
+        setServiceState(newServiceState);
+        dispatch(setService(newServiceState));
+    };
+
     return (
-        <FormControl component="fieldset">
-            <FormLabel component="legend">Services</FormLabel>
-            <RadioGroup
-                aria-label="services"
-                name="services"
-                // value={value}
-                // onChange={handleChange}
-            >
-                <FormControlLabel value="Hair" control={<Radio />} label="Hair" />
-                <FormControlLabel value="Nails" control={<Radio />} label="Nails" />
-                <FormControlLabel value="Spa" control={<Radio />} label="Spa" />
-            </RadioGroup>
-        </FormControl>
+        <div>
+            <FormControl component="fieldset">
+                <Typography gutterBottom>Services Offered</Typography>
+                <FormGroup>
+                    {SERVICES_OFFERED.map((service) => {
+                        return (
+                            <FormControlLabel
+                                key={service}
+                                control={
+                                    <Checkbox
+                                        checked={serviceState[service]}
+                                        onChange={handleChange}
+                                        name={service}
+                                    />
+                                }
+                                label={service}
+                            />
+                        );
+                    })}
+                </FormGroup>
+            </FormControl>
+        </div>
     );
 }

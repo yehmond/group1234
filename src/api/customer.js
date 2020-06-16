@@ -12,7 +12,7 @@ const axios = require("axios").default;
 /* Local constants */
 const instance = axios.create({
     // TODO abstract baseURL
-    baseURL: "http://localhost:5000/api"
+    baseURL: "http://localhost:5000/api",
 });
 
 /*************
@@ -30,7 +30,6 @@ const instance = axios.create({
  *
  **************/
 async function getStoreById(store_id) {
-
     if (store_id.length === 0) {
         alert("customer/getStoreById: store_id is invalid");
         throw Error("customer/getStoreById: store_id is invalid");
@@ -65,7 +64,6 @@ async function getStoreById(store_id) {
  *
  **************/
 async function getBarberReservations(store_id, barber_id) {
-
     if (store_id.length === 0) {
         alert("customer/getBarberReservations: store_id is invalid");
         throw Error("customer/getBarberReservations: store_id is invalid");
@@ -76,7 +74,9 @@ async function getBarberReservations(store_id, barber_id) {
     }
 
     try {
-        const response = await instance.get("/customer/barber/" + store_id + "/" + barber_id);
+        const response = await instance.get(
+            "/customer/barber/" + store_id + "/" + barber_id
+        );
         console.log(response);
         return response.data;
     } catch (error) {
@@ -109,18 +109,21 @@ async function getBarberReservations(store_id, barber_id) {
  *
  **************/
 async function searchStore(count, body) {
-
     // Base case
     if (count === 0) {
         return { stores: [] };
     }
 
-    const query = Object.keys(body).map(function (key) {
-        return key + '=' + encodeURIComponent(body[key]);
-    }).join('&');
+    const query = Object.keys(body)
+        .map(function (key) {
+            return key + "=" + encodeURIComponent(body[key]);
+        })
+        .join("&");
 
     try {
-        const response = await instance.get("/customer/store/search/" + count + "/?" + query);
+        const response = await instance.get(
+            "/customer/store/search/" + count + "/?" + query
+        );
         console.log(response);
         return response.data;
     } catch (error) {
@@ -147,7 +150,6 @@ async function searchStore(count, body) {
  *
  **************/
 async function getReviews(user_id) {
-
     if (user_id.length === 0) {
         alert("customer/getReviews: user_id is invalid");
         throw Error("customer/getReviews: user_id is invalid");
@@ -186,7 +188,6 @@ async function getReviews(user_id) {
  *
  **************/
 async function setReview(user_id, store_id, barber_id, review, rating) {
-
     if (user_id.length === 0) {
         alert("customer/setReview: user_id is invalid");
         throw Error("customer/setReview: user_id is invalid");
@@ -247,7 +248,6 @@ async function setReview(user_id, store_id, barber_id, review, rating) {
  *
  **************/
 async function getReservations(user_id, body) {
-
     if (user_id.length === 0) {
         alert("customer/getReservations: user_id is invalid");
         throw Error("customer/getReservations: user_id is invalid");
@@ -260,13 +260,17 @@ async function getReservations(user_id, body) {
         body.end_time.toISOString();
     }
 
-    const query = Object.keys(body).map(function (key) {
-        return key + '=' + encodeURIComponent(body[key]);
-    }).join('&');
+    const query = Object.keys(body)
+        .map(function (key) {
+            return key + "=" + encodeURIComponent(body[key]);
+        })
+        .join("&");
 
     try {
         // TODO add authorization header
-        const response = await instance.get("/customer/reservations/" + user_id + "/?" + query);
+        const response = await instance.get(
+            "/customer/reservations/" + user_id + "/?" + query
+        );
         console.log(response);
         return response.data;
     } catch (error) {
@@ -297,7 +301,6 @@ async function getReservations(user_id, body) {
  *
  **************/
 async function setReservation(user_id, store_id, barber_id, start_time, service) {
-
     if (user_id.length === 0) {
         alert("customer/setReservation: user_id is invalid");
         throw Error("customer/setReservation: user_id is invalid");
@@ -351,7 +354,6 @@ async function setReservation(user_id, store_id, barber_id, start_time, service)
  *
  **************/
 async function removeReservation(reservation_id) {
-
     if (reservation_id.length === 0) {
         alert("customer/removeReservation: reservation_id is invalid");
         throw Error("customer/removeReservation: reservation_id is invalid");
@@ -362,7 +364,9 @@ async function removeReservation(reservation_id) {
 
     try {
         // TODO add authorization header
-        const response = await instance.delete("/customer/reservations/" + reservation_id);
+        const response = await instance.delete(
+            "/customer/reservations/" + reservation_id
+        );
         console.log(response);
         return response.data;
     } catch (error) {
