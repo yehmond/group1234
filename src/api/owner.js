@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /*************
  *
  * Filename:  owner.js
@@ -7,12 +8,12 @@
  **************/
 
 /* Include files */
-const axios = require("axios").default;
+import axios from "axios";
 
 /* Local constants */
 const instance = axios.create({
     // TODO abstract baseURL
-    baseURL: "http://localhost:5000/api"
+    baseURL: "http://localhost:5000/api",
 });
 
 /*************
@@ -30,7 +31,6 @@ const instance = axios.create({
  *
  **************/
 async function getStoreById(store_id) {
-
     if (store_id.length === 0) {
         alert("owner/getStoreById: store_id is invalid");
         throw Error("owner/getStoreById: store_id is invalid");
@@ -65,7 +65,6 @@ async function getStoreById(store_id) {
  *
  **************/
 async function getBarberReservations(store_id, barber_id) {
-
     if (store_id.length === 0) {
         alert("owner/getBarberReservations: store_id is invalid");
         throw Error("owner/getBarberReservations: store_id is invalid");
@@ -76,7 +75,9 @@ async function getBarberReservations(store_id, barber_id) {
     }
 
     try {
-        const response = await instance.get("/owner/barber/" + store_id + "/" + barber_id);
+        const response = await instance.get(
+            "/owner/barber/" + store_id + "/" + barber_id
+        );
         console.log(response);
         return response.data;
     } catch (error) {
@@ -103,7 +104,6 @@ async function getBarberReservations(store_id, barber_id) {
  *
  **************/
 async function registerStore(store) {
-
     // TODO need to change the param into params
     try {
         const response = await instance.post("/owner/store/", store);
@@ -118,7 +118,7 @@ async function registerStore(store) {
     }
 }
 
-module.exports = {
+export default {
     getStoreById,
     getBarberReservations,
     registerStore,
