@@ -3,7 +3,7 @@ import ShopsList from "../components/MyShops/ShopsList";
 import { Route, Switch } from "react-router-dom";
 import AddBarber from "../components/MyShops/AddBarber/AddBarber";
 import ViewSchedule from "../components/MyShops/ViewSchedule/ViewSchedule";
-import ViewShop from "../components/MyShops/ViewShop";
+import ViewShop from "../components/MyShops/ViewShop/ViewShop";
 
 export default function MyShops() {
     return (

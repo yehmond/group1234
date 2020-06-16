@@ -31,8 +31,6 @@ class RBSMain extends Component {
         };
     }
 
-
-
     addFormParameters(state) {
         this.setState({
             barbershop: Object.assign({}, this.state.barbershop, state),

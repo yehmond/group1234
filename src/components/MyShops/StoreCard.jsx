@@ -8,11 +8,10 @@ import EventIcon from "@material-ui/icons/Event";
 import Typography from "@material-ui/core/Typography";
 import EqualizerIcon from "@material-ui/icons/Equalizer";
 import barbershopPic from "../../images/barbershop.png";
-import PersonAddIcon from '@material-ui/icons/PersonAdd';
+import PersonAddIcon from "@material-ui/icons/PersonAdd";
 import { withStyles } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
 import Tooltip from "@material-ui/core/Tooltip";
-
 
 const useStyles = (theme) => ({
     root: {

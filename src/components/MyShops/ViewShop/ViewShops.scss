@@ -1,0 +1,12 @@
+#view-shops-content {
+  display: grid;
+  grid-template-rows: 0.1fr 0.3fr 0.3fr 0.3fr;
+  grid-row-gap: 10px;
+
+  #shop-information {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-column-gap: 10px;
+  }
+
+}

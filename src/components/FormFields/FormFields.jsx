@@ -78,7 +78,7 @@ export function RenderAutocomplete(props) {
                 ))
             }
             renderInput={(params) => (
-                <TextField {...params} label="Services" placeholder="Add Another" />
+                <TextField {...params} label={props.placeholder} placeholder="Add Another" />
             )}
         />
     );
@@ -110,10 +110,11 @@ export function RenderDropzone(props) {
         <div>
             <h4>{props.label}</h4>
             <DropzoneArea
-                acceptedFiles={["image/*"]}
-                dropzoneText={"Drag and drop an image here or click"}
+                acceptedFiles={props.acceptedFiles}
+                dropzoneText={props.dropzoneText}
                 onChange={props.handleChange}
                 initialFiles={props.value}
+                filesLimit={props.filesLimit}
             />
         </div>
     );

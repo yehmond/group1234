@@ -31,7 +31,7 @@ export const SERVICES_OFFERED = [
     "Hair color",
     "Eyebrows",
     "Nails",
-    "Waxing"
+    "Waxing",
 ];
 
 export const ADD_BARBERSHOP_STEPS = [

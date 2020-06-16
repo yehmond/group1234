@@ -160,6 +160,9 @@ class RBSForm extends Component {
                             />
                             <div className="field-regular">
                                 <RenderDropzone
+                                    acceptedFiles={['image/*']}
+                                    dropzoneText={"Upload a few pictures of your shop!"}
+                                    filesLimit={5}
                                     name="photos"
                                     label="Upload Some Photos"
                                     handleChange={this.handleDropZoneChange}
