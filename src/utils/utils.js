@@ -1,3 +1,5 @@
+import { DAYS_OF_WEEK_ABBR } from "./constants";
+
 export function convert24HrTo12Hr(time) {
     let hours = parseInt(time.substr(0, 2));
     const minutes = time.substr(3);
@@ -21,4 +23,17 @@ export function initializeHours() {
         hours.push({ isOpen: true, from: "08:00", to: "17:00" });
     }
     return hours;
+}
+
+export function hoursToString(hours){
+    let retObj ={};
+    hours.forEach((day, index) => {
+        const dayAbr = DAYS_OF_WEEK_ABBR[index];
+        if(day.isOpen) {
+            retObj[dayAbr] = dayAbr + ' - ' + convert24HrTo12Hr(day.from) + ' to ' + convert24HrTo12Hr(day.to)
+        } else {
+            retObj[dayAbr] = 'Closed'
+        }
+    })
+    return retObj;
 }

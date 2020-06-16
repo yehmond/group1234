@@ -19,7 +19,15 @@ import _ from "lodash";
 class AddBarber extends Component {
     constructor(props) {
         super(props);
-        this.state = { firstName: "", lastName: "", profile: "", specialties: [], photo: [], timeslotValue: 0, hours: initializeHours() };
+        this.state = {
+            firstName: "",
+            lastName: "",
+            profile: "",
+            specialties: [],
+            photo: [],
+            timeslotValue: 0,
+            hours: initializeHours(),
+        };
         this.isFormValid = this.isFormValid.bind(this);
         this.handleTextChange = this.handleTextChange.bind(this);
         this.handleAutoCompleteChange = this.handleAutoCompleteChange.bind(this);
@@ -48,8 +56,10 @@ class AddBarber extends Component {
     }
 
     isFormValid() {
-        return !_.some(_.omit(this.state, "photo", "timeslotValue"), _.isEmpty) && this.state.timeslotValue !== 0;
-
+        return (
+            !_.some(_.omit(this.state, "photo", "timeslotValue"), _.isEmpty) &&
+            this.state.timeslotValue !== 0
+        );
     }
 
     render() {
@@ -106,14 +116,14 @@ class AddBarber extends Component {
                             <RenderDropzone
                                 name="photos"
                                 label="Upload a Profile Picture"
-                                acceptedFiles={['image/*']}
+                                acceptedFiles={["image/*"]}
                                 dropzoneText="Add a profile picture!"
                                 filesLimit={1}
                                 handleChange={this.handleDropZoneChange}
                             />
                         </div>
                     </div>
-                    <br/>
+                    <br />
                     <h1>Weekly Schedule</h1>
                     <div className="hours-fields">
                         {DAYS_OF_WEEK.map((day, index) => {
@@ -129,10 +139,13 @@ class AddBarber extends Component {
                     </div>
                     <div className="one-button">
                         <div className="divider"></div>
-                        <Button variant="contained"
-                                color="primary" type="button"
-                                disabled={!this.isFormValid()}
-                                onClick={this.handleSubmit}>
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            type="button"
+                            disabled={!this.isFormValid()}
+                            onClick={this.handleSubmit}
+                        >
                             Add Barber
                         </Button>
                     </div>

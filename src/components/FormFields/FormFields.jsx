@@ -78,7 +78,11 @@ export function RenderAutocomplete(props) {
                 ))
             }
             renderInput={(params) => (
-                <TextField {...params} label={props.placeholder} placeholder="Add Another" />
+                <TextField
+                    {...params}
+                    label={props.placeholder}
+                    placeholder="Add Another"
+                />
             )}
         />
     );

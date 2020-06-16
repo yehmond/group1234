@@ -25,6 +25,16 @@ export const DAYS_OF_WEEK = [
     "Sunday",
 ];
 
+export const DAYS_OF_WEEK_ABBR = [
+    "Mon",
+    "Tue",
+    "Wed",
+    "Thu",
+    "Fri",
+    "Sat",
+    "Sun",
+];
+
 export const SERVICES_OFFERED = [
     "Haircut",
     "Shaving",
