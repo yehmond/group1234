@@ -1,13 +1,7 @@
-#view-shops-content {
+#shop-page-wrapper {
     display: grid;
-    grid-template-rows: 0.1fr 0.3fr 0.3fr 0.3fr;
-    grid-row-gap: 10px;
-
-    #shop-information {
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
-        grid-column-gap: 10px;
-    }
+    grid-template-rows: 0.1fr auto 0.99fr;
+    grid-row-gap: 20px;
 
     #top-info {
         p {
@@ -21,26 +15,43 @@
             margin: 1.5vh 0;
         }
     }
+}
 
-    #shop-reviews {
-        .circle {
-            border: 3px solid var(--primary-dark);
-            border-radius: 10px;
-            padding: 30px;
-            margin: 1rem 1rem;
-            p {
-                text-align: center;
-                margin: 0.5rem 0.5rem
-            }
-        }
+#shop-info-content {
+    display: grid;
+    grid-template-rows: 0.3fr 0.3fr 0.3fr;
+    grid-row-gap: 10px;
 
-        #avg-rating {
-            display: grid;
-            grid-template-columns: 1fr 6fr;
-            align-items: center;
-            justify-content: center;
+    #shop-information {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-column-gap: 10px;
+    }
+}
+
+#shop-reviews {
+    .circle {
+        border: 3px solid var(--primary-dark);
+        border-radius: 10px;
+        padding: 30px;
+        margin: 1rem 1rem;
+        p {
+            text-align: center;
+            margin: 0.5rem 0.5rem;
         }
     }
 
+    #avg-rating {
+        display: grid;
+        grid-template-columns: 1fr 6fr;
+        align-items: center;
+        justify-content: center;
+    }
+}
 
+#barbers-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-column-gap: 20px;
+    grid-row-gap: 20px;
 }

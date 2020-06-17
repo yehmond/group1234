@@ -25,15 +25,20 @@ export function initializeHours() {
     return hours;
 }
 
-export function hoursToString(hours){
-    let retObj ={};
+export function hoursToString(hours) {
+    let retObj = {};
     hours.forEach((day, index) => {
         const dayAbr = DAYS_OF_WEEK_ABBR[index];
-        if(day.isOpen) {
-            retObj[dayAbr] = dayAbr + ' - ' + convert24HrTo12Hr(day.from) + ' to ' + convert24HrTo12Hr(day.to)
+        if (day.isOpen) {
+            retObj[dayAbr] =
+                dayAbr +
+                " - " +
+                convert24HrTo12Hr(day.from) +
+                " to " +
+                convert24HrTo12Hr(day.to);
         } else {
-            retObj[dayAbr] = 'Closed'
+            retObj[dayAbr] = "Closed";
         }
-    })
+    });
     return retObj;
 }

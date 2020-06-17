@@ -52,7 +52,7 @@ class StoreCard extends Component {
         const { shopID, name, classes } = this.props;
         return (
             <div className={classes.root}>
-                <Card className="card-wrapper">
+                <Card>
                     <CardActionArea>
                         <CardMedia
                             className={classes.media}

@@ -9,13 +9,13 @@ const useStyles = makeStyles({
     root: {
         minWidth: 275,
         display: "grid",
-        gridTemplateColumns: '0.25fr 0.75fr'
+        gridTemplateColumns: "0.25fr 0.75fr",
     },
     leftPanel: {
-        display: 'grid',
-        alignSelf: 'center',
-        justifySelf: 'center'
-    }
+        display: "grid",
+        alignSelf: "center",
+        justifySelf: "center",
+    },
 });
 
 export default function ReviewCard(props) {
@@ -24,9 +24,11 @@ export default function ReviewCard(props) {
     return (
         <Card className={classes.root} variant={"outlined"}>
             <CardContent className={classes.leftPanel}>
-                <div className={'left-panel'}>
-                    <Typography align={'center'} variant="h6">{props.review.name}</Typography>
-                    <Rating  name='rating' value={props.review.rating} disabled />
+                <div className={"left-panel"}>
+                    <Typography align={"center"} variant="h6">
+                        {props.review.name}
+                    </Typography>
+                    <Rating name="rating" value={props.review.rating} disabled />
                 </div>
             </CardContent>
             <CardContent>

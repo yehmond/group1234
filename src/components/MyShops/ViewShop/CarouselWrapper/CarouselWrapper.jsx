@@ -33,7 +33,6 @@ export default function CarouselWrapper(props) {
             breakPoints={breakPoints}
         >
             {props.images.map((image, index) => {
-                console.log(image);
                 return (
                     <CardMedia
                         id={"view-shop-image-" + index}
