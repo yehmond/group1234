@@ -8,6 +8,7 @@ import Chip from "@material-ui/core/Chip";
 import Typography from "@material-ui/core/Typography";
 import TimerIcon from "@material-ui/icons/Timer";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -38,11 +39,17 @@ const useStyles = makeStyles((theme) => ({
         alignItems: "center",
         justifyContent: "center",
     },
+    buttonContainer: {
+        display: "block",
+        alignItems: "center",
+        justifyContent: "center"
+    },
     button: {
-        display: "grid",
-        alignSelf: "center",
-        justifySelf: "center",
+        display: "block",
         width: "80%",
+        marginLeft: "auto",
+        marginRight: "auto",
+        textAlign: "center"
     },
 }));
 
@@ -50,7 +57,6 @@ export default function BarberCard(props) {
     const classes = useStyles();
     const authState = useSelector((state) => state.authState);
     const role = authState.role;
-    console.log(authState);
 
     return (
         <Card className={classes.root}>
@@ -69,12 +75,14 @@ export default function BarberCard(props) {
                     <TimerIcon />
                     <span>{props.barber.timeslot}</span>
                 </div>
-                <div>
+                <div className={classes.buttonContainer}>
                     {role === "CUSTOMER" && (
                         <Button
                             className={classes.button}
                             color="primary"
                             variant="contained"
+                            component={Link}
+                            to={"/reservation"}
                         >
                             Make Reservation
                         </Button>

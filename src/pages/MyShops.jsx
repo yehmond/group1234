@@ -18,7 +18,7 @@ export default function MyShops() {
                 <ViewSchedule />
             </Route>
             <Route path="/stores/:storeID/stats"></Route>
-            <Route path="/stores/:storeID/view">
+            <Route eaxct path="/stores/:storeID">
                 <ViewShop />
             </Route>
         </Switch>

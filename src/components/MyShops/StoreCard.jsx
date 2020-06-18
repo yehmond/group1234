@@ -60,7 +60,7 @@ class StoreCard extends Component {
                         />
                         <CardContent>
                             <Link
-                                to={`/stores/${shopID}/view`}
+                                to={`/stores/${shopID}`}
                                 style={{ textDecoration: "none" }}
                             >
                                 <Tooltip title="View shop information">
