@@ -16,7 +16,7 @@ import { validateEmail } from "../../utils/utils";
 import { Visibility, VisibilityOff } from "@material-ui/icons";
 import PasswordStrengthBar from "react-password-strength-bar/dist";
 import { MIN_PASSWORD_LENGTH } from "../../utils/constants";
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink } from "react-router-dom";
 
 // code taken from https://material-ui.com/getting-started/templates/
 const useStyles = (theme) => ({
@@ -69,9 +69,7 @@ class SignUp extends Component {
     }
 
     handleTabChange(event, value) {
-        this.setState({ userType: value }, () => {
-            console.log(this.state);
-        });
+        this.setState({ userType: value });
     }
 
     handleClickShowPassword() {
@@ -250,7 +248,11 @@ class SignUp extends Component {
                         </Button>
                         <Grid container justify="flex-end">
                             <Grid item>
-                                <Link component={RouterLink} to="/signin" variant="body2">
+                                <Link
+                                    component={RouterLink}
+                                    to="/signin"
+                                    variant="body2"
+                                >
                                     Already have an account? Sign in
                                 </Link>
                             </Grid>
