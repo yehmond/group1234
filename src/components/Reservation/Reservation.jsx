@@ -5,12 +5,12 @@ import { InputLabel } from "@material-ui/core";
 import { Input } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
-import FormLabel from '@material-ui/core/FormLabel';
-import FormGroup from '@material-ui/core/FormGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
+import FormLabel from "@material-ui/core/FormLabel";
+import FormGroup from "@material-ui/core/FormGroup";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Checkbox from "@material-ui/core/Checkbox";
 import { SERVICES_OFFERED } from "../../utils/constants";
-import { useDispatch } from "react-redux";
+// import { useDispatch } from "react-redux";
 // import { setService } from "../../actions/filterActions";
 
 const useStyles = makeStyles((theme) =>
@@ -48,7 +48,7 @@ const useStyles = makeStyles((theme) =>
             marginTop: "2rem",
         },
         serviceSelection: {
-            paddingBottom: "2rem"
+            paddingBottom: "2rem",
         },
     })
 );
@@ -59,7 +59,7 @@ export default function Reservation() {
     const [serviceState, setServiceState] = React.useState(
         Object.fromEntries(SERVICES_OFFERED.map((service) => [service, false]))
     );
-    
+
     const handleChange = (event) => {
         const newServiceState = {
             ...serviceState,
@@ -106,7 +106,9 @@ export default function Reservation() {
 
             <div className={classes.serviceSelection}>
                 <FormControl component="fieldset" className={classes.formControl}>
-                    <FormLabel component="legend">Select the service(s) for this booking</FormLabel>
+                    <FormLabel component="legend">
+                        Select the service(s) for this booking
+                    </FormLabel>
                     <FormGroup>
                         {SERVICES_OFFERED.map((service) => {
                             return (
