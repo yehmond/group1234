@@ -80,7 +80,7 @@ class DayHoursInput extends Component {
                             color="primary"
                         />
                     }
-                    label="Closed?"
+                    label={this.props.label}
                 />
             </div>
         );
