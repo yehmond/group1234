@@ -52,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function Orders() {
+export default function Reservations() {
     const classes = useStyles();
     return (
         <React.Fragment>
