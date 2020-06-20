@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./SummaryRenderer.scss";
-import { Chip, Paper } from "@material-ui/core";
+import { Paper } from "@material-ui/core";
 
 class SummaryRenderer extends Component {
     render() {

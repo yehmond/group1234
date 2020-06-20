@@ -8,7 +8,17 @@ import { SERVICES_OFFERED } from "../utils/constants";
 import Skeleton from "@material-ui/lab/Skeleton";
 
 // const searchCount = 20;
-
+const mockShops = [];
+for (let i = 0; i < 12; i++) {
+    mockShops.push({
+        id: i,
+        name: "Citrus Hair Salon",
+        services: SERVICES_OFFERED,
+        cost: 3,
+        rating: 5,
+        address: "123 Main St.",
+    });
+}
 const useStyles = makeStyles((theme) => ({
     root: {
         display: "flex",
@@ -36,17 +46,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Browse() {
-    let mockShops = [];
-    for (let i = 0; i < 12; i++) {
-        mockShops.push({
-            id: "1",
-            name: "Citrus Hair Salon",
-            services: SERVICES_OFFERED,
-            cost: 3,
-            rating: 5,
-            address: "123 Main St.",
-        });
-    }
     const classes = useStyles();
     const filterState = useSelector((state) => state.filterState);
     const [shops, setShops] = useState([]);
@@ -66,6 +65,7 @@ export default function Browse() {
     for (let i = 0; i < 12; i++) {
         skeletons.push(
             <Skeleton
+                key={i}
                 variant="rect"
                 animation="wave"
                 className={classes.skeleton}
@@ -81,21 +81,19 @@ export default function Browse() {
             <div className={classes.cards}>
                 {shops.length === 0 && skeletons.map((skeleton) => skeleton)}
                 {shops.length > 0 &&
-                    shops.map(
-                        ({ id, name, services, cost, rating, address }, idx) => {
-                            return (
-                                <BrowseCards
-                                    key={idx}
-                                    id={id}
-                                    name={name}
-                                    services={services}
-                                    cost={cost}
-                                    rating={rating}
-                                    address={address}
-                                />
-                            );
-                        }
-                    )}
+                    shops.map(({ id, name, services, cost, rating, address }) => {
+                        return (
+                            <BrowseCards
+                                key={id}
+                                id={id}
+                                name={name}
+                                services={services}
+                                cost={cost}
+                                rating={rating}
+                                address={address}
+                            />
+                        );
+                    })}
             </div>
         </div>
     );

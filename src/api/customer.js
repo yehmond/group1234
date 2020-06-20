@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /*************
  *
  * Filename:  customer.js
@@ -7,7 +8,7 @@
  **************/
 
 /* Include files */
-const axios = require("axios").default;
+import axios from "axios";
 
 /* Local constants */
 const instance = axios.create({
@@ -253,10 +254,10 @@ async function getReservations(user_id, body) {
         throw Error("customer/getReservations: user_id is invalid");
     }
 
-    if (body.hasOwnProperty("start_time")) {
+    if ("start_time" in body) {
         body.start_time.toISOString();
     }
-    if (body.hasOwnProperty("end_time")) {
+    if ("end_time" in body) {
         body.end_time.toISOString();
     }
 
@@ -378,7 +379,7 @@ async function removeReservation(reservation_id) {
     }
 }
 
-module.exports = {
+export default {
     getStoreById,
     getBarberReservations,
     searchStore,

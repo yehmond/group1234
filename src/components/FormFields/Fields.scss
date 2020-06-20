@@ -23,6 +23,10 @@
     max-width: 700px;
 }
 
+.long {
+    grid-template-columns: 1.5fr 0.5fr;
+}
+
 .field-regular {
     width: 100%;
     max-width: 700px;
@@ -31,6 +35,16 @@
 .field-small {
     width: 100%;
     max-width: 340px;
+}
+
+.field-medium {
+    width: 100%;
+    max-width: 545px;
+}
+
+.field-extra-small {
+    width: 100%;
+    max-width: 150px;
 }
 
 .rating-container {

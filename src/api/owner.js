@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /*************
  *
  * Filename:  owner.js
@@ -7,7 +8,7 @@
  **************/
 
 /* Include files */
-const axios = require("axios").default;
+import axios from "axios";
 
 /* Local constants */
 const instance = axios.create({
@@ -117,7 +118,7 @@ async function registerStore(store) {
     }
 }
 
-module.exports = {
+export default {
     getStoreById,
     getBarberReservations,
     registerStore,

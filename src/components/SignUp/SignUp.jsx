@@ -69,9 +69,7 @@ class SignUp extends Component {
     }
 
     handleTabChange(event, value) {
-        this.setState({ userType: value }, () => {
-            console.log(this.state);
-        });
+        this.setState({ userType: value });
     }
 
     handleClickShowPassword() {
