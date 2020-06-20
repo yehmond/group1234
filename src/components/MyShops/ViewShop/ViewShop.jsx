@@ -8,8 +8,6 @@ import Reviews from "./Reviews";
 import Barbers from "./Barbers";
 
 class ViewShop extends Component {
-    barbershop = null;
-
     constructor(props) {
         super(props);
         this.barbershop = mockStore;

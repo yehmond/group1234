@@ -58,10 +58,10 @@ class StoreCard extends Component {
                             to={`/stores/${shopID}`}
                             style={{ textDecoration: "none" }}
                         >
-                        <CardMedia
-                            className={classes.media}
-                            image={barbershopPic}
-                        />
+                            <CardMedia
+                                className={classes.media}
+                                image={barbershopPic}
+                            />
                         </Link>
                         <CardContent>
                             <Link
