@@ -10,7 +10,7 @@ import TimerIcon from "@material-ui/icons/Timer";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
     root: {
         display: "grid",
         gridTemplateColumns: "auto 1fr",
@@ -42,14 +42,14 @@ const useStyles = makeStyles((theme) => ({
     buttonContainer: {
         display: "block",
         alignItems: "center",
-        justifyContent: "center"
+        justifyContent: "center",
     },
     button: {
         display: "block",
         width: "80%",
         marginLeft: "auto",
         marginRight: "auto",
-        textAlign: "center"
+        textAlign: "center",
     },
 }));
 

@@ -6,8 +6,6 @@ import { hoursToString } from "../../../utils/utils";
 import MapCard from "./Cards/MapCard";
 
 class Info extends Component {
-    barbershop = null;
-
     constructor(props) {
         super(props);
         this.barbershop = props.barbershop;
