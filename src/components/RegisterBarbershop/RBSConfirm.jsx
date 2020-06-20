@@ -3,7 +3,7 @@ import ExpandMore from "@material-ui/icons/ArrowDropDownCircle";
 import ExpandLess from "@material-ui/icons/ArrowDropUp";
 import StepperHeader from "../Stepper/StepperHeader";
 import { ADD_BARBERSHOP_STEPS, DAYS_OF_WEEK } from "../../utils/constants";
-import "./RBS.scss";
+import "../FormFields/Forms.scss";
 import SummaryRenderer from "../SummaryRenderer/SummaryRenderer";
 import _ from "lodash";
 import { convert24HrTo12Hr } from "../../utils/utils";
@@ -41,7 +41,7 @@ class RBSConfirm extends Component {
         return (
             <div>
                 <StepperHeader currentStep={2} stepLabels={ADD_BARBERSHOP_STEPS} />
-                <div className="rbs-page-content">
+                <div className="page-content">
                     <h1>Summary</h1>
                     <p id="confirm-subtitle">
                         Please confirm that the fields below are accurate; please go
