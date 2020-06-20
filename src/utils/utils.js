@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { DAYS_OF_WEEK_ABBR } from "./constants";
 
 export function convert24HrTo12Hr(time) {
     let hours = parseInt(time.substr(0, 2));
@@ -37,4 +38,30 @@ export function useWindowSize() {
     }, []);
 
     return windowSize;
+}
+
+export function initializeHours() {
+    const hours = [];
+    for (let i = 0; i < 7; i++) {
+        hours.push({ isOpen: true, from: "08:00", to: "17:00" });
+    }
+    return hours;
+}
+
+export function hoursToString(hours) {
+    let retObj = {};
+    hours.forEach((day, index) => {
+        const dayAbr = DAYS_OF_WEEK_ABBR[index];
+        if (day.isOpen) {
+            retObj[dayAbr] =
+                dayAbr +
+                " - " +
+                convert24HrTo12Hr(day.from) +
+                " to " +
+                convert24HrTo12Hr(day.to);
+        } else {
+            retObj[dayAbr] = "Closed";
+        }
+    });
+    return retObj;
 }

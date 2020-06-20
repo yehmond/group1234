@@ -52,7 +52,7 @@ export default function BrowseCards({ id, name, services, cost, rating, address 
     }
 
     function handleClickArea() {
-        history.push(`/store/${id}`);
+        history.push(`/stores/${id}`);
     }
 
     if (size.width > 600) {

@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
 const mockShops = [];
 for (let i = 0; i < 12; i++) {
     mockShops.push({
-        id: "1",
+        id: i,
         name: "Citrus Hair Salon",
         services: ["Hair Salon", "Day Spa", "Waxing"],
         cost: 3,
