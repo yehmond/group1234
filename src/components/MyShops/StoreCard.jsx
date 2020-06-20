@@ -54,10 +54,15 @@ class StoreCard extends Component {
             <div className={classes.root}>
                 <Card>
                     <CardActionArea>
+                        <Link
+                            to={`/stores/${shopID}`}
+                            style={{ textDecoration: "none" }}
+                        >
                         <CardMedia
                             className={classes.media}
                             image={barbershopPic}
                         />
+                        </Link>
                         <CardContent>
                             <Link
                                 to={`/stores/${shopID}`}
