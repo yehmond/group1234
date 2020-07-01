@@ -1,0 +1,16 @@
+.rbc-event {
+  background-color: var(--primary-dark);
+  border: var(--primary-dark);
+}
+
+#view-schedule-content {
+  display: grid;
+  grid-template-rows: 0.1fr 0.1fr 2.8fr;
+  grid-row-gap: 20px;
+  padding: 40px;
+
+  .MuiFormControl-root {
+    width: 80%;
+    max-width: 500px;
+  }
+}
