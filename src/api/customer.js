@@ -96,6 +96,7 @@ async function getBarberReservations(store_id, barber_id) {
  * Purpose:  Search for stores that fit the optional parameters
  *
  * Parms:    (number)     count                  - number of stores to return
+ *           (number)     skip                   - number of documents to skip
  *           (object)     body                   - (optional) object body that can contain the following optional keys:
  *              (string)     store                  - name of the store
  *              (string)     city                   - city to find stores around
@@ -109,7 +110,7 @@ async function getBarberReservations(store_id, barber_id) {
  * Notes:    for empty optional params, omit the key from the object. If no optional params, please pass an empty object
  *
  **************/
-async function searchStore(count, body) {
+async function searchStore(body, count, skip = 0) {
     // Base case
     if (count === 0) {
         return { stores: [] };
@@ -123,7 +124,7 @@ async function searchStore(count, body) {
 
     try {
         const response = await instance.get(
-            "/customer/store/search/" + count + "/?" + query
+            "/customer/store/search/" + count + "/" + skip + "/?" + query
         );
         console.log(response);
         return response.data;

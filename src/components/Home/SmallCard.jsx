@@ -32,12 +32,12 @@ const useStyles = makeStyles({
     },
 });
 
-export default function HomeCard({ shopId, name, services, cost, rating }) {
+export default function SmallCard({ shopId, name, services, cost, rating }) {
     const classes = useStyles();
     const history = useHistory();
 
     function handleClickArea() {
-        history.push(`/store/${shopId}`);
+        history.push(`/stores/${shopId}`);
     }
 
     function handleClickRequest() {

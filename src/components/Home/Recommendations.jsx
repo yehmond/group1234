@@ -1,6 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core";
-import HomeCard from "./HomeCard";
+import SmallCard from "./SmallCard";
 
 const useStyles = makeStyles((theme) => ({
     grid: {
@@ -45,7 +45,7 @@ export default function Recommendations() {
             <div className={classes.grid}>
                 {mockShops.map(({ id, name, services, cost, rating }, idx) => {
                     return (
-                        <HomeCard
+                        <SmallCard
                             key={idx}
                             shopId={id}
                             name={name}
@@ -60,7 +60,7 @@ export default function Recommendations() {
             <div className={classes.grid}>
                 {mockShops.map(({ id, name, services, cost, rating }) => {
                     return (
-                        <HomeCard
+                        <SmallCard
                             key={id}
                             shopId={id}
                             name={name}
