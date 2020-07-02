@@ -2,11 +2,20 @@ import React from "react";
 import PriceFilter from "./PriceFilter";
 import ServiceFilter from "./ServiceFilter";
 import RatingFilter from "./RatingSlider";
-import style from "./Filter.module.css";
+import { makeStyles } from "@material-ui/core/styles";
 
-export default function Filters() {
+const useStyles = makeStyles(() => ({
+    container: {
+        "& > *": {
+            marginBottom: "3rem",
+        },
+    },
+}));
+
+export default function Filter() {
+    const classes = useStyles();
     return (
-        <div className={style.container}>
+        <div className={classes.container}>
             <PriceFilter />
             <ServiceFilter />
             <RatingFilter />

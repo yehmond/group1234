@@ -6,10 +6,13 @@ import { useSelector } from "react-redux";
 // import { searchStore } from "../api/customer";
 import { SERVICES_OFFERED } from "../utils/constants";
 import Skeleton from "@material-ui/lab/Skeleton";
+import Pagination from "@material-ui/lab/Pagination";
+import PaginationItem from "@material-ui/lab/PaginationItem";
+import { Link } from "react-router-dom";
 
-// const searchCount = 20;
+const searchCount = 20;
 const mockShops = [];
-for (let i = 0; i < 12; i++) {
+for (let i = 0; i < searchCount; i++) {
     mockShops.push({
         id: i,
         name: "Citrus Hair Salon",
@@ -33,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
     },
     filter: {
         padding: "2rem 1rem",
-        minWidth: "15rem",
+        minWidth: "20rem",
         [theme.breakpoints.up("md")]: {
             position: "sticky",
             alignSelf: "flex-start",
@@ -42,6 +45,11 @@ const useStyles = makeStyles((theme) => ({
     },
     cards: {
         flexGrow: 1,
+    },
+    paginationContainer: {
+        display: "flex",
+        margin: "3rem auto",
+        justifyContent: "center",
     },
 }));
 
@@ -53,10 +61,10 @@ export default function Browse() {
     useEffect(() => {
         setShops([]); // Loads placeholder rectangles
         async function loadStores() {
+            // setShops(await searchStore(searchCount, filterState));
             setTimeout(() => {
-                // setShops(await searchStore(searchCount, filterState));
                 setShops(mockShops);
-            }, 1000);
+            }, 500);
         }
         loadStores();
     }, [filterState]);
@@ -94,6 +102,21 @@ export default function Browse() {
                             />
                         );
                     })}
+                <div className={classes.paginationContainer}>
+                    <Pagination
+                        count={10}
+                        size="large"
+                        renderItem={(item) => (
+                            <PaginationItem
+                                component={Link}
+                                to={`/browse${
+                                    item.page === 1 ? "" : `?page=${item.page}`
+                                }`}
+                                {...item}
+                            />
+                        )}
+                    />
+                </div>
             </div>
         </div>
     );
