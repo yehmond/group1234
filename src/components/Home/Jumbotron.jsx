@@ -54,7 +54,10 @@ export default function JumboTron() {
                     <div className={classes.titleContainer}>
                         <h1 className={classes.discover}>Discover</h1>
                         <h1 className={classes.flippingText}>
-                            <FlippingText texts={storesOptions} color={"#303f9f"} />
+                            <FlippingText
+                                texts={storesOptions}
+                                color={"rgba(0, 136, 122, 1)"}
+                            />
                         </h1>
                     </div>
                     <SearchBar />

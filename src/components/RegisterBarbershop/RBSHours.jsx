@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import StepperHeader from "../Stepper/StepperHeader";
 import { ADD_BARBERSHOP_STEPS, DAYS_OF_WEEK } from "../../utils/constants";
-import "./RBS.scss";
+import "../FormFields/Forms.scss";
 import DayHoursInput from "./DayHoursInput";
 import { Button } from "@material-ui/core";
 import { Link } from "react-router-dom";
@@ -21,7 +21,7 @@ class RBSHours extends Component {
         return (
             <div>
                 <StepperHeader currentStep={1} stepLabels={ADD_BARBERSHOP_STEPS} />
-                <div className="rbs-page-content">
+                <div className="page-content">
                     <h1>Hours of Operation</h1>
                     <form className="hours-fields">
                         {DAYS_OF_WEEK.map((day, index) => {
@@ -30,6 +30,7 @@ class RBSHours extends Component {
                                     day={this.state.hours[index]}
                                     dayOfWeek={day}
                                     key={day}
+                                    label={"Closed"}
                                 />
                             );
                         })}

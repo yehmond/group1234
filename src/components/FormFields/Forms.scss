@@ -1,4 +1,4 @@
-.rbs-page-content {
+.page-content {
     display: grid;
     grid-template-rows: auto 1fr;
     align-items: center;
@@ -28,7 +28,7 @@
     max-width: 700px;
     padding: 20px 0;
     display: grid;
-    grid-template-columns: 5fr 1fr;
+    grid-template-columns: 4fr 1fr;
     grid-column-gap: 10px;
     align-items: flex-end;
     justify-content: center;
@@ -64,7 +64,7 @@
 
 #drop-icon {
     font-size: 2rem;
-    color: #3f51b5;
+    color: var(--primary-dark);
 }
 
 #confirm-subtitle {

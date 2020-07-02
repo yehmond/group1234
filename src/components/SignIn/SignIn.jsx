@@ -10,6 +10,7 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { withStyles } from "@material-ui/core/styles";
 import cover from "../../images/home-cover2.jpg";
+import { Link as RouterLink } from "react-router-dom";
 
 const useStyles = (theme) => ({
     root: {
@@ -101,7 +102,11 @@ class SignIn extends Component {
                             </Button>
                             <Grid container>
                                 <Grid item>
-                                    <Link href="/signup" variant="body2">
+                                    <Link
+                                        component={RouterLink}
+                                        to="/signup"
+                                        variant="body2"
+                                    >
                                         {"Don't have an account? Sign Up"}
                                     </Link>
                                 </Grid>
