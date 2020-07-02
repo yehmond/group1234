@@ -97,13 +97,14 @@ async function getBarberReservations(store_id, barber_id) {
  *
  * Parms:    (number)     count                  - number of stores to return
  *           (object)     body                   - (optional) object body that can contain the following optional keys:
+ *              (number)     startIndex             - index of the first store object to return
  *              (string)     store                  - name of the store
  *              (string)     city                   - city to find stores around
  *              (array[SERVICES_OFFERED])  services - array of services offered
  *              (number)     rating                 - minimum rating
- *              (number)     price                  - maximum price level
+ *              (number)     price                  - price object
  *
- * Return:   response.data            - {stores: [{store_id: string, picture: (base64) string, rating: number, price: number, services: array[SERVICES_OFFERED]}]}
+ * Return:   response.data            - {count: number, stores: [{store_id: string, picture: (base64) string, rating: number, price: {1: boolean,2: boolean,3: boolean}, services: array[SERVICES_OFFERED]}]}
  *           response.status          - 200: successful
  *
  * Notes:    for empty optional params, omit the key from the object. If no optional params, please pass an empty object
