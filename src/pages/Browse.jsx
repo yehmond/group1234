@@ -1,27 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import BrowseCards from "../components/Browse/BrowseCards";
 import Filters from "../components/Browse/Filter";
 import { makeStyles } from "@material-ui/core/styles";
-import { useSelector } from "react-redux";
-// import { searchStore } from "../api/customer";
-import { SERVICES_OFFERED } from "../utils/constants";
+import { useSelector, useDispatch } from "react-redux";
+import { search } from "../actions/searchActions";
 import Skeleton from "@material-ui/lab/Skeleton";
 import Pagination from "@material-ui/lab/Pagination";
 import PaginationItem from "@material-ui/lab/PaginationItem";
 import { Link } from "react-router-dom";
 
 const searchCount = 20;
-const mockShops = [];
-for (let i = 0; i < searchCount; i++) {
-    mockShops.push({
-        id: i,
-        name: "Citrus Hair Salon",
-        services: SERVICES_OFFERED,
-        cost: 3,
-        rating: 5,
-        address: "123 Main St.",
-    });
-}
+
 const useStyles = makeStyles((theme) => ({
     root: {
         display: "flex",
@@ -56,18 +45,24 @@ const useStyles = makeStyles((theme) => ({
 export default function Browse() {
     const classes = useStyles();
     const filterState = useSelector((state) => state.filterState);
-    const [shops, setShops] = useState([]);
+    const searchState = useSelector((state) => state.searchState);
+    const dispatch = useDispatch();
 
     useEffect(() => {
-        setShops([]); // Loads placeholder rectangles
-        async function loadStores() {
-            // setShops(await searchStore(searchCount, filterState));
-            setTimeout(() => {
-                setShops(mockShops);
-            }, 500);
+        const queryObj = {};
+
+        if (filterState.price) {
+            queryObj.price = filterState.price;
         }
-        loadStores();
-    }, [filterState]);
+        if (filterState.rating) {
+            queryObj.rating = filterState.rating;
+        }
+        if (filterState.rating) {
+            queryObj.city = filterState.city;
+        }
+
+        dispatch(search(searchCount, queryObj));
+    }, [filterState, dispatch]);
 
     const skeletons = [];
     for (let i = 0; i < 12; i++) {
@@ -87,21 +82,24 @@ export default function Browse() {
                 <Filters />
             </div>
             <div className={classes.cards}>
-                {shops.length === 0 && skeletons.map((skeleton) => skeleton)}
-                {shops.length > 0 &&
-                    shops.map(({ id, name, services, cost, rating, address }) => {
-                        return (
-                            <BrowseCards
-                                key={id}
-                                id={id}
-                                name={name}
-                                services={services}
-                                cost={cost}
-                                rating={rating}
-                                address={address}
-                            />
-                        );
-                    })}
+                {searchState.status !== "success" &&
+                    skeletons.map((skeleton) => skeleton)}
+                {searchState.status === "success" &&
+                    searchState.data.map(
+                        ({ id, name, services, cost, rating, address }) => {
+                            return (
+                                <BrowseCards
+                                    key={id}
+                                    id={id}
+                                    name={name}
+                                    services={services}
+                                    cost={cost}
+                                    rating={rating}
+                                    address={address}
+                                />
+                            );
+                        }
+                    )}
                 <div className={classes.paginationContainer}>
                     <Pagination
                         count={10}

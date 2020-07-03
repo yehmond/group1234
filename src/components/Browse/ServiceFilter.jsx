@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import FormControl from "@material-ui/core/FormControl";
 import FormGroup from "@material-ui/core/FormGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
@@ -10,7 +10,7 @@ import { SERVICES_OFFERED } from "../../utils/constants";
 
 export default function ServiceFilter() {
     const dispatch = useDispatch();
-    const [serviceState, setServiceState] = React.useState(
+    const [serviceState, setServiceState] = useState(
         Object.fromEntries(SERVICES_OFFERED.map((service) => [service, false]))
     );
 
@@ -20,8 +20,14 @@ export default function ServiceFilter() {
             [event.target.name]: event.target.checked,
         };
         setServiceState(newServiceState);
-        dispatch(setService(newServiceState));
     };
+
+    useEffect(() => {
+        const serviceArr = Object.keys(serviceState).filter(
+            (key) => serviceState[key]
+        );
+        dispatch(setService(serviceArr));
+    }, [serviceState, dispatch]);
 
     return (
         <div>

@@ -96,13 +96,13 @@ async function getBarberReservations(store_id, barber_id) {
  * Purpose:  Search for stores that fit the optional parameters
  *
  * Parms:    (number)     count                  - number of stores to return
- *           (number)     skip                   - number of documents to skip
  *           (object)     body                   - (optional) object body that can contain the following optional keys:
  *              (string)     store                  - name of the store
  *              (string)     city                   - city to find stores around
  *              (array[SERVICES_OFFERED])  services - array of services offered
  *              (number)     rating                 - minimum rating
  *              (number)     price                  - maximum price level
+ *              (number)     skip                   - number of documents to skip
  *
  * Return:   response.data            - {stores: [{store_id: string, picture: (base64) string, rating: number, price: number, services: array[SERVICES_OFFERED]}]}
  *           response.status          - 200: successful
@@ -110,29 +110,49 @@ async function getBarberReservations(store_id, barber_id) {
  * Notes:    for empty optional params, omit the key from the object. If no optional params, please pass an empty object
  *
  **************/
-async function searchStore(body, count, skip = 0) {
+async function searchStore(count, body) {
     // Base case
     if (count === 0) {
         return { stores: [] };
     }
 
-    const query = Object.keys(body)
-        .map(function (key) {
-            return key + "=" + encodeURIComponent(body[key]);
-        })
-        .join("&");
+    // const query = Object.keys(body)
+    //     .map(function (key) {
+    //         return key + "=" + encodeURIComponent(body[key]);
+    //     })
+    //     .join("&");
 
     try {
-        const response = await instance.get(
-            "/customer/store/search/" + count + "/" + skip + "/?" + query
-        );
-        console.log(response);
-        return response.data;
+        // const response = await instance.get(
+        //     "/customer/store/search/" + count + "/?" + query
+        // );
+        // console.log(response);
+        // return response.data;
+        const mockShops = [];
+        for (let i = 0; i < 20; i++) {
+            mockShops.push({
+                id: i,
+                name: "Citrus Hair Salon",
+                services: [
+                    "Haircut",
+                    "Shaving",
+                    "Hair color",
+                    "Eyebrows",
+                    "Nails",
+                    "Waxing",
+                ],
+                cost: 3,
+                rating: 5,
+                address: "123 Main St.",
+            });
+        }
+        return { data: mockShops };
     } catch (error) {
         if (error.response) {
             // TODO error handling
             console.log(error.response.status);
             console.log(error.response.data);
+            throw new Error(error);
         }
     }
 }
@@ -380,7 +400,7 @@ async function removeReservation(reservation_id) {
     }
 }
 
-export default {
+export {
     getStoreById,
     getBarberReservations,
     searchStore,

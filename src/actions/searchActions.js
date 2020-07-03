@@ -24,12 +24,12 @@ export function searchError(msg) {
     };
 }
 
-export function search(body) {
+export function search(count, queryObj) {
     return (dispatch) => {
         dispatch(searchLoading());
-        searchStore(12, body)
-            .then((data) => {
-                dispatch(searchSuccess(data));
+        searchStore(count, queryObj)
+            .then((response) => {
+                dispatch(searchSuccess(response.data));
             })
             .catch((err) => {
                 dispatch(searchError(err));
