@@ -44,7 +44,7 @@ async function getStoreById(store_id) {
         return response.data;
     } catch (error) {
         console.log(error);
-        return {status: error.response.status};
+        return { status: error.response.status };
     }
 }
 
@@ -83,7 +83,7 @@ async function getBarberReservations(store_id, barber_id) {
         return response.data;
     } catch (error) {
         console.log(error);
-        return {status: error.response.status};
+        return { status: error.response.status };
     }
 }
 
@@ -130,7 +130,7 @@ async function searchStore(count, body) {
         return response.data;
     } catch (error) {
         console.log(error);
-        return {status: error.response.status};
+        return { status: error.response.status };
     }
 }
 
@@ -163,7 +163,7 @@ async function getReviews(user_id) {
         return response.data;
     } catch (error) {
         console.log(error);
-        return {status: error.response.status};
+        return { status: error.response.status };
     }
 }
 
@@ -207,12 +207,13 @@ async function setReview(user_id, store_id, barber_id, review, rating) {
         throw Error("customer/setReview: rating is invalid");
     }
 
-    let body = {};
-    body.user_id = user_id;
-    body.store_id = store_id;
-    body.barber_id = barber_id;
-    body.review = review;
-    body.rating = rating;
+    let body = {
+        user_id,
+        store_id,
+        barber_id,
+        review,
+        rating,
+    };
 
     try {
         // TODO add authorization header
@@ -222,7 +223,7 @@ async function setReview(user_id, store_id, barber_id, review, rating) {
         return response.data;
     } catch (error) {
         console.log(error);
-        return {status: error.response.status};
+        return { status: error.response.status };
     }
 }
 
@@ -313,12 +314,13 @@ async function setReservation(user_id, store_id, barber_id, start_time, service)
         throw Error("customer/setReservation: service is invalid");
     }
 
-    let body = {};
-    body.user_id = user_id;
-    body.store_id = store_id;
-    body.barber_id = barber_id;
-    body.start_time = start_time;
-    body.service = service;
+    let body = {
+        user_id,
+        store_id,
+        barber_id,
+        start_time,
+        service,
+    };
 
     try {
         // TODO add authorization header
@@ -350,8 +352,9 @@ async function removeReservation(reservation_id) {
         throw Error("customer/removeReservation: reservation_id is invalid");
     }
 
-    let body = {};
-    body.reservation_id = reservation_id;
+    let body = {
+        reservation_id,
+    };
 
     try {
         // TODO add authorization header
