@@ -352,10 +352,6 @@ async function removeReservation(reservation_id) {
         throw Error("customer/removeReservation: reservation_id is invalid");
     }
 
-    let body = {
-        reservation_id,
-    };
-
     try {
         // TODO add authorization header
         const response = await instance.delete(

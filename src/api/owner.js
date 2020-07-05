@@ -44,7 +44,7 @@ async function getStoreById(store_id) {
         return response.data;
     } catch (error) {
         console.log(error);
-        return {status: error.response.status};
+        return { status: error.response.status };
     }
 }
 
@@ -83,7 +83,7 @@ async function getBarberReservations(store_id, barber_id) {
         return response.data;
     } catch (error) {
         console.log(error);
-        return {status: error.response.status};
+        return { status: error.response.status };
     }
 }
 
@@ -105,7 +105,7 @@ async function getBarberReservations(store_id, barber_id) {
  * Notes:    none
  *
  **************/
-async function registerBarber(name, description, picture, services) {
+async function registerBarber(name, description, picture, stores, services) {
     if (name.length === 0) {
         alert("owner/registerBarber: name is invalid");
         throw Error("owner/registerBarber: name is invalid");
@@ -127,12 +127,13 @@ async function registerBarber(name, description, picture, services) {
         throw Error("owner/registerBarber: services is invalid");
     }
 
-    let body = {};
-    body.name = name;
-    body.description = description;
-    body.picture = picture;
-    body.stores = stores;
-    body.services = services;
+    let body = {
+        name,
+        description,
+        picture,
+        stores,
+        services,
+    };
 
     try {
         const response = await instance.post("/owner/barber/", body);
@@ -141,7 +142,7 @@ async function registerBarber(name, description, picture, services) {
         return response.data;
     } catch (error) {
         console.log(error);
-        return {status: error.response.status};
+        return { status: error.response.status };
     }
 }
 
@@ -173,7 +174,22 @@ async function registerBarber(name, description, picture, services) {
  * Notes:    none
  *
  **************/
-async function registerStore(name, address, city, province, description, price, lat, lon, website, phone_number, pictures, services, hours, barbers) {
+async function registerStore(
+    name,
+    address,
+    city,
+    province,
+    description,
+    price,
+    lat,
+    lon,
+    website,
+    phone_number,
+    pictures,
+    services,
+    hours,
+    barbers
+) {
     if (name.length === 0) {
         alert("owner/registerStore: name is invalid");
         throw Error("owner/registerStore: name is invalid");
@@ -231,21 +247,22 @@ async function registerStore(name, address, city, province, description, price, 
         throw Error("owner/registerStore: barbers is invalid");
     }
 
-    let body = {};
-    body.name = name;
-    body.address = address;
-    body.city = city;
-    body.province = province;
-    body.description = description;
-    body.price = price;
-    body.lat = lat;
-    body.lon = lon;
-    body.website = website;
-    body.phone_number = phone_number;
-    body.pictures = pictures;
-    body.services = services;
-    body.hours = hours;
-    body.barbers = barbers;
+    let body = {
+        name,
+        address,
+        city,
+        province,
+        description,
+        price,
+        lat,
+        lon,
+        website,
+        phone_number,
+        pictures,
+        services,
+        hours,
+        barbers,
+    };
 
     try {
         const response = await instance.post("/owner/store/", body);
@@ -254,7 +271,7 @@ async function registerStore(name, address, city, province, description, price, 
         return response.data;
     } catch (error) {
         console.log(error);
-        return {status: error.response.status};
+        return { status: error.response.status };
     }
 }
 
