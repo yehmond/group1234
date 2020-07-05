@@ -2,6 +2,7 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
+import CardActions from "@material-ui/core/CardActions";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
@@ -96,18 +97,20 @@ export default function LargeCard({ id, name, services, cost, rating, address })
                     <Typography variant="body2" color="textSecondary" component="p">
                         {address}
                     </Typography>
-                    <br />
-                    <Button
-                        variant="contained"
-                        color="primary"
-                        disableElevation
-                        onClick={handleClickRequest}
-                    >
-                        <EventAvailableIcon />
-                        &nbsp; Request Appointment
-                    </Button>
                 </CardContent>
             </CardActionArea>
+            <CardActions className={classes.cardAction} disableSpacing>
+                <Button
+                    size="medium"
+                    color="primary"
+                    variant="contained"
+                    className={classes.button}
+                    onClick={handleClickRequest}
+                >
+                    <EventAvailableIcon />
+                    &nbsp;Request&nbsp;Appointment
+                </Button>
+            </CardActions>
         </Card>
     );
 }

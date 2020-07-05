@@ -24,15 +24,15 @@ export function searchError(msg) {
     };
 }
 
-export function search(body) {
+export function search(count, queryObj) {
     return (dispatch) => {
         dispatch(searchLoading());
-        searchStore(12, body)
-            .then((data) => {
-                dispatch(searchSuccess(data));
-            })
-            .catch((err) => {
-                dispatch(searchError(err));
-            });
+        searchStore(count, queryObj).then((response) => {
+            if (response.status === 200) {
+                dispatch(searchSuccess(response.stores));
+            } else {
+                dispatch(searchError(response.status));
+            }
+        });
     };
 }
