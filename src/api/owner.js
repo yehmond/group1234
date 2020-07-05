@@ -24,8 +24,9 @@ const instance = axios.create({
  *
  * Parms:    (string)     store_id    - store_id of the store to be returned
  *
- * Return:   response.data            - {store: {}, reservations: [], statistics: {}, reviews: []}
- *           response.status          - 200: successful
+ * Return:   SUCCESS            - {status: 200, store: {}, reservations: [], statistics: {}, reviews: []}
+ *           NOT FOUND          - {status: 404}
+ *           SERVER ERROR       - {status: 500}
  *
  * Notes:    none
  *
@@ -38,6 +39,7 @@ async function getStoreById(store_id) {
 
     try {
         const response = await instance.get("/owner/store/" + store_id);
+        response.data.status = response.status;
         console.log(response);
         return response.data;
     } catch (error) {
@@ -55,8 +57,9 @@ async function getStoreById(store_id) {
  * Parms:    (string)     store_id    - store_id of the current store for the barber
  *           (string)     barber_id   - barber_id of the barber details to be returned
  *
- * Return:   response.data            - {reservations: []}
- *           response.status          - 200: successful
+ * Return:   SUCCESS            - {status: 200, reservations: []}
+ *           NOT FOUND          - {status: 404}
+ *           SERVER ERROR       - {status: 500}
  *
  * Notes:    none
  *
@@ -75,6 +78,7 @@ async function getBarberReservations(store_id, barber_id) {
         const response = await instance.get(
             "/owner/barber/" + store_id + "/" + barber_id
         );
+        response.data.status = response.status;
         console.log(response);
         return response.data;
     } catch (error) {
@@ -148,10 +152,24 @@ async function registerBarber(name, description, picture, stores, services) {
  *
  * Purpose:  Returns store_id of the newly added store
  *
- * Parms:    (object)  store          - store object to register into database
+ * Parms:    (string)  name          - name of the store
+ *           (string)  address       - address of the store
+ *           (string)  city          - city of the store
+ *           (string)  province      - province of the store
+ *           (string)  description   - description of the store
+ *           (number)  price         - price range of the store
+ *           (number)  lat           - latitude of the store
+ *           (number)  lon           - longitude of the store
+ *           (string)  website       - website of the store
+ *           (string)  phone_number  - phone number of the store
+ *           (array[string])             pictures    - array of pictures in base64 string
+ *           (array[SERVICES_OFFERED])   services    - array of services
+ *           (array[{isOpen: boolean, from: string, to: string}]) hours   - store hours array size of 7, with hours in military 0000 to 2400 format
+ *           (array[string])             barbers     - array of barber_ids that works at the store, need to ensure ids are valid
  *
- * Return:   response.data            - {store_id: string}
- *           response.status          - 200: successful
+ * Return:   SUCCESS            - {status: 200, store_id: string}
+ *           NOT FOUND          - {status: 404}
+ *           SERVER ERROR       - {status: 500}
  *
  * Notes:    none
  *
@@ -229,7 +247,7 @@ async function registerStore(
         throw Error("owner/registerStore: barbers is invalid");
     }
 
-    let store = {
+    let body = {
         name,
         address,
         city,
@@ -247,7 +265,8 @@ async function registerStore(
     };
 
     try {
-        const response = await instance.post("/owner/store/", store);
+        const response = await instance.post("/owner/store/", body);
+        response.data.status = response.status;
         console.log(response);
         return response.data;
     } catch (error) {
