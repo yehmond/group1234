@@ -41,11 +41,8 @@ async function getStoreById(store_id) {
         console.log(response);
         return response.data;
     } catch (error) {
-        if (error.response) {
-            // TODO error handling
-            console.log(error.response.status);
-            console.log(error.response.data);
-        }
+        console.log(error);
+        return { status: error.response.status };
     }
 }
 
@@ -81,11 +78,67 @@ async function getBarberReservations(store_id, barber_id) {
         console.log(response);
         return response.data;
     } catch (error) {
-        if (error.response) {
-            // TODO error handling
-            console.log(error.response.status);
-            console.log(error.response.data);
-        }
+        console.log(error);
+        return { status: error.response.status };
+    }
+}
+
+/*************
+ *
+ * Name:     registerBarber
+ *
+ * Purpose:  Returns barber_id of the newly added barber
+ *
+ * Parms:    (string)  name          - name of the store
+ *           (string)  description   - description of the store
+ *           (string)  picture       - picture in base64 string
+ *           (array[{service: SERVICES_OFFERED, duration: number}])   services    - array of services along with the duration of its service
+ *
+ * Return:   SUCCESS            - {status: 200, barber_id: string}
+ *           NOT FOUND          - {status: 404}
+ *           SERVER ERROR       - {status: 500}
+ *
+ * Notes:    none
+ *
+ **************/
+async function registerBarber(name, description, picture, stores, services) {
+    if (name.length === 0) {
+        alert("owner/registerBarber: name is invalid");
+        throw Error("owner/registerBarber: name is invalid");
+    }
+    if (description.length === 0) {
+        alert("owner/registerBarber: description is invalid");
+        throw Error("owner/registerBarber: description is invalid");
+    }
+    if (picture.length === 0) {
+        alert("owner/registerBarber: picture is invalid");
+        throw Error("owner/registerBarber: picture is invalid");
+    }
+    if (stores.length === 0) {
+        alert("owner/registerBarber: stores is invalid");
+        throw Error("owner/registerBarber: stores is invalid");
+    }
+    if (services.length === 0) {
+        alert("owner/registerBarber: services is invalid");
+        throw Error("owner/registerBarber: services is invalid");
+    }
+
+    let body = {
+        name,
+        description,
+        picture,
+        stores,
+        services,
+    };
+
+    try {
+        const response = await instance.post("/owner/barber/", body);
+        response.data.status = response.status;
+        console.log(response);
+        return response.data;
+    } catch (error) {
+        console.log(error);
+        return { status: error.response.status };
     }
 }
 
@@ -103,23 +156,109 @@ async function getBarberReservations(store_id, barber_id) {
  * Notes:    none
  *
  **************/
-async function registerStore(store) {
-    // TODO need to change the param into params
+async function registerStore(
+    name,
+    address,
+    city,
+    province,
+    description,
+    price,
+    lat,
+    lon,
+    website,
+    phone_number,
+    pictures,
+    services,
+    hours,
+    barbers
+) {
+    if (name.length === 0) {
+        alert("owner/registerStore: name is invalid");
+        throw Error("owner/registerStore: name is invalid");
+    }
+    if (address.length === 0) {
+        alert("owner/registerStore: address is invalid");
+        throw Error("owner/registerStore: address is invalid");
+    }
+    if (city.length === 0) {
+        alert("owner/registerStore: city is invalid");
+        throw Error("owner/registerStore: city is invalid");
+    }
+    if (province.length === 0) {
+        alert("owner/registerStore: province is invalid");
+        throw Error("owner/registerStore: province is invalid");
+    }
+    if (description.length === 0) {
+        alert("owner/registerStore: description is invalid");
+        throw Error("owner/registerStore: description is invalid");
+    }
+    if (price.length === 0) {
+        alert("owner/registerStore: price is invalid");
+        throw Error("owner/registerStore: price is invalid");
+    }
+    if (lat.length === 0) {
+        alert("owner/registerStore: lat is invalid");
+        throw Error("owner/registerStore: lat is invalid");
+    }
+    if (lon.length === 0) {
+        alert("owner/registerStore: lon is invalid");
+        throw Error("owner/registerStore: lon is invalid");
+    }
+    if (website.length === 0) {
+        alert("owner/registerStore: website is invalid");
+        throw Error("owner/registerStore: website is invalid");
+    }
+    if (phone_number.length === 0) {
+        alert("owner/registerStore: phone_number is invalid");
+        throw Error("owner/registerStore: phone_number is invalid");
+    }
+    if (pictures.length === 0) {
+        alert("owner/registerStore: pictures is invalid");
+        throw Error("owner/registerStore: pictures is invalid");
+    }
+    if (services.length === 0) {
+        alert("owner/registerStore: services is invalid");
+        throw Error("owner/registerStore: services is invalid");
+    }
+    if (hours.length === 0) {
+        alert("owner/registerStore: hours is invalid");
+        throw Error("owner/registerStore: hours is invalid");
+    }
+    if (barbers.length === 0) {
+        alert("owner/registerStore: barbers is invalid");
+        throw Error("owner/registerStore: barbers is invalid");
+    }
+
+    let store = {
+        name,
+        address,
+        city,
+        province,
+        description,
+        price,
+        lat,
+        lon,
+        website,
+        phone_number,
+        pictures,
+        services,
+        hours,
+        barbers,
+    };
+
     try {
         const response = await instance.post("/owner/store/", store);
         console.log(response);
         return response.data;
     } catch (error) {
-        if (error.response) {
-            // TODO error handling
-            console.log(error.response.status);
-            console.log(error.response.data);
-        }
+        console.log(error);
+        return { status: error.response.status };
     }
 }
 
 export default {
     getStoreById,
     getBarberReservations,
+    registerBarber,
     registerStore,
 };
