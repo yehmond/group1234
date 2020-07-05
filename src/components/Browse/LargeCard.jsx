@@ -10,6 +10,7 @@ import salonPic from "../../images/salon.png";
 import Chip from "@material-ui/core/Chip";
 import { useHistory } from "react-router-dom";
 import Button from "@material-ui/core/Button";
+import EventAvailableIcon from "@material-ui/icons/EventAvailable";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -106,7 +107,8 @@ export default function LargeCard({ id, name, services, cost, rating, address })
                     className={classes.button}
                     onClick={handleClickRequest}
                 >
-                    Request Appointment
+                    <EventAvailableIcon />
+                    &nbsp;Request&nbsp;Appointment
                 </Button>
             </CardActions>
         </Card>

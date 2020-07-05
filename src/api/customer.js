@@ -143,7 +143,7 @@ async function searchStore(count, body) {
                 ],
                 cost: 3,
                 rating: 5,
-                address: "123 Main St.",
+                address: "#101-123 Robson St, Vancouver, BC",
             });
         }
         return { data: mockShops };

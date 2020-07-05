@@ -25,11 +25,12 @@ const useStyles = makeStyles((theme) => ({
     },
     filter: {
         padding: "2rem 1rem",
-        minWidth: "20rem",
+        width: "100%",
         [theme.breakpoints.up("md")]: {
             position: "sticky",
             alignSelf: "flex-start",
             top: 0,
+            width: "17rem",
         },
     },
     cards: {
