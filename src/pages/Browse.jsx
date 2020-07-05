@@ -7,7 +7,7 @@ import { search } from "../actions/searchActions";
 import Skeleton from "@material-ui/lab/Skeleton";
 import Pagination from "@material-ui/lab/Pagination";
 import PaginationItem from "@material-ui/lab/PaginationItem";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const searchCount = 20;
 
@@ -48,6 +48,7 @@ export default function Browse() {
     const filterState = useSelector((state) => state.filterState);
     const searchState = useSelector((state) => state.searchState);
     const dispatch = useDispatch();
+    const location = useLocation();
 
     useEffect(() => {
         const queryObj = {};
@@ -61,9 +62,13 @@ export default function Browse() {
         if (filterState.rating) {
             queryObj.city = filterState.city;
         }
+        if (new URLSearchParams(location.search).has("page")) {
+            const pageNum = new URLSearchParams(location.search).get("page");
+            queryObj.startIndex = (pageNum - 1) * searchCount;
+        }
 
         dispatch(search(searchCount, queryObj));
-    }, [filterState, dispatch]);
+    }, [filterState, location, dispatch]);
 
     const skeletons = [];
     for (let i = 0; i < 12; i++) {

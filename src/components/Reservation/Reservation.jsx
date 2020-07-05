@@ -5,6 +5,13 @@ import { InputLabel } from "@material-ui/core";
 import { Input } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
+import FormLabel from "@material-ui/core/FormLabel";
+import FormGroup from "@material-ui/core/FormGroup";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Checkbox from "@material-ui/core/Checkbox";
+import { SERVICES_OFFERED } from "../../utils/constants";
+// import { useDispatch } from "react-redux";
+// import { setService } from "../../actions/filterActions";
 
 const useStyles = makeStyles((theme) =>
     createStyles({
@@ -17,9 +24,6 @@ const useStyles = makeStyles((theme) =>
         formControl: {
             margin: theme.spacing(1),
             minWidth: 120,
-        },
-        selectEmpty: {
-            marginTop: theme.spacing(2),
         },
         container: {
             display: "block",
@@ -43,12 +47,27 @@ const useStyles = makeStyles((theme) =>
             paddingRight: "3rem",
             marginTop: "2rem",
         },
-        reserveHeader: {},
+        serviceSelection: {
+            paddingBottom: "2rem",
+        },
     })
 );
 
 export default function Reservation() {
     const classes = useStyles();
+
+    const [serviceState, setServiceState] = React.useState(
+        Object.fromEntries(SERVICES_OFFERED.map((service) => [service, false]))
+    );
+
+    const handleChange = (event) => {
+        const newServiceState = {
+            ...serviceState,
+            [event.target.name]: event.target.checked,
+        };
+        setServiceState(newServiceState);
+        // dispatch(setService(newServiceState));
+    };
 
     return (
         <div className={classes.wrapper}>
@@ -72,20 +91,43 @@ export default function Reservation() {
                 </FormControl>
             </div>
 
-            <body>
-                <form className={classes.container} noValidate>
-                    <TextField
-                        id="datetime-local"
-                        label="Available Time Slot"
-                        type="datetime-local"
-                        defaultValue="2020-06-06T10:30"
-                        className={classes.textField}
-                        InputLabelProps={{
-                            shrink: true,
-                        }}
-                    />
-                </form>
-            </body>
+            <form className={classes.container} noValidate>
+                <TextField
+                    id="datetime-local"
+                    label="Available Time Slot"
+                    type="datetime-local"
+                    defaultValue="2020-06-06T10:30"
+                    className={classes.textField}
+                    InputLabelProps={{
+                        shrink: true,
+                    }}
+                />
+            </form>
+
+            <div className={classes.serviceSelection}>
+                <FormControl component="fieldset" className={classes.formControl}>
+                    <FormLabel component="legend">
+                        Select the service(s) for this booking
+                    </FormLabel>
+                    <FormGroup>
+                        {SERVICES_OFFERED.map((service) => {
+                            return (
+                                <FormControlLabel
+                                    key={service}
+                                    control={
+                                        <Checkbox
+                                            checked={serviceState[service]}
+                                            onChange={handleChange}
+                                            name={service}
+                                        />
+                                    }
+                                    label={service}
+                                />
+                            );
+                        })}
+                    </FormGroup>
+                </FormControl>
+            </div>
 
             <div>
                 {/* TODO: submit form */}

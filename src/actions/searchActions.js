@@ -27,12 +27,12 @@ export function searchError(msg) {
 export function search(count, queryObj) {
     return (dispatch) => {
         dispatch(searchLoading());
-        searchStore(count, queryObj)
-            .then((response) => {
-                dispatch(searchSuccess(response.data));
-            })
-            .catch((err) => {
-                dispatch(searchError(err));
-            });
+        searchStore(count, queryObj).then((response) => {
+            if (response.status === 200) {
+                dispatch(searchSuccess(response.stores));
+            } else {
+                dispatch(searchError(response.status));
+            }
+        });
     };
 }
