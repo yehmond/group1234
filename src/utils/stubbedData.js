@@ -97,42 +97,42 @@ export const mockStore = {
 const event1 = {
     title: "Elvis Presley",
     start: moment("2020-07-01 09:30").toDate(),
-    end: moment("2020-07-01 09:30").add(30,'minutes').toDate(),
+    end: moment("2020-07-01 09:30").add(30, "minutes").toDate(),
     allDay: false,
-    barberId: '123'
-}
+    barberId: "123",
+};
 
 const event2 = {
     title: "Ringo Starr",
     start: moment("2020-07-01 12:30").toDate(),
-    end: moment("2020-07-01 12:30").add(60,'minutes').toDate(),
+    end: moment("2020-07-01 12:30").add(60, "minutes").toDate(),
     allDay: false,
-    barberId: '124'
-}
+    barberId: "124",
+};
 
 const event3 = {
     title: "John Lennon",
     start: moment("2020-07-02 10:00").toDate(),
-    end: moment("2020-07-02 10:30").add(30,'minutes').toDate(),
+    end: moment("2020-07-02 10:30").add(30, "minutes").toDate(),
     allDay: false,
-    barberId: '123'
-}
+    barberId: "123",
+};
 
 const event4 = {
     title: "Bob Saget",
     start: moment("2020-07-03 11:30").toDate(),
-    end: moment("2020-07-03 11:30").add(30,'minutes').toDate(),
+    end: moment("2020-07-03 11:30").add(30, "minutes").toDate(),
     allDay: false,
-    barberId: '124'
-}
+    barberId: "124",
+};
 
 const event5 = {
     title: "Ted Danson",
     start: moment("2020-07-01 15:30").toDate(),
-    end: moment("2020-07-01 15:30").add(45,'minutes').toDate(),
+    end: moment("2020-07-01 15:30").add(45, "minutes").toDate(),
     allDay: false,
-    barberId: '123'
-}
+    barberId: "123",
+};
 
 export const events = [event1, event2, event3, event4, event5];
 // export const resources = [
