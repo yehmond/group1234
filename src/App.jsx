@@ -11,6 +11,7 @@ import SignUpPage from "./pages/SignUpPage";
 import SignInPage from "./pages/SignInPage";
 import MyShops from "./pages/MyShops";
 
+
 function App() {
     return (
         <Router>

@@ -5,9 +5,13 @@ import AddBarber from "../components/MyShops/AddBarber/AddBarber";
 import ViewSchedule from "../components/MyShops/ViewSchedule/ViewSchedule";
 import ViewShop from "../components/MyShops/ViewShop/ViewShop";
 import Stats from "./Stats";
+import { useSelector } from "react-redux";
+import UserContext from "./UserContext";
 
 export default function MyShops() {
+    const authState = useSelector((state) => state.authState);
     return (
+        <UserContext.Provider value={authState.userId}>
         <Switch>
             <Route exact path="/stores">
                 <ShopsList />
@@ -25,5 +29,6 @@ export default function MyShops() {
                 <ViewShop />
             </Route>
         </Switch>
+        </UserContext.Provider>
     );
 }

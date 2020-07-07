@@ -187,8 +187,7 @@ async function registerStore(
     phone_number,
     pictures,
     services,
-    hours,
-    barbers
+    hours
 ) {
     if (name.length === 0) {
         alert("owner/registerStore: name is invalid");
@@ -242,10 +241,6 @@ async function registerStore(
         alert("owner/registerStore: hours is invalid");
         throw Error("owner/registerStore: hours is invalid");
     }
-    if (barbers.length === 0) {
-        alert("owner/registerStore: barbers is invalid");
-        throw Error("owner/registerStore: barbers is invalid");
-    }
 
     let body = {
         name,
@@ -260,8 +255,7 @@ async function registerStore(
         phone_number,
         pictures,
         services,
-        hours,
-        barbers,
+        hours
     };
 
     try {

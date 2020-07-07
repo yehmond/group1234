@@ -62,7 +62,6 @@ export function RenderAutocomplete(props) {
         <Autocomplete
             multiple
             id={props.id}
-            freeSolo
             options={props.options}
             onChange={props.handleChange}
             value={props.value}

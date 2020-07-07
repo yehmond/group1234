@@ -9,10 +9,12 @@ import _ from "lodash";
 import { convert24HrTo12Hr } from "../../utils/utils";
 import { Button } from "@material-ui/core";
 import { Link } from "react-router-dom";
+import DialogMessage from "../Dialog/Dialog";
 
 class RBSConfirm extends Component {
     constructor(props) {
         super(props);
+        console.log(this.props.barbershop);
         this.state = {
             clonedBS: _.omit(this.props.barbershop, [
                 "id",
@@ -22,8 +24,11 @@ class RBSConfirm extends Component {
                 "description",
             ]),
             isHoursDisp: false,
+            isSuccess: false,
+            isError: false
         };
         this.handleClickDisplayHours = this.handleClickDisplayHours.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     handleClickDisplayHours() {
@@ -35,6 +40,11 @@ class RBSConfirm extends Component {
         return day.isOpen
             ? convert24HrTo12Hr(day.from) + " to " + convert24HrTo12Hr(day.to)
             : "Closed";
+    }
+
+    handleSubmit() {
+        console.log(this.props.barbershop);
+        this.setState({isSuccess: true});
     }
 
     render() {
@@ -103,14 +113,15 @@ class RBSConfirm extends Component {
                             variant="contained"
                             color="primary"
                             type="button"
-                            component={Link}
-                            to={"/createshop/hours"}
-                            // onClick={this.handleSubmit}
+                            // component={Link}
+                            onClick={this.handleSubmit}
                         >
                             Confirm
                         </Button>
                     </div>
                 </div>
+                {this.state.isSuccess && (<DialogMessage title={'Success!'} link={'/stores'}  text={'The barbershop has been successfully registered!'}/>)}
+                {this.state.isError && (<DialogMessage title={'Error!'}  text={'The barbershop was not registered! Please try again.'}/>)}
             </div>
         );
     }

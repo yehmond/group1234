@@ -82,17 +82,30 @@ class StoreCard extends Component {
                     </CardActionArea>
                     <CardActions className={classes.iconWrapper}>
                         <Tooltip title="View Schedule">
-                            <Link to={`/stores/${shopID}/schedule`}>
+                            <Link
+                                to={{
+                                    pathname: `/stores/${shopID}/schedule`,
+                                    id: shopID,
+                                }}
+                            >
                                 <EventIcon className={classes.icon} />
                             </Link>
                         </Tooltip>
                         <Tooltip title="Add/Edit Barbers">
-                            <Link to={`/stores/${shopID}/addbarber`}>
+                            <Link  to={{
+                                pathname: `/stores/${shopID}/addbarber`,
+                                id: shopID,
+                            }}>
                                 <PersonAddIcon className={classes.icon} />
                             </Link>
                         </Tooltip>
                         <Tooltip title="View Statistics">
-                            <Link to={`/stores/${shopID}/stats`}>
+                            <Link
+                                to={{
+                                    pathname: `/stores/${shopID}/stats`,
+                                    id: shopID,
+                                }}
+                            >
                                 <EqualizerIcon className={classes.icon} />
                             </Link>
                         </Tooltip>
