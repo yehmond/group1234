@@ -1,8 +1,8 @@
 import React from "react";
 import MaterialTable from "material-table";
 import { createStyles, makeStyles } from "@material-ui/core/styles";
-import GradeIcon from '@material-ui/icons/Grade';
-import { useHistory } from 'react-router-dom';
+import GradeIcon from "@material-ui/icons/Grade";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles(() =>
     createStyles({
@@ -48,7 +48,7 @@ export default function PastReservations() {
 
     const handleRatingClick = (barbershopID) => {
         history.push("/stores/" + barbershopID);
-    }
+    };
 
     return (
         <div className={classes.wrapper}>
@@ -89,10 +89,11 @@ export default function PastReservations() {
                     }}
                     actions={[
                         {
-                          icon: GradeIcon,
-                          tooltip: 'Rate',
-                          onClick: (event, rowData) => handleRatingClick(rowData.barbershopID)
-                        }
+                            icon: GradeIcon,
+                            tooltip: "Rate",
+                            onClick: (event, rowData) =>
+                                handleRatingClick(rowData.barbershopID),
+                        },
                     ]}
                 />
             </div>
