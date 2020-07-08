@@ -10,8 +10,8 @@ import FormGroup from "@material-ui/core/FormGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import { SERVICES_OFFERED } from "../../utils/constants";
-import MenuItem from '@material-ui/core/MenuItem';
-import Select from '@material-ui/core/Select';
+import MenuItem from "@material-ui/core/MenuItem";
+import Select from "@material-ui/core/Select";
 // import { useDispatch } from "react-redux";
 // import { setService } from "../../actions/filterActions";
 
@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) =>
         },
         formControl: {
             minWidth: 120,
-            marginTop:"2rem",
+            marginTop: "2rem",
             marginBottom: "0.5rem",
         },
         container: {
@@ -63,7 +63,7 @@ export default function Reservation() {
         Object.fromEntries(SERVICES_OFFERED.map((service) => [service, false]))
     );
 
-    const [barberName, setBarber] = React.useState('');
+    const [barberName, setBarber] = React.useState("");
 
     const handleBarberChange = (event) => {
         setBarber(event.target.value);
@@ -116,18 +116,17 @@ export default function Reservation() {
                 <FormControl className={classes.formControl}>
                     <InputLabel id="demo-simple-select-label">Barber</InputLabel>
                     <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    value={barberName}
-                    onChange={handleBarberChange}
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
+                        value={barberName}
+                        onChange={handleBarberChange}
                     >
-                    <MenuItem value={"Tommy"}>Tommmy</MenuItem>
-                    <MenuItem value={"Diasy"}>Daisy</MenuItem>
-                    <MenuItem value={"Harry"}>Harry</MenuItem>
+                        <MenuItem value={"Tommy"}>Tommmy</MenuItem>
+                        <MenuItem value={"Diasy"}>Daisy</MenuItem>
+                        <MenuItem value={"Harry"}>Harry</MenuItem>
                     </Select>
                 </FormControl>
             </div>
-            
 
             <div className={classes.serviceSelection}>
                 <FormControl component="fieldset" className={classes.formControl}>
