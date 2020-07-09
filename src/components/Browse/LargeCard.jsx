@@ -29,8 +29,8 @@ const useStyles = makeStyles((theme) => ({
         },
     },
     cover: {
-        width: "13rem",
-        height: "13rem",
+        width: "12rem",
+        height: "12rem",
         objectFit: "cover",
         [theme.breakpoints.down("xs")]: {
             width: "100%",
@@ -45,12 +45,12 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function LargeCard({ id, name, services, cost, rating, address }) {
+export default function LargeCard({ id, name, services, price, rating, address }) {
     const classes = useStyles();
     const history = useHistory();
 
     let dollarSigns = "";
-    for (let i = 0; i < cost; i++) {
+    for (let i = 0; i < price; i++) {
         dollarSigns += "$";
     }
 

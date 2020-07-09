@@ -122,36 +122,15 @@ async function searchStore(count, body) {
         .join("&");
 
     try {
-        // const response = await instance.get(
-        //     "/customer/store/search/" + count + "/?" + query
-        // );
-        // response.data.status = response.status;
-        // console.log(response);
-        // return response.data;
-
-        //  Mock data
-        const mockShops = [];
-        for (let i = 0; i < 20; i++) {
-            mockShops.push({
-                id: i,
-                name: "Citrus Hair Salon",
-                services: [
-                    "Haircut",
-                    "Shaving",
-                    "Hair color",
-                    "Eyebrows",
-                    "Nails",
-                    "Waxing",
-                ],
-                cost: 3,
-                rating: 5,
-                address: "#101-123 Robson St, Vancouver, BC",
-            });
-        }
-        return { status: 200, stores: mockShops };
+        const response = await instance.get(
+            "/customer/store/search/" + count + "/?" + query
+        );
+        response.data.status = response.status;
+        console.log(response);
+        return response.data;
     } catch (error) {
         console.log(error);
-        return { status: error.response?.status };
+        return { status: error };
     }
 }
 

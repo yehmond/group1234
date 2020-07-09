@@ -1,4 +1,7 @@
 import { searchStore } from "../api/customer";
+import { RESULTS_PER_PAGE } from "../pages/Browse";
+import { parseSearchURL } from "../utils/utils";
+import { SERVICES_OFFERED } from "../utils/constants";
 
 export const SEARCH_LOADING = "SEARCH_LOADING";
 export const SEARCH_SUCCESS = "SEARCH_SUCCESS";
@@ -17,21 +20,34 @@ export function searchSuccess(data) {
     };
 }
 
-export function searchError(msg) {
+export function searchError(error) {
     return {
         type: SEARCH_ERROR,
-        msg,
+        error,
     };
 }
 
-export function search(count, queryObj) {
+export function search() {
+    const queryObj = parseSearchURL();
+    if (queryObj.price?.length === 0) {
+        queryObj.price = [1, 2, 3];
+    }
+
+    if (queryObj.services?.length === 0) {
+        queryObj.services = SERVICES_OFFERED;
+    }
+
+    if ("page" in queryObj) {
+        queryObj.startIndex = (queryObj.page - 1) * RESULTS_PER_PAGE;
+    }
+
     return (dispatch) => {
         dispatch(searchLoading());
-        searchStore(count, queryObj).then((response) => {
+        searchStore(RESULTS_PER_PAGE, queryObj).then((response) => {
             if (response.status === 200) {
-                dispatch(searchSuccess(response.stores));
+                dispatch(searchSuccess(response));
             } else {
-                dispatch(searchError(response.status));
+                dispatch(searchError(response));
             }
         });
     };

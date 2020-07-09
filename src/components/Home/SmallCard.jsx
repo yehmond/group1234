@@ -32,7 +32,7 @@ const useStyles = makeStyles({
     },
 });
 
-export default function SmallCard({ shopId, name, services, cost, rating }) {
+export default function SmallCard({ shopId, name, services, price, rating }) {
     const classes = useStyles();
     const history = useHistory();
 
@@ -45,7 +45,7 @@ export default function SmallCard({ shopId, name, services, cost, rating }) {
     }
 
     let dollarSigns = "";
-    for (let i = 0; i < cost; i++) {
+    for (let i = 0; i < price; i++) {
         dollarSigns += "$";
     }
 

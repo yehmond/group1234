@@ -5,11 +5,10 @@ import { makeStyles } from "@material-ui/core/styles";
 import { useSelector, useDispatch } from "react-redux";
 import { search } from "../actions/searchActions";
 import Skeleton from "@material-ui/lab/Skeleton";
-import Pagination from "@material-ui/lab/Pagination";
-import PaginationItem from "@material-ui/lab/PaginationItem";
-import { Link, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+import Pages from "../components/Browse/Pages";
 
-const searchCount = 20;
+export const RESULTS_PER_PAGE = 10;
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -23,16 +22,6 @@ const useStyles = makeStyles((theme) => ({
         height: "12rem",
         borderRadius: "5px",
     },
-    filter: {
-        padding: "2rem 1rem",
-        width: "100%",
-        [theme.breakpoints.up("md")]: {
-            position: "sticky",
-            alignSelf: "flex-start",
-            top: 0,
-            width: "17rem",
-        },
-    },
     cards: {
         flexGrow: 1,
     },
@@ -45,41 +34,17 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Browse() {
     const classes = useStyles();
-    const filterState = useSelector((state) => state.filterState);
     const searchState = useSelector((state) => state.searchState);
     const dispatch = useDispatch();
     const location = useLocation();
 
     useEffect(() => {
-        const queryObj = {};
-
-        if (filterState.price) {
-            queryObj.price = filterState.price;
-        }
-        if (filterState.rating) {
-            queryObj.rating = filterState.rating;
-        }
-        if (filterState.rating) {
-            queryObj.city = filterState.city;
-        }
-        if (new URLSearchParams(location.search).has("page")) {
-            const pageNum = new URLSearchParams(location.search).get("page");
-            queryObj.startIndex = (pageNum - 1) * searchCount;
-        }
-
-        dispatch(search(searchCount, queryObj));
-    }, [filterState, location, dispatch]);
+        dispatch(search());
+    }, [location, dispatch]);
 
     const skeletons = [];
     for (let i = 0; i < 12; i++) {
-        skeletons.push(
-            <Skeleton
-                key={i}
-                variant="rect"
-                animation="wave"
-                className={classes.skeleton}
-            />
-        );
+        skeletons.push(i);
     }
 
     return (
@@ -89,38 +54,33 @@ export default function Browse() {
             </div>
             <div className={classes.cards}>
                 {searchState.status !== "success" &&
-                    skeletons.map((skeleton) => skeleton)}
+                    skeletons.map((id, i) => (
+                        <Skeleton
+                            key={i}
+                            variant="rect"
+                            animation="wave"
+                            className={classes.skeleton}
+                        />
+                    ))}
+
                 {searchState.status === "success" &&
-                    searchState.data.map(
-                        ({ id, name, services, cost, rating, address }) => {
+                    searchState.data?.stores.length > 0 &&
+                    searchState.data?.stores.map(
+                        ({ store_id, name, services, price, rating, address }) => {
                             return (
                                 <BrowseCards
-                                    key={id}
-                                    id={id}
+                                    key={store_id}
+                                    id={store_id}
                                     name={name}
                                     services={services}
-                                    cost={cost}
+                                    price={price}
                                     rating={rating}
                                     address={address}
                                 />
                             );
                         }
                     )}
-                <div className={classes.paginationContainer}>
-                    <Pagination
-                        count={10}
-                        size="large"
-                        renderItem={(item) => (
-                            <PaginationItem
-                                component={Link}
-                                to={`/browse${
-                                    item.page === 1 ? "" : `?page=${item.page}`
-                                }`}
-                                {...item}
-                            />
-                        )}
-                    />
-                </div>
+                {searchState.data?.stores.length > 0 && <Pages />}
             </div>
         </div>
     );
