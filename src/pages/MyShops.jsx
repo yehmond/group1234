@@ -12,23 +12,23 @@ export default function MyShops() {
     const authState = useSelector((state) => state.authState);
     return (
         <UserContext.Provider value={authState.userId}>
-        <Switch>
-            <Route exact path="/stores">
-                <ShopsList />
-            </Route>
-            <Route path="/stores/:storeID/addbarber">
-                <AddBarber />
-            </Route>
-            <Route path="/stores/:storeID/schedule">
-                <ViewSchedule />
-            </Route>
-            <Route path="/stores/:storeID/stats">
-                <Stats />
-            </Route>
-            <Route eaxct path="/stores/:storeID">
-                <ViewShop />
-            </Route>
-        </Switch>
+            <Switch>
+                <Route exact path="/stores">
+                    <ShopsList />
+                </Route>
+                <Route path="/stores/:storeID/addbarber">
+                    <AddBarber />
+                </Route>
+                <Route path="/stores/:storeID/schedule">
+                    <ViewSchedule />
+                </Route>
+                <Route path="/stores/:storeID/stats">
+                    <Stats />
+                </Route>
+                <Route eaxct path="/stores/:storeID">
+                    <ViewShop />
+                </Route>
+            </Switch>
         </UserContext.Provider>
     );
 }

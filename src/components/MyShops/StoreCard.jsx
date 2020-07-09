@@ -65,7 +65,10 @@ class StoreCard extends Component {
                         </Link>
                         <CardContent>
                             <Link
-                                to={`/stores/${shopID}`}
+                                to={{
+                                    pathname: `/stores/${shopID}`,
+                                    id: shopID,
+                                }}
                                 style={{ textDecoration: "none" }}
                             >
                                 <Tooltip title="View shop information">
@@ -92,10 +95,12 @@ class StoreCard extends Component {
                             </Link>
                         </Tooltip>
                         <Tooltip title="Add/Edit Barbers">
-                            <Link  to={{
-                                pathname: `/stores/${shopID}/addbarber`,
-                                id: shopID,
-                            }}>
+                            <Link
+                                to={{
+                                    pathname: `/stores/${shopID}/addbarber`,
+                                    id: shopID,
+                                }}
+                            >
                                 <PersonAddIcon className={classes.icon} />
                             </Link>
                         </Tooltip>

@@ -34,7 +34,7 @@ class AddBarber extends Component {
             hours: initializeHours(),
             storeId: this.props.match.params.storeID,
             submitSuccess: false,
-            submitError: false
+            submitError: false,
         };
         this.isFormValid = this.isFormValid.bind(this);
         this.handleTextChange = this.handleTextChange.bind(this);
@@ -42,7 +42,6 @@ class AddBarber extends Component {
         this.handleDropZoneChange = this.handleDropZoneChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
-
 
     handleTextChange(event) {
         const {
@@ -62,18 +61,25 @@ class AddBarber extends Component {
     handleSubmit() {
         // tbd
         console.log(this.state);
-        this.setState({submitSuccess: true})
+        this.setState({ submitSuccess: true });
     }
 
     isFormValid() {
         return (
-            !_.some(_.omit(this.state, "photo", "timeslotValue", "submitSuccess", "submitError"), _.isEmpty) &&
-            this.state.timeslotValue !== 0
+            !_.some(
+                _.omit(
+                    this.state,
+                    "photo",
+                    "timeslotValue",
+                    "submitSuccess",
+                    "submitError"
+                ),
+                _.isEmpty
+            ) && this.state.timeslotValue !== 0
         );
     }
 
     render() {
-
         return (
             <div className="page-content">
                 <h1> Add Barber</h1>
@@ -161,8 +167,19 @@ class AddBarber extends Component {
                         </Button>
                     </div>
                 </form>
-                {this.state.submitSuccess && (<DialogMessage title={'Success!'} link={'/stores'}  text={'The barber has been successfully registered!'}/>)}
-                {this.state.submitError && (<DialogMessage title={'Error!'}  text={'The barber was not registered! Please try again.'}/>)}
+                {this.state.submitSuccess && (
+                    <DialogMessage
+                        title={"Success!"}
+                        link={"/stores"}
+                        text={"The barber has been successfully registered!"}
+                    />
+                )}
+                {this.state.submitError && (
+                    <DialogMessage
+                        title={"Error!"}
+                        text={"The barber was not registered! Please try again."}
+                    />
+                )}
             </div>
         );
     }

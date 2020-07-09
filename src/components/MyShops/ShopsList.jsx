@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import StoreCard from "./StoreCard";
 import { makeStyles } from "@material-ui/core";
-import AddCircleIcon from '@material-ui/icons/AddCircle';
+import AddCircleIcon from "@material-ui/icons/AddCircle";
 import Tooltip from "@material-ui/core/Tooltip";
 import { Link } from "react-router-dom";
 import Loading from "../Loading/Loading";
@@ -30,21 +30,21 @@ const useStyles = makeStyles((theme) => ({
         padding: "3rem 1rem",
     },
     icon: {
-        fill: 'var(--primary-dark)',
-        fontSize: '3.5rem',
-        placeSelf: 'center',
-        '&:hover': {
-            cursor: 'pointer'
-        }
+        fill: "var(--primary-dark)",
+        fontSize: "3.5rem",
+        placeSelf: "center",
+        "&:hover": {
+            cursor: "pointer",
+        },
     },
     header: {
-        display: 'inline-flex'
+        display: "inline-flex",
     },
     title: {
-        display: 'grid',
-        placeSelf: 'center',
-        paddingRight: '20px'
-    }
+        display: "grid",
+        placeSelf: "center",
+        paddingRight: "20px",
+    },
 }));
 
 const mockShops = [];
@@ -55,7 +55,6 @@ for (let i = 0; i < 4; i++) {
     });
 }
 
-
 export default function ShopsList() {
     const classes = useStyles();
     const user = useContext(UserContext);
@@ -64,28 +63,27 @@ export default function ShopsList() {
     //     setShops(response);
     // })
     setTimeout(() => {
-        setShops(mockShops)
+        setShops(mockShops);
     }, 2000);
     if (shops) {
-    return (
-        <div className={classes.container}>
-            <div className={classes.header}>
-                <h1 className={classes.title}>My Shops</h1>
-                <Tooltip title={'Add Barbershop'}>
-                    <Link to={'/createshop'}>
-                        <AddCircleIcon className={classes.icon}/>
-                    </Link>
-                </Tooltip>
+        return (
+            <div className={classes.container}>
+                <div className={classes.header}>
+                    <h1 className={classes.title}>My Shops</h1>
+                    <Tooltip title={"Add Barbershop"}>
+                        <Link to={"/createshop"}>
+                            <AddCircleIcon className={classes.icon} />
+                        </Link>
+                    </Tooltip>
+                </div>
+                <div className={classes.grid}>
+                    {shops.map(({ id, name }) => {
+                        return <StoreCard key={id} shopID={id} name={name} />;
+                    })}
+                </div>
             </div>
-            <div className={classes.grid}>
-                {shops.map(({ id, name }) => {
-                    return <StoreCard key={id} shopID={id} name={name}/>;
-                })}
-
-            </div>
-        </div>
-    );
-} else {
-        return <Loading/>
+        );
+    } else {
+        return <Loading />;
     }
 }

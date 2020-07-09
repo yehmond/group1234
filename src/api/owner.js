@@ -31,7 +31,7 @@ const instance = axios.create({
  * Notes:    none
  *
  **************/
-async function getStoreById(store_id) {
+export async function getStoreById(store_id) {
     if (store_id.length === 0) {
         alert("owner/getStoreById: store_id is invalid");
         throw Error("owner/getStoreById: store_id is invalid");
@@ -255,7 +255,7 @@ async function registerStore(
         phone_number,
         pictures,
         services,
-        hours
+        hours,
     };
 
     try {

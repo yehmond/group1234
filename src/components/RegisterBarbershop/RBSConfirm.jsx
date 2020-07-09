@@ -25,7 +25,7 @@ class RBSConfirm extends Component {
             ]),
             isHoursDisp: false,
             isSuccess: false,
-            isError: false
+            isError: false,
         };
         this.handleClickDisplayHours = this.handleClickDisplayHours.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -44,7 +44,7 @@ class RBSConfirm extends Component {
 
     handleSubmit() {
         console.log(this.props.barbershop);
-        this.setState({isSuccess: true});
+        this.setState({ isSuccess: true });
     }
 
     render() {
@@ -120,8 +120,21 @@ class RBSConfirm extends Component {
                         </Button>
                     </div>
                 </div>
-                {this.state.isSuccess && (<DialogMessage title={'Success!'} link={'/stores'}  text={'The barbershop has been successfully registered!'}/>)}
-                {this.state.isError && (<DialogMessage title={'Error!'}  text={'The barbershop was not registered! Please try again.'}/>)}
+                {this.state.isSuccess && (
+                    <DialogMessage
+                        title={"Success!"}
+                        link={"/stores"}
+                        text={"The barbershop has been successfully registered!"}
+                    />
+                )}
+                {this.state.isError && (
+                    <DialogMessage
+                        title={"Error!"}
+                        text={
+                            "The barbershop was not registered! Please try again."
+                        }
+                    />
+                )}
             </div>
         );
     }

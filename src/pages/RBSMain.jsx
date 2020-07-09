@@ -68,7 +68,7 @@ class RBSMain extends Component {
 
 const mapState = (state) => {
     const authState = state.authState;
-    return {user: authState.userId};
-}
+    return { user: authState.userId };
+};
 
 export default connect(mapState)(RBSMain);
