@@ -8,20 +8,17 @@ export default function searchReducer(state = {}, action) {
     switch (action.type) {
         case SEARCH_LOADING: {
             return {
-                ...state,
                 status: "loading",
             };
         }
         case SEARCH_ERROR:
             return {
                 ...state,
-                msg: action.msg,
+                error: action.error,
                 status: "error",
             };
         case SEARCH_SUCCESS:
             return {
-                ...state,
-                msg: "",
                 data: action.data,
                 status: "success",
             };

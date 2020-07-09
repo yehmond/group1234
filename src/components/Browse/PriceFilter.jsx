@@ -2,34 +2,31 @@ import React, { useState, useEffect } from "react";
 import Button from "@material-ui/core/Button";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 import Typography from "@material-ui/core/Typography";
-import { useDispatch } from "react-redux";
-import { setPrice } from "../../actions/filterActions";
+import { parseSearchURL, setQueryString } from "../../utils/utils";
+import { useLocation, useHistory } from "react-router-dom";
 
 export default function PriceFilter() {
-    const dispatch = useDispatch();
-    const [priceState, setPriceState] = useState({
-        1: "outlined",
-        2: "outlined",
-        3: "outlined",
-    });
-
-    function handleClick(num) {
-        setPriceState({
-            ...priceState,
-            [num]: priceState[num] === "outlined" ? "contained" : "outlined",
-        });
-    }
+    const location = useLocation();
+    const history = useHistory();
+    const [priceState, setPriceState] = useState([]);
 
     useEffect(() => {
-        const newPrice = Object.keys(priceState).reduce((acc, key) => {
-            if (priceState[key] === "contained") {
-                acc.push(Number(key));
-            }
-            return acc;
-        }, []);
+        const { price } = parseSearchURL();
+        if (price?.length > 0) {
+            setPriceState(price);
+        }
+    }, [location]);
 
-        dispatch(setPrice(newPrice));
-    }, [priceState, dispatch]);
+    function handleClick(num) {
+        let newPriceState = [];
+        if (priceState.includes(num)) {
+            newPriceState = priceState.filter((p) => p !== num);
+        } else {
+            newPriceState = [...priceState, num];
+        }
+        setPriceState(newPriceState);
+        setQueryString({ price: newPriceState }, history, true);
+    }
 
     return (
         <div>
@@ -42,13 +39,22 @@ export default function PriceFilter() {
                 fullWidth
                 disableElevation
             >
-                <Button onClick={() => handleClick(1)} variant={priceState["1"]}>
+                <Button
+                    onClick={() => handleClick(1)}
+                    variant={priceState.includes(1) ? "contained" : "outlined"}
+                >
                     $
                 </Button>
-                <Button onClick={() => handleClick(2)} variant={priceState["2"]}>
+                <Button
+                    onClick={() => handleClick(2)}
+                    variant={priceState.includes(2) ? "contained" : "outlined"}
+                >
                     $$
                 </Button>
-                <Button onClick={() => handleClick(3)} variant={priceState["3"]}>
+                <Button
+                    onClick={() => handleClick(3)}
+                    variant={priceState.includes(3) ? "contained" : "outlined"}
+                >
                     $$$
                 </Button>
             </ButtonGroup>

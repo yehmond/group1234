@@ -3,7 +3,14 @@ import { useWindowSize } from "../../utils/utils";
 import LargeCard from "./LargeCard";
 import SmallCard from "../Home/SmallCard";
 
-export default function BrowseCards({ id, name, services, cost, rating, address }) {
+export default function BrowseCards({
+    id,
+    name,
+    services,
+    price,
+    rating,
+    address,
+}) {
     const size = useWindowSize();
 
     if (size.width > 700) {
@@ -13,7 +20,7 @@ export default function BrowseCards({ id, name, services, cost, rating, address 
                 id={id}
                 name={name}
                 services={services}
-                cost={cost}
+                price={price}
                 rating={rating}
                 address={address}
             />
@@ -26,7 +33,7 @@ export default function BrowseCards({ id, name, services, cost, rating, address 
                     id={id}
                     name={name}
                     services={services}
-                    cost={cost}
+                    price={price}
                     rating={rating}
                     address={address}
                 />

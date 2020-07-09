@@ -4,30 +4,32 @@ import FormGroup from "@material-ui/core/FormGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import Typography from "@material-ui/core/Typography";
-import { useDispatch } from "react-redux";
-import { setService } from "../../actions/filterActions";
 import { SERVICES_OFFERED } from "../../utils/constants";
+import { parseSearchURL, setQueryString } from "../../utils/utils";
+import { useLocation, useHistory } from "react-router-dom";
 
 export default function ServiceFilter() {
-    const dispatch = useDispatch();
-    const [serviceState, setServiceState] = useState(
-        Object.fromEntries(SERVICES_OFFERED.map((service) => [service, false]))
-    );
-
-    const handleChange = (event) => {
-        const newServiceState = {
-            ...serviceState,
-            [event.target.name]: event.target.checked,
-        };
-        setServiceState(newServiceState);
-    };
+    const location = useLocation();
+    const history = useHistory();
+    const [serviceState, setServiceState] = useState([]);
 
     useEffect(() => {
-        const serviceArr = Object.keys(serviceState).filter(
-            (key) => serviceState[key]
-        );
-        dispatch(setService(serviceArr));
-    }, [serviceState, dispatch]);
+        const { service } = parseSearchURL();
+        if (service) {
+            setServiceState(service);
+        }
+    }, [location]);
+
+    function handleChange(event) {
+        let newServiceState = [];
+        if (serviceState.includes(event.target.name)) {
+            newServiceState = serviceState.filter((s) => s !== event.target.name);
+        } else {
+            newServiceState = [...serviceState, event.target.name];
+        }
+        setServiceState(newServiceState);
+        setQueryString({ services: newServiceState }, history, true);
+    }
 
     return (
         <div>
@@ -40,7 +42,7 @@ export default function ServiceFilter() {
                                 key={service}
                                 control={
                                     <Checkbox
-                                        checked={serviceState[service]}
+                                        checked={serviceState.includes(service)}
                                         onChange={handleChange}
                                         name={service}
                                     />

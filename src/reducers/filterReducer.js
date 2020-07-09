@@ -1,4 +1,4 @@
-import { SET_PRICE, SET_RATING, SET_SERVICE } from "../actions/filterActions";
+import { SET_PRICE, SET_RATING, SET_SERVICES } from "../actions/filterActions";
 
 const initState = {
     price: [],
@@ -14,7 +14,7 @@ export default function filterReducer(initialState = initState, action) {
                 price: action.price,
             };
         }
-        case SET_SERVICE:
+        case SET_SERVICES:
             return {
                 ...initialState,
                 services: action.services,
