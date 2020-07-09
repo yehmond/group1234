@@ -52,6 +52,7 @@ class RBSForm extends Component {
     }
 
     handleDropZoneChange(files) {
+        console.log(files);
         this.setState({ photos: files });
     }
 

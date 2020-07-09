@@ -18,6 +18,7 @@ import _ from "lodash";
 import UserContext from "../../../pages/UserContext";
 import { withRouter } from "react-router-dom";
 import DialogMessage from "../../Dialog/Dialog";
+import { registerBarber } from "../../../api/owner";
 
 class AddBarber extends Component {
     static contextType = UserContext;
@@ -58,10 +59,34 @@ class AddBarber extends Component {
         this.setState({ photo: files });
     }
 
+    specialitiesToServices(){
+        let ret = [];
+        for(const service of this.state.specialties){
+            ret.push({service: service, duration: this.state.timeslotValue});
+        }
+        return ret;
+    }
+
+    hoursToDate(){
+        let newHrs = []
+        for(let day in this.state.hours) {
+            if(!day.isOpen) {
+                newHrs.push({from: "0000", to: "0000"})
+            } else {
+                newHrs.push(day);
+            }
+        }
+        console.log(newHrs);
+        return newHrs;
+    }
+
+
     handleSubmit() {
-        // tbd
-        console.log(this.state);
-        this.setState({ submitSuccess: true });
+        registerBarber(this.state.firstName + " " + this.state.lastName, this.state.profile, this.state.photo[0], this.specialitiesToServices(), [this.state.storeId],this.hoursToDate()).then((response) => {
+            this.setState({submitSuccess: true});
+        }).catch((reject) => {
+            this.setState({submitError: true});
+        })
     }
 
     isFormValid() {

@@ -33,19 +33,19 @@ const instance = axios.create({
  * Notes:    The function will return an array regardless of amount of entries returned
  *
  **************/
-async function getStore(body) {
+export async function getStore(body) {
     if (!body.hasOwnProperty("store_id") && !body.hasOwnProperty("owner_id")) {
         alert("owner/getStore: missing input parameters");
         return {};
     }
 
     try {
-        const response = await instance.get("/store", body);
+        const response = await instance.get("/store", { params: body });
         console.log(response);
         return response.data;
     } catch (error) {
         console.log(error);
-        return {};
+        return [];
     }
 }
 
@@ -74,7 +74,7 @@ async function getStore(body) {
  * Notes:    none
  *
  **************/
-async function registerStore(
+export async function registerStore(
     owner_id,
     name,
     address,
@@ -179,14 +179,14 @@ async function registerStore(
  * Notes:    The function will return an array regardless of amount of entries returned
  *
  **************/
-async function getBarber(body) {
+export async function getBarber(body) {
     if (!body.hasOwnProperty("barber_id") && !body.hasOwnProperty("store_id")) {
         alert("owner/getBarber: missing input parameters");
         return {};
     }
 
     try {
-        const response = await instance.get("/barber", body);
+        const response = await instance.get("/barber", { params: body });
         console.log(response);
         return response.data;
     } catch (error) {
@@ -215,7 +215,7 @@ async function getBarber(body) {
  * Notes:    none
  *
  **************/
-async function registerBarber(
+export async function registerBarber(
     name,
     description,
     picture,
@@ -267,9 +267,3 @@ async function registerBarber(
     }
 }
 
-export default {
-    getStore,
-    getBarber,
-    registerBarber,
-    registerStore,
-};

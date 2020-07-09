@@ -65,15 +65,15 @@ export default function BarberCard(props) {
                 <Typography variant="h2">{props.barber.name}</Typography>
                 <p>{props.barber.description}</p>
                 <div>
-                    {props.barber.specialties.map((service) => {
+                    {props.barber.services.map((service) => {
                         return (
-                            <Chip label={service} color="primary" key={service} />
+                            <Chip label={service.service} color="primary" key={service.service} />
                         );
                     })}
                 </div>
                 <div className={classes.time}>
                     <TimerIcon />
-                    <span>{props.barber.timeslot}</span>
+                    <span>{props.barber.services[0].duration}</span>
                 </div>
                 <div className={classes.buttonContainer}>
                     {role === "CUSTOMER" && (

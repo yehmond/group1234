@@ -109,15 +109,25 @@ export function RenderTimePicker(props) {
 }
 
 export function RenderDropzone(props) {
+    const onDropHandler = (files) => {
+        const file = files[0]
+        const reader = new FileReader();
+        reader.onload = (event) => {
+            files[0] = event.target.result;
+        };
+        reader.readAsDataURL(file);
+        props.handleChange(files);
+    }
     return (
         <div>
             <h4>{props.label}</h4>
             <DropzoneArea
                 acceptedFiles={props.acceptedFiles}
                 dropzoneText={props.dropzoneText}
-                onChange={props.handleChange}
+                // onChange={props.handleChange}
                 initialFiles={props.value}
                 filesLimit={props.filesLimit}
+                onDrop={onDropHandler}
             />
         </div>
     );
@@ -131,7 +141,7 @@ export function RenderRating(props) {
                 name={props.name}
                 precision={1}
                 onChange={props.handleChange}
-                max={5}
+                max={3}
                 value={parseInt(props.value)}
                 size="large"
                 icon={<MonetizationOnIcon fontSize="inherit" />}

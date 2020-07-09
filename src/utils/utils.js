@@ -42,3 +42,20 @@ export function hoursToString(hours) {
     });
     return retObj;
 }
+
+export function addColonTime(time) {
+    if(time.length !== 4) {
+        return '';
+    } else {
+        const hours = time.substring(0, 2);
+        const minutes = time.substring(2);
+        return hours + ":" + minutes;
+    }
+}
+
+export function stringTimeToLocalTime(str){
+    if(str === null || str === undefined || str === "" || str === " "){
+        return "0000"
+    }
+
+}

@@ -10,11 +10,11 @@ import { convert24HrTo12Hr } from "../../utils/utils";
 import { Button } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import DialogMessage from "../Dialog/Dialog";
+import { registerStore } from "../../api/owner";
 
 class RBSConfirm extends Component {
     constructor(props) {
         super(props);
-        console.log(this.props.barbershop);
         this.state = {
             clonedBS: _.omit(this.props.barbershop, [
                 "id",
@@ -22,6 +22,7 @@ class RBSConfirm extends Component {
                 "hours",
                 "price",
                 "description",
+                "ownerId"
             ]),
             isHoursDisp: false,
             isSuccess: false,
@@ -43,8 +44,15 @@ class RBSConfirm extends Component {
     }
 
     handleSubmit() {
-        console.log(this.props.barbershop);
-        this.setState({ isSuccess: true });
+        let shop = this.props.barbershop;
+        console.log(shop);
+        registerStore(shop.ownerId, shop.name, shop.address, shop.city, shop.province, shop.description, shop.price, shop.website, shop.phoneNumber, shop.photos, shop.servicesOffered, shop.hours).then((response) => {
+            console.log(response);
+            this.setState({isSuccess: true});
+        }).catch((reject) => {
+            console.log(reject);
+            this.setState({isError: true});
+        })
     }
 
     render() {
@@ -133,6 +141,7 @@ class RBSConfirm extends Component {
                         text={
                             "The barbershop was not registered! Please try again."
                         }
+                        link={"/createshop"}
                     />
                 )}
             </div>

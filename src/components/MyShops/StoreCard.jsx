@@ -7,7 +7,6 @@ import CardMedia from "@material-ui/core/CardMedia";
 import EventIcon from "@material-ui/icons/Event";
 import Typography from "@material-ui/core/Typography";
 import EqualizerIcon from "@material-ui/icons/Equalizer";
-import barbershopPic from "../../images/barbershop.png";
 import PersonAddIcon from "@material-ui/icons/PersonAdd";
 import { withStyles } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
@@ -49,7 +48,7 @@ const useStyles = (theme) => ({
 
 class StoreCard extends Component {
     render() {
-        const { shopID, name, classes } = this.props;
+        const { shopID, name, classes, shop } = this.props;
         return (
             <div className={classes.root}>
                 <Card>
@@ -60,7 +59,7 @@ class StoreCard extends Component {
                         >
                             <CardMedia
                                 className={classes.media}
-                                image={barbershopPic}
+                                image={shop.photos[0]}
                             />
                         </Link>
                         <CardContent>
@@ -68,6 +67,7 @@ class StoreCard extends Component {
                                 to={{
                                     pathname: `/stores/${shopID}`,
                                     id: shopID,
+                                    shop: shop
                                 }}
                                 style={{ textDecoration: "none" }}
                             >
