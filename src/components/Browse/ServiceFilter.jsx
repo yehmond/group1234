@@ -14,9 +14,9 @@ export default function ServiceFilter() {
     const [serviceState, setServiceState] = useState([]);
 
     useEffect(() => {
-        const { service } = parseSearchURL();
-        if (service) {
-            setServiceState(service);
+        const { services } = parseSearchURL();
+        if (services) {
+            setServiceState(services);
         }
     }, [location]);
 
