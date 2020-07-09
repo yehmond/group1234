@@ -180,19 +180,19 @@ async function registerStore(
  *
  **************/
 async function deleteStore(body) {
-  if (!body.hasOwnProperty("store_id") && !body.hasOwnProperty("owner_id")) {
-      alert("owner/deleteStore: missing input parameters");
-      return null;
-  }
+    if (!body.hasOwnProperty("store_id") && !body.hasOwnProperty("owner_id")) {
+        alert("owner/deleteStore: missing input parameters");
+        return null;
+    }
 
-  try {
-      const response = await instance.delete("/store", { params: body });
-      console.log(response);
-      return response.data;
-  } catch (error) {
-      console.log(error);
-      return null;
-  }
+    try {
+        const response = await instance.delete("/store", { params: body });
+        console.log(response);
+        return response.data;
+    } catch (error) {
+        console.log(error);
+        return null;
+    }
 }
 
 /*************
@@ -318,19 +318,19 @@ async function registerBarber(
  *
  **************/
 async function deleteBarber(body) {
-  if (!body.hasOwnProperty("barber_id") && !body.hasOwnProperty("store_id")) {
-      alert("owner/getBarber: missing input parameters");
-      return null;
-  }
+    if (!body.hasOwnProperty("barber_id") && !body.hasOwnProperty("store_id")) {
+        alert("owner/getBarber: missing input parameters");
+        return null;
+    }
 
-  try {
-      const response = await instance.delete("/barber", { params: body });
-      console.log(response);
-      return response.data;
-  } catch (error) {
-      console.log(error);
-      return null;
-  }
+    try {
+        const response = await instance.delete("/barber", { params: body });
+        console.log(response);
+        return response.data;
+    } catch (error) {
+        console.log(error);
+        return null;
+    }
 }
 
 export default {
@@ -339,5 +339,5 @@ export default {
     deleteStore,
     getBarber,
     registerBarber,
-    deleteBarber
+    deleteBarber,
 };
