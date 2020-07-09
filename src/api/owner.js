@@ -26,7 +26,7 @@ const instance = axios.create({
  *               (number)    store_id    - return specific store
  *               (number)    owner_id    - return list of stores owned by owner_id
  *
- * Return:   SUCCESS            - [{store_id: number, store: {}, reservations: [], reviews: []}]
+ * Return:   SUCCESS            - [{store_id: number, store: {}, reservations: [], reviews: [], barbers: []}]
  *           NOT FOUND          - {}
  *           OTHER ERRORS       - {}
  *
@@ -172,7 +172,7 @@ async function registerStore(
  *               (number)    barber_id   - return specific barber
  *               (number)    store_id    - return list of barbers working at store_id
  *
- * Return:   SUCCESS            - [{barber_id: number, barber {}, reservations: [], reviews: []}]
+ * Return:   SUCCESS            - [{barber_id: number, barber {}, reservations: [], reviews: [], stores: []}]
  *           NOT FOUND          - {}
  *           OTHER ERRORS       - {}
  *
