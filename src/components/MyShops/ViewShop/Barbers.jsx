@@ -6,14 +6,16 @@ import Typography from "@material-ui/core/Typography";
 class Barbers extends Component {
     render() {
         if (!this.props.barbers || this.props.barbers.length === 0) {
-            return (<Typography align="center" variant={"h2"}>
-                There are no barbers yet!
-            </Typography>)
+            return (
+                <Typography align="center" variant={"h2"}>
+                    There are no barbers yet!
+                </Typography>
+            );
         } else {
             return (
                 <div id="barbers-wrapper">
                     {this.props.barbers.map((barber, index) => {
-                        return <BarberCard key={index} barber={barber}/>;
+                        return <BarberCard key={index} barber={barber} />;
                     })}
                 </div>
             );

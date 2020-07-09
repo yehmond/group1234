@@ -15,9 +15,11 @@ class Reviews extends Component {
 
     render() {
         if (!this.props.reviews || this.props.reviews.length === 0) {
-            return (<Typography align="center" variant={"h2"}>
-                There are no reviews yet!
-            </Typography>)
+            return (
+                <Typography align="center" variant={"h2"}>
+                    There are no reviews yet!
+                </Typography>
+            );
         } else {
             return (
                 <div id="shop-reviews">
@@ -26,7 +28,8 @@ class Reviews extends Component {
                             <div className={"circle"}>
                                 <Typography align="center" variant={"h2"}>
                                     {(
-                                        Math.round(this.getAverageRating() * 10) / 10
+                                        Math.round(this.getAverageRating() * 10) /
+                                        10
                                     ).toFixed(1)}
                                 </Typography>
                                 <Rating
@@ -41,7 +44,7 @@ class Reviews extends Component {
                         </div>
                     </div>
                     {this.props.reviews.map((review, index) => {
-                        return <ReviewCard key={index} review={review}/>;
+                        return <ReviewCard key={index} review={review} />;
                     })}
                 </div>
             );

@@ -67,7 +67,7 @@ class StoreCard extends Component {
                                 to={{
                                     pathname: `/stores/${shopID}`,
                                     id: shopID,
-                                    shop: shop
+                                    shop: shop,
                                 }}
                                 style={{ textDecoration: "none" }}
                             >

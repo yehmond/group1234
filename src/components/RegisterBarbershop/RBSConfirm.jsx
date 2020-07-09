@@ -22,7 +22,7 @@ class RBSConfirm extends Component {
                 "hours",
                 "price",
                 "description",
-                "ownerId"
+                "ownerId",
             ]),
             isHoursDisp: false,
             isSuccess: false,
@@ -46,13 +46,28 @@ class RBSConfirm extends Component {
     handleSubmit() {
         let shop = this.props.barbershop;
         console.log(shop);
-        registerStore(shop.ownerId, shop.name, shop.address, shop.city, shop.province, shop.description, shop.price, shop.website, shop.phoneNumber, shop.photos, shop.servicesOffered, shop.hours).then((response) => {
-            console.log(response);
-            this.setState({isSuccess: true});
-        }).catch((reject) => {
-            console.log(reject);
-            this.setState({isError: true});
-        })
+        registerStore(
+            shop.ownerId,
+            shop.name,
+            shop.address,
+            shop.city,
+            shop.province,
+            shop.description,
+            shop.price,
+            shop.website,
+            shop.phoneNumber,
+            shop.photos,
+            shop.servicesOffered,
+            shop.hours
+        )
+            .then((response) => {
+                console.log(response);
+                this.setState({ isSuccess: true });
+            })
+            .catch((reject) => {
+                console.log(reject);
+                this.setState({ isError: true });
+            });
     }
 
     render() {

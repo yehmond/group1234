@@ -59,19 +59,19 @@ class AddBarber extends Component {
         this.setState({ photo: files });
     }
 
-    specialitiesToServices(){
+    specialitiesToServices() {
         let ret = [];
-        for(const service of this.state.specialties){
-            ret.push({service: service, duration: this.state.timeslotValue});
+        for (const service of this.state.specialties) {
+            ret.push({ service: service, duration: this.state.timeslotValue });
         }
         return ret;
     }
 
-    hoursToDate(){
-        let newHrs = []
-        for(let day in this.state.hours) {
-            if(!day.isOpen) {
-                newHrs.push({from: "0000", to: "0000"})
+    hoursToDate() {
+        let newHrs = [];
+        for (let day in this.state.hours) {
+            if (!day.isOpen) {
+                newHrs.push({ from: "0000", to: "0000" });
             } else {
                 newHrs.push(day);
             }
@@ -80,13 +80,21 @@ class AddBarber extends Component {
         return newHrs;
     }
 
-
     handleSubmit() {
-        registerBarber(this.state.firstName + " " + this.state.lastName, this.state.profile, this.state.photo[0], this.specialitiesToServices(), [this.state.storeId],this.hoursToDate()).then((response) => {
-            this.setState({submitSuccess: true});
-        }).catch((reject) => {
-            this.setState({submitError: true});
-        })
+        registerBarber(
+            this.state.firstName + " " + this.state.lastName,
+            this.state.profile,
+            this.state.photo[0],
+            this.specialitiesToServices(),
+            [this.state.storeId],
+            this.hoursToDate()
+        )
+            .then((response) => {
+                this.setState({ submitSuccess: true });
+            })
+            .catch((reject) => {
+                this.setState({ submitError: true });
+            });
     }
 
     isFormValid() {

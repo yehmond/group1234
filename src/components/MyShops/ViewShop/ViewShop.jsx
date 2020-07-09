@@ -22,11 +22,11 @@ class ViewShop extends Component {
 
     componentDidMount() {
         // for a refresh, need to fetch
-        if(!this.props.location.shop) {
-            getStore({store_id: this.state.storeId}).then((response) => {
+        if (!this.props.location.shop) {
+            getStore({ store_id: this.state.storeId }).then((response) => {
                 const fetchedShops = [];
                 // will only be one store
-                for(let obj of response) {
+                for (let obj of response) {
                     const store = obj.store;
                     const barbers = obj.barbers;
                     const reservations = obj.reservations;
@@ -48,15 +48,14 @@ class ViewShop extends Component {
                         hours: store.hours,
                         reviews: reviews,
                         barbers: barbers,
-                        reservations: reservations
+                        reservations: reservations,
                     };
                     fetchedShops.push(fetchedShop);
                 }
-                this.setState({barbershop: fetchedShops[0]});
+                this.setState({ barbershop: fetchedShops[0] });
             });
         }
     }
-
 
     handleTabChange(event, value) {
         this.setState({ page: value });

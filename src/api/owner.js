@@ -266,4 +266,3 @@ export async function registerBarber(
         return {};
     }
 }
-

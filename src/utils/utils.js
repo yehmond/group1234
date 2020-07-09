@@ -44,8 +44,8 @@ export function hoursToString(hours) {
 }
 
 export function addColonTime(time) {
-    if(time.length !== 4) {
-        return '';
+    if (time.length !== 4) {
+        return "";
     } else {
         const hours = time.substring(0, 2);
         const minutes = time.substring(2);
@@ -53,9 +53,8 @@ export function addColonTime(time) {
     }
 }
 
-export function stringTimeToLocalTime(str){
-    if(str === null || str === undefined || str === "" || str === " "){
-        return "0000"
+export function stringTimeToLocalTime(str) {
+    if (str === null || str === undefined || str === "" || str === " ") {
+        return "0000";
     }
-
 }

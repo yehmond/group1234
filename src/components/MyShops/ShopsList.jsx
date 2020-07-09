@@ -48,19 +48,18 @@ const useStyles = makeStyles((theme) => ({
         paddingRight: "20px",
     },
     noShops: {
-        paddingTop: "50px"
-    }
-
+        paddingTop: "50px",
+    },
 }));
-
 
 export default function ShopsList() {
     const classes = useStyles();
     const user = useContext(UserContext);
     const [shops, setShops] = useState(null);
     useEffect(() => {
-        getStore({owner_id: user}).then((response) => {
-            const fetchedShops = [];
+        getStore({ owner_id: user })
+            .then((response) => {
+                const fetchedShops = [];
                 for (let obj of response) {
                     const store = obj.store;
                     const barbers = obj.barbers;
@@ -83,34 +82,42 @@ export default function ShopsList() {
                         hours: store.hours,
                         reviews: reviews,
                         barbers: barbers,
-                        reservations: reservations
+                        reservations: reservations,
                     };
                     fetchedShops.push(fetchedShop);
                 }
                 setShops(fetchedShops);
-        }).catch((reject) => {
-            console.log(reject);
-        });
-    }, [user])
+            })
+            .catch((reject) => {
+                console.log(reject);
+            });
+    }, [user]);
 
-    if(shops === null) {
-        return <Loading/>
+    if (shops === null) {
+        return <Loading />;
     }
-    if(shops.length === 0) {
-        return (<>
-            <div className={classes.container}>
-            <div className={classes.header}>
-                <h1 className={classes.title}>My Shops</h1>
-                <Tooltip title={"Add Barbershop"}>
-                    <Link to={"/createshop"}>
-                        <AddCircleIcon className={classes.icon} />
-                    </Link>
-                </Tooltip>
-            </div>
-                <Typography className={classes.noShops} align="center" variant={"h2"}>
-                    There are no shops yet! Please create a shop!
-                </Typography>
-            </div></>);
+    if (shops.length === 0) {
+        return (
+            <>
+                <div className={classes.container}>
+                    <div className={classes.header}>
+                        <h1 className={classes.title}>My Shops</h1>
+                        <Tooltip title={"Add Barbershop"}>
+                            <Link to={"/createshop"}>
+                                <AddCircleIcon className={classes.icon} />
+                            </Link>
+                        </Tooltip>
+                    </div>
+                    <Typography
+                        className={classes.noShops}
+                        align="center"
+                        variant={"h2"}
+                    >
+                        There are no shops yet! Please create a shop!
+                    </Typography>
+                </div>
+            </>
+        );
     }
 
     if (shops) {
@@ -126,7 +133,14 @@ export default function ShopsList() {
                 </div>
                 <div className={classes.grid}>
                     {shops.map((shop) => {
-                        return <StoreCard key={shop.id} shopID={shop.id} shop={shop} name={shop.name} />;
+                        return (
+                            <StoreCard
+                                key={shop.id}
+                                shopID={shop.id}
+                                shop={shop}
+                                name={shop.name}
+                            />
+                        );
                     })}
                 </div>
             </div>

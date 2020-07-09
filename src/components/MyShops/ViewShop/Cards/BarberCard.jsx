@@ -67,7 +67,11 @@ export default function BarberCard(props) {
                 <div>
                     {props.barber.services.map((service) => {
                         return (
-                            <Chip label={service.service} color="primary" key={service.service} />
+                            <Chip
+                                label={service.service}
+                                color="primary"
+                                key={service.service}
+                            />
                         );
                     })}
                 </div>
