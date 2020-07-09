@@ -33,10 +33,10 @@ const instance = axios.create({
  * Notes:    The function will return an array regardless of amount of entries returned
  *
  **************/
-export async function getStore(body) {
+async function getStore(body) {
     if (!body.hasOwnProperty("store_id") && !body.hasOwnProperty("owner_id")) {
         alert("owner/getStore: missing input parameters");
-        return {};
+        return null;
     }
 
     try {
@@ -45,7 +45,7 @@ export async function getStore(body) {
         return response.data;
     } catch (error) {
         console.log(error);
-        return [];
+        return null;
     }
 }
 
@@ -74,7 +74,7 @@ export async function getStore(body) {
  * Notes:    none
  *
  **************/
-export async function registerStore(
+async function registerStore(
     owner_id,
     name,
     address,
@@ -179,10 +179,10 @@ export async function registerStore(
  * Notes:    The function will return an array regardless of amount of entries returned
  *
  **************/
-export async function getBarber(body) {
+async function getBarber(body) {
     if (!body.hasOwnProperty("barber_id") && !body.hasOwnProperty("store_id")) {
         alert("owner/getBarber: missing input parameters");
-        return {};
+        return null;
     }
 
     try {
@@ -191,7 +191,7 @@ export async function getBarber(body) {
         return response.data;
     } catch (error) {
         console.log(error);
-        return {};
+        return null;
     }
 }
 
@@ -215,7 +215,7 @@ export async function getBarber(body) {
  * Notes:    none
  *
  **************/
-export async function registerBarber(
+async function registerBarber(
     name,
     description,
     picture,
@@ -266,3 +266,82 @@ export async function registerBarber(
         return {};
     }
 }
+
+/*************
+ *
+ * Name:     registerBarber
+ *
+ * Purpose:  Returns barber_id of the newly added barber
+ *
+ * Parms:    (string)  name          - name of the store
+ *           (string)  description   - description of the store
+ *           (string)  picture       - picture in base64 string
+ *           (array[{service: SERVICES_OFFERED, duration: number}])   services    - array of services along with the duration of its service
+ *           (array[number])    store_ids    - array of store_ids the barber works at
+ *           (array[{from: Date, to: Date}])   schedule   - array of weekly opening hours
+ *
+ * Return:   SUCCESS            - {barber_id: number}
+ *           NOT FOUND          - {}
+ *           OTHER ERRORS       - {}
+ *
+ * Notes:    none
+ *
+ **************/
+async function registerBarber(
+    name,
+    description,
+    picture,
+    services,
+    store_ids,
+    schedule
+) {
+    if (name.length === 0) {
+        alert("owner/registerBarber: name is invalid");
+        return {};
+    }
+    if (description.length === 0) {
+        alert("owner/registerBarber: description is invalid");
+        return {};
+    }
+    if (picture.length === 0) {
+        alert("owner/registerBarber: picture is invalid");
+        return {};
+    }
+    if (services.length === 0) {
+        alert("owner/registerBarber: services is invalid");
+        return {};
+    }
+    if (store_ids.length === 0) {
+        alert("owner/registerBarber: store_ids is invalid");
+        return {};
+    }
+    if (schedule.length === 0) {
+        alert("owner/registerBarber: schedule is invalid");
+        return {};
+    }
+
+    let body = {
+        name,
+        description,
+        picture,
+        store_ids,
+        services,
+        schedule,
+    };
+
+    try {
+        const response = await instance.post("/barber", body);
+        console.log(response);
+        return response.data;
+    } catch (error) {
+        console.log(error);
+        return {};
+    }
+}
+
+export default {
+    getStore,
+    getBarber,
+    registerBarber,
+    registerStore,
+};
