@@ -40,7 +40,7 @@ async function getStore(body) {
     }
 
     try {
-        const response = await instance.get("/store", body);
+        const response = await instance.get("/store", { params: body });
         console.log(response);
         return response.data;
     } catch (error) {
@@ -186,7 +186,7 @@ async function getBarber(body) {
     }
 
     try {
-        const response = await instance.get("/barber", body);
+        const response = await instance.get("/barber", { params: body });
         console.log(response);
         return response.data;
     } catch (error) {
