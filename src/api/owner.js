@@ -13,77 +13,185 @@ import axios from "axios";
 /* Local constants */
 const instance = axios.create({
     // TODO abstract baseURL
-    baseURL: "http://localhost:5000/api",
+    baseURL: "http://localhost:5000/api/owner",
 });
 
 /*************
  *
- * Name:     getStoreById
+ * Name:     getStore
  *
- * Purpose:  Returns detailed store information and statistics
+ * Purpose:  Returns detailed store information, reviews, and reservation
  *
- * Parms:    (string)     store_id    - store_id of the store to be returned
+ * Parms:    (object)     body    - at least one of the following properties, if both are given an AND will be returned
+ *               (number)    store_id    - return specific store
+ *               (number)    owner_id    - return list of stores owned by owner_id
  *
- * Return:   SUCCESS            - {status: 200, store: {}, reservations: [], statistics: {}, reviews: []}
- *           NOT FOUND          - {status: 404}
- *           SERVER ERROR       - {status: 500}
+ * Return:   SUCCESS            - [{store_id: number, store: {}, reservations: [], reviews: []}]
+ *           NOT FOUND          - {}
+ *           OTHER ERRORS       - {}
  *
- * Notes:    none
+ * Notes:    The function will return an array regardless of amount of entries returned
  *
  **************/
-export async function getStoreById(store_id) {
-    if (store_id.length === 0) {
-        alert("owner/getStoreById: store_id is invalid");
-        throw Error("owner/getStoreById: store_id is invalid");
+async function getStore(body) {
+    if (!body.hasOwnProperty("store_id") && !body.hasOwnProperty("owner_id")) {
+        alert("owner/getStore: missing input parameters");
+        return {};
     }
 
     try {
-        const response = await instance.get("/owner/store/" + store_id);
-        response.data.status = response.status;
+        const response = await instance.get("/store", body);
         console.log(response);
         return response.data;
     } catch (error) {
         console.log(error);
-        return { status: error.response.status };
+        return {};
     }
 }
 
 /*************
  *
- * Name:     getBarberReservations
+ * Name:     registerStore
  *
- * Purpose:  Returns detailed reservations
+ * Purpose:  Returns store_id of the newly added store
  *
- * Parms:    (string)     store_id    - store_id of the current store for the barber
- *           (string)     barber_id   - barber_id of the barber details to be returned
+ * Parms:    (number)  owner_id      - user_id of the owner
+ *           (string)  name          - name of the store
+ *           (string)  address       - address of the store
+ *           (string)  city          - city of the store
+ *           (string)  province      - province of the store
+ *           (string)  description   - description of the store
+ *           (number)  price         - price range of the store
+ *           (string)  website       - website of the store
+ *           (string)  phone_number  - phone number of the store
+ *           (array[string])             pictures    - array of pictures in base64 string
+ *           (array[SERVICES_OFFERED])   services    - array of services
+ *           (array[{isOpen: boolean, from: string, to: string}]) hours   - store hours array size of 7, with hours in military 0000 to 2400 format
  *
- * Return:   SUCCESS            - {status: 200, reservations: []}
- *           NOT FOUND          - {status: 404}
- *           SERVER ERROR       - {status: 500}
+ * Return:   SUCCESS            - {store_id: number}
+ *           OTHER ERRORS       - {}
  *
  * Notes:    none
  *
  **************/
-async function getBarberReservations(store_id, barber_id) {
-    if (store_id.length === 0) {
-        alert("owner/getBarberReservations: store_id is invalid");
-        throw Error("owner/getBarberReservations: store_id is invalid");
+async function registerStore(
+    owner_id,
+    name,
+    address,
+    city,
+    province,
+    description,
+    price,
+    website,
+    phone_number,
+    pictures,
+    services,
+    hours
+) {
+    if (owner_id.length === 0) {
+        alert("owner/registerStore: owner_id is invalid");
+        return {};
     }
-    if (barber_id.length === 0) {
-        alert("owner/getBarberReservations: barber_id is invalid");
-        throw Error("owner/getBarberReservations: barber_id is invalid");
+    if (name.length === 0) {
+        alert("owner/registerStore: name is invalid");
+        return {};
+    }
+    if (address.length === 0) {
+        alert("owner/registerStore: address is invalid");
+        return {};
+    }
+    if (city.length === 0) {
+        alert("owner/registerStore: city is invalid");
+        return {};
+    }
+    if (province.length === 0) {
+        alert("owner/registerStore: province is invalid");
+        return {};
+    }
+    if (description.length === 0) {
+        alert("owner/registerStore: description is invalid");
+        return {};
+    }
+    if (price.length === 0) {
+        alert("owner/registerStore: price is invalid");
+        return {};
+    }
+    if (website.length === 0) {
+        alert("owner/registerStore: website is invalid");
+        return {};
+    }
+    if (phone_number.length === 0) {
+        alert("owner/registerStore: phone_number is invalid");
+        return {};
+    }
+    if (pictures.length === 0) {
+        alert("owner/registerStore: pictures is invalid");
+        return {};
+    }
+    if (services.length === 0) {
+        alert("owner/registerStore: services is invalid");
+        return {};
+    }
+    if (hours.length === 0) {
+        alert("owner/registerStore: hours is invalid");
+        return {};
     }
 
+    let body = {
+        owner_id,
+        name,
+        address,
+        city,
+        province,
+        description,
+        price,
+        website,
+        phone_number,
+        pictures,
+        services,
+        hours,
+    };
+
     try {
-        const response = await instance.get(
-            "/owner/barber/" + store_id + "/" + barber_id
-        );
-        response.data.status = response.status;
+        const response = await instance.post("/store", body);
         console.log(response);
         return response.data;
     } catch (error) {
         console.log(error);
-        return { status: error.response.status };
+        return {};
+    }
+}
+
+/*************
+ *
+ * Name:     getBarber
+ *
+ * Purpose:  Returns detailed barber information, statistics, reviews, and reservation
+ *
+ * Parms:    (object)     body    - at least one of the following properties, if both are given an AND will be returned
+ *               (number)    barber_id   - return specific barber
+ *               (number)    store_id    - return list of barbers working at store_id
+ *
+ * Return:   SUCCESS            - [{barber_id: number, barber {}, reservations: [], reviews: []}]
+ *           NOT FOUND          - {}
+ *           OTHER ERRORS       - {}
+ *
+ * Notes:    The function will return an array regardless of amount of entries returned
+ *
+ **************/
+async function getBarber(body) {
+    if (!body.hasOwnProperty("barber_id") && !body.hasOwnProperty("store_id")) {
+        alert("owner/getBarber: missing input parameters");
+        return {};
+    }
+
+    try {
+        const response = await instance.get("/barber", body);
+        console.log(response);
+        return response.data;
+    } catch (error) {
+        console.log(error);
+        return {};
     }
 }
 
@@ -97,181 +205,71 @@ async function getBarberReservations(store_id, barber_id) {
  *           (string)  description   - description of the store
  *           (string)  picture       - picture in base64 string
  *           (array[{service: SERVICES_OFFERED, duration: number}])   services    - array of services along with the duration of its service
+ *           (array[number])    store_ids    - array of store_ids the barber works at
+ *           (array[{from: Date, to: Date}])   schedule   - array of weekly opening hours
  *
- * Return:   SUCCESS            - {status: 200, barber_id: string}
- *           NOT FOUND          - {status: 404}
- *           SERVER ERROR       - {status: 500}
+ * Return:   SUCCESS            - {barber_id: number}
+ *           NOT FOUND          - {}
+ *           OTHER ERRORS       - {}
  *
  * Notes:    none
  *
  **************/
-async function registerBarber(name, description, picture, stores, services) {
+async function registerBarber(
+    name,
+    description,
+    picture,
+    services,
+    store_ids,
+    schedule
+) {
     if (name.length === 0) {
         alert("owner/registerBarber: name is invalid");
-        throw Error("owner/registerBarber: name is invalid");
+        return {};
     }
     if (description.length === 0) {
         alert("owner/registerBarber: description is invalid");
-        throw Error("owner/registerBarber: description is invalid");
+        return {};
     }
     if (picture.length === 0) {
         alert("owner/registerBarber: picture is invalid");
-        throw Error("owner/registerBarber: picture is invalid");
-    }
-    if (stores.length === 0) {
-        alert("owner/registerBarber: stores is invalid");
-        throw Error("owner/registerBarber: stores is invalid");
+        return {};
     }
     if (services.length === 0) {
         alert("owner/registerBarber: services is invalid");
-        throw Error("owner/registerBarber: services is invalid");
+        return {};
+    }
+    if (store_ids.length === 0) {
+        alert("owner/registerBarber: store_ids is invalid");
+        return {};
+    }
+    if (schedule.length === 0) {
+        alert("owner/registerBarber: schedule is invalid");
+        return {};
     }
 
     let body = {
         name,
         description,
         picture,
-        stores,
+        store_ids,
         services,
+        schedule,
     };
 
     try {
-        const response = await instance.post("/owner/barber/", body);
-        response.data.status = response.status;
+        const response = await instance.post("/barber", body);
         console.log(response);
         return response.data;
     } catch (error) {
         console.log(error);
-        return { status: error.response.status };
-    }
-}
-
-/*************
- *
- * Name:     registerStore
- *
- * Purpose:  Returns store_id of the newly added store
- *
- * Parms:    (string)  name          - name of the store
- *           (string)  address       - address of the store
- *           (string)  city          - city of the store
- *           (string)  province      - province of the store
- *           (string)  description   - description of the store
- *           (number)  price         - price range of the store
- *           (number)  lat           - latitude of the store
- *           (number)  lon           - longitude of the store
- *           (string)  website       - website of the store
- *           (string)  phone_number  - phone number of the store
- *           (array[string])             pictures    - array of pictures in base64 string
- *           (array[SERVICES_OFFERED])   services    - array of services
- *           (array[{isOpen: boolean, from: string, to: string}]) hours   - store hours array size of 7, with hours in military 0000 to 2400 format
- *           (array[string])             barbers     - array of barber_ids that works at the store, need to ensure ids are valid
- *
- * Return:   SUCCESS            - {status: 200, store_id: string}
- *           NOT FOUND          - {status: 404}
- *           SERVER ERROR       - {status: 500}
- *
- * Notes:    none
- *
- **************/
-async function registerStore(
-    name,
-    address,
-    city,
-    province,
-    description,
-    price,
-    lat,
-    lon,
-    website,
-    phone_number,
-    pictures,
-    services,
-    hours
-) {
-    if (name.length === 0) {
-        alert("owner/registerStore: name is invalid");
-        throw Error("owner/registerStore: name is invalid");
-    }
-    if (address.length === 0) {
-        alert("owner/registerStore: address is invalid");
-        throw Error("owner/registerStore: address is invalid");
-    }
-    if (city.length === 0) {
-        alert("owner/registerStore: city is invalid");
-        throw Error("owner/registerStore: city is invalid");
-    }
-    if (province.length === 0) {
-        alert("owner/registerStore: province is invalid");
-        throw Error("owner/registerStore: province is invalid");
-    }
-    if (description.length === 0) {
-        alert("owner/registerStore: description is invalid");
-        throw Error("owner/registerStore: description is invalid");
-    }
-    if (price.length === 0) {
-        alert("owner/registerStore: price is invalid");
-        throw Error("owner/registerStore: price is invalid");
-    }
-    if (lat.length === 0) {
-        alert("owner/registerStore: lat is invalid");
-        throw Error("owner/registerStore: lat is invalid");
-    }
-    if (lon.length === 0) {
-        alert("owner/registerStore: lon is invalid");
-        throw Error("owner/registerStore: lon is invalid");
-    }
-    if (website.length === 0) {
-        alert("owner/registerStore: website is invalid");
-        throw Error("owner/registerStore: website is invalid");
-    }
-    if (phone_number.length === 0) {
-        alert("owner/registerStore: phone_number is invalid");
-        throw Error("owner/registerStore: phone_number is invalid");
-    }
-    if (pictures.length === 0) {
-        alert("owner/registerStore: pictures is invalid");
-        throw Error("owner/registerStore: pictures is invalid");
-    }
-    if (services.length === 0) {
-        alert("owner/registerStore: services is invalid");
-        throw Error("owner/registerStore: services is invalid");
-    }
-    if (hours.length === 0) {
-        alert("owner/registerStore: hours is invalid");
-        throw Error("owner/registerStore: hours is invalid");
-    }
-
-    let body = {
-        name,
-        address,
-        city,
-        province,
-        description,
-        price,
-        lat,
-        lon,
-        website,
-        phone_number,
-        pictures,
-        services,
-        hours,
-    };
-
-    try {
-        const response = await instance.post("/owner/store/", body);
-        response.data.status = response.status;
-        console.log(response);
-        return response.data;
-    } catch (error) {
-        console.log(error);
-        return { status: error.response.status };
+        return {};
     }
 }
 
 export default {
-    getStoreById,
-    getBarberReservations,
+    getStore,
+    getBarber,
     registerBarber,
     registerStore,
 };
