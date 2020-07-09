@@ -29,6 +29,7 @@
         "react-text-loop": "^2.3.0",
         "recharts": "^1.8.5",
         "redux": "^4.0.5",
+        "redux-thunk": "^2.3.0",
         "styled-components": "^5.1.1",
         "uuid": "^8.1.0"
     },
@@ -43,7 +44,7 @@
     },
     "husky": {
         "hooks": {
-            "pre-commit": "yarn lint --no-error-on-unmatched-pattern && yarn prettier-write"
+            "pre-commit": "yarn lint --no-error-on-unmatched-pattern"
         }
     },
     "eslintConfig": {

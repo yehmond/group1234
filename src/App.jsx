@@ -5,6 +5,7 @@ import RBSMain from "./pages/RBSMain";
 import NavBar from "./components/Nav/NavBar";
 import "./App.scss";
 import Home from "./pages/Home";
+import Browse from "./pages/Browse";
 import MyReservations from "./pages/MyReservations";
 import Reservation from "./pages/Reservation";
 import SignUpPage from "./pages/SignUpPage";
@@ -19,7 +20,9 @@ function App() {
                 <Route exact path="/">
                     <Home />
                 </Route>
-                <Route path="/browse"></Route>
+                <Route path="/browse">
+                    <Browse />
+                </Route>
                 <Route path="/about"></Route>
                 <Route path="/signin">
                     <SignInPage />

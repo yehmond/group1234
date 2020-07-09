@@ -1,6 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core";
-import HomeCard from "./HomeCard";
+import SmallCard from "./SmallCard";
 
 const useStyles = makeStyles((theme) => ({
     grid: {
@@ -32,7 +32,7 @@ for (let i = 0; i < 12; i++) {
         id: i,
         name: "Citrus Hair Salon",
         services: ["Hair Salon", "Day Spa", "Waxing"],
-        cost: 4,
+        cost: 3,
         rating: 5,
     });
 }
@@ -43,10 +43,10 @@ export default function Recommendations() {
         <div className={classes.container}>
             <h1>Available Now</h1>
             <div className={classes.grid}>
-                {mockShops.map(({ id, name, services, cost, rating }) => {
+                {mockShops.map(({ id, name, services, cost, rating }, idx) => {
                     return (
-                        <HomeCard
-                            key={id}
+                        <SmallCard
+                            key={idx}
                             shopId={id}
                             name={name}
                             services={services}
@@ -60,7 +60,7 @@ export default function Recommendations() {
             <div className={classes.grid}>
                 {mockShops.map(({ id, name, services, cost, rating }) => {
                     return (
-                        <HomeCard
+                        <SmallCard
                             key={id}
                             shopId={id}
                             name={name}
