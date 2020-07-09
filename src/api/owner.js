@@ -27,8 +27,8 @@ const instance = axios.create({
  *               (number)    owner_id    - return list of stores owned by owner_id
  *
  * Return:   SUCCESS            - [{store_id: number, store: {}, reservations: [], reviews: [], barbers: []}]
- *           NOT FOUND          - {}
- *           OTHER ERRORS       - {}
+ *           NOT FOUND          - null
+ *           OTHER ERRORS       - null
  *
  * Notes:    The function will return an array regardless of amount of entries returned
  *
@@ -36,7 +36,7 @@ const instance = axios.create({
 async function getStore(body) {
     if (!body.hasOwnProperty("store_id") && !body.hasOwnProperty("owner_id")) {
         alert("owner/getStore: missing input parameters");
-        return {};
+        return null;
     }
 
     try {
@@ -45,7 +45,7 @@ async function getStore(body) {
         return response.data;
     } catch (error) {
         console.log(error);
-        return {};
+        return null;
     }
 }
 
@@ -69,7 +69,7 @@ async function getStore(body) {
  *           (array[{isOpen: boolean, from: string, to: string}]) hours   - store hours array size of 7, with hours in military 0000 to 2400 format
  *
  * Return:   SUCCESS            - {store_id: number}
- *           OTHER ERRORS       - {}
+ *           OTHER ERRORS       - null
  *
  * Notes:    none
  *
@@ -90,51 +90,51 @@ async function registerStore(
 ) {
     if (owner_id.length === 0) {
         alert("owner/registerStore: owner_id is invalid");
-        return {};
+        return null;
     }
     if (name.length === 0) {
         alert("owner/registerStore: name is invalid");
-        return {};
+        return null;
     }
     if (address.length === 0) {
         alert("owner/registerStore: address is invalid");
-        return {};
+        return null;
     }
     if (city.length === 0) {
         alert("owner/registerStore: city is invalid");
-        return {};
+        return null;
     }
     if (province.length === 0) {
         alert("owner/registerStore: province is invalid");
-        return {};
+        return null;
     }
     if (description.length === 0) {
         alert("owner/registerStore: description is invalid");
-        return {};
+        return null;
     }
     if (price.length === 0) {
         alert("owner/registerStore: price is invalid");
-        return {};
+        return null;
     }
     if (website.length === 0) {
         alert("owner/registerStore: website is invalid");
-        return {};
+        return null;
     }
     if (phone_number.length === 0) {
         alert("owner/registerStore: phone_number is invalid");
-        return {};
+        return null;
     }
     if (pictures.length === 0) {
         alert("owner/registerStore: pictures is invalid");
-        return {};
+        return null;
     }
     if (services.length === 0) {
         alert("owner/registerStore: services is invalid");
-        return {};
+        return null;
     }
     if (hours.length === 0) {
         alert("owner/registerStore: hours is invalid");
-        return {};
+        return null;
     }
 
     let body = {
@@ -158,8 +158,41 @@ async function registerStore(
         return response.data;
     } catch (error) {
         console.log(error);
-        return {};
+        return null;
     }
+}
+
+/*************
+ *
+ * Name:     deleteStore
+ *
+ * Purpose:  Delete specific store and related reservations, reviews, and barbers that only works there
+ *
+ * Parms:    (object)     body    - at least one of the following properties, if both are given an AND will be returned
+ *               (number)    store_id    - delete specific store
+ *               (number)    owner_id    - delete list of stores owned by owner_id
+ *
+ * Return:   SUCCESS            - {store_ids: [number], barber_ids: [number]}
+ *           NOT FOUND          - null
+ *           OTHER ERRORS       - null
+ *
+ * Notes:    none
+ *
+ **************/
+async function deleteStore(body) {
+  if (!body.hasOwnProperty("store_id") && !body.hasOwnProperty("owner_id")) {
+      alert("owner/deleteStore: missing input parameters");
+      return null;
+  }
+
+  try {
+      const response = await instance.delete("/store", { params: body });
+      console.log(response);
+      return response.data;
+  } catch (error) {
+      console.log(error);
+      return null;
+  }
 }
 
 /*************
@@ -173,8 +206,8 @@ async function registerStore(
  *               (number)    store_id    - return list of barbers working at store_id
  *
  * Return:   SUCCESS            - [{barber_id: number, barber {}, reservations: [], reviews: [], stores: []}]
- *           NOT FOUND          - {}
- *           OTHER ERRORS       - {}
+ *           NOT FOUND          - null
+ *           OTHER ERRORS       - null
  *
  * Notes:    The function will return an array regardless of amount of entries returned
  *
@@ -182,7 +215,7 @@ async function registerStore(
 async function getBarber(body) {
     if (!body.hasOwnProperty("barber_id") && !body.hasOwnProperty("store_id")) {
         alert("owner/getBarber: missing input parameters");
-        return {};
+        return null;
     }
 
     try {
@@ -191,7 +224,7 @@ async function getBarber(body) {
         return response.data;
     } catch (error) {
         console.log(error);
-        return {};
+        return null;
     }
 }
 
@@ -209,8 +242,8 @@ async function getBarber(body) {
  *           (array[{from: Date, to: Date}])   schedule   - array of weekly opening hours
  *
  * Return:   SUCCESS            - {barber_id: number}
- *           NOT FOUND          - {}
- *           OTHER ERRORS       - {}
+ *           NOT FOUND          - null
+ *           OTHER ERRORS       - null
  *
  * Notes:    none
  *
@@ -225,27 +258,27 @@ async function registerBarber(
 ) {
     if (name.length === 0) {
         alert("owner/registerBarber: name is invalid");
-        return {};
+        return null;
     }
     if (description.length === 0) {
         alert("owner/registerBarber: description is invalid");
-        return {};
+        return null;
     }
     if (picture.length === 0) {
         alert("owner/registerBarber: picture is invalid");
-        return {};
+        return null;
     }
     if (services.length === 0) {
         alert("owner/registerBarber: services is invalid");
-        return {};
+        return null;
     }
     if (store_ids.length === 0) {
         alert("owner/registerBarber: store_ids is invalid");
-        return {};
+        return null;
     }
     if (schedule.length === 0) {
         alert("owner/registerBarber: schedule is invalid");
-        return {};
+        return null;
     }
 
     let body = {
@@ -263,13 +296,48 @@ async function registerBarber(
         return response.data;
     } catch (error) {
         console.log(error);
-        return {};
+        return null;
     }
+}
+
+/*************
+ *
+ * Name:     deleteBarber
+ *
+ * Purpose:  Delete specific barber and related reservations and reviews
+ *
+ * Parms:    (object)     body    - at least one of the following properties, if both are given an AND will be returned
+ *               (number)    barber_id   - delete specific barber
+ *               (number)    store_id    - delete list of barbers working at store_id
+ *
+ * Return:   SUCCESS            - {barber_ids: [number]}
+ *           NOT FOUND          - null
+ *           OTHER ERRORS       - null
+ *
+ * Notes:    none
+ *
+ **************/
+async function deleteBarber(body) {
+  if (!body.hasOwnProperty("barber_id") && !body.hasOwnProperty("store_id")) {
+      alert("owner/getBarber: missing input parameters");
+      return null;
+  }
+
+  try {
+      const response = await instance.delete("/barber", { params: body });
+      console.log(response);
+      return response.data;
+  } catch (error) {
+      console.log(error);
+      return null;
+  }
 }
 
 export default {
     getStore,
+    registerStore,
+    deleteStore,
     getBarber,
     registerBarber,
-    registerStore,
+    deleteBarber
 };
