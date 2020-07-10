@@ -1,6 +1,8 @@
 import React from "react";
 import MaterialTable from "material-table";
 import { createStyles, makeStyles } from "@material-ui/core/styles";
+import GradeIcon from "@material-ui/icons/Grade";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles(() =>
     createStyles({
@@ -31,14 +33,22 @@ export default function PastReservations() {
                 time: "Tue May 15, 11:15 am",
                 barbershop: "Tonys Barbershop",
                 barberName: "Tony",
+                barbershopID: 0,
             },
             {
                 time: "Fri May 21, 2:00 pm",
                 barbershop: "Timmys Barbershop",
                 barberName: "Sam",
+                barbershopID: 1,
             },
         ],
     });
+
+    const history = useHistory();
+
+    const handleRatingClick = (barbershopID) => {
+        history.push("/stores/" + barbershopID + "/rate");
+    };
 
     return (
         <div className={classes.wrapper}>
@@ -54,30 +64,17 @@ export default function PastReservations() {
                     columns={state.columns}
                     data={state.passdata}
                     editable={{
-                        onRowAdd: (newData) =>
-                            new Promise((resolve) => {
-                                setTimeout(() => {
-                                    resolve();
-                                    setState((prevState) => {
-                                        const data = [...prevState.passdata];
-                                        data.push(newData);
-                                        return { ...prevState, data };
-                                    });
-                                }, 600);
-                            }),
-                        onRowUpdate: (newData, oldData) =>
-                            new Promise((resolve) => {
-                                setTimeout(() => {
-                                    resolve();
-                                    if (oldData) {
-                                        setState((prevState) => {
-                                            const data = [...prevState.passdata];
-                                            data[data.indexOf(oldData)] = newData;
-                                            return { ...prevState, data };
-                                        });
-                                    }
-                                }, 600);
-                            }),
+                        // onRowAdd: (newData) =>
+                        //     new Promise((resolve) => {
+                        //         setTimeout(() => {
+                        //             resolve();
+                        //             setState((prevState) => {
+                        //                 const data = [...prevState.passdata];
+                        //                 data.push(newData);
+                        //                 return { ...prevState, data };
+                        //             });
+                        //         }, 600);
+                        //     }),
                         onRowDelete: (oldData) =>
                             new Promise((resolve) => {
                                 setTimeout(() => {
@@ -90,6 +87,14 @@ export default function PastReservations() {
                                 }, 600);
                             }),
                     }}
+                    actions={[
+                        {
+                            icon: GradeIcon,
+                            tooltip: "Rate",
+                            onClick: (event, rowData) =>
+                                handleRatingClick(rowData.barbershopID),
+                        },
+                    ]}
                 />
             </div>
         </div>
