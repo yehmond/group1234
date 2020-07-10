@@ -11,6 +11,7 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import AlertBox from "../../../Dialog/Alert";
 import { deleteBarber } from "../../../../api/owner";
+import { refreshPage } from "../../../../utils/utils";
 
 const useStyles = makeStyles(() => ({
     root: {
@@ -91,7 +92,7 @@ export default function BarberCard(props) {
                                 color="primary"
                                 variant="contained"
                                 component={Link}
-                                to={"/reservation"}
+                                to={`/reserve/${props.shopID}`}
                             >
                                 Make Reservation
                             </Button>
@@ -120,6 +121,7 @@ export default function BarberCard(props) {
                     }
                     close={() => {
                         setDeleteDialog(false);
+                        refreshPage();
                     }}
                 />
             )}

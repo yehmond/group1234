@@ -15,7 +15,7 @@ class Barbers extends Component {
             return (
                 <div id="barbers-wrapper">
                     {this.props.barbers.map((barber, index) => {
-                        return <BarberCard key={index} barber={barber} />;
+                        return <BarberCard key={index} barber={barber} shopID={this.props.shopID} />;
                     })}
                 </div>
             );

@@ -26,33 +26,37 @@ class ViewShop extends Component {
             getStore({ store_id: this.state.storeId }).then((response) => {
                 const fetchedShops = [];
                 // will only be one store
-                for (let obj of response) {
-                    const store = obj.store;
-                    const barbers = obj.barbers;
-                    const reservations = obj.reservations;
-                    const reviews = obj.reviews;
-                    const fetchedShop = {
-                        id: obj.store_id,
-                        name: store.name,
-                        address: store.address,
-                        lat: parseInt(store.lat),
-                        lon: parseInt(store.lon),
-                        city: store.city,
-                        province: store.province,
-                        website: store.website,
-                        phoneNumber: store.phone_number,
-                        description: store.description,
-                        servicesOffered: store.services,
-                        price: store.price,
-                        photos: store.pictures,
-                        hours: store.hours,
-                        reviews: reviews,
-                        barbers: barbers,
-                        reservations: reservations,
-                    };
-                    fetchedShops.push(fetchedShop);
+                if(response !== null) {
+                    for (let obj of response) {
+                        const store = obj.store;
+                        const barbers = obj.barbers;
+                        const reservations = obj.reservations;
+                        const reviews = obj.reviews;
+                        const fetchedShop = {
+                            id: obj.store_id,
+                            name: store.name,
+                            address: store.address,
+                            lat: parseInt(store.lat),
+                            lon: parseInt(store.lon),
+                            city: store.city,
+                            province: store.province,
+                            website: store.website,
+                            phoneNumber: store.phone_number,
+                            description: store.description,
+                            servicesOffered: store.services,
+                            price: store.price,
+                            photos: store.pictures,
+                            hours: store.hours,
+                            reviews: reviews,
+                            barbers: barbers,
+                            reservations: reservations,
+                        };
+                        fetchedShops.push(fetchedShop);
+                    }
+                    this.setState({ barbershop: fetchedShops[0] });
+                } else {
+                    // this store doesn't exist (should not be possible
                 }
-                this.setState({ barbershop: fetchedShops[0] });
             });
         }
     }
@@ -110,7 +114,7 @@ class ViewShop extends Component {
                             <Info barbershop={this.state.barbershop} />
                         )}
                         {this.state.page === "BARBER_PAGE" && (
-                            <Barbers barbers={this.state.barbershop.barbers} />
+                            <Barbers barbers={this.state.barbershop.barbers} shopID={this.state.barbershop.id} />
                         )}
                         {this.state.page === "REVIEWS_PAGE" && (
                             <Reviews reviews={this.state.barbershop.reviews} />

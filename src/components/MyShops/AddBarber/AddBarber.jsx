@@ -30,7 +30,7 @@ class AddBarber extends Component {
             lastName: "",
             profile: "",
             specialties: [],
-            photo: [],
+            photo: null,
             timeslotValue: 0,
             hours: initializeHours(),
             storeId: this.props.match.params.storeID,
@@ -61,7 +61,7 @@ class AddBarber extends Component {
     }
 
     handleDropZoneDelete(files) {
-        this.setState({ photos: [] });
+        this.setState({ photo: null });
     }
 
     specialitiesToServices() {
@@ -88,7 +88,7 @@ class AddBarber extends Component {
         registerBarber(
             this.state.firstName + " " + this.state.lastName,
             this.state.profile,
-            this.state.photo[0],
+            this.state.photo,
             this.specialitiesToServices(),
             [this.state.storeId],
             this.hoursToDate()
@@ -216,6 +216,7 @@ class AddBarber extends Component {
                     <DialogMessage
                         title={"Error!"}
                         text={"The barber was not registered! Please try again."}
+                        link={'/stores/'}
                     />
                 )}
             </div>

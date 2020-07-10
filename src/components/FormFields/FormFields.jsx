@@ -111,19 +111,23 @@ export function RenderTimePicker(props) {
 export function RenderDropzone(props) {
     const onDropHandler = (files) => {
         const file = files[0];
+        let newPic;
         const reader = new FileReader();
         reader.onload = (event) => {
-            files[0] = event.target.result;
+            newPic = event.target.result;
+            props.handleChange(newPic);
         };
         reader.readAsDataURL(file);
-        props.handleChange(files);
     };
     const onDeleteHandler = (files) => {
+        const file = files;
+        let oldPic;
         const reader = new FileReader();
         reader.onload = (event) => {
-            files[0] = event.target.result;
+            oldPic = event.target.result;
+            props.handleDelete(oldPic);
         };
-        props.handleDelete(files);
+        reader.readAsDataURL(file);
     };
     return (
         <div>
