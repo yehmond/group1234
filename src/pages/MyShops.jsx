@@ -5,6 +5,7 @@ import AddBarber from "../components/MyShops/AddBarber/AddBarber";
 import ViewSchedule from "../components/MyShops/ViewSchedule/ViewSchedule";
 import ViewShop from "../components/MyShops/ViewShop/ViewShop";
 import Stats from "./Stats";
+import Rating from "./Rating";
 
 export default function MyShops() {
     return (
@@ -20,6 +21,9 @@ export default function MyShops() {
             </Route>
             <Route path="/stores/:storeID/stats">
                 <Stats />
+            </Route>
+            <Route path="/stores/:storeID/rate">
+                <Rating />
             </Route>
             <Route eaxct path="/stores/:storeID">
                 <ViewShop />
