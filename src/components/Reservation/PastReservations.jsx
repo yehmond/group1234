@@ -47,7 +47,7 @@ export default function PastReservations() {
     const history = useHistory();
 
     const handleRatingClick = (barbershopID) => {
-        history.push("/stores/" + barbershopID);
+        history.push("/stores/" + barbershopID + "/rate");
     };
 
     return (
