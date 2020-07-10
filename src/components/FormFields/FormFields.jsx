@@ -119,7 +119,6 @@ export function RenderDropzone(props) {
         props.handleChange(files);
     };
     const onDeleteHandler = (files) => {
-        const file = files[0];
         const reader = new FileReader();
         reader.onload = (event) => {
             files[0] = event.target.result;
