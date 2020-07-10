@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { DAYS_OF_WEEK_ABBR } from "./constants";
 
 export function convert24HrTo12Hr(time) {
@@ -15,6 +16,28 @@ export function convert24HrTo12Hr(time) {
 export function validateEmail(email) {
     const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(String(email).toLowerCase());
+}
+
+// From https://usehooks.com/useWindowSize/
+export function useWindowSize() {
+    const [windowSize, setWindowSize] = useState({
+        width: window.innerWidth,
+        height: window.innerHeight,
+    });
+
+    useEffect(() => {
+        function handleResize() {
+            setWindowSize({
+                width: window.innerWidth,
+                height: window.innerHeight,
+            });
+        }
+
+        window.addEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleResize);
+    }, []);
+
+    return windowSize;
 }
 
 export function initializeHours() {
@@ -61,4 +84,67 @@ export function stringTimeToLocalTime(str) {
 
 export function refreshPage() {
     window.location.reload();
+}
+
+export function parseSearchURL() {
+    const params = new URLSearchParams(window.location.search);
+    const queryParams = {};
+
+    for (const [key, value] of params) {
+        switch (key) {
+            case "price":
+                queryParams.price = value
+                    .split(",")
+                    .map((str) => Number(str))
+                    .filter((num) => [1, 2, 3].includes(num))
+                    .sort();
+                break;
+            case "services":
+                if (value) {
+                    queryParams.services = value.split(",");
+                }
+                break;
+            case "rating":
+                // eslint-disable-next-line no-case-declarations
+                const rating = Number(value);
+                if (rating >= 1 && rating <= 5) {
+                    queryParams.rating = rating;
+                }
+                break;
+            case "location":
+                queryParams.location = value;
+                break;
+            case "page":
+                queryParams.page = Number(value);
+                break;
+            default:
+                break;
+        }
+    }
+    return queryParams;
+}
+
+export function setQueryString(param, history, replace = false) {
+    const currParam = parseSearchURL();
+    const newParam = {
+        ...currParam,
+        ...param,
+    };
+    const newUrl = window.location.pathname + `?${convertToQueryString(newParam)}`;
+
+    if (replace) {
+        history.replace(newUrl);
+    } else {
+        history.push(newUrl);
+    }
+}
+
+export function convertToQueryString(queryObj) {
+    const query = Object.keys(queryObj)
+        .map((key) => {
+            return key + "=" + encodeURIComponent(queryObj[key]);
+        })
+        .join("&");
+
+    return query;
 }
