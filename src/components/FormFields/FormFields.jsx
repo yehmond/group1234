@@ -118,6 +118,14 @@ export function RenderDropzone(props) {
         reader.readAsDataURL(file);
         props.handleChange(files);
     };
+    const onDeleteHandler = (files) => {
+        const file = files[0];
+        const reader = new FileReader();
+        reader.onload = (event) => {
+            files[0] = event.target.result;
+        };
+        props.handleDelete(files);
+    }
     return (
         <div>
             <h4>{props.label}</h4>
@@ -128,6 +136,7 @@ export function RenderDropzone(props) {
                 initialFiles={props.value}
                 filesLimit={props.filesLimit}
                 onDrop={onDropHandler}
+                onDelete={onDeleteHandler}
             />
         </div>
     );

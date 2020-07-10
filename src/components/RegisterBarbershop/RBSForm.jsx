@@ -36,6 +36,7 @@ class RBSForm extends Component {
         this.handleTextChange = this.handleTextChange.bind(this);
         this.handleAutoCompleteChange = this.handleAutoCompleteChange.bind(this);
         this.handleDropZoneChange = this.handleDropZoneChange.bind(this);
+        this.handleDropZoneDelete = this.handleDropZoneDelete.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.isFormValid = this.isFormValid.bind(this);
     }
@@ -52,8 +53,18 @@ class RBSForm extends Component {
     }
 
     handleDropZoneChange(files) {
-        console.log(files);
-        this.setState({ photos: files });
+        if(files) {
+            this.setState((prevState) => ({
+                photos: prevState.photos.concat(files)
+            }));
+        }
+    }
+
+    handleDropZoneDelete(files) {
+        if(files) {
+            const filtered = this.state.photos.filter(file => file !== files);
+            this.setState({photos: filtered})
+        }
     }
 
     handleSubmit() {
@@ -165,13 +176,14 @@ class RBSForm extends Component {
                                     dropzoneText={
                                         "Upload a few pictures of your shop!"
                                     }
-                                    filesLimit={5}
+                                    filesLimit={4}
                                     name="photos"
                                     label="Upload Some Photos"
                                     handleChange={this.handleDropZoneChange}
-                                    value={this.state.photos.map((file) => {
-                                        return file.type;
-                                    })}
+                                    handleDelete = {this.handleDropZoneDelete}
+                                    // value={this.state.photos.map((file) => {
+                                    //     return file.type;
+                                    // })}
                                 />
                             </div>
                         </div>

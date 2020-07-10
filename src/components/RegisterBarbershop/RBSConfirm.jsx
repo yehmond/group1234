@@ -45,7 +45,6 @@ class RBSConfirm extends Component {
 
     handleSubmit() {
         let shop = this.props.barbershop;
-        console.log(shop);
         registerStore(
             shop.ownerId,
             shop.name,
@@ -61,11 +60,9 @@ class RBSConfirm extends Component {
             shop.hours
         )
             .then((response) => {
-                console.log(response);
                 this.setState({ isSuccess: true });
             })
             .catch((reject) => {
-                console.log(reject);
                 this.setState({ isError: true });
             });
     }

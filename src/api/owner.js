@@ -333,7 +333,7 @@ async function deleteBarber(body) {
     }
 }
 
-export default {
+export {
     getStore,
     registerStore,
     deleteStore,

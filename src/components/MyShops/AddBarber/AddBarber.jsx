@@ -41,6 +41,7 @@ class AddBarber extends Component {
         this.handleTextChange = this.handleTextChange.bind(this);
         this.handleAutoCompleteChange = this.handleAutoCompleteChange.bind(this);
         this.handleDropZoneChange = this.handleDropZoneChange.bind(this);
+        this.handleDropZoneDelete = this.handleDropZoneDelete.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
@@ -57,6 +58,10 @@ class AddBarber extends Component {
 
     handleDropZoneChange(files) {
         this.setState({ photo: files });
+    }
+
+    handleDropZoneDelete(files) {
+        this.setState({photos: []});
     }
 
     specialitiesToServices() {
@@ -76,7 +81,6 @@ class AddBarber extends Component {
                 newHrs.push(day);
             }
         }
-        console.log(newHrs);
         return newHrs;
     }
 
@@ -170,6 +174,7 @@ class AddBarber extends Component {
                                 dropzoneText="Add a profile picture!"
                                 filesLimit={1}
                                 handleChange={this.handleDropZoneChange}
+                                handleDelete={this.handleDropZoneDelete}
                             />
                         </div>
                     </div>

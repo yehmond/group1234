@@ -11,6 +11,10 @@ import PersonAddIcon from "@material-ui/icons/PersonAdd";
 import { withStyles } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
 import Tooltip from "@material-ui/core/Tooltip";
+import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
+import AlertBox from "../Dialog/Alert";
+import { deleteStore } from "../../api/owner";
+import { refreshPage } from "../../utils/utils";
 
 const useStyles = (theme) => ({
     root: {
@@ -30,7 +34,7 @@ const useStyles = (theme) => ({
     },
     iconWrapper: {
         display: "grid",
-        gridTemplateColumns: "1fr 1fr 1fr",
+        gridTemplateColumns: "1fr 1fr 1fr 1fr",
         alignContent: "center",
         justifyItems: "center",
         backgroundColor: theme.palette.primary.dark,
@@ -47,9 +51,32 @@ const useStyles = (theme) => ({
 });
 
 class StoreCard extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {deleteDialog: false};
+        this.handleClickTrash = this.handleClickTrash.bind(this);
+        this.handleCloseTrash = this.handleCloseTrash.bind(this);
+        this.handleDelete = this.handleDelete.bind(this);
+    }
+
+    handleClickTrash() {
+        this.setState({deleteDialog: true});
+    }
+
+    handleCloseTrash() {
+        this.setState({deleteDialog: false});
+        refreshPage();
+    }
+
+    handleDelete() {
+        return deleteStore({store_id: this.props.shopID});
+    }
+
+
     render() {
         const { shopID, name, classes, shop } = this.props;
         return (
+            <>
             <div className={classes.root}>
                 <Card>
                     <CardActionArea>
@@ -114,9 +141,14 @@ class StoreCard extends Component {
                                 <EqualizerIcon className={classes.icon} />
                             </Link>
                         </Tooltip>
+                        <Tooltip title="Delete Store">
+                                <DeleteForeverIcon onClick={this.handleClickTrash} className={classes.icon} />
+                        </Tooltip>
                     </CardActions>
                 </Card>
             </div>
+                {this.state.deleteDialog && <AlertBox title={'Delete Store'} confirm={this.handleDelete} text={'This will delete the store, and all barbers, reviews, and reservations associated.'} close={this.handleCloseTrash} />}
+                </>
         );
     }
 }

@@ -6,7 +6,7 @@ import Tooltip from "@material-ui/core/Tooltip";
 import { Link } from "react-router-dom";
 import Loading from "../Loading/Loading";
 import UserContext from "../../pages/UserContext";
-import { getStore } from "../../api/owner";
+import  {getStore} from  "../../api/owner";
 import Typography from "@material-ui/core/Typography";
 
 const useStyles = makeStyles((theme) => ({
@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
         display: "grid",
         marginTop: "1rem",
         marginBottom: "4rem",
-        gridTemplateColumns: "repeat(4, 23%)",
+        gridTemplateColumns: "repeat(3, 31%)",
         justifyContent: "space-between",
         [theme.breakpoints.down("md")]: {
             gridTemplateColumns: "repeat(3, 31%)",
@@ -60,37 +60,36 @@ export default function ShopsList() {
         getStore({ owner_id: user })
             .then((response) => {
                 const fetchedShops = [];
-                for (let obj of response) {
-                    const store = obj.store;
-                    const barbers = obj.barbers;
-                    const reservations = obj.reservations;
-                    const reviews = obj.reviews;
-                    const fetchedShop = {
-                        id: obj.store_id,
-                        name: store.name,
-                        address: store.address,
-                        lat: parseInt(store.lat),
-                        lon: parseInt(store.lon),
-                        city: store.city,
-                        province: store.province,
-                        website: store.website,
-                        phoneNumber: store.phone_number,
-                        description: store.description,
-                        servicesOffered: store.services,
-                        price: store.price,
-                        photos: store.pictures,
-                        hours: store.hours,
-                        reviews: reviews,
-                        barbers: barbers,
-                        reservations: reservations,
-                    };
-                    fetchedShops.push(fetchedShop);
+                if(response !== null) {
+                    for (let obj of response) {
+                        const store = obj.store;
+                        const barbers = obj.barbers;
+                        const reservations = obj.reservations;
+                        const reviews = obj.reviews;
+                        const fetchedShop = {
+                            id: obj.store_id,
+                            name: store.name,
+                            address: store.address,
+                            lat: parseInt(store.lat),
+                            lon: parseInt(store.lon),
+                            city: store.city,
+                            province: store.province,
+                            website: store.website,
+                            phoneNumber: store.phone_number,
+                            description: store.description,
+                            servicesOffered: store.services,
+                            price: store.price,
+                            photos: store.pictures,
+                            hours: store.hours,
+                            reviews: reviews,
+                            barbers: barbers,
+                            reservations: reservations,
+                        };
+                        fetchedShops.push(fetchedShop);
+                    }
                 }
                 setShops(fetchedShops);
             })
-            .catch((reject) => {
-                console.log(reject);
-            });
     }, [user]);
 
     if (shops === null) {

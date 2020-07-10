@@ -58,3 +58,7 @@ export function stringTimeToLocalTime(str) {
         return "0000";
     }
 }
+
+export function refreshPage(){
+    window.location.reload();
+}

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
@@ -9,6 +9,8 @@ import Typography from "@material-ui/core/Typography";
 import TimerIcon from "@material-ui/icons/Timer";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import AlertBox from "../../../Dialog/Alert";
+import { deleteBarber } from "../../../../api/owner";
 
 const useStyles = makeStyles(() => ({
     root: {
@@ -27,10 +29,7 @@ const useStyles = makeStyles(() => ({
     },
     content: {
         display: "grid",
-        gridTemplateRows: "auto auto auto auto auto",
         gridRowGap: "5px",
-        alignItems: "center",
-        justifyContent: "center",
     },
     time: {
         display: "grid",
@@ -56,9 +55,15 @@ const useStyles = makeStyles(() => ({
 export default function BarberCard(props) {
     const classes = useStyles();
     const authState = useSelector((state) => state.authState);
+    const [deleteDialog, setDeleteDialog] = useState(false);
     const role = authState.role;
 
+    const handleDelete = () => {
+        return deleteBarber({barber_id: props.barber.barber_id});
+    }
+
     return (
+        <>
         <Card className={classes.root}>
             <CardMedia image={props.barber.picture} className={classes.media} />
             <CardContent className={classes.content}>
@@ -91,8 +96,26 @@ export default function BarberCard(props) {
                             Make Reservation
                         </Button>
                     )}
+                    {role === "OWNER" && (
+                        <Button
+                            className={classes.button}
+                            color="secondary"
+                            variant="contained"
+                            onClick={()=> {
+                                setDeleteDialog(true)
+                            }}
+                        >
+                            DELETE BARBER
+                        </Button>
+
+                    )}
                 </div>
             </CardContent>
         </Card>
+            {deleteDialog && (
+                <AlertBox title={'Delete Barber'} confirm={handleDelete} text={'This will delete the barber, and all reviews and reservations associated.'} close={() => {
+                    setDeleteDialog(false)
+                }} />)}
+        </>
     );
 }
