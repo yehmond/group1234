@@ -22,7 +22,8 @@ const useStyles = (theme) => ({
         width: "100%",
     },
     media: {
-        height: 150,
+        height: 0,
+        paddingTop: "75%"
     },
     darken: {
         color: theme.palette.primary.dark,
