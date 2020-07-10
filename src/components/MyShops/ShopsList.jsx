@@ -6,7 +6,7 @@ import Tooltip from "@material-ui/core/Tooltip";
 import { Link } from "react-router-dom";
 import Loading from "../Loading/Loading";
 import UserContext from "../../pages/UserContext";
-import  {getStore} from  "../../api/owner";
+import { getStore } from "../../api/owner";
 import Typography from "@material-ui/core/Typography";
 
 const useStyles = makeStyles((theme) => ({
@@ -57,39 +57,38 @@ export default function ShopsList() {
     const user = useContext(UserContext);
     const [shops, setShops] = useState(null);
     useEffect(() => {
-        getStore({ owner_id: user })
-            .then((response) => {
-                const fetchedShops = [];
-                if(response !== null) {
-                    for (let obj of response) {
-                        const store = obj.store;
-                        const barbers = obj.barbers;
-                        const reservations = obj.reservations;
-                        const reviews = obj.reviews;
-                        const fetchedShop = {
-                            id: obj.store_id,
-                            name: store.name,
-                            address: store.address,
-                            lat: parseInt(store.lat),
-                            lon: parseInt(store.lon),
-                            city: store.city,
-                            province: store.province,
-                            website: store.website,
-                            phoneNumber: store.phone_number,
-                            description: store.description,
-                            servicesOffered: store.services,
-                            price: store.price,
-                            photos: store.pictures,
-                            hours: store.hours,
-                            reviews: reviews,
-                            barbers: barbers,
-                            reservations: reservations,
-                        };
-                        fetchedShops.push(fetchedShop);
-                    }
+        getStore({ owner_id: user }).then((response) => {
+            const fetchedShops = [];
+            if (response !== null) {
+                for (let obj of response) {
+                    const store = obj.store;
+                    const barbers = obj.barbers;
+                    const reservations = obj.reservations;
+                    const reviews = obj.reviews;
+                    const fetchedShop = {
+                        id: obj.store_id,
+                        name: store.name,
+                        address: store.address,
+                        lat: parseInt(store.lat),
+                        lon: parseInt(store.lon),
+                        city: store.city,
+                        province: store.province,
+                        website: store.website,
+                        phoneNumber: store.phone_number,
+                        description: store.description,
+                        servicesOffered: store.services,
+                        price: store.price,
+                        photos: store.pictures,
+                        hours: store.hours,
+                        reviews: reviews,
+                        barbers: barbers,
+                        reservations: reservations,
+                    };
+                    fetchedShops.push(fetchedShop);
                 }
-                setShops(fetchedShops);
-            })
+            }
+            setShops(fetchedShops);
+        });
     }, [user]);
 
     if (shops === null) {

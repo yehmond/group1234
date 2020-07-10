@@ -125,7 +125,7 @@ export function RenderDropzone(props) {
             files[0] = event.target.result;
         };
         props.handleDelete(files);
-    }
+    };
     return (
         <div>
             <h4>{props.label}</h4>

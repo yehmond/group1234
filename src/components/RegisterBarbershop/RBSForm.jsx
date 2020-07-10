@@ -53,17 +53,17 @@ class RBSForm extends Component {
     }
 
     handleDropZoneChange(files) {
-        if(files) {
+        if (files) {
             this.setState((prevState) => ({
-                photos: prevState.photos.concat(files)
+                photos: prevState.photos.concat(files),
             }));
         }
     }
 
     handleDropZoneDelete(files) {
-        if(files) {
-            const filtered = this.state.photos.filter(file => file !== files);
-            this.setState({photos: filtered})
+        if (files) {
+            const filtered = this.state.photos.filter((file) => file !== files);
+            this.setState({ photos: filtered });
         }
     }
 
@@ -180,7 +180,7 @@ class RBSForm extends Component {
                                     name="photos"
                                     label="Upload Some Photos"
                                     handleChange={this.handleDropZoneChange}
-                                    handleDelete = {this.handleDropZoneDelete}
+                                    handleDelete={this.handleDropZoneDelete}
                                     // value={this.state.photos.map((file) => {
                                     //     return file.type;
                                     // })}

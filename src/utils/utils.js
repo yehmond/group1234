@@ -59,6 +59,6 @@ export function stringTimeToLocalTime(str) {
     }
 }
 
-export function refreshPage(){
+export function refreshPage() {
     window.location.reload();
 }

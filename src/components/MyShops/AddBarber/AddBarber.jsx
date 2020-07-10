@@ -61,7 +61,7 @@ class AddBarber extends Component {
     }
 
     handleDropZoneDelete(files) {
-        this.setState({photos: []});
+        this.setState({ photos: [] });
     }
 
     specialitiesToServices() {

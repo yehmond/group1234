@@ -17,13 +17,13 @@ export default function AlertBox(props) {
 
     const handleConfirmAsync = () => {
         props.confirm().then((response) => {
-            if(response !== null) {
+            if (response !== null) {
                 setDeleted(true);
             } else {
-                setError(true)
+                setError(true);
             }
-        })
-    }
+        });
+    };
 
     return (
         <div>
@@ -32,29 +32,32 @@ export default function AlertBox(props) {
                     {props.title}
                 </DialogTitle>
                 <DialogContent>
-                    <DialogContentText>
-                        {props.text}
-                    </DialogContentText>
+                    <DialogContentText>{props.text}</DialogContentText>
                     {!deleted && (
                         <Alert severity="error">
-                            {'WARNING: This cannot be undone.'}
+                            {"WARNING: This cannot be undone."}
                         </Alert>
                     )}
                     {deleted && (
                         <Alert severity="success">
-                            {'The operation was successful.'}
+                            {"The operation was successful."}
                         </Alert>
                     )}
                     {error && (
                         <Alert severity="warning">
-                            {'Sorry, we could not process the request. Pleas try again.'}
+                            {
+                                "Sorry, we could not process the request. Pleas try again."
+                            }
                         </Alert>
                     )}
-
                 </DialogContent>
                 <DialogActions>
-                    {(!deleted && !error) && (
-                        <Button autoFocus onClick={handleConfirmAsync} color="primary">
+                    {!deleted && !error && (
+                        <Button
+                            autoFocus
+                            onClick={handleConfirmAsync}
+                            color="primary"
+                        >
                             CONFIRM
                         </Button>
                     )}

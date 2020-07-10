@@ -11,7 +11,7 @@ import PersonAddIcon from "@material-ui/icons/PersonAdd";
 import { withStyles } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
 import Tooltip from "@material-ui/core/Tooltip";
-import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
+import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import AlertBox from "../Dialog/Alert";
 import { deleteStore } from "../../api/owner";
 import { refreshPage } from "../../utils/utils";
@@ -53,102 +53,113 @@ const useStyles = (theme) => ({
 class StoreCard extends Component {
     constructor(props) {
         super(props);
-        this.state = {deleteDialog: false};
+        this.state = { deleteDialog: false };
         this.handleClickTrash = this.handleClickTrash.bind(this);
         this.handleCloseTrash = this.handleCloseTrash.bind(this);
         this.handleDelete = this.handleDelete.bind(this);
     }
 
     handleClickTrash() {
-        this.setState({deleteDialog: true});
+        this.setState({ deleteDialog: true });
     }
 
     handleCloseTrash() {
-        this.setState({deleteDialog: false});
+        this.setState({ deleteDialog: false });
         refreshPage();
     }
 
     handleDelete() {
-        return deleteStore({store_id: this.props.shopID});
+        return deleteStore({ store_id: this.props.shopID });
     }
-
 
     render() {
         const { shopID, name, classes, shop } = this.props;
         return (
             <>
-            <div className={classes.root}>
-                <Card>
-                    <CardActionArea>
-                        <Link
-                            to={`/stores/${shopID}`}
-                            style={{ textDecoration: "none" }}
-                        >
-                            <CardMedia
-                                className={classes.media}
-                                image={shop.photos[0]}
-                            />
-                        </Link>
-                        <CardContent>
+                <div className={classes.root}>
+                    <Card>
+                        <CardActionArea>
                             <Link
-                                to={{
-                                    pathname: `/stores/${shopID}`,
-                                    id: shopID,
-                                    shop: shop,
-                                }}
+                                to={`/stores/${shopID}`}
                                 style={{ textDecoration: "none" }}
                             >
-                                <Tooltip title="View shop information">
-                                    <Typography
-                                        variant="h5"
-                                        align="center"
-                                        className={classes.darken}
-                                    >
-                                        {name}
-                                    </Typography>
-                                </Tooltip>
+                                <CardMedia
+                                    className={classes.media}
+                                    image={shop.photos[0]}
+                                />
                             </Link>
-                        </CardContent>
-                    </CardActionArea>
-                    <CardActions className={classes.iconWrapper}>
-                        <Tooltip title="View Schedule">
-                            <Link
-                                to={{
-                                    pathname: `/stores/${shopID}/schedule`,
-                                    id: shopID,
-                                }}
-                            >
-                                <EventIcon className={classes.icon} />
-                            </Link>
-                        </Tooltip>
-                        <Tooltip title="Add/Edit Barbers">
-                            <Link
-                                to={{
-                                    pathname: `/stores/${shopID}/addbarber`,
-                                    id: shopID,
-                                }}
-                            >
-                                <PersonAddIcon className={classes.icon} />
-                            </Link>
-                        </Tooltip>
-                        <Tooltip title="View Statistics">
-                            <Link
-                                to={{
-                                    pathname: `/stores/${shopID}/stats`,
-                                    id: shopID,
-                                }}
-                            >
-                                <EqualizerIcon className={classes.icon} />
-                            </Link>
-                        </Tooltip>
-                        <Tooltip title="Delete Store">
-                                <DeleteForeverIcon onClick={this.handleClickTrash} className={classes.icon} />
-                        </Tooltip>
-                    </CardActions>
-                </Card>
-            </div>
-                {this.state.deleteDialog && <AlertBox title={'Delete Store'} confirm={this.handleDelete} text={'This will delete the store, and all barbers, reviews, and reservations associated.'} close={this.handleCloseTrash} />}
-                </>
+                            <CardContent>
+                                <Link
+                                    to={{
+                                        pathname: `/stores/${shopID}`,
+                                        id: shopID,
+                                        shop: shop,
+                                    }}
+                                    style={{ textDecoration: "none" }}
+                                >
+                                    <Tooltip title="View shop information">
+                                        <Typography
+                                            variant="h5"
+                                            align="center"
+                                            className={classes.darken}
+                                        >
+                                            {name}
+                                        </Typography>
+                                    </Tooltip>
+                                </Link>
+                            </CardContent>
+                        </CardActionArea>
+                        <CardActions className={classes.iconWrapper}>
+                            <Tooltip title="View Schedule">
+                                <Link
+                                    to={{
+                                        pathname: `/stores/${shopID}/schedule`,
+                                        id: shopID,
+                                    }}
+                                >
+                                    <EventIcon className={classes.icon} />
+                                </Link>
+                            </Tooltip>
+                            <Tooltip title="Add/Edit Barbers">
+                                <Link
+                                    to={{
+                                        pathname: `/stores/${shopID}/addbarber`,
+                                        id: shopID,
+                                    }}
+                                >
+                                    <PersonAddIcon className={classes.icon} />
+                                </Link>
+                            </Tooltip>
+                            <Tooltip title="View Statistics">
+                                <Link
+                                    to={{
+                                        pathname: `/stores/${shopID}/stats`,
+                                        id: shopID,
+                                    }}
+                                >
+                                    <EqualizerIcon className={classes.icon} />
+                                </Link>
+                            </Tooltip>
+                            <Tooltip title="Delete Store">
+                                <DeleteForeverIcon
+                                    onClick={this.handleClickTrash}
+                                    className={classes.icon}
+                                />
+                            </Tooltip>
+                        </CardActions>
+                    </Card>
+                </div>
+                {this.state.deleteDialog && (
+                    <AlertBox
+                        title={"Delete Store"}
+                        confirm={this.handleDelete}
+                        text={
+                            "This will delete the store, and all barbers, reviews, and reservations associated."
+                        }
+                        close={this.handleCloseTrash}
+                    />
+                )}
+            </>
         );
     }
 }

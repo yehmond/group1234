@@ -59,63 +59,70 @@ export default function BarberCard(props) {
     const role = authState.role;
 
     const handleDelete = () => {
-        return deleteBarber({barber_id: props.barber.barber_id});
-    }
+        return deleteBarber({ barber_id: props.barber.barber_id });
+    };
 
     return (
         <>
-        <Card className={classes.root}>
-            <CardMedia image={props.barber.picture} className={classes.media} />
-            <CardContent className={classes.content}>
-                <Typography variant="h2">{props.barber.name}</Typography>
-                <p>{props.barber.description}</p>
-                <div>
-                    {props.barber.services.map((service) => {
-                        return (
-                            <Chip
-                                label={service.service}
+            <Card className={classes.root}>
+                <CardMedia image={props.barber.picture} className={classes.media} />
+                <CardContent className={classes.content}>
+                    <Typography variant="h2">{props.barber.name}</Typography>
+                    <p>{props.barber.description}</p>
+                    <div>
+                        {props.barber.services.map((service) => {
+                            return (
+                                <Chip
+                                    label={service.service}
+                                    color="primary"
+                                    key={service.service}
+                                />
+                            );
+                        })}
+                    </div>
+                    <div className={classes.time}>
+                        <TimerIcon />
+                        <span>{props.barber.services[0].duration}</span>
+                    </div>
+                    <div className={classes.buttonContainer}>
+                        {role === "CUSTOMER" && (
+                            <Button
+                                className={classes.button}
                                 color="primary"
-                                key={service.service}
-                            />
-                        );
-                    })}
-                </div>
-                <div className={classes.time}>
-                    <TimerIcon />
-                    <span>{props.barber.services[0].duration}</span>
-                </div>
-                <div className={classes.buttonContainer}>
-                    {role === "CUSTOMER" && (
-                        <Button
-                            className={classes.button}
-                            color="primary"
-                            variant="contained"
-                            component={Link}
-                            to={"/reservation"}
-                        >
-                            Make Reservation
-                        </Button>
-                    )}
-                    {role === "OWNER" && (
-                        <Button
-                            className={classes.button}
-                            color="secondary"
-                            variant="contained"
-                            onClick={()=> {
-                                setDeleteDialog(true)
-                            }}
-                        >
-                            DELETE BARBER
-                        </Button>
-
-                    )}
-                </div>
-            </CardContent>
-        </Card>
+                                variant="contained"
+                                component={Link}
+                                to={"/reservation"}
+                            >
+                                Make Reservation
+                            </Button>
+                        )}
+                        {role === "OWNER" && (
+                            <Button
+                                className={classes.button}
+                                color="secondary"
+                                variant="contained"
+                                onClick={() => {
+                                    setDeleteDialog(true);
+                                }}
+                            >
+                                DELETE BARBER
+                            </Button>
+                        )}
+                    </div>
+                </CardContent>
+            </Card>
             {deleteDialog && (
-                <AlertBox title={'Delete Barber'} confirm={handleDelete} text={'This will delete the barber, and all reviews and reservations associated.'} close={() => {
-                    setDeleteDialog(false)
-                }} />)}
+                <AlertBox
+                    title={"Delete Barber"}
+                    confirm={handleDelete}
+                    text={
+                        "This will delete the barber, and all reviews and reservations associated."
+                    }
+                    close={() => {
+                        setDeleteDialog(false);
+                    }}
+                />
+            )}
         </>
     );
 }
