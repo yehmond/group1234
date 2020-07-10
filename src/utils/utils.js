@@ -66,6 +66,7 @@ export function hoursToString(hours) {
     return retObj;
 }
 
+
 export function addColonTime(time) {
     if (time.length !== 4) {
         return "";

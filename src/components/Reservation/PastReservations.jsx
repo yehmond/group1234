@@ -95,6 +95,7 @@ export default function PastReservations() {
                             tooltip: "Rate",
                             onClick: (event, rowData) =>
                                 handleRatingClick(rowData.reservationID),
+
                         },
                     ]}
                 />
