@@ -1,39 +1,20 @@
-import { signIn } from "../api/auth";
+import { signIn, signOut } from "../api/auth";
 
 export const SIGN_IN_LOADING = "SIGN_IN_LOADING";
 export const SIGN_IN_SUCCESS = "SIGN_IN_SUCCESS";
 export const SIGN_IN_ERROR = "SIGN_IN_ERROR";
 export const SIGN_IN_OWNER = "SIGN_IN_OWNER";
 export const SIGN_IN_CUSTOMER = "SIGN_IN_CUSTOMER";
-export const SIGN_OUT = "SIGN_OUT";
+export const SIGN_OUT_LOADING = "SIGN_OUT_LOADING";
+export const SIGN_OUT_SUCCESS = "SIGN_OUT_SUCCESS";
+export const SIGN_OUT_ERROR = "SIGN_OUT_ERROR";
+export const SET_SIGN_IN = "SET_SIGN_IN";
 
-export function signInOwner() {
+export function setSignInStatus(username, role) {
     return {
-        type: SIGN_IN_OWNER,
-        payload: {
-            isLoggedIn: true,
-            role: "OWNER",
-        },
-    };
-}
-
-export function signInCustomer() {
-    return {
-        type: SIGN_IN_CUSTOMER,
-        payload: {
-            isLoggedIn: true,
-            role: "CUSTOMER",
-        },
-    };
-}
-
-export function signOut() {
-    return {
-        type: SIGN_OUT,
-        payload: {
-            isLoggedIn: false,
-            role: "",
-        },
+        type: SET_SIGN_IN,
+        username,
+        role,
     };
 }
 
@@ -43,10 +24,11 @@ export function signInLoading() {
     };
 }
 
-export function signInSuccess(data) {
+export function signInSuccess(username, role) {
     return {
         type: SIGN_IN_SUCCESS,
-        data,
+        username,
+        role,
     };
 }
 
@@ -61,12 +43,44 @@ export function signInAsync(username, password) {
     return (dispatch) => {
         dispatch(signInLoading());
         signIn(username, password)
-            .then(() => {
-                dispatch(signInSuccess());
-                window.location = "/";
+            .then((res) => {
+                dispatch(signInSuccess(res.username, res.role));
             })
             .catch((err) => {
+                console.log(err);
                 dispatch(signInError(err));
+            });
+    };
+}
+
+export function signOutSuccess() {
+    return {
+        type: SIGN_OUT_SUCCESS,
+    };
+}
+
+export function signOutLoading() {
+    return {
+        type: SIGN_OUT_LOADING,
+    };
+}
+
+export function signOutError() {
+    return {
+        type: SIGN_OUT_ERROR,
+    };
+}
+
+export function signOutAsync() {
+    return (dispatch) => {
+        dispatch(signOutLoading());
+        signOut()
+            .then(() => {
+                dispatch(signOutSuccess());
+            })
+            .catch((err) => {
+                console.log(err);
+                dispatch(signOutError(err));
             });
     };
 }

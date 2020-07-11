@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { createStyles, makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -10,7 +10,7 @@ import Menu from "@material-ui/core/Menu";
 import MenuIcon from "@material-ui/icons/Menu";
 import Button from "@material-ui/core/Button";
 import { useDispatch, useSelector } from "react-redux";
-import { signOut } from "../../actions/authActions";
+import { signOutAsync, setSignInStatus } from "../../actions/authActions";
 import { Link } from "react-router-dom";
 import NavDrawer from "./NavDrawer";
 
@@ -66,6 +66,17 @@ export default function MenuAppBar() {
     const [drawerIsOpen, setDrawer] = useState(false);
     const authState = useSelector((state) => state.authState);
     const dispatch = useDispatch();
+
+    useEffect(() => {
+        const username = localStorage.getItem("username");
+        const role = localStorage.getItem("role");
+
+        if (username && role) {
+            dispatch(setSignInStatus(username, role));
+        }
+        // eslint-disable-next-line
+    }, []);
+
     let displayedLinks;
     switch (authState.role) {
         case "CUSTOMER":
@@ -163,7 +174,7 @@ export default function MenuAppBar() {
                                 <MenuItem onClick={() => setAnchorEl(null)}>
                                     Profile
                                 </MenuItem>
-                                <MenuItem onClick={() => dispatch(signOut())}>
+                                <MenuItem onClick={() => dispatch(signOutAsync())}>
                                     Sign out
                                 </MenuItem>
                             </Menu>

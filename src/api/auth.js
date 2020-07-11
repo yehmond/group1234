@@ -31,11 +31,12 @@ export async function signIn(username, password) {
 
 export async function signOut() {
     try {
-        const response = await instance.post("/signout/");
+        const response = await instance.get("/signout/");
+        console.log(response);
         return response.data;
     } catch (err) {
         console.error(err);
-        return { status: err.response?.status };
+        throw Error(err);
     }
 }
 
@@ -68,6 +69,6 @@ export async function signUp(
         return response.data;
     } catch (err) {
         console.error(err);
-        return { status: err.response?.status };
+        throw Error(err);
     }
 }
