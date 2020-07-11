@@ -111,7 +111,7 @@ class SignUp extends Component {
 
     submitSignUp() {
         if (this.areFieldsValid()) {
-            // do something
+            console.log(this.state);
         }
     }
 

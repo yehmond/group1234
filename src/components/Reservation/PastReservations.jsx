@@ -28,26 +28,28 @@ export default function PastReservations() {
             { title: "Barbershop", field: "barbershop" },
             { title: "Barber Name", field: "barberName" },
         ],
-        passdata: [
+        pastdata: [
             {
                 time: "Tue May 15, 11:15 am",
                 barbershop: "Tonys Barbershop",
                 barberName: "Tony",
                 barbershopID: 0,
+                reservationID: 0
             },
             {
                 time: "Fri May 21, 2:00 pm",
                 barbershop: "Timmys Barbershop",
                 barberName: "Sam",
                 barbershopID: 1,
+                reservationID: 1
             },
         ],
     });
 
     const history = useHistory();
 
-    const handleRatingClick = (barbershopID) => {
-        history.push("/stores/" + barbershopID + "/rate");
+    const handleRatingClick = (reservationID) => {
+        history.push("/reservations/" + reservationID + "/rate");
     };
 
     return (
@@ -58,11 +60,11 @@ export default function PastReservations() {
             />
 
             <div>
-                <h2 className={classes.header}>Pass Reservations</h2>
+                <h2 className={classes.header}>Past Reservations</h2>
                 <MaterialTable
-                    title="Pass Reservations Details"
+                    title="Past Reservations Details"
                     columns={state.columns}
-                    data={state.passdata}
+                    data={state.pastdata}
                     editable={{
                         // onRowAdd: (newData) =>
                         //     new Promise((resolve) => {
@@ -80,7 +82,7 @@ export default function PastReservations() {
                                 setTimeout(() => {
                                     resolve();
                                     setState((prevState) => {
-                                        const data = [...prevState.passdata];
+                                        const data = [...prevState.pastdata];
                                         data.splice(data.indexOf(oldData), 1);
                                         return { ...prevState, data };
                                     });
@@ -92,7 +94,8 @@ export default function PastReservations() {
                             icon: GradeIcon,
                             tooltip: "Rate",
                             onClick: (event, rowData) =>
-                                handleRatingClick(rowData.barbershopID),
+                                handleRatingClick(rowData.reservationID),
+
                         },
                     ]}
                 />

@@ -9,6 +9,8 @@ import _ from "lodash";
 import { convert24HrTo12Hr } from "../../utils/utils";
 import { Button } from "@material-ui/core";
 import { Link } from "react-router-dom";
+import DialogMessage from "../Dialog/Dialog";
+import { registerStore } from "../../api/owner";
 
 class RBSConfirm extends Component {
     constructor(props) {
@@ -20,10 +22,14 @@ class RBSConfirm extends Component {
                 "hours",
                 "price",
                 "description",
+                "ownerId",
             ]),
             isHoursDisp: false,
+            isSuccess: false,
+            isError: false,
         };
         this.handleClickDisplayHours = this.handleClickDisplayHours.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     handleClickDisplayHours() {
@@ -35,6 +41,30 @@ class RBSConfirm extends Component {
         return day.isOpen
             ? convert24HrTo12Hr(day.from) + " to " + convert24HrTo12Hr(day.to)
             : "Closed";
+    }
+
+    handleSubmit() {
+        let shop = this.props.barbershop;
+        registerStore(
+            shop.ownerId,
+            shop.name,
+            shop.address,
+            shop.city,
+            shop.province,
+            shop.description,
+            shop.price,
+            shop.website,
+            shop.phoneNumber,
+            shop.photos,
+            shop.servicesOffered,
+            shop.hours
+        )
+            .then((response) => {
+                this.setState({ isSuccess: true });
+            })
+            .catch((reject) => {
+                this.setState({ isError: true });
+            });
     }
 
     render() {
@@ -103,14 +133,29 @@ class RBSConfirm extends Component {
                             variant="contained"
                             color="primary"
                             type="button"
-                            component={Link}
-                            to={"/createshop/hours"}
-                            // onClick={this.handleSubmit}
+                            // component={Link}
+                            onClick={this.handleSubmit}
                         >
                             Confirm
                         </Button>
                     </div>
                 </div>
+                {this.state.isSuccess && (
+                    <DialogMessage
+                        title={"Success!"}
+                        link={"/stores"}
+                        text={"The barbershop has been successfully registered!"}
+                    />
+                )}
+                {this.state.isError && (
+                    <DialogMessage
+                        title={"Error!"}
+                        text={
+                            "The barbershop was not registered! Please try again."
+                        }
+                        link={"/createshop"}
+                    />
+                )}
             </div>
         );
     }
