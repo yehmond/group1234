@@ -130,7 +130,7 @@ async function searchStore(count, body) {
         return response.data;
     } catch (error) {
         console.log(error);
-        return { status: error.response.status };
+        return { status: error };
     }
 }
 
@@ -365,7 +365,7 @@ async function removeReservation(reservation_id) {
     }
 }
 
-export default {
+export {
     getStoreById,
     getBarberReservations,
     searchStore,

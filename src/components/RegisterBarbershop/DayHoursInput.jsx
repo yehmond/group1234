@@ -3,6 +3,7 @@ import "../FormFields/Fields.scss";
 import { RenderTimePicker } from "../FormFields/FormFields";
 import { Checkbox, FormControlLabel } from "@material-ui/core";
 import { DEFAULT_FROM, DEFAULT_TO } from "../../utils/constants";
+import { addColonTime } from "../../utils/utils";
 
 class DayHoursInput extends Component {
     constructor(props) {
@@ -62,14 +63,14 @@ class DayHoursInput extends Component {
                 <h2>{this.props.dayOfWeek}</h2>
                 <RenderTimePicker
                     disabled={!this.state.day.isOpen}
-                    value={this.state.day.from}
+                    value={addColonTime(this.state.day.from)}
                     handleChange={this.handleChangeOpen}
                 />
                 <p>To</p>
                 <RenderTimePicker
                     disabled={!this.state.day.isOpen}
                     handleChange={this.handleChangeClose}
-                    value={this.state.day.to}
+                    value={addColonTime(this.state.day.to)}
                 />
                 <FormControlLabel
                     control={

@@ -25,6 +25,8 @@ export const DAYS_OF_WEEK = [
     "Sunday",
 ];
 
+export const PRICE_RANGE = [1, 2, 3];
+
 export const DAYS_OF_WEEK_ABBR = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
 export const SERVICES_OFFERED = [
@@ -42,8 +44,8 @@ export const ADD_BARBERSHOP_STEPS = [
     "Confirm",
 ];
 
-export const DEFAULT_FROM = "08:00";
-export const DEFAULT_TO = "17:00";
+export const DEFAULT_FROM = "0800";
+export const DEFAULT_TO = "1700";
 export const MIN_PASSWORD_LENGTH = 6;
 
 export const TIMESLOT_VALUES = [15, 30, 45, 60, 90, 120];
