@@ -336,8 +336,10 @@ async function deleteBarber(body) {
 export {
     getStore,
     registerStore,
+    updateStore,
     deleteStore,
     getBarber,
     registerBarber,
+    updateBarber,
     deleteBarber,
 };
