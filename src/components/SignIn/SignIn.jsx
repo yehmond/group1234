@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
+import Alert from "@material-ui/lab/Alert";
 import TextField from "@material-ui/core/TextField";
 import Link from "@material-ui/core/Link";
 import Paper from "@material-ui/core/Paper";
@@ -11,7 +12,7 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core";
 import cover from "../../images/home-cover2.jpg";
 import { Link as RouterLink } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { signInAsync } from "../../actions/authActions";
 
 const useStyles = makeStyles((theme) => ({
@@ -50,6 +51,7 @@ const useStyles = makeStyles((theme) => ({
 export default function SignIn() {
     const classes = useStyles();
     const dispatch = useDispatch();
+    const authState = useSelector((state) => state.authState);
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
 
@@ -85,15 +87,20 @@ export default function SignIn() {
                         noValidate
                         onSubmit={handleSubmit}
                     >
+                        {authState.status === "error" && !authState.isLoggedIn && (
+                            <Alert severity="error">
+                                Incorrect username or password.
+                            </Alert>
+                        )}
                         <TextField
                             variant="outlined"
                             margin="normal"
                             required
                             fullWidth
-                            id="email"
-                            label="Email Address"
-                            name="email"
-                            autoComplete="email"
+                            id="username"
+                            label="Username"
+                            name="username"
+                            autoComplete="username"
                             autoFocus
                             onChange={handleUsername}
                         />
