@@ -13,20 +13,23 @@ import Checkbox from "@material-ui/core/Checkbox";
 import ListItemText from "@material-ui/core/ListItemText";
 import _ from "lodash";
 import { getStore } from "../../../api/owner";
-import { convertReservationToEvent } from "../../../utils/utils";
+import { convertReservationToEvent, getBarberColor } from "../../../utils/utils";
 import Loading from "../../Loading/Loading";
+import Chip from '@material-ui/core/Chip';
+import Typography from "@material-ui/core/Typography";
+
 
 class ViewSchedule extends Component {
     constructor(props) {
         super(props);
         this.localizer = momentLocalizer(moment);
-        // query for store from backend
         this.minTime = new Date();
         this.minTime.setHours(7, 0, 0);
         this.maxTime = new Date();
         this.maxTime.setHours(20, 30, 0);
-        this.state = { selected: [], barbers: props.location.barbers, allEvents: props.location.reservations, eventsToShow: [], id: props.match.params.storeID};
+        this.state = { selected: [], barbers: props.location.barbers, allEvents: props.location.reservations, eventsToShow: [], id: props.match.params.storeID, colors: getBarberColor(props.location.barbers)};
         this.handleChange = this.handleChange.bind(this);
+        this.eventPropGetter = this.eventPropGetter.bind(this);
     }
 
     componentDidMount() {
@@ -37,17 +40,25 @@ class ViewSchedule extends Component {
                 let barbers = null;
                 // will only be one store
                 if(response !== null) {
-                    console.log(response);
                     for (let obj of response) {
-                       reservations =  obj.reservations.map((reservation) => {return convertReservationToEvent(reservation)});
+                       reservations =  obj.reservations.map((reservation) => {return convertReservationToEvent(obj.barbers, reservation)});
                        barbers = obj.barbers;
                     }
-                    this.setState({ allEvents: reservations , barbers: barbers});
+                    this.setState({ allEvents: reservations , barbers: barbers, colors: getBarberColor(barbers)});
                 } else {
                     // this store doesn't exist (should not be possible
                 }
             });
         }
+    }
+
+    eventPropGetter(event, start, end, isSelected) {
+        const style = {
+            backgroundColor: event.color,
+        };
+        return {
+            style: style
+        };
     }
 
     handleChange(event) {
@@ -62,7 +73,13 @@ class ViewSchedule extends Component {
     render() {
         if(!this.state.allEvents || !this.state.barbers) {
             return <Loading/>;
-        } else {
+        } else if(this.state.barbers.length === 0) {
+            return (
+                <Typography align="center" variant={"h2"}>
+                    There are no barbers yet!
+                </Typography>
+            );
+        }else {
             return (
                 <div id="view-schedule-content">
                     <h1>View Schedule</h1>
@@ -83,6 +100,7 @@ class ViewSchedule extends Component {
                             {this.state.barbers.map((barber) => (
                                 <MenuItem key={barber.barber_id} value={barber}>
                                     <Checkbox
+                                        style={{"color": this.state.colors[barber.barber_id]}}
                                         checked={
                                             _.map(this.state.selected, "barber_id").indexOf(
                                                 barber.barber_id
@@ -94,6 +112,12 @@ class ViewSchedule extends Component {
                             ))}
                         </Select>
                     </FormControl>
+                    <div id={"chips-container-barbers"}>
+                    {this.state.barbers.map((barber) => {return (
+                        <Chip label={barber.name} key={barber.barber_id} style={{"backgroundColor": this.state.colors[barber.barber_id]}}/>
+                    )})
+                    }
+                    </div>
                     <Calendar
                         localizer={this.localizer}
                         events={this.state.eventsToShow}
@@ -106,6 +130,11 @@ class ViewSchedule extends Component {
                         style={{ height: "100%" }}
                         views={["day", "week"]}
                         selector={false}
+                        eventPropGetter={event => ({
+                            style: {
+                                backgroundColor: event.color,
+                            },
+                        })}
                     />
                 </div>
             );

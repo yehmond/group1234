@@ -59,7 +59,6 @@ export default function ShopsList() {
     const [shops, setShops] = useState(null);
     useEffect(() => {
         getStore({ owner_id: user }).then((response) => {
-            console.log(response);
             const fetchedShops = [];
             if (response !== null) {
                 for (let obj of response) {
@@ -84,7 +83,7 @@ export default function ShopsList() {
                         hours: store.hours,
                         reviews: reviews,
                         barbers: barbers,
-                        reservations: reservations.map((reservation) => {return convertReservationToEvent(reservation)}),
+                        reservations: reservations.map((reservation) => {return convertReservationToEvent(barbers, reservation)}),
                     };
                     fetchedShops.push(fetchedShop);
                 }

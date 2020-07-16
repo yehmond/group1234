@@ -49,3 +49,5 @@ export const DEFAULT_TO = "1700";
 export const MIN_PASSWORD_LENGTH = 6;
 
 export const TIMESLOT_VALUES = [15, 30, 45, 60, 90, 120];
+
+export const CALENDAR_COLORS = ['var(--primary-light)', 'var(--secondary-light)', 'lightcoral','lightskyblue', 'lightyellow', 'springgreen', 'gainsboro'];

@@ -1,13 +1,39 @@
-.rbc-event {
-    background-color: var(--primary-dark);
-    border: var(--primary-dark);
+.rbc-time-view {
+  height: 800px;
+    .rbc-event {
+        display: grid !important;
+        grid-template-rows: 1fr 2fr !important;
+        grid-row-gap: 2px;
+        padding: 0 3px;
+    }
+
+    .rbc-event-label {
+        font-size: 0.6rem;
+    }
+    .rbc-event-content {
+        font-size: 0.75rem;
+    }
 }
+
 
 #view-schedule-content {
     display: grid;
-    grid-template-rows: 0.1fr 0.1fr 2.8fr;
+    grid-template-rows: 0.1fr 0.1fr 0.1fr 2.8fr;
     grid-row-gap: 20px;
     padding: 40px;
+
+  #chips-container-barbers {
+    display: flex;
+    place-content: flex-start;
+    place-items: center;
+
+    .MuiChip-root {
+      display: grid;
+      align-items: center;
+
+    }
+
+  }
 
     .MuiFormControl-root {
         width: 80%;

@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
-import { DAYS_OF_WEEK_ABBR } from "./constants";
-import moment from "moment";
+import { CALENDAR_COLORS, DAYS_OF_WEEK_ABBR } from "./constants";
 
 export function convert24HrTo12Hr(time) {
     let hours = parseInt(time.substr(0, 2));
@@ -151,14 +150,30 @@ export function convertToQueryString(queryObj) {
     return query;
 }
 
-export function convertReservationToEvent(reservation) {
+export function getBarberColor(barbers) {
+    if (barbers === null || barbers === undefined) {
+        return null;
+    }
+    // assign colors to barbers
+    const colors = {};
+    let i = 0;
+    for(let barber of barbers) {
+        colors[barber.barber_id] = CALENDAR_COLORS[i % CALENDAR_COLORS.length];
+        i++;
+    }
+    return colors;
+}
+
+export function convertReservationToEvent(barbers, reservation) {
+   const colors = getBarberColor(barbers);
     return {
         title: reservation.user_id,
         start: new Date(reservation.from),
         end: new Date(reservation.to),
         allDay: false,
         barber_id: reservation.barber_id,
-        service: reservation.service
+        service: reservation.service,
+        color: colors[reservation.barber_id]
     };
 
 }
