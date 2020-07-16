@@ -6,7 +6,7 @@ import pic4 from "../images/home-cover2.jpg";
 import profilePic from "../images/barber_profile_pic.png";
 import moment from "moment";
 
-const imageList = [pic1, pic2, pic3, pic4];
+export const imageList = [pic1, pic2, pic3, pic4];
 
 const mockReviews = [
     {

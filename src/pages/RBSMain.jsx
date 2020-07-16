@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import { v4 as uuidv4 } from "uuid";
 import { Switch, Route } from "react-router-dom";
 import RBSForm from "../components/RegisterBarbershop/RBSForm";
 import RBSHours from "../components/RegisterBarbershop/RBSHours";
 import RBSConfirm from "../components/RegisterBarbershop/RBSConfirm";
 import { initializeHours } from "../utils/utils";
+import { connect } from "react-redux";
 
 class RBSMain extends Component {
     constructor(props) {
@@ -16,7 +16,7 @@ class RBSMain extends Component {
 
     initializeBarbershop() {
         return {
-            id: uuidv4(),
+            ownerId: this.props.user,
             name: "",
             address: "",
             city: "",
@@ -66,4 +66,9 @@ class RBSMain extends Component {
     }
 }
 
-export default RBSMain;
+const mapState = (state) => {
+    const authState = state.authState;
+    return { user: authState.userId };
+};
+
+export default connect(mapState)(RBSMain);

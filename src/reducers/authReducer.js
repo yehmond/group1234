@@ -1,5 +1,5 @@
 export default function authReducer(
-    initialState = { isLoggedIn: true, role: "OWNER" },
+    initialState = { isLoggedIn: true, role: "OWNER", userId: "11" },
     action
 ) {
     switch (action.type) {

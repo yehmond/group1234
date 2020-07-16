@@ -26,13 +26,14 @@ export default function ReviewCard(props) {
             <CardContent className={classes.leftPanel}>
                 <div className={"left-panel"}>
                     <Typography align={"center"} variant="h6">
+                        {/*TODO: Change to name*/}
                         {props.review.name}
                     </Typography>
                     <Rating name="rating" value={props.review.rating} disabled />
                 </div>
             </CardContent>
             <CardContent>
-                <p>{props.review.text}</p>
+                <p>{props.review.review}</p>
             </CardContent>
         </Card>
     );
