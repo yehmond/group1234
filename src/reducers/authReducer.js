@@ -9,7 +9,7 @@ import {
 } from "../actions/authActions";
 
 export default function authReducer(
-    initialState = { isLoggedIn: true, role: "OWNER", userId: "11" },
+    initialState = { isLoggedIn: false, role: "", username: "" },
     action
 ) {
     switch (action.type) {
