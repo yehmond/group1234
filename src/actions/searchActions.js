@@ -1,4 +1,4 @@
-import { searchStore } from "../api/customer";
+import { searchStores } from "../api/customer";
 import { RESULTS_PER_PAGE } from "../pages/Browse";
 import { parseSearchURL } from "../utils/utils";
 import { SERVICES_OFFERED } from "../utils/constants";
@@ -43,7 +43,7 @@ export function search() {
 
     return (dispatch) => {
         dispatch(searchLoading());
-        searchStore(RESULTS_PER_PAGE, queryObj).then((response) => {
+        searchStores(RESULTS_PER_PAGE, queryObj).then((response) => {
             if (response.status === 200) {
                 dispatch(searchSuccess(response));
             } else {
