@@ -9,10 +9,10 @@ export const SIGN_OUT_LOADING = "SIGN_OUT_LOADING";
 export const SIGN_OUT_SUCCESS = "SIGN_OUT_SUCCESS";
 export const SIGN_OUT_ERROR = "SIGN_OUT_ERROR";
 
-export function setSignInStatus(username, role) {
+export function setSignInStatus(email, role) {
     return {
         type: SET_SIGN_IN,
-        username,
+        email,
         role,
     };
 }
@@ -23,10 +23,10 @@ export function signInLoading() {
     };
 }
 
-export function signInSuccess(username, role) {
+export function signInSuccess(email, role) {
     return {
         type: SIGN_IN_SUCCESS,
-        username,
+        email,
         role,
     };
 }
@@ -38,12 +38,12 @@ export function signInError(msg) {
     };
 }
 
-export function signInAsync(username, password) {
+export function signInAsync(email, password) {
     return (dispatch) => {
         dispatch(signInLoading());
-        signIn(username, password)
+        signIn(email, password)
             .then((res) => {
-                dispatch(signInSuccess(res.username, res.role));
+                dispatch(signInSuccess(res.email, res.role));
             })
             .catch((err) => {
                 console.log(err);

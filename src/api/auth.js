@@ -17,8 +17,8 @@ const instance = axios.create({
     withCredentials: true,
 });
 
-export async function signIn(username, password) {
-    const body = { id: username, password };
+export async function signIn(email, password) {
+    const body = { email, password };
     try {
         const response = await instance.post("/signin/", body);
         console.log(response);
@@ -41,22 +41,20 @@ export async function signOut() {
 }
 
 export async function signUp(
-    username,
     password,
     role,
-    firstName,
-    lastName,
+    first_name,
+    last_name,
     email,
-    phoneNumber
+    phone_number
 ) {
     const body = {
-        id: username,
         password,
         role,
-        firstName,
-        lastName,
+        first_name,
+        last_name,
         email,
-        phoneNumber,
+        phone_number,
     };
 
     try {

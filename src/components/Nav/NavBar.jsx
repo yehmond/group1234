@@ -68,11 +68,11 @@ export default function MenuAppBar() {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        const username = localStorage.getItem("username");
+        const email = localStorage.getItem("email");
         const role = localStorage.getItem("role");
 
-        if (username && role) {
-            dispatch(setSignInStatus(username, role));
+        if (email && role) {
+            dispatch(setSignInStatus(email, role));
         }
     }, []); // eslint-disable-line
 

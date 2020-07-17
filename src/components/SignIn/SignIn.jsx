@@ -52,11 +52,11 @@ export default function SignIn() {
     const classes = useStyles();
     const dispatch = useDispatch();
     const authState = useSelector((state) => state.authState);
-    const [username, setUsername] = useState("");
+    const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-    function handleUsername(event) {
-        setUsername(event.target.value);
+    function handleEmail(event) {
+        setEmail(event.target.value);
     }
 
     function handlePassword(event) {
@@ -65,8 +65,8 @@ export default function SignIn() {
 
     function handleSubmit(event) {
         event.preventDefault();
-        if (username.length > 0 && password.length > 0) {
-            dispatch(signInAsync(username, password));
+        if (email.length > 0 && password.length > 0) {
+            dispatch(signInAsync(email, password));
         }
     }
 
@@ -89,7 +89,7 @@ export default function SignIn() {
                     >
                         {authState.status === "error" && !authState.isLoggedIn && (
                             <Alert severity="error">
-                                Incorrect username or password.
+                                Incorrect email or password.
                             </Alert>
                         )}
                         <TextField
@@ -97,12 +97,12 @@ export default function SignIn() {
                             margin="normal"
                             required
                             fullWidth
-                            id="username"
-                            label="Username"
-                            name="username"
-                            autoComplete="username"
+                            id="email"
+                            label="Email"
+                            name="email"
+                            autoComplete="email"
                             autoFocus
-                            onChange={handleUsername}
+                            onChange={handleEmail}
                         />
                         <TextField
                             variant="outlined"

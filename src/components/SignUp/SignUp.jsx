@@ -145,7 +145,6 @@ export default function SignUp() {
     useEffect(() => {
         if (submit) {
             signUp(
-                state.username,
                 state.password,
                 state.userType,
                 state.fName,
@@ -169,7 +168,7 @@ export default function SignUp() {
             <div className={classes.paper}>
                 {signUpError && (
                     <Alert severity="error">
-                        Username already taken. Please try again.
+                        Email already taken. Please try again.
                     </Alert>
                 )}
                 <Avatar className={classes.avatar}>
@@ -225,17 +224,6 @@ export default function SignUp() {
                                 autoComplete="email"
                                 helperText={state.emailHelper}
                                 error={state.emailError}
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <TextField
-                                onChange={handleChange}
-                                variant="outlined"
-                                required
-                                fullWidth
-                                label="Username"
-                                name="username"
-                                autoComplete="username"
                             />
                         </Grid>
                         <Grid item xs={12}>

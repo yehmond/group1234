@@ -9,7 +9,7 @@ import {
 } from "../actions/authActions";
 
 export default function authReducer(
-    initialState = { isLoggedIn: false, role: "", username: "" },
+    initialState = { isLoggedIn: false, role: "", email: "" },
     action
 ) {
     switch (action.type) {
@@ -17,7 +17,7 @@ export default function authReducer(
             return {
                 isLoggedIn: true,
                 role: action.role.toUpperCase(),
-                username: action.username,
+                email: action.email,
             };
         case SIGN_IN_LOADING:
             return {
@@ -27,11 +27,11 @@ export default function authReducer(
         case SIGN_IN_SUCCESS:
             window.location = "/";
             window.localStorage.setItem("role", action.role);
-            window.localStorage.setItem("username", action.username);
+            window.localStorage.setItem("email", action.email);
             return {
                 isLoggedIn: true,
                 role: action.role,
-                username: action.username,
+                email: action.email,
                 status: "success",
             };
         case SIGN_IN_ERROR:
@@ -47,7 +47,7 @@ export default function authReducer(
         case SIGN_OUT_SUCCESS:
             window.location = "/";
             window.localStorage.removeItem("role");
-            window.localStorage.removeItem("username");
+            window.localStorage.removeItem("email");
             return {
                 isLoggedIn: false,
                 status: "success",
