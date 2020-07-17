@@ -1,15 +1,13 @@
 /* eslint-disable no-console */
 import { signIn, signOut } from "../api/auth";
 
+export const SET_SIGN_IN = "SET_SIGN_IN";
 export const SIGN_IN_LOADING = "SIGN_IN_LOADING";
 export const SIGN_IN_SUCCESS = "SIGN_IN_SUCCESS";
 export const SIGN_IN_ERROR = "SIGN_IN_ERROR";
-export const SIGN_IN_OWNER = "SIGN_IN_OWNER";
-export const SIGN_IN_CUSTOMER = "SIGN_IN_CUSTOMER";
 export const SIGN_OUT_LOADING = "SIGN_OUT_LOADING";
 export const SIGN_OUT_SUCCESS = "SIGN_OUT_SUCCESS";
 export const SIGN_OUT_ERROR = "SIGN_OUT_ERROR";
-export const SET_SIGN_IN = "SET_SIGN_IN";
 
 export function setSignInStatus(username, role) {
     return {

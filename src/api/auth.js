@@ -58,17 +58,12 @@ export async function signUp(
         email,
         phoneNumber,
     };
-    for (const key in body) {
-        if (typeof body[key] === "undefined") {
-            throw Error(`Missing ${key}`);
-        }
-    }
 
     try {
         const response = await instance.post("/signup/", body);
         return response.data;
     } catch (err) {
-        console.error(err);
+        console.error(err?.response);
         throw Error(err);
     }
 }

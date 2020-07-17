@@ -13,6 +13,7 @@ import SignInPage from "./pages/SignInPage";
 import MyShops from "./pages/MyShops";
 import Rating from "./pages/Rating";
 import ViewShop from "./components/MyShops/ViewShop/ViewShop";
+import SignUpSuccessful from "./pages/SignUpSuccessful";
 
 function App() {
     return (
@@ -29,8 +30,11 @@ function App() {
                 <Route path="/signin">
                     <SignInPage />
                 </Route>
-                <Route path="/signup">
+                <Route exact path="/signup">
                     <SignUpPage />
+                </Route>
+                <Route path="/signup/success">
+                    <SignUpSuccessful />
                 </Route>
                 <Route exact path="/reserve/:id">
                     <Reservation />

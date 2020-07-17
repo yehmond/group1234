@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -17,6 +17,8 @@ import PasswordStrengthBar from "react-password-strength-bar/dist";
 import { MIN_PASSWORD_LENGTH } from "../../utils/constants";
 import { Link as RouterLink } from "react-router-dom";
 import { makeStyles } from "@material-ui/core";
+import { signUp } from "../../api/auth";
+import Alert from "@material-ui/lab/Alert";
 
 // code taken from https://material-ui.com/getting-started/templates/
 const useStyles = makeStyles((theme) => ({
@@ -53,6 +55,8 @@ export default function SignUp() {
         emailHelper: "",
         showPassword: false,
     });
+    const [submit, setSubmit] = useState(false);
+    const [signUpError, setSignUpError] = useState(false);
 
     function handleChange(event) {
         const {
@@ -85,7 +89,6 @@ export default function SignUp() {
     }
 
     function areFieldsValid() {
-        let invalid = false;
         // validate email
         if (!validateEmail(state.email)) {
             setState({
@@ -93,20 +96,10 @@ export default function SignUp() {
                 emailError: true,
                 emailHelper: "Pleas enter a valid email",
             });
-            invalid = true;
         }
-        // validate password
-        if (!isValidPassword()) {
-            invalid = true;
-        }
-        // if any fields are invalid return
-        return invalid;
-    }
 
-    function submitSignUp() {
-        if (areFieldsValid()) {
-            console.log(state);
-        }
+        // if any fields are invalid return
+        return validateEmail(state.email) && isValidPassword();
     }
 
     function isValidPassword() {
@@ -143,10 +136,42 @@ export default function SignUp() {
         );
     }
 
+    function submitSignUp() {
+        if (areFieldsValid()) {
+            setSubmit(true);
+        }
+    }
+
+    useEffect(() => {
+        if (submit) {
+            signUp(
+                state.username,
+                state.password,
+                state.userType,
+                state.fName,
+                state.lName,
+                state.email,
+                state.phoneNumber
+            )
+                .then(() => {
+                    window.location = "/signup/success";
+                })
+                .catch(() => {
+                    setSignUpError(true);
+                    setSubmit(false);
+                });
+        }
+    }, [submit]); //eslint-disable-line
+
     return (
         <Container component="main" maxWidth="xs">
             <CssBaseline />
             <div className={classes.paper}>
+                {signUpError && (
+                    <Alert severity="error">
+                        Username already taken. Please try again.
+                    </Alert>
+                )}
                 <Avatar className={classes.avatar}>
                     <Add />
                 </Avatar>
@@ -184,11 +209,33 @@ export default function SignUp() {
                                 variant="outlined"
                                 required
                                 fullWidth
+                                label="Phone Number"
+                                name="phoneNumber"
+                                autoComplete="phone number"
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                onChange={handleChange}
+                                variant="outlined"
+                                required
+                                fullWidth
                                 label="Email Address"
                                 name="email"
                                 autoComplete="email"
                                 helperText={state.emailHelper}
                                 error={state.emailError}
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                onChange={handleChange}
+                                variant="outlined"
+                                required
+                                fullWidth
+                                label="Username"
+                                name="username"
+                                autoComplete="username"
                             />
                         </Grid>
                         <Grid item xs={12}>

@@ -74,8 +74,7 @@ export default function MenuAppBar() {
         if (username && role) {
             dispatch(setSignInStatus(username, role));
         }
-        // eslint-disable-next-line
-    }, []);
+    }, []); // eslint-disable-line
 
     let displayedLinks;
     switch (authState.role) {
