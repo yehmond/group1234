@@ -60,7 +60,7 @@ export default function LargeCard({ id, name, services, price, rating, address }
     }
 
     function handleClickArea() {
-        history.push(`/stores/${id}`);
+        history.push(`/view/stores/${id}`);
     }
 
     function handleClickRequest(event) {

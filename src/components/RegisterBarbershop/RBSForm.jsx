@@ -36,6 +36,7 @@ class RBSForm extends Component {
         this.handleTextChange = this.handleTextChange.bind(this);
         this.handleAutoCompleteChange = this.handleAutoCompleteChange.bind(this);
         this.handleDropZoneChange = this.handleDropZoneChange.bind(this);
+        this.handleDropZoneDelete = this.handleDropZoneDelete.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.isFormValid = this.isFormValid.bind(this);
     }
@@ -51,8 +52,21 @@ class RBSForm extends Component {
         this.setState({ servicesOffered: values });
     }
 
-    handleDropZoneChange(files) {
-        this.setState({ photos: files });
+    handleDropZoneChange(file) {
+        if (file) {
+            const photos = this.state.photos;
+            photos.push(file);
+            this.setState({ photos: photos });
+        }
+    }
+
+    handleDropZoneDelete(file) {
+        if (file) {
+            const filtered = this.state.photos.filter(
+                (oldFile) => oldFile !== file
+            );
+            this.setState({ photos: filtered });
+        }
     }
 
     handleSubmit() {
@@ -164,13 +178,11 @@ class RBSForm extends Component {
                                     dropzoneText={
                                         "Upload a few pictures of your shop!"
                                     }
-                                    filesLimit={5}
+                                    filesLimit={4}
                                     name="photos"
                                     label="Upload Some Photos"
                                     handleChange={this.handleDropZoneChange}
-                                    value={this.state.photos.map((file) => {
-                                        return file.type;
-                                    })}
+                                    handleDelete={this.handleDropZoneDelete}
                                 />
                             </div>
                         </div>

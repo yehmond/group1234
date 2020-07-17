@@ -37,7 +37,7 @@ export default function SmallCard({ shopId, name, services, price, rating }) {
     const history = useHistory();
 
     function handleClickArea() {
-        history.push(`/stores/${shopId}`);
+        history.push(`/view/stores/${shopId}`);
     }
 
     function handleClickRequest() {

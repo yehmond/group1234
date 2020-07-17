@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { signIn, signOut } from "../api/auth";
 
 export const SIGN_IN_LOADING = "SIGN_IN_LOADING";

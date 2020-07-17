@@ -62,7 +62,6 @@ export function RenderAutocomplete(props) {
         <Autocomplete
             multiple
             id={props.id}
-            freeSolo
             options={props.options}
             onChange={props.handleChange}
             value={props.value}
@@ -110,15 +109,37 @@ export function RenderTimePicker(props) {
 }
 
 export function RenderDropzone(props) {
+    const onDropHandler = (files) => {
+        const file = files[0];
+        let newPic;
+        const reader = new FileReader();
+        reader.onload = (event) => {
+            newPic = event.target.result;
+            props.handleChange(newPic);
+        };
+        reader.readAsDataURL(file);
+    };
+    const onDeleteHandler = (files) => {
+        const file = files;
+        let oldPic;
+        const reader = new FileReader();
+        reader.onload = (event) => {
+            oldPic = event.target.result;
+            props.handleDelete(oldPic);
+        };
+        reader.readAsDataURL(file);
+    };
     return (
         <div>
             <h4>{props.label}</h4>
             <DropzoneArea
                 acceptedFiles={props.acceptedFiles}
                 dropzoneText={props.dropzoneText}
-                onChange={props.handleChange}
+                // onChange={props.handleChange}
                 initialFiles={props.value}
                 filesLimit={props.filesLimit}
+                onDrop={onDropHandler}
+                onDelete={onDeleteHandler}
             />
         </div>
     );
@@ -132,7 +153,7 @@ export function RenderRating(props) {
                 name={props.name}
                 precision={1}
                 onChange={props.handleChange}
-                max={5}
+                max={3}
                 value={parseInt(props.value)}
                 size="large"
                 icon={<MonetizationOnIcon fontSize="inherit" />}

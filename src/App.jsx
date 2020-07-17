@@ -11,6 +11,8 @@ import Reservation from "./pages/Reservation";
 import SignUpPage from "./pages/SignUpPage";
 import SignInPage from "./pages/SignInPage";
 import MyShops from "./pages/MyShops";
+import Rating from "./pages/Rating";
+import ViewShop from "./components/MyShops/ViewShop/ViewShop";
 
 function App() {
     return (
@@ -30,11 +32,14 @@ function App() {
                 <Route path="/signup">
                     <SignUpPage />
                 </Route>
-                <Route path="/reservations">
+                <Route exact path="/reserve/:id">
+                    <Reservation />
+                </Route>
+                <Route exact path="/reservations">
                     <MyReservations />
                 </Route>
-                <Route path="/reservation">
-                    <Reservation />
+                <Route path="/reservations/:reservationID/rate">
+                    <Rating />
                 </Route>
                 <Route path="/createshop">
                     <Redirect to="/createshop/register" />
@@ -42,6 +47,9 @@ function App() {
                 </Route>
                 <Route path="/stores">
                     <MyShops />
+                </Route>
+                <Route exact path="/view/stores/:storeID">
+                    <ViewShop />
                 </Route>
             </Switch>
         </Router>

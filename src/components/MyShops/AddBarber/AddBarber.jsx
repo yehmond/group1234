@@ -15,23 +15,33 @@ import {
 import DayHoursInput from "../../RegisterBarbershop/DayHoursInput";
 import { initializeHours } from "../../../utils/utils";
 import _ from "lodash";
+import UserContext from "../../../pages/UserContext";
+import { withRouter } from "react-router-dom";
+import DialogMessage from "../../Dialog/Dialog";
+import { registerBarber } from "../../../api/owner";
 
 class AddBarber extends Component {
-    constructor(props) {
-        super(props);
+    static contextType = UserContext;
+
+    constructor(props, context) {
+        super(props, context);
         this.state = {
             firstName: "",
             lastName: "",
             profile: "",
             specialties: [],
-            photo: [],
+            photo: null,
             timeslotValue: 0,
             hours: initializeHours(),
+            storeId: this.props.match.params.storeID,
+            submitSuccess: false,
+            submitError: false,
         };
         this.isFormValid = this.isFormValid.bind(this);
         this.handleTextChange = this.handleTextChange.bind(this);
         this.handleAutoCompleteChange = this.handleAutoCompleteChange.bind(this);
         this.handleDropZoneChange = this.handleDropZoneChange.bind(this);
+        this.handleDropZoneDelete = this.handleDropZoneDelete.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
@@ -50,15 +60,59 @@ class AddBarber extends Component {
         this.setState({ photo: files });
     }
 
+    handleDropZoneDelete() {
+        this.setState({ photo: null });
+    }
+
+    specialitiesToServices() {
+        let ret = [];
+        for (const service of this.state.specialties) {
+            ret.push({ service: service, duration: this.state.timeslotValue });
+        }
+        return ret;
+    }
+
+    hoursToDate() {
+        let newHrs = [];
+        for (let day in this.state.hours) {
+            if (!day.isOpen) {
+                newHrs.push({ from: "0000", to: "0000" });
+            } else {
+                newHrs.push(day);
+            }
+        }
+        return newHrs;
+    }
+
     handleSubmit() {
-        // tbd
-        console.log(this.state);
+        registerBarber(
+            this.state.firstName + " " + this.state.lastName,
+            this.state.profile,
+            this.state.photo,
+            this.specialitiesToServices(),
+            [this.state.storeId],
+            this.hoursToDate()
+        )
+            .then(() => {
+                this.setState({ submitSuccess: true });
+            })
+            .catch(() => {
+                this.setState({ submitError: true });
+            });
     }
 
     isFormValid() {
         return (
-            !_.some(_.omit(this.state, "photo", "timeslotValue"), _.isEmpty) &&
-            this.state.timeslotValue !== 0
+            !_.some(
+                _.omit(
+                    this.state,
+                    "photo",
+                    "timeslotValue",
+                    "submitSuccess",
+                    "submitError"
+                ),
+                _.isEmpty
+            ) && this.state.timeslotValue !== 0
         );
     }
 
@@ -120,6 +174,7 @@ class AddBarber extends Component {
                                 dropzoneText="Add a profile picture!"
                                 filesLimit={1}
                                 handleChange={this.handleDropZoneChange}
+                                handleDelete={this.handleDropZoneDelete}
                             />
                         </div>
                     </div>
@@ -150,9 +205,23 @@ class AddBarber extends Component {
                         </Button>
                     </div>
                 </form>
+                {this.state.submitSuccess && (
+                    <DialogMessage
+                        title={"Success!"}
+                        link={"/stores"}
+                        text={"The barber has been successfully registered!"}
+                    />
+                )}
+                {this.state.submitError && (
+                    <DialogMessage
+                        title={"Error!"}
+                        text={"The barber was not registered! Please try again."}
+                        link={"/stores/"}
+                    />
+                )}
             </div>
         );
     }
 }
 
-export default AddBarber;
+export default withRouter(AddBarber);

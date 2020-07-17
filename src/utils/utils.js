@@ -3,7 +3,7 @@ import { DAYS_OF_WEEK_ABBR } from "./constants";
 
 export function convert24HrTo12Hr(time) {
     let hours = parseInt(time.substr(0, 2));
-    const minutes = time.substr(3);
+    const minutes = time.substr(2);
     //it is pm if hours from 12 onwards
     const suffix = hours >= 12 ? "PM" : "AM";
     //only -12 from hours if it is greater than 12 (if not back at mid night)
@@ -43,7 +43,7 @@ export function useWindowSize() {
 export function initializeHours() {
     const hours = [];
     for (let i = 0; i < 7; i++) {
-        hours.push({ isOpen: true, from: "08:00", to: "17:00" });
+        hours.push({ isOpen: true, from: "0800", to: "1700" });
     }
     return hours;
 }
@@ -64,6 +64,26 @@ export function hoursToString(hours) {
         }
     });
     return retObj;
+}
+
+export function addColonTime(time) {
+    if (time.length !== 4) {
+        return "";
+    } else {
+        const hours = time.substring(0, 2);
+        const minutes = time.substring(2);
+        return hours + ":" + minutes;
+    }
+}
+
+export function stringTimeToLocalTime(str) {
+    if (str === null || str === undefined || str === "" || str === " ") {
+        return "0000";
+    }
+}
+
+export function refreshPage() {
+    window.location.reload();
 }
 
 export function parseSearchURL() {

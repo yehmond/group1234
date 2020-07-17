@@ -34,7 +34,7 @@ class RBSHours extends Component {
                                 />
                             );
                         })}
-                        <div className="inline-buttons long">
+                        <div className="inline-buttons long-buttons">
                             <div className="divider"></div>
                             <Button
                                 variant="contained"
