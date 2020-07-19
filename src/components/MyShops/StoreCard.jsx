@@ -23,7 +23,7 @@ const useStyles = (theme) => ({
     },
     media: {
         height: 0,
-        paddingTop: "75%"
+        paddingTop: "75%",
     },
     darken: {
         color: theme.palette.primary.dark,
@@ -117,7 +117,8 @@ class StoreCard extends Component {
                                         pathname: `/stores/${shopID}/schedule`,
                                         id: shopID,
                                         reservations: shop.reservations,
-                                        barbers: shop.barbers
+                                        barbers: shop.barbers,
+                                        hours: shop.hours,
                                     }}
                                 >
                                     <EventIcon className={classes.icon} />
@@ -138,6 +139,7 @@ class StoreCard extends Component {
                                     to={{
                                         pathname: `/stores/${shopID}/stats`,
                                         id: shopID,
+                                        shop: shop,
                                     }}
                                 >
                                     <EqualizerIcon className={classes.icon} />

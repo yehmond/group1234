@@ -13,21 +13,29 @@ import Checkbox from "@material-ui/core/Checkbox";
 import ListItemText from "@material-ui/core/ListItemText";
 import _ from "lodash";
 import { getStore } from "../../../api/owner";
-import { convertReservationToEvent, getBarberColor } from "../../../utils/utils";
+import {
+    convertReservationToEvent,
+    getBarberColor,
+    getEarliestAndLatest,
+} from "../../../utils/utils";
 import Loading from "../../Loading/Loading";
-import Chip from '@material-ui/core/Chip';
+import Chip from "@material-ui/core/Chip";
 import Typography from "@material-ui/core/Typography";
-
 
 class ViewSchedule extends Component {
     constructor(props) {
         super(props);
         this.localizer = momentLocalizer(moment);
-        this.minTime = new Date();
-        this.minTime.setHours(7, 0, 0);
-        this.maxTime = new Date();
-        this.maxTime.setHours(20, 30, 0);
-        this.state = { selected: [], barbers: props.location.barbers, allEvents: props.location.reservations, eventsToShow: [], id: props.match.params.storeID, colors: getBarberColor(props.location.barbers)};
+        this.state = {
+            minTime: getEarliestAndLatest(props.location.hours)[0],
+            maxTime: getEarliestAndLatest(props.location.hours)[1],
+            selected: [],
+            barbers: props.location.barbers,
+            allEvents: props.location.reservations,
+            eventsToShow: [],
+            id: props.match.params.storeID,
+            colors: getBarberColor(props.location.barbers),
+        };
         this.handleChange = this.handleChange.bind(this);
         this.eventPropGetter = this.eventPropGetter.bind(this);
     }
@@ -38,13 +46,26 @@ class ViewSchedule extends Component {
             getStore({ store_id: this.state.id }).then((response) => {
                 let reservations = null;
                 let barbers = null;
+                let hours = null;
                 // will only be one store
-                if(response !== null) {
+                if (response !== null) {
                     for (let obj of response) {
-                       reservations =  obj.reservations.map((reservation) => {return convertReservationToEvent(obj.barbers, reservation)});
-                       barbers = obj.barbers;
+                        reservations = obj.reservations.map((reservation) => {
+                            return convertReservationToEvent(
+                                obj.barbers,
+                                reservation
+                            );
+                        });
+                        barbers = obj.barbers;
+                        hours = obj.store.hours;
                     }
-                    this.setState({ allEvents: reservations , barbers: barbers, colors: getBarberColor(barbers)});
+                    this.setState({
+                        allEvents: reservations,
+                        barbers: barbers,
+                        colors: getBarberColor(barbers),
+                        minTime: getEarliestAndLatest(hours)[0],
+                        maxTime: getEarliestAndLatest(hours)[1],
+                    });
                 } else {
                     // this store doesn't exist (should not be possible
                 }
@@ -57,7 +78,7 @@ class ViewSchedule extends Component {
             backgroundColor: event.color,
         };
         return {
-            style: style
+            style: style,
         };
     }
 
@@ -65,21 +86,23 @@ class ViewSchedule extends Component {
         this.setState({ selected: event.target.value }, () => {
             const eventsFiltered = this.state.allEvents.filter(
                 (event) =>
-                    _.map(this.state.selected, "barber_id").indexOf(event.barber_id) > -1
+                    _.map(this.state.selected, "barber_id").indexOf(
+                        event.barber_id
+                    ) > -1
             );
             this.setState({ eventsToShow: eventsFiltered });
         });
     }
     render() {
-        if(!this.state.allEvents || !this.state.barbers) {
-            return <Loading/>;
-        } else if(this.state.barbers.length === 0) {
+        if (!this.state.allEvents || !this.state.barbers) {
+            return <Loading />;
+        } else if (this.state.barbers.length === 0) {
             return (
                 <Typography align="center" variant={"h2"}>
                     There are no barbers yet!
                 </Typography>
             );
-        }else {
+        } else {
             return (
                 <div id="view-schedule-content">
                     <h1>View Schedule</h1>
@@ -92,7 +115,7 @@ class ViewSchedule extends Component {
                             multiple
                             value={this.state.selected}
                             onChange={this.handleChange}
-                            input={<Input/>}
+                            input={<Input />}
                             renderValue={(selected) =>
                                 _.map(selected, "name").join(", ")
                             }
@@ -100,23 +123,37 @@ class ViewSchedule extends Component {
                             {this.state.barbers.map((barber) => (
                                 <MenuItem key={barber.barber_id} value={barber}>
                                     <Checkbox
-                                        style={{"color": this.state.colors[barber.barber_id]}}
-                                        checked={
-                                            _.map(this.state.selected, "barber_id").indexOf(
+                                        style={{
+                                            "color": this.state.colors[
                                                 barber.barber_id
-                                            ) > -1
+                                            ],
+                                        }}
+                                        checked={
+                                            _.map(
+                                                this.state.selected,
+                                                "barber_id"
+                                            ).indexOf(barber.barber_id) > -1
                                         }
                                     />
-                                    <ListItemText primary={barber.name}/>
+                                    <ListItemText primary={barber.name} />
                                 </MenuItem>
                             ))}
                         </Select>
                     </FormControl>
                     <div id={"chips-container-barbers"}>
-                    {this.state.barbers.map((barber) => {return (
-                        <Chip label={barber.name} key={barber.barber_id} style={{"backgroundColor": this.state.colors[barber.barber_id]}}/>
-                    )})
-                    }
+                        {this.state.barbers.map((barber) => {
+                            return (
+                                <Chip
+                                    label={barber.name}
+                                    key={barber.barber_id}
+                                    style={{
+                                        "backgroundColor": this.state.colors[
+                                            barber.barber_id
+                                        ],
+                                    }}
+                                />
+                            );
+                        })}
                     </div>
                     <Calendar
                         localizer={this.localizer}
@@ -125,12 +162,12 @@ class ViewSchedule extends Component {
                             return event.title + ": " + event.service;
                         }}
                         defaultView={"week"}
-                        min={this.minTime}
-                        max={this.maxTime}
+                        min={this.state.minTime}
+                        max={this.state.maxTime}
                         style={{ height: "100%" }}
                         views={["day", "week"]}
                         selector={false}
-                        eventPropGetter={event => ({
+                        eventPropGetter={(event) => ({
                             style: {
                                 backgroundColor: event.color,
                             },

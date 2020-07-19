@@ -1,5 +1,5 @@
 .rbc-time-view {
-  height: 800px;
+    height: 800px;
     .rbc-event {
         display: grid !important;
         grid-template-rows: 1fr 2fr !important;
@@ -15,25 +15,22 @@
     }
 }
 
-
 #view-schedule-content {
     display: grid;
     grid-template-rows: 0.1fr 0.1fr 0.1fr 2.8fr;
     grid-row-gap: 20px;
     padding: 40px;
 
-  #chips-container-barbers {
-    display: flex;
-    place-content: flex-start;
-    place-items: center;
+    #chips-container-barbers {
+        display: flex;
+        place-content: flex-start;
+        place-items: center;
 
-    .MuiChip-root {
-      display: grid;
-      align-items: center;
-
+        .MuiChip-root {
+            display: grid;
+            align-items: center;
+        }
     }
-
-  }
 
     .MuiFormControl-root {
         width: 80%;

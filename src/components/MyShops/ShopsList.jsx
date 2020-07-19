@@ -83,7 +83,9 @@ export default function ShopsList() {
                         hours: store.hours,
                         reviews: reviews,
                         barbers: barbers,
-                        reservations: reservations.map((reservation) => {return convertReservationToEvent(barbers, reservation)}),
+                        reservations: reservations.map((reservation) => {
+                            return convertReservationToEvent(barbers, reservation);
+                        }),
                     };
                     fetchedShops.push(fetchedShop);
                 }
