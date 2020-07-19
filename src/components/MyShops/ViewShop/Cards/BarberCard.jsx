@@ -10,7 +10,7 @@ import TimerIcon from "@material-ui/icons/Timer";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import AlertBox from "../../../Dialog/Alert";
-import { deleteBarber } from "../../../../api/owner";
+import { deleteBarbers } from "../../../../api/owner";
 import { refreshPage } from "../../../../utils/utils";
 
 const useStyles = makeStyles(() => ({
@@ -60,7 +60,7 @@ export default function BarberCard(props) {
     const role = authState.role;
 
     const handleDelete = () => {
-        return deleteBarber({ barber_id: props.barber.barber_id });
+        return deleteBarbers({ barber_id: props.barber.barber_id });
     };
 
     return (
