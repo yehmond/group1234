@@ -13,8 +13,8 @@ import { Link } from "react-router-dom";
 import Tooltip from "@material-ui/core/Tooltip";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import AlertBox from "../Dialog/Alert";
-import { convertReservationToEvent, refreshPage } from "../../utils/utils";
 import { deleteStores } from "../../api/owner";
+import { convertReservationToEvent, refreshPage } from "../../utils/utils";
 
 const useStyles = (theme) => ({
     root: {

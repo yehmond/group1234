@@ -66,6 +66,7 @@ export function hoursToString(hours) {
     return retObj;
 }
 
+
 export function addColonTime(time) {
     if (time.length !== 4) {
         return "";
@@ -237,4 +238,5 @@ export function sortReservations(reservations) {
         return new Date(b.to) - new Date(a.to);
     });
 }
+
 
