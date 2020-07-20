@@ -8,7 +8,6 @@ import Loading from "../Loading/Loading";
 import UserContext from "../../pages/UserContext";
 import { getStore } from "../../api/owner";
 import Typography from "@material-ui/core/Typography";
-import { convertReservationToEvent } from "../../utils/utils";
 
 const useStyles = makeStyles((theme) => ({
     grid: {

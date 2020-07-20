@@ -49,7 +49,7 @@ function App() {
                     <MyShops />
                 </Route>
                 <Route exact path="/view/stores/:storeID">
-                    <ViewShop />
+                    <ViewShop/>
                 </Route>
             </Switch>
         </Router>

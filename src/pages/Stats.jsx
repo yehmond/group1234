@@ -55,7 +55,7 @@ export default function Stats() {
         } else {
             setStore(location.shop);
         }
-    }, []);
+    }, [location.shop, storeID]);
 
     const classes = useStyles();
     const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);

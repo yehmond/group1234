@@ -216,7 +216,7 @@ class AddBarber extends Component {
                     <DialogMessage
                         title={"Error!"}
                         text={"The barber was not registered! Please try again."}
-                        link={"/stores/"}
+                        link={'/stores/'}
                     />
                 )}
             </div>

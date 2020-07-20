@@ -56,15 +56,13 @@ class RBSForm extends Component {
         if (file) {
             const photos = this.state.photos;
             photos.push(file);
-            this.setState({ photos: photos });
+            this.setState({photos: photos});
         }
     }
 
     handleDropZoneDelete(file) {
         if (file) {
-            const filtered = this.state.photos.filter(
-                (oldFile) => oldFile !== file
-            );
+            const filtered = this.state.photos.filter((oldFile) => oldFile !== file);
             this.setState({ photos: filtered });
         }
     }

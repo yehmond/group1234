@@ -26,7 +26,7 @@ class ViewShop extends Component {
             getStore({ store_id: this.state.storeId }).then((response) => {
                 const fetchedShops = [];
                 // will only be one store
-                if (response !== null) {
+                if(response !== null) {
                     for (let obj of response) {
                         const store = obj.store;
                         const barbers = obj.barbers;
@@ -114,10 +114,7 @@ class ViewShop extends Component {
                             <Info barbershop={this.state.barbershop} />
                         )}
                         {this.state.page === "BARBER_PAGE" && (
-                            <Barbers
-                                barbers={this.state.barbershop.barbers}
-                                shopID={this.state.barbershop.id}
-                            />
+                            <Barbers barbers={this.state.barbershop.barbers} shopID={this.state.barbershop.id} />
                         )}
                         {this.state.page === "REVIEWS_PAGE" && (
                             <Reviews reviews={this.state.barbershop.reviews} />

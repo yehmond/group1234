@@ -96,10 +96,10 @@ class ViewSchedule extends Component {
     render() {
         if (!this.state.allEvents || !this.state.barbers) {
             return <Loading />;
-        } else if (this.state.barbers.length === 0) {
+        } else if (this.state.allEvents.length === 0) {
             return (
-                <Typography align="center" variant={"h2"}>
-                    There are no barbers yet!
+                <Typography className="padding-top" align="center" variant={"h2"}>
+                    There are no reservations yet!
                 </Typography>
             );
         } else {
