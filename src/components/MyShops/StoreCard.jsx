@@ -116,9 +116,14 @@ class StoreCard extends Component {
                                     to={{
                                         pathname: `/stores/${shopID}/schedule`,
                                         id: shopID,
-                                        reservations: shop.reservations.map((reservation) => {
-                                            return convertReservationToEvent(shop.barbers, reservation);
-                                        }),
+                                        reservations: shop.reservations.map(
+                                            (reservation) => {
+                                                return convertReservationToEvent(
+                                                    shop.barbers,
+                                                    reservation
+                                                );
+                                            }
+                                        ),
                                         barbers: shop.barbers,
                                         hours: shop.hours,
                                     }}

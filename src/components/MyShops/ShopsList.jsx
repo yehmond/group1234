@@ -83,7 +83,7 @@ export default function ShopsList() {
                         hours: store.hours,
                         reviews: reviews,
                         barbers: barbers,
-                        reservations: reservations
+                        reservations: reservations,
                     };
                     fetchedShops.push(fetchedShop);
                 }
