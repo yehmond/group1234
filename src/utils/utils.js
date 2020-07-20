@@ -237,3 +237,4 @@ export function sortReservations(reservations) {
         return new Date(b.to) - new Date(a.to);
     });
 }
+

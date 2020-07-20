@@ -12,7 +12,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Checkbox from "@material-ui/core/Checkbox";
 import ListItemText from "@material-ui/core/ListItemText";
 import _ from "lodash";
-import { getStore } from "../../../api/owner";
+import { getStores } from "../../../api/owner";
 import {
     convertReservationToEvent,
     getBarberColor,
@@ -43,7 +43,7 @@ class ViewSchedule extends Component {
     componentDidMount() {
         // for a refresh, need to fetch
         if (!this.props.location.reservations || !this.props.location.barbers) {
-            getStore({ store_id: this.state.id }).then((response) => {
+            getStores({ store_id: this.state.id }).then((response) => {
                 let reservations = null;
                 let barbers = null;
                 let hours = null;

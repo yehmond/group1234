@@ -7,7 +7,7 @@ import Reviews from "./Reviews";
 import Barbers from "./Barbers";
 import { withRouter } from "react-router-dom";
 import Loading from "../../Loading/Loading";
-import { getStore } from "../../../api/owner";
+import { getStores } from "../../../api/owner";
 
 class ViewShop extends Component {
     constructor(props) {
@@ -23,7 +23,7 @@ class ViewShop extends Component {
     componentDidMount() {
         // for a refresh, need to fetch
         if (!this.props.location.shop) {
-            getStore({ store_id: this.state.storeId }).then((response) => {
+            getStores({ store_id: this.state.storeId }).then((response) => {
                 const fetchedShops = [];
                 // will only be one store
                 if(response !== null) {

@@ -8,7 +8,7 @@ import Paper from "@material-ui/core/Paper";
 import Chart from "./../components/Stats/Chart";
 import Deposits from "./../components/Stats/TotalReservations";
 import Orders from "./../components/Stats/Reservations";
-import { getStore } from "../api/owner";
+import { getStores } from "../api/owner";
 import Loading from "../components/Loading/Loading";
 import { sortReservations } from "../utils/utils";
 
@@ -44,7 +44,7 @@ export default function Stats() {
     const { storeID } = useParams();
     useEffect(() => {
         if (!location.shop) {
-            getStore({ store_id: storeID }).then((response) => {
+            getStores({ store_id: storeID }).then((response) => {
                 // will only be one store
                 if (response !== null) {
                     for (let obj of response) {

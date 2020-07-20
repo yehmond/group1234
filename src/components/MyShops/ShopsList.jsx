@@ -6,7 +6,7 @@ import Tooltip from "@material-ui/core/Tooltip";
 import { Link } from "react-router-dom";
 import Loading from "../Loading/Loading";
 import UserContext from "../../pages/UserContext";
-import { getStore } from "../../api/owner";
+import { getStores } from "../../api/owner";
 import Typography from "@material-ui/core/Typography";
 
 const useStyles = makeStyles((theme) => ({
@@ -57,7 +57,7 @@ export default function ShopsList() {
     const user = useContext(UserContext);
     const [shops, setShops] = useState(null);
     useEffect(() => {
-        getStore({ owner_id: user }).then((response) => {
+        getStores({ owner_id: user }).then((response) => {
             const fetchedShops = [];
             if (response !== null) {
                 for (let obj of response) {

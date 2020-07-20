@@ -13,83 +13,43 @@ import axios from "axios";
 /* Local constants */
 const instance = axios.create({
     // TODO abstract baseURL
-    baseURL: "http://localhost:5000/api",
+    baseURL: "http://localhost:5000/api/customer",
 });
 
 /*************
  *
- * Name:     getStoreById
+ * Name:     getStore
  *
- * Purpose:  Get a specific store for customer viewing
+ * Purpose:  Return all store information needed for specific store page
  *
- * Parms:    (string)     store_id    - store_id of the store to be returned
+ * Parms:    (number)     store_id    - store_id of the store to be returned
  *
- * Return:   SUCCESS            - {status: 200, store: {}, reservations: [], reviews: []}
- *           NOT FOUND          - {status: 404}
- *           SERVER ERROR       - {status: 500}
+ * Return:   SUCCESS            - {store_id: number, store: {}, reservations: [], reviews: [], barbers: []}
+ *           NOT FOUND          - null
+ *           SERVER ERROR       - null
  *
  * Notes:    none
  *
  **************/
-async function getStoreById(store_id) {
+async function getStore(store_id) {
     if (store_id.length === 0) {
-        alert("customer/getStoreById: store_id is invalid");
-        throw Error("customer/getStoreById: store_id is invalid");
+        alert("customer/getStore: store_id is invalid");
+        return null;
     }
 
     try {
-        const response = await instance.get("/customer/store/" + store_id);
-        response.data.status = response.status;
+        const response = await instance.get("/store/" + store_id);
         console.log(response);
         return response.data;
     } catch (error) {
         console.log(error);
-        return { status: error.response.status };
+        return null;
     }
 }
 
 /*************
  *
- * Name:     getBarberReservations
- *
- * Purpose:  Get the time schedule of a specific barber
- *
- * Parms:    (string)     store_id    - store_id of the current store for the barber
- *           (string)     barber_id   - barber_id of the barber details to be returned
- *
- * Return:   SUCCESS            - {status: 200, schedule: []}
- *           NOT FOUND          - {status: 404}
- *           SERVER ERROR       - {status: 500}
- *
- * Notes:    none
- *
- **************/
-async function getBarberReservations(store_id, barber_id) {
-    if (store_id.length === 0) {
-        alert("customer/getBarberReservations: store_id is invalid");
-        throw Error("customer/getBarberReservations: store_id is invalid");
-    }
-    if (barber_id.length === 0) {
-        alert("customer/getBarberReservations: barber_id is invalid");
-        throw Error("customer/getBarberReservations: barber_id is invalid");
-    }
-
-    try {
-        const response = await instance.get(
-            "/customer/barber/" + store_id + "/" + barber_id
-        );
-        response.data.status = response.status;
-        console.log(response);
-        return response.data;
-    } catch (error) {
-        console.log(error);
-        return { status: error.response.status };
-    }
-}
-
-/*************
- *
- * Name:     searchStore
+ * Name:     searchStores
  *
  * Purpose:  Search for stores that fit the optional parameters
  *
@@ -100,19 +60,19 @@ async function getBarberReservations(store_id, barber_id) {
  *              (string)     city                   - city to find stores around
  *              (array[SERVICES_OFFERED])  services - array of services offered
  *              (number)     rating                 - minimum rating
- *              (number)     price                  - price array of prices (1-3)
+ *              (array[number])     price           - price array of prices (1-3)
  *
- * Return:   SUCCESS            - {status: 200, count: number, stores: [{store_id: string, picture: (base64) string, rating: number, price: number, services: array[SERVICES_OFFERED]}]}
- *           NOT FOUND          - {status: 404}
- *           SERVER ERROR       - {status: 500}
+ * Return:   SUCCESS            - {count: number, stores: [{store_id: string, picture: (base64) string, rating: number, price: number, services: array[SERVICES_OFFERED]}]}
+ *           NOT FOUND          - null
+ *           SERVER ERROR       - null
  *
  * Notes:    for empty optional params, omit the key from the object. If no optional params, please pass an empty object
  *
  **************/
-async function searchStore(count, body) {
-    // Base case
+async function searchStores(count, body) {
     if (count === 0) {
-        return { stores: [] };
+        alert("customer/searchStores: missing counts");
+        return null;
     }
 
     const query = Object.keys(body)
@@ -123,14 +83,13 @@ async function searchStore(count, body) {
 
     try {
         const response = await instance.get(
-            "/customer/store/search/" + count + "/?" + query
+            "/store/search/" + count + "/?" + query
         );
-        response.data.status = response.status;
         console.log(response);
         return response.data;
     } catch (error) {
         console.log(error);
-        return { status: error };
+        return null;
     }
 }
 
@@ -142,9 +101,9 @@ async function searchStore(count, body) {
  *
  * Parms:    (string)     user_id     - id of the user
  *
- * Return:   SUCCESS            - {status: 200, reviews: []}
- *           NOT FOUND          - {status: 404}
- *           SERVER ERROR       - {status: 500}
+ * Return:   SUCCESS            - {user_id: number, reviews: []}
+ *           NOT FOUND          - null
+ *           SERVER ERROR       - null
  *
  * Notes:    none
  *
@@ -152,59 +111,58 @@ async function searchStore(count, body) {
 async function getReviews(user_id) {
     if (user_id.length === 0) {
         alert("customer/getReviews: user_id is invalid");
-        throw Error("customer/getReviews: user_id is invalid");
+        return null;
     }
 
     try {
-        // TODO add authorization header
-        const response = await instance.get("/customer/reviews/" + user_id);
-        response.data.status = response.status;
+        const response = await instance.get("/review/" + user_id);
         console.log(response);
         return response.data;
     } catch (error) {
         console.log(error);
-        return { status: error.response.status };
+        return null;
     }
 }
 
 /*************
  *
- * Name:     setReview
+ * Name:     registerReview
  *
  * Purpose:  Make a new review
  *
- * Parms:    (string)     user_id     - id of the user
- *           (string)     store_id    - id of the store
- *           (string)     barber_id   - id of the barber
+ * Parms:    (number)     user_id     - id of the user
+ *           (number)     store_id    - id of the store
+ *           (number)     barber_id   - id of the barber
  *           (string)     review      - message left by reviewer
  *           (number)     rating      - rating from 1 to 5
  *
- * Return:   SUCCESS            - {status: 200}
- *           SERVER ERROR       - {status: 500}
+ * Return:   SUCCESS            - {review_id: string, name: string}
+ *           NOT FOUND          - null
+ *           SERVER ERROR       - null
  *
  * Notes:    none
  *
  **************/
-async function setReview(user_id, store_id, barber_id, review, rating) {
+async function registerReview(user_id, store_id, barber_id, review, rating) {
     if (user_id.length === 0) {
-        alert("customer/setReview: user_id is invalid");
-        throw Error("customer/setReview: user_id is invalid");
+        alert("customer/registerReview: user_id is invalid");
+        return null;
     }
     if (store_id.length === 0) {
-        alert("customer/setReview: store_id is invalid");
-        throw Error("customer/setReview: store_id is invalid");
+        alert("customer/registerReview: store_id is invalid");
+        return null;
     }
     if (barber_id.length === 0) {
-        alert("customer/setReview: barber_id is invalid");
-        throw Error("customer/setReview: barber_id is invalid");
+        alert("customer/registerReview: barber_id is invalid");
+        return null;
     }
     if (review.length === 0) {
-        alert("customer/setReview: review is invalid");
-        throw Error("customer/setReview: review is invalid");
+        alert("customer/registerReview: review is invalid");
+        return null;
     }
     if (rating.length === 0) {
-        alert("customer/setReview: rating is invalid");
-        throw Error("customer/setReview: rating is invalid");
+        alert("customer/registerReview: rating is invalid");
+        return null;
     }
 
     let body = {
@@ -216,14 +174,85 @@ async function setReview(user_id, store_id, barber_id, review, rating) {
     };
 
     try {
-        // TODO add authorization header
-        const response = await instance.post("/customer/reviews", body);
-        response.data.status = response.status;
+        const response = await instance.post("/review", body);
         console.log(response);
         return response.data;
     } catch (error) {
         console.log(error);
-        return { status: error.response.status };
+        return null;
+    }
+}
+
+/*************
+ *
+ * Name:     updateReview
+ *
+ * Purpose:  Update a previously made review
+ *
+ * Parms:    (number)     review_id   - id of the review
+ *           (object)     body        - at least one of the following properties that will be updated
+ *               (number)     user_id     - id of the user
+ *               (number)     store_id    - id of the store
+ *               (number)     barber_id   - id of the barber
+ *               (string)     review      - message left by reviewer
+ *               (number)     rating      - rating from 1 to 5
+ *
+ * Return:   SUCCESS            - {review_id: number}
+ *           NOT FOUND          - null
+ *           OTHER ERRORS       - null
+ *
+ * Notes:    none
+ *
+ **************/
+async function updateReview(review_id, body) {
+    if (review_id.length === 0) {
+        alert("customer/updateReview: review_id is invalid");
+        return null;
+    }
+    body.review_id = review_id;
+
+    try {
+        const response = await instance.put(
+            "/review", { params: body }
+        );
+        console.log(response);
+        return response.data;
+    } catch (error) {
+        console.log(error);
+        return null;
+    }
+}
+
+/*************
+ *
+ * Name:     deleteReview
+ *
+ * Purpose:  Remove a previously made review
+ *
+ * Parms:    (number)     review_id   - id of the review
+ *
+ * Return:   SUCCESS            - {review_id: number}
+ *           NOT FOUND          - null
+ *           OTHER ERRORS       - null
+ *
+ * Notes:    none
+ *
+ **************/
+async function deleteReview(review_id) {
+    if (review_id.length === 0) {
+        alert("customer/deleteReview: review_id is invalid");
+        return null;
+    }
+
+    try {
+        const response = await instance.delete(
+            "/review/" + review_id
+        );
+        console.log(response);
+        return response.data;
+    } catch (error) {
+        console.log(error);
+        return null;
     }
 }
 
@@ -233,14 +262,14 @@ async function setReview(user_id, store_id, barber_id, review, rating) {
  *
  * Purpose:  Gets a list of reservations filtered by params
  *
- * Parms:    (string)     user_id     - id of the user
- *           (object)     body                   - (optional) object body that can contain the following optional keys:
+ * Parms:    (number)     user_id     - id of the user
+ *           (object)     body        - (optional) object body that can contain the following optional keys:
  *              (Date)       start_time  - earliest review to return
  *              (Date)       end_time    - latest review to return
  *
- * Return:   SUCCESS            - {status: 200, reservations: []}
- *           NOT FOUND          - {status: 404}
- *           SERVER ERROR       - {status: 500}
+ * Return:   SUCCESS            - {user_id: number, reservations: []}
+ *           NOT FOUND          - null
+ *           SERVER ERROR       - null
  *
  * Notes:    for empty optional params, omit the key from the object. If no optional params, please pass an empty object
  *
@@ -248,7 +277,7 @@ async function setReview(user_id, store_id, barber_id, review, rating) {
 async function getReservations(user_id, body) {
     if (user_id.length === 0) {
         alert("customer/getReservations: user_id is invalid");
-        throw Error("customer/getReservations: user_id is invalid");
+        return null;
     }
 
     if ("start_time" in body) {
@@ -267,51 +296,55 @@ async function getReservations(user_id, body) {
     try {
         // TODO add authorization header
         const response = await instance.get(
-            "/customer/reservations/" + user_id + "/?" + query
+            "/reservation/" + user_id + "/?" + query
         );
-        response.data.status = response.status;
         console.log(response);
         return response.data;
     } catch (error) {
         console.log(error);
+        return null;
     }
 }
 
 /*************
  *
- * Name:     setReservation
+ * Name:     registerReservation
  *
  * Purpose:  Make a new reservation
  *
- * Parms:    (string)     user_id           - id of the user
- *           (string)     store_id          - store id of the store
- *           (string)     barber_id         - barber id of the barber
+ * Parms:    (number)     user_id           - id of the user
+ *           (number)     store_id          - store id of the store
+ *           (number)     barber_id         - barber id of the barber
  *           (Date)       start_time        - start time of the reservation
  *           (SERVICES_OFFERED) service     - service offered
  *
- * Return:   SUCCESS            - {status: 200, reservation_id: string, end_time: Date}
- *           SERVER ERROR       - {status: 500}
+ * Return:   SUCCESS            - {reservation_id: string, end_time: Date}
+ *           NOT FOUND          - null
+ *           OTHER ERRORS       - null
  *
  * Notes:    none
  *
  **************/
-async function setReservation(user_id, store_id, barber_id, start_time, service) {
+async function registerReservation(user_id, store_id, barber_id, start_time, service) {
     if (user_id.length === 0) {
-        alert("customer/setReservation: user_id is invalid");
-        throw Error("customer/setReservation: user_id is invalid");
+        alert("customer/registerReservation: user_id is invalid");
+        return null;
     }
     if (store_id.length === 0) {
-        alert("customer/setReservation: store_id is invalid");
-        throw Error("customer/setReservation: store_id is invalid");
+        alert("customer/registerReservation: store_id is invalid");
+        return null;
     }
     if (barber_id.length === 0) {
-        alert("customer/setReservation: barber_id is invalid");
-        throw Error("customer/setReservation: barber_id is invalid");
+        alert("customer/registerReservation: barber_id is invalid");
+        return null;
     }
-    // TODO check for valid date
+    if (typeof start_time !== Date) {
+        alert("customer/registerReservation: start_time is invalid");
+        return null;
+    }
     if (service.length === 0) {
-        alert("customer/setReservation: service is invalid");
-        throw Error("customer/setReservation: service is invalid");
+        alert("customer/registerReservation: service is invalid");
+        return null;
     }
 
     let body = {
@@ -323,55 +356,56 @@ async function setReservation(user_id, store_id, barber_id, start_time, service)
     };
 
     try {
-        // TODO add authorization header
-        const response = await instance.post("/customer/reservations/", body);
-        response.data.status = response.status;
+        const response = await instance.post("/reservation/", body);
         console.log(response);
         return response.data;
     } catch (error) {
         console.log(error);
+        return null;
     }
 }
 
 /*************
  *
- * Name:     removeReservation
+ * Name:     deleteReservation
  *
  * Purpose:  Remove a previously made reservation
  *
  * Parms:    (string)     reservation_id    - id of the reservation
  *
- * Return:   response.status          - 200: successful
+ * Return:   SUCCESS            - {reservation_id: number}
+ *           NOT FOUND          - null
+ *           OTHER ERRORS       - null
  *
  * Notes:    none
  *
  **************/
-async function removeReservation(reservation_id) {
+async function deleteReservation(reservation_id) {
     if (reservation_id.length === 0) {
-        alert("customer/removeReservation: reservation_id is invalid");
-        throw Error("customer/removeReservation: reservation_id is invalid");
+        alert("customer/deleteReservation: reservation_id is invalid");
+        return null;
     }
 
     try {
-        // TODO add authorization header
         const response = await instance.delete(
-            "/customer/reservations/" + reservation_id
+            "/reservation/" + reservation_id
         );
-        response.data.status = response.status;
         console.log(response);
         return response.data;
     } catch (error) {
         console.log(error);
+        return null;
     }
 }
 
 export {
-    getStoreById,
-    getBarberReservations,
-    searchStore,
+    getStore,
+    searchStores,
     getReviews,
-    setReview,
+    registerReview,
+    updateReview,
+    deleteReview,
     getReservations,
-    setReservation,
-    removeReservation,
+    registerReservation,
+    deleteReservation,
 };

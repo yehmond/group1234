@@ -13,8 +13,8 @@ import { Link } from "react-router-dom";
 import Tooltip from "@material-ui/core/Tooltip";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import AlertBox from "../Dialog/Alert";
-import { deleteStore } from "../../api/owner";
 import { convertReservationToEvent, refreshPage } from "../../utils/utils";
+import { deleteStores } from "../../api/owner";
 
 const useStyles = (theme) => ({
     root: {
@@ -70,7 +70,7 @@ class StoreCard extends Component {
     }
 
     handleDelete() {
-        return deleteStore({ store_id: this.props.shopID });
+        return deleteStores({ store_id: this.props.shopID });
     }
 
     render() {
