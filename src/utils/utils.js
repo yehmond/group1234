@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { CALENDAR_COLORS, DAYS_OF_WEEK_ABBR, MONTHS_OF_YEAR } from "./constants";
 
+
 export function convert24HrTo12Hr(time) {
     let hours = parseInt(time.substr(0, 2));
     const minutes = time.substr(2);

@@ -11,33 +11,38 @@ import Typography from "@material-ui/core/Typography";
 
 export default function MyShops() {
     const authState = useSelector((state) => state.authState);
-    if(authState.role === 'OWNER') {
+    console.log(authState);
+    if (authState.role === "OWNER") {
         return (
-            <UserContext.Provider value={authState.userId}>
+            <UserContext.Provider value={authState.id}>
                 <Switch>
                     <Route exact path="/stores">
-                        <ShopsList/>
+                         <ShopsList />
                     </Route>
                     <Route path="/stores/:storeID/addbarber">
-                        <AddBarber/>
+                        <AddBarber />
                     </Route>
                     <Route path="/stores/:storeID/schedule">
-                        <ViewSchedule/>
+                        <ViewSchedule />
                     </Route>
                     <Route path="/stores/:storeID/stats">
-                        <Stats/>
+                        <Stats />
                     </Route>
                     <Route exact path="/stores/:storeID">
-                        <ViewShop/>
+                        <ViewShop />
                     </Route>
                 </Switch>
             </UserContext.Provider>
         );
     } else {
         return (
-            <Typography align="center" variant={"h2"} style={{"padding": "100px"}}>
+            <Typography
+                align="center"
+                variant={"h2"}
+                style={{ "padding": "100px" }}
+            >
                 You are not authorized to view this page
             </Typography>
-        )
+        );
     }
 }

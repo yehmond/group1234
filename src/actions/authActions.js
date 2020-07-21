@@ -1,29 +1,86 @@
-export function loginOwner() {
+/* eslint-disable no-console */
+import { signIn, signOut } from "../api/auth";
+export const SET_SIGN_IN = "SET_SIGN_IN";
+export const SIGN_IN_LOADING = "SIGN_IN_LOADING";
+export const SIGN_IN_SUCCESS = "SIGN_IN_SUCCESS";
+export const SIGN_IN_ERROR = "SIGN_IN_ERROR";
+export const SIGN_OUT_LOADING = "SIGN_OUT_LOADING";
+export const SIGN_OUT_SUCCESS = "SIGN_OUT_SUCCESS";
+export const SIGN_OUT_ERROR = "SIGN_OUT_ERROR";
+
+export function setSignInStatus(email, role, id) {
     return {
-        type: "LOGIN_OWNER",
-        payload: {
-            isLoggedIn: true,
-            role: "OWNER",
-        },
+        type: SET_SIGN_IN,
+        email,
+        role,
+        id,
     };
 }
 
-export function loginCustomer() {
+export function signInLoading() {
     return {
-        type: "LOGIN_CUSTOMER",
-        payload: {
-            isLoggedIn: true,
-            role: "CUSTOMER",
-        },
+        type: SIGN_IN_LOADING,
     };
 }
 
-export function logout() {
+export function signInSuccess(email, role, id) {
     return {
-        type: "LOGOUT",
-        payload: {
-            isLoggedIn: false,
-            role: "",
-        },
+        type: SIGN_IN_SUCCESS,
+        email,
+        role,
+        id
+    };
+}
+
+export function signInError(msg) {
+    return {
+        type: SIGN_IN_ERROR,
+        msg,
+    };
+}
+
+export function signInAsync(email, password) {
+    return (dispatch) => {
+        dispatch(signInLoading());
+        signIn(email, password)
+            .then((res) => {
+                dispatch(signInSuccess(res.email, res.role, res.id));
+            })
+            .catch((err) => {
+                console.log(err);
+                dispatch(signInError(err));
+            });
+    };
+}
+
+export function signOutSuccess() {
+    return {
+        type: SIGN_OUT_SUCCESS,
+    };
+}
+
+export function signOutLoading() {
+    return {
+        type: SIGN_OUT_LOADING,
+    };
+}
+
+export function signOutError() {
+    return {
+        type: SIGN_OUT_ERROR,
+    };
+}
+
+export function signOutAsync() {
+    return (dispatch) => {
+        dispatch(signOutLoading());
+        signOut()
+            .then(() => {
+                dispatch(signOutSuccess());
+            })
+            .catch((err) => {
+                console.log(err);
+                dispatch(signOutError(err));
+            });
     };
 }

@@ -60,7 +60,7 @@ class AddBarber extends Component {
         this.setState({ photo: files });
     }
 
-    handleDropZoneDelete(files) {
+    handleDropZoneDelete() {
         this.setState({ photo: null });
     }
 
@@ -93,10 +93,11 @@ class AddBarber extends Component {
             [this.state.storeId],
             this.hoursToDate()
         )
-            .then((response) => {
+
+            .then(() => {
                 this.setState({ submitSuccess: true });
             })
-            .catch((reject) => {
+            .catch(() => {
                 this.setState({ submitError: true });
             });
     }
@@ -216,7 +217,7 @@ class AddBarber extends Component {
                     <DialogMessage
                         title={"Error!"}
                         text={"The barber was not registered! Please try again."}
-                        link={'/stores/'}
+                        link={"/stores/"}
                     />
                 )}
             </div>
