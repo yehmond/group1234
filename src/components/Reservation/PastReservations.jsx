@@ -34,14 +34,14 @@ export default function PastReservations() {
                 barbershop: "Tonys Barbershop",
                 barberName: "Tony",
                 barbershopID: 0,
-                reservationID: 0
+                reservationID: 0,
             },
             {
                 time: "Fri May 21, 2:00 pm",
                 barbershop: "Timmys Barbershop",
                 barberName: "Sam",
                 barbershopID: 1,
-                reservationID: 1
+                reservationID: 1,
             },
         ],
     });
@@ -95,7 +95,6 @@ export default function PastReservations() {
                             tooltip: "Rate",
                             onClick: (event, rowData) =>
                                 handleRatingClick(rowData.reservationID),
-
                         },
                     ]}
                 />
