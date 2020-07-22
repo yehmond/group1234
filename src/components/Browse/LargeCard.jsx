@@ -45,7 +45,16 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function LargeCard({ id, name, services, price, rating, address }) {
+export default function LargeCard({
+    id,
+    name,
+    services,
+    price,
+    rating,
+    address,
+    city,
+    province,
+}) {
     const classes = useStyles();
     const history = useHistory();
 
@@ -95,7 +104,7 @@ export default function LargeCard({ id, name, services, price, rating, address }
                         );
                     })}
                     <Typography variant="body2" color="textSecondary" component="p">
-                        {address}
+                        {address}, {city} {province}
                     </Typography>
                 </CardContent>
             </CardActionArea>

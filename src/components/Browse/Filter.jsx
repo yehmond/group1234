@@ -2,6 +2,7 @@ import React from "react";
 import PriceFilter from "./PriceFilter";
 import ServiceFilter from "./ServiceFilter";
 import RatingFilter from "./RatingSlider";
+import NeighbourhoodFilter from "./NeighbourhoodFilter";
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
@@ -15,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
             position: "unset",
         },
         padding: "2rem 1rem",
-        position: "sticky",
+        // position: "sticky",
         alignSelf: "flex-start",
         top: 0,
         minWidth: "17rem",
@@ -29,6 +30,7 @@ export default function Filter() {
             <PriceFilter />
             <ServiceFilter />
             <RatingFilter />
+            <NeighbourhoodFilter />
         </div>
     );
 }

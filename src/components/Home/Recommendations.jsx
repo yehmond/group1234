@@ -32,8 +32,11 @@ for (let i = 0; i < 12; i++) {
         id: i + 1,
         name: "Citrus Hair Salon",
         services: ["Hair Salon", "Day Spa", "Waxing"],
-        cost: 3,
+        price: 3,
         rating: 5,
+        address: "123 Main St.",
+        city: "Vancouver",
+        province: "BC",
     });
 }
 
@@ -43,33 +46,61 @@ export default function Recommendations() {
         <div className={classes.container}>
             <h1>Available Now</h1>
             <div className={classes.grid}>
-                {mockShops.map(({ id, name, services, cost, rating }, idx) => {
-                    return (
-                        <SmallCard
-                            key={idx}
-                            shopId={id}
-                            name={name}
-                            services={services}
-                            cost={cost}
-                            rating={rating}
-                        />
-                    );
-                })}
+                {mockShops.map(
+                    ({
+                        id,
+                        name,
+                        services,
+                        price,
+                        rating,
+                        address,
+                        city,
+                        province,
+                    }) => {
+                        return (
+                            <SmallCard
+                                key={id}
+                                shopId={id}
+                                name={name}
+                                services={services}
+                                price={price}
+                                rating={rating}
+                                address={address}
+                                city={city}
+                                province={province}
+                            />
+                        );
+                    }
+                )}
             </div>
             <h1>Recommended</h1>
             <div className={classes.grid}>
-                {mockShops.map(({ id, name, services, cost, rating }) => {
-                    return (
-                        <SmallCard
-                            key={id}
-                            shopId={id}
-                            name={name}
-                            services={services}
-                            cost={cost}
-                            rating={rating}
-                        />
-                    );
-                })}
+                {mockShops.map(
+                    ({
+                        id,
+                        name,
+                        services,
+                        price,
+                        rating,
+                        address,
+                        city,
+                        province,
+                    }) => {
+                        return (
+                            <SmallCard
+                                key={id}
+                                shopId={id}
+                                name={name}
+                                services={services}
+                                price={price}
+                                rating={rating}
+                                address={address}
+                                city={city}
+                                province={province}
+                            />
+                        );
+                    }
+                )}
             </div>
         </div>
     );

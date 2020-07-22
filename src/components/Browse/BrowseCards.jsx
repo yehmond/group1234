@@ -10,6 +10,8 @@ export default function BrowseCards({
     price,
     rating,
     address,
+    city,
+    province,
 }) {
     const size = useWindowSize();
 
@@ -23,6 +25,8 @@ export default function BrowseCards({
                 price={price}
                 rating={rating}
                 address={address}
+                city={city}
+                province={province}
             />
         );
     } else {
@@ -36,6 +40,8 @@ export default function BrowseCards({
                     price={price}
                     rating={rating}
                     address={address}
+                    city={city}
+                    province={province}
                 />
             </div>
         );

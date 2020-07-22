@@ -67,6 +67,7 @@ export default function MenuAppBar() {
     const authState = useSelector((state) => state.authState);
     const dispatch = useDispatch();
 
+    // Initialize auth state
     useEffect(() => {
         const email = localStorage.getItem("email");
         const role = localStorage.getItem("role");

@@ -49,7 +49,7 @@ export default function Browse() {
 
     return (
         <div className={classes.root}>
-            <div className={classes.filter}>
+            <div>
                 <Filters />
             </div>
             <div className={classes.cards}>
@@ -66,7 +66,16 @@ export default function Browse() {
                 {searchState.status === "success" &&
                     searchState.data?.stores.length > 0 &&
                     searchState.data?.stores.map(
-                        ({ store_id, name, services, price, rating, address }) => {
+                        ({
+                            store_id,
+                            name,
+                            services,
+                            price,
+                            rating,
+                            address,
+                            city,
+                            province,
+                        }) => {
                             return (
                                 <BrowseCards
                                     key={store_id}
@@ -76,6 +85,8 @@ export default function Browse() {
                                     price={price}
                                     rating={rating}
                                     address={address}
+                                    city={city}
+                                    province={province}
                                 />
                             );
                         }

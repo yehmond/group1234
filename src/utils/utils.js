@@ -111,8 +111,10 @@ export function parseSearchURL() {
                     queryParams.rating = rating;
                 }
                 break;
-            case "location":
-                queryParams.location = value;
+            case "neighbourhoods":
+                if (value.length !== 0) {
+                    queryParams.neighbourhoods = value.split(",");
+                }
                 break;
             case "page":
                 queryParams.page = Number(value);
@@ -126,10 +128,16 @@ export function parseSearchURL() {
 
 export function setQueryString(param, history, replace = false) {
     const currParam = parseSearchURL();
+
     const newParam = {
         ...currParam,
         ...param,
     };
+
+    if (!param.page) {
+        delete newParam.page;
+    }
+
     const newUrl = window.location.pathname + `?${convertToQueryString(newParam)}`;
 
     if (replace) {

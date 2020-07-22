@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
     MuiPickersUtilsProvider,
     KeyboardTimePicker,
@@ -11,8 +11,9 @@ import clsx from "clsx";
 import { useHistory } from "react-router-dom";
 import moment from "moment";
 import { SERVICES_OFFERED } from "../../utils/constants";
+import { searchStores } from "../../api/customer";
 
-const DEFAULT_SEARCH_TEXT = "Vancouver";
+const DEFAULT_SEARCH_TEXT = "Coal Harbour";
 const DEFAULT_SERVICE = "Haircut";
 
 const useStyles = makeStyles((theme) => ({
@@ -68,15 +69,34 @@ const useStyles = makeStyles((theme) => ({
 export default function SearchBar() {
     const [selectedDate, setDateChange] = useState(new Date());
     const [selectedTime, setSelectedTime] = useState(new Date());
-    const [selectedLocation, setSelectedLocation] = useState(DEFAULT_SEARCH_TEXT);
-    const [selectedService, setSelectedServie] = useState(DEFAULT_SERVICE);
+    const [selectedNeighbourhood, setSelectedLocation] = useState(
+        DEFAULT_SEARCH_TEXT
+    );
+    const [selectedService, setSelectedService] = useState(DEFAULT_SERVICE);
+    const [locationOptions, setLocationOptions] = useState([]);
     const classes = useStyles();
     const history = useHistory();
 
+    // Get locations and shop name
+    useEffect(() => {
+        searchStores(30, {}).then((data) => {
+            if (data) {
+                const options = Array.from(
+                    new Set([
+                        ...data.stores.map((elem) => {
+                            return elem.neighbourhood;
+                        }),
+                    ])
+                );
+                setLocationOptions(options);
+            }
+        });
+    }, []);
+
     function handleClick() {
-        const [date, time, service, location] = getEncodedDateTimeLocation();
+        const [date, time, service, neighbourhood] = getEncodedDateTimeLocation();
         history.push(
-            `/browse?date=${date}&time=${time}&services=${service}&location=${location}`
+            `/browse?date=${date}&time=${time}&services=${service}&neighbourhoods=${neighbourhood}`
         );
     }
 
@@ -85,7 +105,7 @@ export default function SearchBar() {
             date: moment(selectedDate).format("YYYY-MM-DD"),
             time: moment(selectedTime).format("HH:mm"),
             service: selectedService,
-            location: selectedLocation,
+            neighbourhood: selectedNeighbourhood,
         };
         return Object.keys(parsedData).map((key) =>
             encodeURIComponent(parsedData[key])
@@ -149,7 +169,7 @@ export default function SearchBar() {
                             ></TextField>
                         )}
                         onChange={(event, value) => {
-                            setSelectedServie(value);
+                            setSelectedService(value);
                         }}
                     />
                 </div>
@@ -159,18 +179,13 @@ export default function SearchBar() {
                         className={clsx(classes.input, classes.location)}
                         autoHighlight
                         freeSolo
-                        value={selectedLocation}
+                        value={selectedNeighbourhood}
                         defaultValue={DEFAULT_SEARCH_TEXT}
-                        options={[
-                            "🍕 Pizza",
-                            "🍪 Cookie",
-                            "🍩 Doughnut",
-                            "🍫 Chocolate",
-                        ]}
+                        options={locationOptions}
                         renderInput={(params) => (
                             <TextField
                                 {...params}
-                                label="Location or Shop Name"
+                                label="Neighbourhood"
                                 variant="outlined"
                             ></TextField>
                         )}

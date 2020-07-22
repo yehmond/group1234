@@ -32,7 +32,16 @@ const useStyles = makeStyles({
     },
 });
 
-export default function SmallCard({ shopId, name, services, price, rating }) {
+export default function SmallCard({
+    shopId,
+    name,
+    services,
+    price,
+    rating,
+    address,
+    city,
+    province,
+}) {
     const classes = useStyles();
     const history = useHistory();
 
@@ -76,6 +85,10 @@ export default function SmallCard({ shopId, name, services, price, rating }) {
                     </Typography>
                     <Typography variant="body2" color="textSecondary" component="p">
                         {dollarSigns} · {ratingStars}
+                    </Typography>
+                    <br />
+                    <Typography variant="body2" color="textSecondary" component="p">
+                        {address}, {city} {province}
                     </Typography>
                 </CardContent>
             </CardActionArea>
