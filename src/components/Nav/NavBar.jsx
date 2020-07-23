@@ -44,19 +44,16 @@ const useStyles = makeStyles((theme) => {
 const links = {
     guest: {
         Browse: "/browse",
-        About: "/about",
         "Sign in": "/signin",
         "Sign up": "/signup",
     },
     customer: {
         "My Reservations": "/reservations",
         Browse: "/browse",
-        About: "/about",
     },
     owner: {
         "My Stores": "/stores",
         Browse: "/browse",
-        About: "/about",
     },
 };
 
