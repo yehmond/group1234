@@ -11,12 +11,13 @@ import Typography from "@material-ui/core/Typography";
 
 export default function MyShops() {
     const authState = useSelector((state) => state.authState);
+    console.log(authState);
     if (authState.role === "OWNER") {
         return (
-            <UserContext.Provider value={authState.userId}>
+            <UserContext.Provider value={authState.id}>
                 <Switch>
                     <Route exact path="/stores">
-                        <ShopsList />
+                         <ShopsList />
                     </Route>
                     <Route path="/stores/:storeID/addbarber">
                         <AddBarber />

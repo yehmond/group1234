@@ -93,6 +93,7 @@ class AddBarber extends Component {
             [this.state.storeId],
             this.hoursToDate()
         )
+
             .then(() => {
                 this.setState({ submitSuccess: true });
             })

@@ -1,5 +1,6 @@
-import { useState, useEffect } from "react";
-import { DAYS_OF_WEEK_ABBR } from "./constants";
+import { useEffect, useState } from "react";
+import { CALENDAR_COLORS, DAYS_OF_WEEK_ABBR, MONTHS_OF_YEAR } from "./constants";
+
 
 export function convert24HrTo12Hr(time) {
     let hours = parseInt(time.substr(0, 2));
@@ -65,6 +66,7 @@ export function hoursToString(hours) {
     });
     return retObj;
 }
+
 
 export function addColonTime(time) {
     if (time.length !== 4) {
@@ -148,3 +150,94 @@ export function convertToQueryString(queryObj) {
 
     return query;
 }
+
+export function getBarberColor(barbers) {
+    if (barbers === null || barbers === undefined) {
+        return null;
+    }
+    // assign colors to barbers
+    const colors = {};
+    let i = 0;
+    for (let barber of barbers) {
+        colors[barber.barber_id] = CALENDAR_COLORS[i % CALENDAR_COLORS.length];
+        i++;
+    }
+    return colors;
+}
+
+export function convertReservationToEvent(barbers, reservation) {
+    const colors = getBarberColor(barbers);
+    return {
+        title: reservation.user_id,
+        start: new Date(reservation.from),
+        end: new Date(reservation.to),
+        allDay: false,
+        barber_id: reservation.barber_id,
+        service: reservation.service,
+        color: colors[reservation.barber_id],
+    };
+}
+
+// returns tuple, [0] is earliest, [1] is latest
+export function getEarliestAndLatest(hours) {
+    if (hours === null || hours === undefined) {
+        return [null, null];
+    }
+    const minTime = new Date();
+    const maxTime = new Date();
+    let alwaysClosed = false;
+    let earliestTime = hours[0].from;
+    let latestTime = hours[0].to;
+    for (let day of hours) {
+        if (day.isOpen) {
+            alwaysClosed = false;
+            const todayOpen = day.from;
+            const todayClose = day.to;
+            earliestTime =
+                parseInt(earliestTime) > parseInt(day.from)
+                    ? todayOpen
+                    : earliestTime;
+            latestTime =
+                parseInt(latestTime) < parseInt(day.to) ? todayClose : latestTime;
+        }
+    }
+    if (alwaysClosed) {
+        minTime.setHours(7, 0, 0);
+        maxTime.setHours(18, 0, 0);
+    } else {
+        // extract the hours and minutes
+        let earliestHours = parseInt(earliestTime.substring(0, 2));
+        let earliestMins = parseInt(earliestTime.substring(2));
+        let latestHours = parseInt(latestTime.substring(0, 2));
+        let latestMins = parseInt(latestTime.substring(2));
+        minTime.setHours(earliestHours, earliestMins, 0);
+        maxTime.setHours(latestHours, latestMins, 0);
+    }
+    return [minTime, maxTime];
+}
+
+export function reservationDate(reservation) {
+    const date = new Date(reservation.to);
+    return (
+        MONTHS_OF_YEAR[date.getMonth()] +
+        " " +
+        date.getDate() +
+        ", " +
+        date.getFullYear()
+    );
+}
+
+export function reservationBarber(barbers, reservation) {
+    const barber = barbers.find(
+        (barber) => barber.barber_id === reservation.barber_id
+    );
+    return barber.name;
+}
+
+export function sortReservations(reservations) {
+    return reservations.sort((a, b) => {
+        return new Date(b.to) - new Date(a.to);
+    });
+}
+
+
