@@ -1,6 +1,5 @@
 /* eslint-disable no-console */
 import { signIn, signOut } from "../api/auth";
-
 export const SET_SIGN_IN = "SET_SIGN_IN";
 export const SIGN_IN_LOADING = "SIGN_IN_LOADING";
 export const SIGN_IN_SUCCESS = "SIGN_IN_SUCCESS";
@@ -9,11 +8,12 @@ export const SIGN_OUT_LOADING = "SIGN_OUT_LOADING";
 export const SIGN_OUT_SUCCESS = "SIGN_OUT_SUCCESS";
 export const SIGN_OUT_ERROR = "SIGN_OUT_ERROR";
 
-export function setSignInStatus(email, role) {
+export function setSignInStatus(email, role, id) {
     return {
         type: SET_SIGN_IN,
         email,
         role,
+        id,
     };
 }
 
@@ -23,11 +23,12 @@ export function signInLoading() {
     };
 }
 
-export function signInSuccess(email, role) {
+export function signInSuccess(email, role, id) {
     return {
         type: SIGN_IN_SUCCESS,
         email,
         role,
+        id,
     };
 }
 
@@ -43,7 +44,7 @@ export function signInAsync(email, password) {
         dispatch(signInLoading());
         signIn(email, password)
             .then((res) => {
-                dispatch(signInSuccess(res.email, res.role));
+                dispatch(signInSuccess(res.email, res.role, res.id));
             })
             .catch((err) => {
                 console.log(err);

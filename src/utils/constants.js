@@ -29,6 +29,21 @@ export const PRICE_RANGE = [1, 2, 3];
 
 export const DAYS_OF_WEEK_ABBR = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
+export const MONTHS_OF_YEAR = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+];
+
 export const SERVICES_OFFERED = [
     "Haircut",
     "Shaving",
@@ -49,3 +64,13 @@ export const DEFAULT_TO = "1700";
 export const MIN_PASSWORD_LENGTH = 6;
 
 export const TIMESLOT_VALUES = [15, 30, 45, 60, 90, 120];
+
+export const CALENDAR_COLORS = [
+    "var(--primary-light)",
+    "var(--secondary-light)",
+    "lightcoral",
+    "lightskyblue",
+    "#b666d2",
+    "springgreen",
+    "gainsboro",
+];
