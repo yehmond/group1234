@@ -6,7 +6,7 @@ import Checkbox from "@material-ui/core/Checkbox";
 import Typography from "@material-ui/core/Typography";
 import { parseSearchURL, setQueryString } from "../../utils/utils";
 import { useLocation, useHistory } from "react-router-dom";
-import { searchStores } from "../../api/customer";
+import { getNeighbourhoods } from "../../api/customer";
 
 export default function NeighbourhoodFilter() {
     const location = useLocation();
@@ -22,16 +22,9 @@ export default function NeighbourhoodFilter() {
     }, [location]);
 
     useEffect(() => {
-        searchStores(30, {}).then((data) => {
+        getNeighbourhoods("Vancouver", "BC", 10).then((data) => {
             if (data) {
-                const options = Array.from(
-                    new Set([
-                        ...data.stores.map((elem) => {
-                            return elem.neighbourhood;
-                        }),
-                    ])
-                );
-                setOptions(options);
+                setOptions(data);
             }
         });
     }, []);

@@ -11,7 +11,7 @@ import clsx from "clsx";
 import { useHistory } from "react-router-dom";
 import moment from "moment";
 import { SERVICES_OFFERED } from "../../utils/constants";
-import { searchStores } from "../../api/customer";
+import { getNeighbourhoods } from "../../api/customer";
 
 const DEFAULT_SEARCH_TEXT = "Coal Harbour";
 const DEFAULT_SERVICE = "Haircut";
@@ -73,22 +73,15 @@ export default function SearchBar() {
         DEFAULT_SEARCH_TEXT
     );
     const [selectedService, setSelectedService] = useState(DEFAULT_SERVICE);
-    const [locationOptions, setLocationOptions] = useState([]);
+    const [neighbourhoodOptions, setNeighbourhoodOptions] = useState([]);
     const classes = useStyles();
     const history = useHistory();
 
     // Get locations and shop name
     useEffect(() => {
-        searchStores(30, {}).then((data) => {
+        getNeighbourhoods("Vancouver", "BC", 10).then((data) => {
             if (data) {
-                const options = Array.from(
-                    new Set([
-                        ...data.stores.map((elem) => {
-                            return elem.neighbourhood;
-                        }),
-                    ])
-                );
-                setLocationOptions(options);
+                setNeighbourhoodOptions(data);
             }
         });
     }, []);
@@ -181,7 +174,7 @@ export default function SearchBar() {
                         freeSolo
                         value={selectedNeighbourhood}
                         defaultValue={DEFAULT_SEARCH_TEXT}
-                        options={locationOptions}
+                        options={neighbourhoodOptions}
                         renderInput={(params) => (
                             <TextField
                                 {...params}

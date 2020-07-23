@@ -93,6 +93,23 @@ async function searchStores(count, body) {
     }
 }
 
+async function getNeighbourhoods(city, province, limit) {
+    const params = { city, province, limit };
+    const query = Object.keys(params)
+        .map(function (key) {
+            return key + "=" + encodeURIComponent(params[key]);
+        })
+        .join("&");
+    try {
+        const response = await instance.get("/neighbourhoods?" + query);
+        console.log(response);
+        return response.data;
+    } catch (error) {
+        console.log(error);
+        return null;
+    }
+}
+
 /*************
  *
  * Name:     getReviews
@@ -408,4 +425,5 @@ export {
     getReservations,
     registerReservation,
     deleteReservation,
+    getNeighbourhoods,
 };

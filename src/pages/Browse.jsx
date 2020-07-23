@@ -75,6 +75,7 @@ export default function Browse() {
                             address,
                             city,
                             province,
+                            picture,
                         }) => {
                             return (
                                 <BrowseCards
@@ -87,6 +88,7 @@ export default function Browse() {
                                     address={address}
                                     city={city}
                                     province={province}
+                                    picture={picture}
                                 />
                             );
                         }
