@@ -10,6 +10,7 @@ import Chip from "@material-ui/core/Chip";
 import { useHistory } from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import EventAvailableIcon from "@material-ui/icons/EventAvailable";
+import salonPic from "../../images/salon.png";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -82,7 +83,7 @@ export default function LargeCard({
                 <CardMedia
                     component="img"
                     className={classes.cover}
-                    image={picture}
+                    image={picture || salonPic}
                     title="Salon"
                 />
                 <CardContent className={classes.content}>

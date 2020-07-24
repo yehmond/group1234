@@ -169,9 +169,6 @@ export default function MenuAppBar() {
                                 open={Boolean(anchorEl)}
                                 onClose={() => setAnchorEl(null)}
                             >
-                                <MenuItem onClick={() => setAnchorEl(null)}>
-                                    Profile
-                                </MenuItem>
                                 <MenuItem onClick={() => dispatch(signOutAsync())}>
                                     Sign out
                                 </MenuItem>
