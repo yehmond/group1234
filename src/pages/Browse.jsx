@@ -30,6 +30,11 @@ const useStyles = makeStyles((theme) => ({
         margin: "3rem auto",
         justifyContent: "center",
     },
+    noResult: {
+        display: "flex",
+        margin: "3rem auto",
+        justifyContent: "center",
+    },
 }));
 
 export default function Browse() {
@@ -94,6 +99,12 @@ export default function Browse() {
                         }
                     )}
                 {searchState.data?.stores.length > 0 && <Pages />}
+                {searchState.status === "success" &&
+                    searchState.data?.stores.length == 0 && (
+                        <div className={classes.noResult}>
+                            <h2>No Results...</h2>
+                        </div>
+                    )}
             </div>
         </div>
     );
