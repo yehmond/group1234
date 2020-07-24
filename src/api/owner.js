@@ -60,6 +60,7 @@ async function getStores(body) {
  *           (string)  name          - name of the store
  *           (string)  address       - address of the store
  *           (string)  city          - city of the store
+ *           (string)  neighbourhood - neighbourhood of the store
  *           (string)  province      - province of the store
  *           (string)  description   - description of the store
  *           (number)  price         - price range of the store
@@ -80,6 +81,7 @@ async function registerStore(
     name,
     address,
     city,
+    neighbourhood,
     province,
     description,
     price,
@@ -103,6 +105,10 @@ async function registerStore(
     }
     if (city.length === 0) {
         alert("owner/registerStore: city is invalid");
+        return null;
+    }
+    if (neighbourhood.length === 0) {
+        alert("owner/registerStore: neighbourhood is invalid");
         return null;
     }
     if (province.length === 0) {
@@ -143,6 +149,7 @@ async function registerStore(
         name,
         address,
         city,
+        neighbourhood,
         province,
         description,
         price,
@@ -175,6 +182,7 @@ async function registerStore(
  *               (string)  name          - name of the store
  *               (string)  address       - address of the store
  *               (string)  city          - city of the store
+ *               (string)  neighbourhood - neighbourhood of the store
  *               (string)  province      - province of the store
  *               (string)  description   - description of the store
  *               (number)  price         - price range of the store
@@ -356,6 +364,7 @@ async function registerBarber(
         services,
         schedule,
     };
+    console.log('here');
 
     try {
         const response = await instance.post("/barber", body);

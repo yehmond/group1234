@@ -56,7 +56,12 @@ async function getStore(store_id) {
  * Parms:    (number)     count                  - number of stores to return
  *           (object)     body                   - (optional) object body that can contain the following optional keys:
  *              (number)     startIndex             - index of the first store object to return
+<<<<<<< HEAD
  *              (string)     name                   - name of the store
+=======
+ *              (string)     store                  - name of the store
+ *              (array[string])     neighbourhood   - array of the neighbourhoods
+>>>>>>> develop
  *              (string)     city                   - city to find stores around
  *              (string)     neighbourhood          - neighbourhood to find stores around
  *              (array[SERVICES_OFFERED])  services - array of services offered
