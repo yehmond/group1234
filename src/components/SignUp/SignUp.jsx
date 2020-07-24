@@ -70,7 +70,7 @@ export default function SignUp() {
     }
 
     function handleClickShowPassword() {
-        const isPasswordShown = this.state.showPassword;
+        const isPasswordShown = state.showPassword;
         setState({ ...state, showPassword: !isPasswordShown });
     }
 
