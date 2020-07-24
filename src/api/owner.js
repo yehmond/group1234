@@ -190,11 +190,7 @@ async function registerStore(
  *               (string)  phone_number  - phone number of the store
  *               (array[string])             pictures    - array of pictures in base64 string
  *               (array[SERVICES_OFFERED])   services    - array of services
-<<<<<<< HEAD
  *               (array[{isOpen: boolean, from: string, to: string}]) hours   - store hours array size of 7, with hours in military 0000 to 2400 format
-=======
- *               (array[{isOpen: boolean, from: Date, to: Date}]) hours   - store hours array size of 7, with hours in military 0000 to 2400 format
->>>>>>> develop
  *
  * Return:   SUCCESS            - {store_id: number}
  *           NOT FOUND          - null
@@ -204,7 +200,6 @@ async function registerStore(
  *
  **************/
 async function updateStore(store_id, body) {
-<<<<<<< HEAD
   if (store_id.length === 0) {
     alert("owner/updateStore: store_id is invalid");
     return null;
@@ -219,22 +214,6 @@ async function updateStore(store_id, body) {
       console.log(error);
       return null;
   }
-=======
-    if (store_id.length === 0) {
-        alert("owner/updateStore: store_id is invalid");
-        return null;
-    }
-    body.store_id = store_id;
-
-    try {
-        const response = await instance.put("/store", { params: body });
-        console.log(response);
-        return response.data;
-    } catch (error) {
-        console.log(error);
-        return null;
-    }
->>>>>>> develop
 }
 
 /*************
@@ -399,22 +378,6 @@ async function registerBarber(
  *
  **************/
 async function updateBarber(barber_id, body) {
-<<<<<<< HEAD
-  if (barber_id.length === 0) {
-    alert("owner/updateBarber: barber_id is invalid");
-    return null;
-  }
-  body.barber_id = barber_id;
-
-  try {
-      const response = await instance.put("/barber", { params: body });
-      console.log(response);
-      return response.data;
-  } catch (error) {
-      console.log(error);
-      return null;
-  }
-=======
     if (barber_id.length === 0) {
         alert("owner/updateBarber: barber_id is invalid");
         return null;
@@ -429,7 +392,6 @@ async function updateBarber(barber_id, body) {
         console.log(error);
         return null;
     }
->>>>>>> develop
 }
 
 /*************
@@ -474,8 +436,4 @@ export {
     registerBarber,
     updateBarber,
     deleteBarbers,
-<<<<<<< HEAD
 };
-=======
-};
->>>>>>> develop

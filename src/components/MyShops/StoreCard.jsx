@@ -14,11 +14,7 @@ import Tooltip from "@material-ui/core/Tooltip";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import AlertBox from "../Dialog/Alert";
 import { deleteStores } from "../../api/owner";
-<<<<<<< HEAD
-import { refreshPage } from "../../utils/utils";
-=======
 import { convertReservationToEvent, refreshPage } from "../../utils/utils";
->>>>>>> develop
 
 const useStyles = (theme) => ({
     root: {
