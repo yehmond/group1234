@@ -4,6 +4,7 @@ import pic2 from "../images/home-cover.jpg";
 import pic3 from "../images/home-cover1.jpg";
 import pic4 from "../images/home-cover2.jpg";
 import profilePic from "../images/barber_profile_pic.png";
+import moment from "moment";
 
 export const imageList = [pic1, pic2, pic3, pic4];
 
@@ -34,7 +35,7 @@ const mockReviews = [
     },
 ];
 
-const mockBarbers = [
+export const mockBarbers = [
     {
         id: "123",
         name: "Billy Barber",
@@ -46,7 +47,7 @@ const mockBarbers = [
     },
     {
         id: "124",
-        name: "Billy Barber",
+        name: "Bobby Barber",
         description:
             "Barbers cut and style men’s hair. They may also provide other grooming services, such as shaving, beard trimming or hair treatments. Most barbers work in fairly small barbers' shops which serve customers in their local areas.",
         picture: profilePic,
@@ -55,7 +56,7 @@ const mockBarbers = [
     },
     {
         id: "125",
-        name: "Billy Barber",
+        name: "Barney Barber",
         description:
             "Barbers cut and style men’s hair. They may also provide other grooming services, such as shaving, beard trimming or hair treatments. Most barbers work in fairly small barbers' shops which serve customers in their local areas.",
         picture: profilePic,
@@ -64,7 +65,7 @@ const mockBarbers = [
     },
     {
         id: "126",
-        name: "Billy Barber",
+        name: "Brody Barber",
         description:
             "Barbers cut and style men’s hair. They may also provide other grooming services, such as shaving, beard trimming or hair treatments. Most barbers work in fairly small barbers' shops which serve customers in their local areas.",
         picture: profilePic,
@@ -92,3 +93,50 @@ export const mockStore = {
     reviews: mockReviews,
     barbers: mockBarbers,
 };
+
+const event1 = {
+    title: "Elvis Presley",
+    start: moment("2020-07-01 09:30").toDate(),
+    end: moment("2020-07-01 09:30").add(30, "minutes").toDate(),
+    allDay: false,
+    barberId: "123",
+};
+
+const event2 = {
+    title: "Ringo Starr",
+    start: moment("2020-07-01 12:30").toDate(),
+    end: moment("2020-07-01 12:30").add(60, "minutes").toDate(),
+    allDay: false,
+    barberId: "124",
+};
+
+const event3 = {
+    title: "John Lennon",
+    start: moment("2020-07-02 10:00").toDate(),
+    end: moment("2020-07-02 10:30").add(30, "minutes").toDate(),
+    allDay: false,
+    barberId: "123",
+};
+
+const event4 = {
+    title: "Bob Saget",
+    start: moment("2020-07-03 11:30").toDate(),
+    end: moment("2020-07-03 11:30").add(30, "minutes").toDate(),
+    allDay: false,
+    barberId: "124",
+};
+
+const event5 = {
+    title: "Ted Danson",
+    start: moment("2020-07-01 15:30").toDate(),
+    end: moment("2020-07-01 15:30").add(45, "minutes").toDate(),
+    allDay: false,
+    barberId: "123",
+};
+
+export const events = [event1, event2, event3, event4, event5];
+// export const resources = [
+//     {resourceId: '1', name: 'Billy Barber'},
+//     {resourceId: '2', name: 'Bobby Barber'},
+//     {resourceId: '3', name: 'Barney Barber'}
+// ]

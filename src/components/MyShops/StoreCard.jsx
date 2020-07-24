@@ -14,7 +14,7 @@ import Tooltip from "@material-ui/core/Tooltip";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import AlertBox from "../Dialog/Alert";
 import { deleteStores } from "../../api/owner";
-import { refreshPage } from "../../utils/utils";
+import { convertReservationToEvent, refreshPage } from "../../utils/utils";
 
 const useStyles = (theme) => ({
     root: {
@@ -116,6 +116,16 @@ class StoreCard extends Component {
                                     to={{
                                         pathname: `/stores/${shopID}/schedule`,
                                         id: shopID,
+                                        reservations: shop.reservations.map(
+                                            (reservation) => {
+                                                return convertReservationToEvent(
+                                                    shop.barbers,
+                                                    reservation
+                                                );
+                                            }
+                                        ),
+                                        barbers: shop.barbers,
+                                        hours: shop.hours,
                                     }}
                                 >
                                     <EventIcon className={classes.icon} />
@@ -136,6 +146,7 @@ class StoreCard extends Component {
                                     to={{
                                         pathname: `/stores/${shopID}/stats`,
                                         id: shopID,
+                                        shop: shop,
                                     }}
                                 >
                                     <EqualizerIcon className={classes.icon} />

@@ -6,7 +6,6 @@ import CardActions from "@material-ui/core/CardActions";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
-import salonPic from "../../images/salon.png";
 import Chip from "@material-ui/core/Chip";
 import { useHistory } from "react-router-dom";
 import Button from "@material-ui/core/Button";
@@ -45,7 +44,17 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function LargeCard({ id, name, services, price, rating, address }) {
+export default function LargeCard({
+    id,
+    name,
+    services,
+    price,
+    rating,
+    address,
+    city,
+    province,
+    picture,
+}) {
     const classes = useStyles();
     const history = useHistory();
 
@@ -73,7 +82,7 @@ export default function LargeCard({ id, name, services, price, rating, address }
                 <CardMedia
                     component="img"
                     className={classes.cover}
-                    image={salonPic}
+                    image={picture}
                     title="Salon"
                 />
                 <CardContent className={classes.content}>
@@ -95,7 +104,7 @@ export default function LargeCard({ id, name, services, price, rating, address }
                         );
                     })}
                     <Typography variant="body2" color="textSecondary" component="p">
-                        {address}
+                        {address}, {city} {province}
                     </Typography>
                 </CardContent>
             </CardActionArea>

@@ -44,7 +44,7 @@ export function search() {
     return (dispatch) => {
         dispatch(searchLoading());
         searchStores(RESULTS_PER_PAGE, queryObj).then((response) => {
-            if (response.status === 200) {
+            if (response) {
                 dispatch(searchSuccess(response));
             } else {
                 dispatch(searchError(response));

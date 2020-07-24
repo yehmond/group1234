@@ -44,19 +44,16 @@ const useStyles = makeStyles((theme) => {
 const links = {
     guest: {
         Browse: "/browse",
-        About: "/about",
         "Sign in": "/signin",
         "Sign up": "/signup",
     },
     customer: {
         "My Reservations": "/reservations",
         Browse: "/browse",
-        About: "/about",
     },
     owner: {
         "My Stores": "/stores",
         Browse: "/browse",
-        About: "/about",
     },
 };
 
@@ -67,12 +64,14 @@ export default function MenuAppBar() {
     const authState = useSelector((state) => state.authState);
     const dispatch = useDispatch();
 
+    // Initialize auth state
     useEffect(() => {
         const email = localStorage.getItem("email");
         const role = localStorage.getItem("role");
+        const id = localStorage.getItem("id");
 
-        if (email && role) {
-            dispatch(setSignInStatus(email, role));
+        if (email && role && id) {
+            dispatch(setSignInStatus(email, role, id));
         }
     }, []); // eslint-disable-line
 
