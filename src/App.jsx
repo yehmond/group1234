@@ -26,7 +26,6 @@ function App() {
                 <Route path="/browse">
                     <Browse />
                 </Route>
-                <Route path="/about"></Route>
                 <Route path="/signin">
                     <SignInPage />
                 </Route>
