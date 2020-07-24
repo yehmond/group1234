@@ -294,10 +294,10 @@ async function getReservations(user_id, body) {
         return null;
     }
 
-    if ("start_time" in body) {
+    if ("start_time" in body && body.start_time !== "") {
         body.start_time.toISOString();
     }
-    if ("end_time" in body) {
+    if ("end_time" in body && body.end_time !== "") {
         body.end_time.toISOString();
     }
 
