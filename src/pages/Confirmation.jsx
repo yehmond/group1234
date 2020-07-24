@@ -1,4 +1,4 @@
-import React, { useEffect,  } from "react";
+import React, { useEffect } from "react";
 // TODO: import useState
 import { useParams } from "react-router-dom";
 import Box from "@material-ui/core/Box";
