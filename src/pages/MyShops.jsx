@@ -17,7 +17,7 @@ export default function MyShops() {
             <UserContext.Provider value={authState.id}>
                 <Switch>
                     <Route exact path="/stores">
-                         <ShopsList />
+                        <ShopsList />
                     </Route>
                     <Route path="/stores/:storeID/addbarber">
                         <AddBarber />

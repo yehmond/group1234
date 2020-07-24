@@ -192,20 +192,20 @@ async function registerStore(
  *
  **************/
 async function updateStore(store_id, body) {
-  if (store_id.length === 0) {
-    alert("owner/updateStore: store_id is invalid");
-    return null;
-  }
-  body.store_id = store_id;
+    if (store_id.length === 0) {
+        alert("owner/updateStore: store_id is invalid");
+        return null;
+    }
+    body.store_id = store_id;
 
-  try {
-      const response = await instance.put("/store", { params: body });
-      console.log(response);
-      return response.data;
-  } catch (error) {
-      console.log(error);
-      return null;
-  }
+    try {
+        const response = await instance.put("/store", { params: body });
+        console.log(response);
+        return response.data;
+    } catch (error) {
+        console.log(error);
+        return null;
+    }
 }
 
 /*************
@@ -369,20 +369,20 @@ async function registerBarber(
  *
  **************/
 async function updateBarber(barber_id, body) {
-  if (barber_id.length === 0) {
-    alert("owner/updateBarber: barber_id is invalid");
-    return null;
-  }
-  body.barber_id = barber_id;
+    if (barber_id.length === 0) {
+        alert("owner/updateBarber: barber_id is invalid");
+        return null;
+    }
+    body.barber_id = barber_id;
 
-  try {
-      const response = await instance.put("/barber", { params: body });
-      console.log(response);
-      return response.data;
-  } catch (error) {
-      console.log(error);
-      return null;
-  }
+    try {
+        const response = await instance.put("/barber", { params: body });
+        console.log(response);
+        return response.data;
+    } catch (error) {
+        console.log(error);
+        return null;
+    }
 }
 
 /*************

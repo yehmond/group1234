@@ -28,7 +28,7 @@ export function signInSuccess(email, role, id) {
         type: SIGN_IN_SUCCESS,
         email,
         role,
-        id
+        id,
     };
 }
 

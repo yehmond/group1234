@@ -7,7 +7,6 @@ import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
-import salonPic from "../../images/salon.png";
 import EventAvailableIcon from "@material-ui/icons/EventAvailable";
 import { useHistory } from "react-router-dom";
 
@@ -32,7 +31,17 @@ const useStyles = makeStyles({
     },
 });
 
-export default function SmallCard({ shopId, name, services, price, rating }) {
+export default function SmallCard({
+    shopId,
+    name,
+    services,
+    price,
+    rating,
+    address,
+    city,
+    province,
+    picture,
+}) {
     const classes = useStyles();
     const history = useHistory();
 
@@ -57,11 +66,7 @@ export default function SmallCard({ shopId, name, services, price, rating }) {
     return (
         <Card className={classes.root}>
             <CardActionArea onClick={handleClickArea}>
-                <CardMedia
-                    className={classes.media}
-                    image={salonPic}
-                    title={name}
-                />
+                <CardMedia className={classes.media} image={picture} title={name} />
                 <CardContent>
                     <Typography gutterBottom variant="h5" component="h2">
                         {name}
@@ -76,6 +81,10 @@ export default function SmallCard({ shopId, name, services, price, rating }) {
                     </Typography>
                     <Typography variant="body2" color="textSecondary" component="p">
                         {dollarSigns} · {ratingStars}
+                    </Typography>
+                    <br />
+                    <Typography variant="body2" color="textSecondary" component="p">
+                        {address}, {city} {province}
                     </Typography>
                 </CardContent>
             </CardActionArea>

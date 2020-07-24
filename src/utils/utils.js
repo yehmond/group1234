@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { CALENDAR_COLORS, DAYS_OF_WEEK_ABBR, MONTHS_OF_YEAR } from "./constants";
 
-
 export function convert24HrTo12Hr(time) {
     let hours = parseInt(time.substr(0, 2));
     const minutes = time.substr(2);
@@ -67,7 +66,6 @@ export function hoursToString(hours) {
     return retObj;
 }
 
-
 export function addColonTime(time) {
     if (time.length !== 4) {
         return "";
@@ -113,8 +111,10 @@ export function parseSearchURL() {
                     queryParams.rating = rating;
                 }
                 break;
-            case "location":
-                queryParams.location = value;
+            case "neighbourhoods":
+                if (value.length !== 0) {
+                    queryParams.neighbourhoods = value.split(",");
+                }
                 break;
             case "page":
                 queryParams.page = Number(value);
@@ -128,10 +128,16 @@ export function parseSearchURL() {
 
 export function setQueryString(param, history, replace = false) {
     const currParam = parseSearchURL();
+
     const newParam = {
         ...currParam,
         ...param,
     };
+
+    if (!param.page) {
+        delete newParam.page;
+    }
+
     const newUrl = window.location.pathname + `?${convertToQueryString(newParam)}`;
 
     if (replace) {
@@ -239,5 +245,3 @@ export function sortReservations(reservations) {
         return new Date(b.to) - new Date(a.to);
     });
 }
-
-

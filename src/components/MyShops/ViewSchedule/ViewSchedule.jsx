@@ -73,7 +73,7 @@ class ViewSchedule extends Component {
         }
     }
 
-    eventPropGetter(event, start, end, isSelected) {
+    eventPropGetter(event) {
         const style = {
             backgroundColor: event.color,
         };

@@ -18,7 +18,7 @@ export default function authReducer(
                 isLoggedIn: true,
                 role: action.role.toUpperCase(),
                 email: action.email,
-                id: action.id
+                id: action.id,
             };
         case SIGN_IN_LOADING:
             return {
