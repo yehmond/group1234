@@ -5,6 +5,7 @@ import RBSHours from "../components/RegisterBarbershop/RBSHours";
 import RBSConfirm from "../components/RegisterBarbershop/RBSConfirm";
 import { initializeHours } from "../utils/utils";
 import { connect } from "react-redux";
+import Typography from "@material-ui/core/Typography";
 
 class RBSMain extends Component {
     constructor(props) {
@@ -16,7 +17,7 @@ class RBSMain extends Component {
 
     initializeBarbershop() {
         return {
-            ownerId: this.props.user,
+            ownerId: window.localStorage.getItem('id'),
             name: "",
             address: "",
             city: "",
@@ -28,6 +29,7 @@ class RBSMain extends Component {
             price: 0,
             photos: [],
             servicesOffered: [],
+            neighbourhood: ''
         };
     }
 
@@ -44,6 +46,15 @@ class RBSMain extends Component {
     }
 
     render() {
+        if(window.localStorage.getItem('role') !== 'OWNER') {
+            return (<Typography
+                align="center"
+                variant={"h2"}
+                style={{ "padding": "100px" }}
+            >
+                You are not authorized to view this page
+            </Typography>);
+        } else
         return (
             <Switch>
                 <Route path="/createshop/register">

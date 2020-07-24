@@ -32,6 +32,7 @@ class RBSForm extends Component {
             phoneNumber: this.props.barbershop.phoneNumber,
             price: this.props.barbershop.price,
             description: this.props.barbershop.description,
+            neighbourhood: this.props.barbershop.neighbourhood
         };
         this.handleTextChange = this.handleTextChange.bind(this);
         this.handleAutoCompleteChange = this.handleAutoCompleteChange.bind(this);
@@ -100,6 +101,15 @@ class RBSForm extends Component {
                                 required={true}
                                 label="Street Address"
                                 placeholder="Street Address"
+                                fieldWidth="regular"
+                                handleChange={this.handleTextChange}
+                            />
+                            <RenderTextfield
+                                name="neighbourhood"
+                                value={this.state.neighbourhood}
+                                required={true}
+                                label="Neighbourhood Name"
+                                placeholder="Neighbourhood Name"
                                 fieldWidth="regular"
                                 handleChange={this.handleTextChange}
                             />

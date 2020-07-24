@@ -9,6 +9,7 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import EventAvailableIcon from "@material-ui/icons/EventAvailable";
 import { useHistory } from "react-router-dom";
+import salonPic from "../../images/salon.png";
 
 const useStyles = makeStyles({
     root: {
@@ -66,7 +67,11 @@ export default function SmallCard({
     return (
         <Card className={classes.root}>
             <CardActionArea onClick={handleClickArea}>
-                <CardMedia className={classes.media} image={picture} title={name} />
+                <CardMedia
+                    className={classes.media}
+                    image={picture || salonPic}
+                    title={name}
+                />
                 <CardContent>
                     <Typography gutterBottom variant="h5" component="h2">
                         {name}

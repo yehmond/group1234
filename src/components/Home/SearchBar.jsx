@@ -69,9 +69,7 @@ const useStyles = makeStyles((theme) => ({
 export default function SearchBar() {
     const [selectedDate, setDateChange] = useState(new Date());
     const [selectedTime, setSelectedTime] = useState(new Date());
-    const [selectedNeighbourhood, setSelectedLocation] = useState(
-        DEFAULT_SEARCH_TEXT
-    );
+    const [selectedNeighbourhood, setSelectedNeighbourhood] = useState("");
     const [selectedService, setSelectedService] = useState(DEFAULT_SERVICE);
     const [neighbourhoodOptions, setNeighbourhoodOptions] = useState([]);
     const classes = useStyles();
@@ -81,7 +79,8 @@ export default function SearchBar() {
     useEffect(() => {
         getNeighbourhoods("Vancouver", "BC", 10).then((data) => {
             if (data) {
-                setNeighbourhoodOptions(data);
+                setNeighbourhoodOptions(data.sort());
+                setSelectedNeighbourhood(data[0]);
             }
         });
     }, []);
@@ -183,7 +182,7 @@ export default function SearchBar() {
                             ></TextField>
                         )}
                         onChange={(event, value) => {
-                            setSelectedLocation(value);
+                            setSelectedNeighbourhood(value);
                         }}
                     />
                 </div>
