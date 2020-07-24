@@ -50,6 +50,7 @@ class RBSConfirm extends Component {
             shop.name,
             shop.address,
             shop.city,
+            shop.neighbourhood,
             shop.province,
             shop.description,
             shop.price,
