@@ -16,12 +16,13 @@
         "axios": "^0.19.2",
         "clsx": "^1.1.1",
         "google-maps-react": "^2.0.6",
-        "lodash": "^4.17.15",
+        "lodash": "^4.17.19",
         "material-table": "^1.59.0",
         "material-ui-dropzone": "^3.1.0",
         "moment": "^2.26.0",
         "node-sass": "^4.14.1",
         "react": "^16.13.1",
+        "react-big-calendar": "^0.26.0",
         "react-dom": "^16.13.1",
         "react-elastic-carousel": "^0.6.4",
         "react-password-strength-bar": "^0.3.2",
@@ -70,5 +71,6 @@
         "husky": "^4.2.5",
         "prettier": "^2.0.5",
         "redux-devtools-extension": "^2.13.8"
-    }
+    },
+    "proxy": "http://localhost:5000"
 }

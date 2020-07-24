@@ -11,7 +11,6 @@ import { useHistory } from "react-router-dom";
 import FindInPageIcon from "@material-ui/icons/FindInPage";
 import EventAvailableIcon from "@material-ui/icons/EventAvailable";
 import StoreIcon from "@material-ui/icons/Store";
-import InfoIcon from "@material-ui/icons/Info";
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
 import HomeIcon from "@material-ui/icons/Home";
@@ -32,7 +31,6 @@ const drawerIcons = {
     "Browse": <FindInPageIcon />,
     "My Reservations": <EventAvailableIcon />,
     "My Stores": <StoreIcon />,
-    "About": <InfoIcon />,
     "Sign in": <CheckCircleIcon />,
     "Sign up": <AddCircleIcon />,
 };
