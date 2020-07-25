@@ -56,14 +56,14 @@ async function getStore(store_id) {
  * Parms:    (number)     count                  - number of stores to return
  *           (object)     body                   - (optional) object body that can contain the following optional keys:
  *              (number)     startIndex             - index of the first store object to return
- *              (string)     store                  - name of the store
- *              (array[string])     neighbourhood   - array of the neighbourhoods
+ *              (string)     name                   - name of the store
  *              (string)     city                   - city to find stores around
+ *              (string)     neighbourhood          - neighbourhood to find stores around
  *              (array[SERVICES_OFFERED])  services - array of services offered
  *              (number)     rating                 - minimum rating
  *              (array[number])     price           - price array of prices (1-3)
  *
- * Return:   SUCCESS            - {count: number, stores: [{store_id: string, picture: (base64) string, rating: number, price: number, services: array[SERVICES_OFFERED]}]}
+ * Return:   SUCCESS            - {count: number, stores: []}
  *           NOT FOUND          - null
  *           SERVER ERROR       - null
  *
@@ -119,7 +119,7 @@ async function getNeighbourhoods(city, province, limit) {
  *
  * Parms:    (string)     user_id     - id of the user
  *
- * Return:   SUCCESS            - {user_id: number, reviews: []}
+ * Return:   SUCCESS            - {reviews: []}
  *           NOT FOUND          - null
  *           SERVER ERROR       - null
  *
@@ -153,15 +153,16 @@ async function getReviews(user_id) {
  *           (number)     barber_id   - id of the barber
  *           (string)     review      - message left by reviewer
  *           (number)     rating      - rating from 1 to 5
+ *           (SERVICES_OFFERED)  service   - type of service
  *
- * Return:   SUCCESS            - {review_id: string, name: string}
+ * Return:   SUCCESS            - {review_id: string}
  *           NOT FOUND          - null
  *           SERVER ERROR       - null
  *
  * Notes:    none
  *
  **************/
-async function registerReview(user_id, store_id, barber_id, review, rating) {
+async function registerReview(user_id, store_id, barber_id, review, rating, service) {
     if (user_id.length === 0) {
         alert("customer/registerReview: user_id is invalid");
         return null;
@@ -182,6 +183,10 @@ async function registerReview(user_id, store_id, barber_id, review, rating) {
         alert("customer/registerReview: rating is invalid");
         return null;
     }
+    if (service.length === 0) {
+        alert("customer/registerReview: service is invalid");
+        return null;
+    }
 
     let body = {
         user_id,
@@ -189,6 +194,7 @@ async function registerReview(user_id, store_id, barber_id, review, rating) {
         barber_id,
         review,
         rating,
+        service
     };
 
     try {
@@ -209,9 +215,6 @@ async function registerReview(user_id, store_id, barber_id, review, rating) {
  *
  * Parms:    (number)     review_id   - id of the review
  *           (object)     body        - at least one of the following properties that will be updated
- *               (number)     user_id     - id of the user
- *               (number)     store_id    - id of the store
- *               (number)     barber_id   - id of the barber
  *               (string)     review      - message left by reviewer
  *               (number)     rating      - rating from 1 to 5
  *
@@ -278,10 +281,10 @@ async function deleteReview(review_id) {
  *
  * Parms:    (number)     user_id     - id of the user
  *           (object)     body        - (optional) object body that can contain the following optional keys:
- *              (Date)       start_time  - earliest review to return
- *              (Date)       end_time    - latest review to return
+ *              (Date)       from  - earliest review to return
+ *              (Date)       to    - latest review to return
  *
- * Return:   SUCCESS            - {user_id: number, reservations: []}
+ * Return:   SUCCESS            - {reservations: []}
  *           NOT FOUND          - null
  *           SERVER ERROR       - null
  *
@@ -294,11 +297,11 @@ async function getReservations(user_id, body) {
         return null;
     }
 
-    if ("start_time" in body && body.start_time !== "") {
-        body.start_time.toISOString();
+    if ("from" in body) {
+        body.from.toISOString();
     }
-    if ("end_time" in body && body.end_time !== "") {
-        body.end_time.toISOString();
+    if ("to" in body) {
+        body.to.toISOString();
     }
 
     const query = Object.keys(body)
@@ -329,10 +332,10 @@ async function getReservations(user_id, body) {
  * Parms:    (number)     user_id           - id of the user
  *           (number)     store_id          - store id of the store
  *           (number)     barber_id         - barber id of the barber
- *           (Date)       start_time        - start time of the reservation
+ *           (Date)       from              - start time of the reservation
  *           (SERVICES_OFFERED) service     - service offered
  *
- * Return:   SUCCESS            - {reservation_id: string, end_time: Date}
+ * Return:   SUCCESS            - {reservation_id: string, to: Date}
  *           NOT FOUND          - null
  *           OTHER ERRORS       - null
  *
@@ -343,7 +346,7 @@ async function registerReservation(
     user_id,
     store_id,
     barber_id,
-    start_time,
+    from,
     service
 ) {
     if (user_id.length === 0) {
@@ -358,8 +361,8 @@ async function registerReservation(
         alert("customer/registerReservation: barber_id is invalid");
         return null;
     }
-    if (typeof start_time !== Date) {
-        alert("customer/registerReservation: start_time is invalid");
+    if (typeof from !== Date) {
+        alert("customer/registerReservation: from is invalid");
         return null;
     }
     if (service.length === 0) {
@@ -371,7 +374,7 @@ async function registerReservation(
         user_id,
         store_id,
         barber_id,
-        start_time,
+        from,
         service,
     };
 
