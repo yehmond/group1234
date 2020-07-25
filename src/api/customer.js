@@ -13,7 +13,9 @@ import axios from "axios";
 /* Local constants */
 const instance = axios.create({
     // TODO abstract baseURL
-    baseURL: "http://localhost:5000/api/customer",
+    baseURL:
+        (process.env.REACT_APP_BASE_URL || "http://localhost:5000") +
+        "/api/customer",
 });
 
 /*************
@@ -58,7 +60,7 @@ async function getStore(store_id) {
  *              (number)     startIndex             - index of the first store object to return
  *              (string)     name                   - name of the store
  *              (string)     city                   - city to find stores around
- *              (string)     neighbourhood          - neighbourhood to find stores around
+ *              (array[string)     neighbourhood    - neighbourhoods to find stores around
  *              (array[SERVICES_OFFERED])  services - array of services offered
  *              (number)     rating                 - minimum rating
  *              (array[number])     price           - price array of prices (1-3)
@@ -162,7 +164,14 @@ async function getReviews(user_id) {
  * Notes:    none
  *
  **************/
-async function registerReview(user_id, store_id, barber_id, review, rating, service) {
+async function registerReview(
+    user_id,
+    store_id,
+    barber_id,
+    review,
+    rating,
+    service
+) {
     if (user_id.length === 0) {
         alert("customer/registerReview: user_id is invalid");
         return null;
@@ -194,7 +203,7 @@ async function registerReview(user_id, store_id, barber_id, review, rating, serv
         barber_id,
         review,
         rating,
-        service
+        service,
     };
 
     try {
@@ -342,13 +351,7 @@ async function getReservations(user_id, body) {
  * Notes:    none
  *
  **************/
-async function registerReservation(
-    user_id,
-    store_id,
-    barber_id,
-    from,
-    service
-) {
+async function registerReservation(user_id, store_id, barber_id, from, service) {
     if (user_id.length === 0) {
         alert("customer/registerReservation: user_id is invalid");
         return null;
