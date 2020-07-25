@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import "./App.scss";
 import RBSMain from "./pages/RBSMain";
 import NavBar from "./components/Nav/NavBar";
@@ -14,8 +15,19 @@ import MyShops from "./pages/MyShops";
 import Rating from "./pages/Rating";
 import ViewShop from "./components/MyShops/ViewShop/ViewShop";
 import SignUpSuccessful from "./pages/SignUpSuccessful";
+import AuthRequiredRoute from "./components/Auth/AuthRequiredRoute";
+import { setSignInStatus } from "./actions/authActions";
 
 function App() {
+    // Initialize auth state
+    const dispatch = useDispatch();
+    const email = localStorage.getItem("email");
+    const role = localStorage.getItem("role");
+    const id = localStorage.getItem("id");
+    if (email && role && id) {
+        dispatch(setSignInStatus(email, role, id));
+    }
+
     return (
         <Router>
             <NavBar />
@@ -32,12 +44,15 @@ function App() {
                 <Route exact path="/signup">
                     <SignUpPage />
                 </Route>
-                <Route path="/signup/success">
-                    <SignUpSuccessful />
-                </Route>
-                <Route exact path="/reserve/:id">
-                    <Reservation />
-                </Route>
+                <AuthRequiredRoute
+                    path="/signup/success"
+                    component={SignUpSuccessful}
+                />
+                <AuthRequiredRoute
+                    exact
+                    path="/reserve/:id"
+                    component={Reservation}
+                />
                 <Route exact path="/reservations">
                     <MyReservations />
                 </Route>
@@ -53,6 +68,9 @@ function App() {
                 </Route>
                 <Route exact path="/view/stores/:storeID">
                     <ViewShop />
+                </Route>
+                <Route>
+                    <Redirect to="/" />
                 </Route>
             </Switch>
         </Router>
