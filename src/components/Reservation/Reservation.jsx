@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import { createStyles, makeStyles } from "@material-ui/core/styles";
 import { FormControl } from "@material-ui/core";
 import { InputLabel } from "@material-ui/core";
@@ -12,8 +13,9 @@ import Checkbox from "@material-ui/core/Checkbox";
 import { SERVICES_OFFERED } from "../../utils/constants";
 import MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
-// import { useDispatch } from "react-redux";
-// import { setService } from "../../actions/filterActions";
+import { registerReservation } from "../../api/customer";
+import { getStores } from "../../api/owner";
+import { validateEmail } from "../../utils/utils";
 
 const useStyles = makeStyles((theme) =>
     createStyles({
@@ -53,56 +55,160 @@ const useStyles = makeStyles((theme) =>
         serviceSelection: {
             paddingBottom: "2rem",
         },
+        confwrapper: {
+            margin: "5rem",
+            paddingLeft: "5rem",
+            paddingRight: "5rem",
+            paddingBottom: "5rem",
+            alignItems: "center",
+            textAlign: "center",
+        },
+        header: {
+            fontFamily: "Palatino",
+        },
+        hLine: {
+            marginTop: "2.5rem",
+        },
+        textwrapper: {
+            paddingTop: "2rem",
+            paddingLeft: "20rem",
+            paddingRight: "20rem",
+            alignItems: "center",
+        },
+        text: {
+            padding: theme.spacing(2),
+            flexDirection: "column",
+            textAlign: "left",
+        },
+        box: {
+            paddingBottom: "2rem",
+        },
     })
 );
 
 export default function Reservation() {
     const classes = useStyles();
 
+    const [state, setState] = useState({
+        fullName: "",
+        phoneNumber: "",
+        email: "",
+        emailError: false,
+        emailHelper: "",
+        store_name: "",
+
+        user_id: 2, // TODO: remove hard-coded ID
+        store_id: parseInt(Object.values(useParams())),
+        barber_id: 0,
+        start_time: "",
+        service: "",
+    });
+
     const [serviceState, setServiceState] = React.useState(
         Object.fromEntries(SERVICES_OFFERED.map((service) => [service, false]))
     );
 
-    const [barberName, setBarber] = React.useState("");
+    const [barber_id, setBarber] = React.useState("");
+    const [submit, setSubmit] = useState(false);
 
-    const handleBarberChange = (event) => {
+    function handleBarberChange(event) {
         setBarber(event.target.value);
-    };
+        setState({ ...state, barber_id: event.target.value });
+    }
 
-    const handleChange = (event) => {
+    function handleServiceChange(event) {
         const newServiceState = {
             ...serviceState,
             [event.target.name]: event.target.checked,
         };
+        if (event.target.checked) {
+            setState({ ...state, service: event.target.name });
+        }
         setServiceState(newServiceState);
-        // dispatch(setService(newServiceState));
-    };
+    }
+
+    function handleChange(event) {
+        const {
+            target: { name, value },
+        } = event;
+        setState({ ...state, [name]: value });
+    }
+
+    function getStoreName() {
+        getStores({ store_id: state.store_id }).then((res) => {
+            setState({ ...state, store_name: res[0]["store"]["name"] });
+        });
+    }
+
+    function submitReservation() {
+        if (!validateEmail(state.email)) {
+            setState({
+                ...state,
+                emailError: true,
+                emailHelper: "Pleas enter a valid email",
+            });
+        } else {
+            setSubmit(true);
+        }
+    }
+
+    // TODO: getBarbers(body)
+
+    useEffect(() => {
+        getStoreName();
+        if (submit) {
+            console.log(
+                "SUBMITTED reservation!",
+                state.user_id,
+                state.store_id,
+                state.barber_id,
+                state.start_time,
+                state.service
+            );
+            registerReservation(
+                state.user_id,
+                state.store_id,
+                state.barber_id,
+                state.start_time,
+                state.service
+            )
+                .then(() => {
+                    // TODO: remove hard-coded ID
+                    window.location = "/reservations/" + 65 + "/confirm";
+                })
+                .catch(() => {
+                    console.log("register reservation error");
+                });
+        }
+    }, [submit]);
 
     return (
         <div className={classes.wrapper}>
-            {/* TODO: this.props.shopname */}
             <div className={classes.reserveHeader}>
-                <h1>Make Your Reservation With Tony&apos;s Barbershop!</h1>
+                <h1>Make Your Reservation With {state.store_name}!</h1>
             </div>
 
             <div className={classes.container}>
                 <FormControl id="name" className={classes.textInput}>
                     <InputLabel htmlFor="customer_name">Full Name</InputLabel>
-                    <Input id="customer_name" />
+                    <Input name="fullName" onChange={handleChange} />
                 </FormControl>
                 <FormControl id="phone" className={classes.textInput}>
                     <InputLabel htmlFor="customer_phone">Phone Number</InputLabel>
-                    <Input id="customer_phone" />
+                    <Input name="phoneNumber" onChange={handleChange} />
                 </FormControl>
                 <FormControl id="email" className={classes.textInput}>
-                    <InputLabel htmlFor="customer_email">Email Address</InputLabel>
-                    <Input id="customer_email" />
+                    <InputLabel htmlFor="customer_email">
+                        Email Address *
+                    </InputLabel>
+                    <Input name="email" onChange={handleChange} required />
                 </FormControl>
             </div>
 
             <div className={classes.container}>
                 <form noValidate>
                     <TextField
+                        name="start_time"
                         id="datetime-local"
                         label="Available Time Slot"
                         type="datetime-local"
@@ -111,19 +217,22 @@ export default function Reservation() {
                         InputLabelProps={{
                             shrink: true,
                         }}
+                        onChange={handleChange}
                     />
                 </form>
                 <FormControl className={classes.formControl}>
                     <InputLabel id="demo-simple-select-label">Barber</InputLabel>
                     <Select
+                        name="barber"
                         labelId="demo-simple-select-label"
                         id="demo-simple-select"
-                        value={barberName}
+                        value={barber_id}
                         onChange={handleBarberChange}
                     >
-                        <MenuItem value={"Tommy"}>Tommmy</MenuItem>
-                        <MenuItem value={"Diasy"}>Daisy</MenuItem>
-                        <MenuItem value={"Harry"}>Harry</MenuItem>
+                        {/* TODO: loop to show list of barbers */}
+                        <MenuItem value={11}>Larry David</MenuItem>
+                        <MenuItem value={12}>Jerry Seinfeld</MenuItem>
+                        <MenuItem value={13}>J.B. Smoove</MenuItem>
                     </Select>
                 </FormControl>
             </div>
@@ -141,7 +250,7 @@ export default function Reservation() {
                                     control={
                                         <Checkbox
                                             checked={serviceState[service]}
-                                            onChange={handleChange}
+                                            onChange={handleServiceChange}
                                             name={service}
                                         />
                                     }
@@ -154,16 +263,19 @@ export default function Reservation() {
             </div>
 
             <div>
-                {/* TODO: submit form */}
-                <Button variant="contained" color="primary">
+                <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={submitReservation}
+                >
                     Reserve
                 </Button>
             </div>
 
-            <div className={classes.schedule}>
-                {/* TODO: show schedule */}
-                <h1>Schedule Used to Reserve</h1>
-            </div>
+            {/* <div className={classes.schedule}> */}
+            {/* TODO: show schedule */}
+            {/* <h1>Schedule Used to Reserve</h1> */}
+            {/* </div> */}
         </div>
     );
 }

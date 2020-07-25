@@ -162,7 +162,14 @@ async function getReviews(user_id) {
  * Notes:    none
  *
  **************/
-async function registerReview(user_id, store_id, barber_id, review, rating, service) {
+async function registerReview(
+    user_id,
+    store_id,
+    barber_id,
+    review,
+    rating,
+    service
+) {
     if (user_id.length === 0) {
         alert("customer/registerReview: user_id is invalid");
         return null;
@@ -194,7 +201,7 @@ async function registerReview(user_id, store_id, barber_id, review, rating, serv
         barber_id,
         review,
         rating,
-        service
+        service,
     };
 
     try {
@@ -342,13 +349,7 @@ async function getReservations(user_id, body) {
  * Notes:    none
  *
  **************/
-async function registerReservation(
-    user_id,
-    store_id,
-    barber_id,
-    from,
-    service
-) {
+async function registerReservation(user_id, store_id, barber_id, from, service) {
     if (user_id.length === 0) {
         alert("customer/registerReservation: user_id is invalid");
         return null;
