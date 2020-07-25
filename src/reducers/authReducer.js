@@ -26,10 +26,6 @@ export default function authReducer(
                 status: "loading",
             };
         case SIGN_IN_SUCCESS:
-            window.location = "/";
-            window.localStorage.setItem("role", action.role);
-            window.localStorage.setItem("email", action.email);
-            window.localStorage.setItem("id", action.id);
             return {
                 isLoggedIn: true,
                 role: action.role,
@@ -48,10 +44,6 @@ export default function authReducer(
                 status: "loading",
             };
         case SIGN_OUT_SUCCESS:
-            window.location = "/";
-            window.localStorage.removeItem("role");
-            window.localStorage.removeItem("email");
-            window.localStorage.removeItem("id");
             return {
                 isLoggedIn: false,
                 status: "success",

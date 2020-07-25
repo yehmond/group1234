@@ -29,5 +29,5 @@ export class MapContainer extends Component {
 }
 
 export default GoogleApiWrapper({
-    apiKey: process.env.GOOGLE_API_KEY, //eslint-disable-line
+    apiKey: process.env.REACT_APP_GOOGLE_API_KEY, //eslint-disable-line
 })(MapContainer);
