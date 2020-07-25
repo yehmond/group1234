@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { createStyles, makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -9,8 +9,8 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
 import MenuIcon from "@material-ui/icons/Menu";
 import Button from "@material-ui/core/Button";
-import { useDispatch, useSelector } from "react-redux";
-import { signOutAsync, setSignInStatus } from "../../actions/authActions";
+import { useSelector, useDispatch } from "react-redux";
+import { signOutAsync } from "../../actions/authActions";
 import { Link } from "react-router-dom";
 import NavDrawer from "./NavDrawer";
 
@@ -63,17 +63,6 @@ export default function MenuAppBar() {
     const [drawerIsOpen, setDrawer] = useState(false);
     const authState = useSelector((state) => state.authState);
     const dispatch = useDispatch();
-
-    // Initialize auth state
-    useEffect(() => {
-        const email = localStorage.getItem("email");
-        const role = localStorage.getItem("role");
-        const id = localStorage.getItem("id");
-
-        if (email && role && id) {
-            dispatch(setSignInStatus(email, role, id));
-        }
-    }, []); // eslint-disable-line
 
     let displayedLinks;
     switch (authState.role) {

@@ -45,6 +45,10 @@ export function signInAsync(email, password) {
         signIn(email, password)
             .then((res) => {
                 dispatch(signInSuccess(res.email, res.role, res.id));
+                window.location = "/";
+                window.localStorage.setItem("role", res.role);
+                window.localStorage.setItem("email", res.email);
+                window.localStorage.setItem("id", res.id);
             })
             .catch((err) => {
                 console.log(err);
@@ -77,6 +81,10 @@ export function signOutAsync() {
         signOut()
             .then(() => {
                 dispatch(signOutSuccess());
+                window.location = "/";
+                window.localStorage.removeItem("role");
+                window.localStorage.removeItem("email");
+                window.localStorage.removeItem("id");
             })
             .catch((err) => {
                 console.log(err);
