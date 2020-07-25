@@ -13,7 +13,9 @@ import axios from "axios";
 /* Local constants */
 const instance = axios.create({
     // TODO abstract baseURL
-    baseURL: "http://localhost:5000/api/customer",
+    baseURL:
+        (process.env.REACT_APP_BASE_URL || "http://localhost:5000") +
+        "/api/customer",
 });
 
 /*************
@@ -58,7 +60,7 @@ async function getStore(store_id) {
  *              (number)     startIndex             - index of the first store object to return
  *              (string)     name                   - name of the store
  *              (string)     city                   - city to find stores around
- *              (string)     neighbourhood          - neighbourhood to find stores around
+ *              (array[string)     neighbourhood    - neighbourhoods to find stores around
  *              (array[SERVICES_OFFERED])  services - array of services offered
  *              (number)     rating                 - minimum rating
  *              (array[number])     price           - price array of prices (1-3)
