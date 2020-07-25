@@ -334,6 +334,52 @@ async function getReservations(user_id, body) {
 
 /*************
  *
+ * Name:     getAvailability
+ *
+ * Purpose:  Get free times for a reservation
+ *
+ * Parms:    (Date)   date                  - date desired
+ *           (SERVICES_OFFERED) service     - service desired
+ *           (object)     body              - (optional) object body that can contain the following optional keys:
+ *               (number)   barber_id       - barber desired
+ *
+ * Return:   SUCCESS            - {barber_id: number, barber_name: string, picture: (base64) string, available_time: [{from: Date, to: Date}]}
+ *           NOT FOUND          - null
+ *           OTHER ERRORS       - null
+ *
+ * Notes:    none
+ *
+ **************/
+async function getAvailability(date, service, body) {
+    if (date.length === 0) {
+        alert("customer/getFreeReservationTimes: date is invalid");
+        return null;
+    }
+    if (user_id.length === 0) {
+        alert("customer/getReservations: user_id is invalid");
+        return null;
+    }
+
+    const query = Object.keys(body)
+        .map(function (key) {
+            return key + "=" + encodeURIComponent(body[key]);
+        })
+        .join("&");
+
+    try {
+        const response = await instance.get(
+            "/availability/" + date + "/" + service + "/?" + query
+        );
+        console.log(response);
+        return response.data;
+    } catch (error) {
+        console.log(error);
+        return null;
+    }
+}
+
+/*************
+ *
  * Name:     registerReservation
  *
  * Purpose:  Make a new reservation
