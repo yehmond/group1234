@@ -78,16 +78,10 @@ async function searchStores(count, body) {
         return null;
     }
 
-    const query = Object.keys(body)
-        .map(function (key) {
-            return key + "=" + encodeURIComponent(body[key]);
-        })
-        .join("&");
-
     try {
-        const response = await instance.get(
-            "/store/search/" + count + "/?" + query
-        );
+        const response = await instance.get("/store/search/" + count, {
+            params: body,
+        });
         console.log(response);
         return response.data;
     } catch (error) {
@@ -96,15 +90,45 @@ async function searchStores(count, body) {
     }
 }
 
+/*************
+ *
+ * Name:     getNeighbourhoods
+ *
+ * Purpose:  Get availible neighbourhoods up to a certain limit of entries
+ *
+ * Parms:    (string)     city                  - city to search in
+ *           (string)     province              - province to search in
+ *           (number)     limit                 - limit of entries to search
+ *
+ * Return:   SUCCESS            - [string]
+ *           NOT FOUND          - null
+ *           SERVER ERROR       - null
+ *
+ * Notes:
+ *
+ **************/
 async function getNeighbourhoods(city, province, limit) {
-    const params = { city, province, limit };
-    const query = Object.keys(params)
-        .map(function (key) {
-            return key + "=" + encodeURIComponent(params[key]);
-        })
-        .join("&");
+    if (city === 0) {
+        alert("customer/getNeighbourhoods: missing city");
+        return null;
+    }
+    if (province === 0) {
+        alert("customer/getNeighbourhoods: missing province");
+        return null;
+    }
+    if (limit === 0) {
+        alert("customer/getNeighbourhoods: missing limit");
+        return null;
+    }
+
+    const body = {
+        city,
+        province,
+        limit,
+    };
+
     try {
-        const response = await instance.get("/neighbourhoods?" + query);
+        const response = await instance.get("/neighbourhoods", { params: body });
         console.log(response);
         return response.data;
     } catch (error) {
@@ -313,17 +337,10 @@ async function getReservations(user_id, body) {
         body.to.toISOString();
     }
 
-    const query = Object.keys(body)
-        .map(function (key) {
-            return key + "=" + encodeURIComponent(body[key]);
-        })
-        .join("&");
-
     try {
-        // TODO add authorization header
-        const response = await instance.get(
-            "/reservation/" + user_id + "/?" + query
-        );
+        const response = await instance.get("/reservation/" + user_id, {
+            params: body,
+        });
         console.log(response);
         return response.data;
     } catch (error) {
@@ -360,15 +377,10 @@ async function getAvailability(date, service, body) {
         return null;
     }
 
-    const query = Object.keys(body)
-        .map(function (key) {
-            return key + "=" + encodeURIComponent(body[key]);
-        })
-        .join("&");
-
     try {
         const response = await instance.get(
-            "/availability/" + date + "/" + service + "/?" + query
+            "/availability/" + date + "/" + service,
+            { params: body }
         );
         console.log(response);
         return response.data;
@@ -428,7 +440,7 @@ async function registerReservation(user_id, store_id, barber_id, from, service) 
     };
 
     try {
-        const response = await instance.post("/reservation/", body);
+        const response = await instance.post("/reservation", body);
         console.log(response);
         return response.data;
     } catch (error) {
