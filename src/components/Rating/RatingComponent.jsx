@@ -65,7 +65,7 @@ export default function RatingComponent() {
     const reservationID = parseInt(Object.values(useParams()));
     const [state, setState] = useState({
         user_id: 1, // TODO: remove hard-coded ID
-        store_id: "", 
+        store_id: "",
         barber_id: "",
         review: "",
         rating: "",
@@ -86,32 +86,31 @@ export default function RatingComponent() {
 
     function getInfo() {
         getReservations(state.user_id, {})
-        .then((res) => { 
-            console.log("get Info1: ", res); 
-            if (Object.values(res) !== null) {
-                for (let obj of Object.values(res)) {
-                    for (let o of obj) {
-                        console.log("HERE TO GET INFO!");
-                        if (o["reservation_id"] === reservationID){
-                            // TODO: fix setState problem
-                            setState({ ...state, store_id: o["store_id"] });
-                            setState({ ...state, barber_id: o["barber_id"] });
-                            console.log("store_id orig: ", o["store_id"]);
-                            console.log("barber_id orig: ", o["barber_id"]);
-                            console.log("store_id: ", state.store_id);
-                            console.log("barber_id: ", state.barber_id);
+            .then((res) => {
+                console.log("get Info1: ", res);
+                if (Object.values(res) !== null) {
+                    for (let obj of Object.values(res)) {
+                        for (let o of obj) {
+                            console.log("HERE TO GET INFO!");
+                            if (o["reservation_id"] === reservationID) {
+                                // TODO: fix setState problem
+                                setState({ ...state, store_id: o["store_id"] });
+                                setState({ ...state, barber_id: o["barber_id"] });
+                                console.log("store_id orig: ", o["store_id"]);
+                                console.log("barber_id orig: ", o["barber_id"]);
+                                console.log("store_id: ", state.store_id);
+                                console.log("barber_id: ", state.barber_id);
+                            }
                         }
                     }
                 }
-            }
-        })
-        .catch(() => console.log("rating page get Info error"))
-        
+            })
+            .catch(() => console.log("rating page get Info error"));
+
         // TODO: remove hard-coded ID / setState problem for store_id
-        getStores({ store_id: 11 })
-        .then((res) => {
+        getStores({ store_id: 11 }).then((res) => {
             setState({ ...state, store_name: res[0]["store"]["name"] });
-        })
+        });
     }
 
     function handleChange(event) {
@@ -128,7 +127,14 @@ export default function RatingComponent() {
     useEffect(() => {
         getInfo();
         if (submit) {
-            console.log("SUBMIT REVIEW! ", state.user_id, state.store_id, state.barber_id,state.rating, state.review);
+            console.log(
+                "SUBMIT REVIEW! ",
+                state.user_id,
+                state.store_id,
+                state.barber_id,
+                state.rating,
+                state.review
+            );
             registerReview(
                 11, // state.user_id,
                 22, // state.store_id,
@@ -136,12 +142,12 @@ export default function RatingComponent() {
                 state.review,
                 state.rating
             )
-            .then(() => {
-                window.location = "/ratingComplete";
-            })
-            .catch(() => {
-                console.log("submit rating error");
-            });
+                .then(() => {
+                    window.location = "/ratingComplete";
+                })
+                .catch(() => {
+                    console.log("submit rating error");
+                });
         }
     }, [submit]);
 
