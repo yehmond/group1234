@@ -14,6 +14,7 @@ import MyShops from "./pages/MyShops";
 import Rating from "./pages/Rating";
 import ViewShop from "./components/MyShops/ViewShop/ViewShop";
 import SignUpSuccessful from "./pages/SignUpSuccessful";
+import RatingComplete from "./pages/RatingComplete";
 
 function App() {
     return (
@@ -53,6 +54,9 @@ function App() {
                 </Route>
                 <Route exact path="/view/stores/:storeID">
                     <ViewShop />
+                </Route>
+                <Route path="/ratingComplete">
+                    <RatingComplete />
                 </Route>
             </Switch>
         </Router>

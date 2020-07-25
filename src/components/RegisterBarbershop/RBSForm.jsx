@@ -32,7 +32,7 @@ class RBSForm extends Component {
             phoneNumber: this.props.barbershop.phoneNumber,
             price: this.props.barbershop.price,
             description: this.props.barbershop.description,
-            neighbourhood: this.props.barbershop.neighbourhood
+            neighbourhood: this.props.barbershop.neighbourhood,
         };
         this.handleTextChange = this.handleTextChange.bind(this);
         this.handleAutoCompleteChange = this.handleAutoCompleteChange.bind(this);
