@@ -13,7 +13,8 @@ import axios from "axios";
 /* Local constants */
 const instance = axios.create({
     // TODO abstract baseURL
-    baseURL: "http://localhost:5000/api/auth",
+    baseURL:
+        (process.env.REACT_APP_BASE_URL || "http://localhost:5000") + "/api/auth",
     withCredentials: true,
 });
 
