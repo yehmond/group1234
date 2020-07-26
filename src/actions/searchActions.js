@@ -30,11 +30,21 @@ export function searchError(error) {
 export function search() {
     const queryObj = parseSearchURL();
     if (queryObj.price?.length === 0) {
-        queryObj.price = [1, 2, 3];
+        queryObj.price = String([1, 2, 3]);
+    }
+    if (queryObj.price) {
+        queryObj.price = String(queryObj.price);
     }
 
+    if (queryObj.services) {
+        queryObj.services = String(queryObj.services);
+    }
     if (queryObj.services?.length === 0) {
-        queryObj.services = SERVICES_OFFERED;
+        queryObj.services = String(SERVICES_OFFERED);
+    }
+
+    if (queryObj.neighbourhoods) {
+        queryObj.neighbourhoods = String(queryObj.neighbourhoods);
     }
 
     if ("page" in queryObj) {
