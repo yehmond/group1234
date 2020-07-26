@@ -292,6 +292,7 @@ async function getBarbers(body) {
  * Parms:    (string)  name          - name of the barber
  *           (string)  description   - description of the barber
  *           (string)  picture       - picture in base64 string
+ *           (string)  instagram     - instagram URL
  *           (array[{service: SERVICES_OFFERED, duration: number}])   services    - array of services along with the duration of its service
  *           (array[number])    store_ids    - array of store_ids the barber works at
  *           (array[{from: string, to: string}])   schedule   - array of weekly opening hours
@@ -307,6 +308,7 @@ async function registerBarber(
     name,
     description,
     picture,
+    instagram,
     services,
     store_ids,
     schedule
@@ -321,6 +323,10 @@ async function registerBarber(
     }
     if (picture.length === 0) {
         alert("owner/registerBarber: picture is invalid");
+        return null;
+    }
+    if (instagram.length === 0) {
+        alert("owner/registerBarber: instagram is invalid");
         return null;
     }
     if (services.length === 0) {
@@ -340,6 +346,7 @@ async function registerBarber(
         name,
         description,
         picture,
+        instagram,
         store_ids,
         services,
         schedule,
