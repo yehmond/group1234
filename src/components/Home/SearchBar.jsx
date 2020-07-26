@@ -13,7 +13,7 @@ import moment from "moment";
 import { SERVICES_OFFERED } from "../../utils/constants";
 import { getNeighbourhoods } from "../../api/customer";
 
-const DEFAULT_SEARCH_TEXT = "Coal Harbour";
+const DEFAULT_SEARCH_TEXT = "Any";
 const DEFAULT_SERVICE = "Haircut";
 
 const useStyles = makeStyles((theme) => ({
@@ -58,7 +58,7 @@ const useStyles = makeStyles((theme) => ({
     services: {
         minWidth: "12rem",
     },
-    location: {
+    neighbourhood: {
         minWidth: "15rem",
     },
     search: {
@@ -69,7 +69,7 @@ const useStyles = makeStyles((theme) => ({
 export default function SearchBar() {
     const [selectedDate, setDateChange] = useState(new Date());
     const [selectedTime, setSelectedTime] = useState(new Date());
-    const [selectedNeighbourhood, setSelectedNeighbourhood] = useState("");
+    const [selectedNeighbourhood, setSelectedNeighbourhood] = useState("Any");
     const [selectedService, setSelectedService] = useState(DEFAULT_SERVICE);
     const [neighbourhoodOptions, setNeighbourhoodOptions] = useState([]);
     const classes = useStyles();
@@ -80,16 +80,45 @@ export default function SearchBar() {
         getNeighbourhoods("Vancouver", "BC", 10).then((data) => {
             if (data) {
                 setNeighbourhoodOptions(data.sort());
-                setSelectedNeighbourhood(data[0]);
             }
         });
     }, []);
 
     function handleClick() {
-        const [date, time, service, neighbourhood] = getEncodedDateTimeLocation();
+        if (!hasValidInput()) {
+            return;
+        }
+        let [date, time, service, neighbourhood] = getEncodedDateTimeLocation();
         history.push(
             `/browse?date=${date}&time=${time}&services=${service}&neighbourhoods=${neighbourhood}`
         );
+    }
+
+    function hasValidInput() {
+        if (!moment(selectedDate).isValid()) {
+            alert("Please enter a valid date.");
+            return false;
+        }
+
+        if (!moment(selectedTime).isValid()) {
+            alert("Please enter a valid time.");
+            return false;
+        }
+
+        if (
+            selectedService.length === 0 ||
+            !SERVICES_OFFERED.includes(selectedService)
+        ) {
+            alert("Please enter a valid service.");
+            return false;
+        }
+
+        if (selectedNeighbourhood === null) {
+            alert("Please enter a valid neighbourhood.");
+            return false;
+        }
+
+        return true;
     }
 
     function getEncodedDateTimeLocation() {
@@ -97,7 +126,8 @@ export default function SearchBar() {
             date: moment(selectedDate).format("YYYY-MM-DD"),
             time: moment(selectedTime).format("HH:mm"),
             service: selectedService,
-            neighbourhood: selectedNeighbourhood,
+            neighbourhood:
+                selectedNeighbourhood === "Any" ? "" : selectedNeighbourhood,
         };
         return Object.keys(parsedData).map((key) =>
             encodeURIComponent(parsedData[key])
@@ -168,12 +198,11 @@ export default function SearchBar() {
 
                 <div className={classes.pickerContainer}>
                     <Autocomplete
-                        className={clsx(classes.input, classes.location)}
+                        className={clsx(classes.input, classes.neighbourhood)}
                         autoHighlight
                         freeSolo
-                        value={selectedNeighbourhood}
                         defaultValue={DEFAULT_SEARCH_TEXT}
-                        options={neighbourhoodOptions}
+                        options={["Any", ...neighbourhoodOptions]}
                         renderInput={(params) => (
                             <TextField
                                 {...params}
