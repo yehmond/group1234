@@ -355,7 +355,8 @@ async function getReservations(user_id, body) {
  *
  * Purpose:  Get free times for a reservation
  *
- * Parms:    (Date)   date                  - date desired
+ * Parms:    (number) store_id              - store to get availibility at
+ *           (Date)   date                  - date desired
  *           (SERVICES_OFFERED) service     - service desired
  *           (object)     body              - (optional) object body that can contain the following optional keys:
  *               (number)   barber_id       - barber desired
@@ -367,7 +368,11 @@ async function getReservations(user_id, body) {
  * Notes:    none
  *
  **************/
-async function getAvailability(date, service, body) {
+async function getAvailability(store_id, date, service, body) {
+    if (store_id.length === 0) {
+        alert("customer/getFreeReservationTimes: store_id is invalid");
+        return null;
+    }
     if (date.length === 0) {
         alert("customer/getFreeReservationTimes: date is invalid");
         return null;
@@ -379,7 +384,7 @@ async function getAvailability(date, service, body) {
 
     try {
         const response = await instance.get(
-            "/availability/" + date + "/" + service,
+            "/availability/" + store_id + "/" + date + "/" + service,
             { params: body }
         );
         console.log(response);
@@ -487,6 +492,7 @@ export {
     registerReview,
     updateReview,
     deleteReview,
+    getAvailability,
     getReservations,
     registerReservation,
     deleteReservation,
