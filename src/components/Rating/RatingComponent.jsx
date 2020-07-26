@@ -11,9 +11,9 @@ import { SERVICES_OFFERED } from "../../utils/constants";
 import { RenderSelect } from "../FormFields/FormFields";
 
 const labels = {
-    1: "Useless",
-    2: "Poor",
-    3: "Ok",
+    1: "Poor",
+    2: "Acceptable",
+    3: "Mediocre",
     4: "Good",
     5: "Excellent",
 };
@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
 export default function RatingComponent() {
     const history = useHistory();
     const path = history.location.pathname;
-    const userID = path.split("reservations/")[1][0];
+    const userID = window.localStorage.getItem('id');
     const search = new URLSearchParams(history.location.search);
     const storeID = search.get("store");
     const barberID = search.get("barber");
