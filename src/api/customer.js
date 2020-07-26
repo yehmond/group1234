@@ -9,6 +9,7 @@
 
 /* Include files */
 import axios from "axios";
+import { SERVICES_OFFERED } from "../utils/constants";
 
 /* Local constants */
 const instance = axios.create({
@@ -370,8 +371,8 @@ async function getAvailability(store_id, date, service, body) {
         alert("customer/getFreeReservationTimes: date is invalid");
         return null;
     }
-    if (user_id.length === 0) {
-        alert("customer/getReservations: user_id is invalid");
+    if (service.length === 0 && !SERVICES_OFFERED.includes(service)) {
+        alert("customer/getReservations: service is invalid");
         return null;
     }
     body.store_id = store_id;
