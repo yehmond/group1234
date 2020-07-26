@@ -379,7 +379,7 @@ async function getAvailability(store_id, date, service, body) {
     body.service = service;
 
     try {
-        const response = await instance.get("/store/availability", { params: body });
+        const response = await instance.get("/availability", { params: body });
         console.log(response);
         return response.data;
     } catch (error) {
