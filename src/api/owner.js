@@ -208,7 +208,7 @@ async function updateStore(store_id, body) {
     body.store_id = store_id;
 
     try {
-        const response = await instance.put("/store", { params: body });
+        const response = await instance.put("/store", body);
         console.log(response);
         return response.data;
     } catch (error) {
@@ -386,7 +386,7 @@ async function updateBarber(barber_id, body) {
     body.barber_id = barber_id;
 
     try {
-        const response = await instance.put("/barber", { params: body });
+        const response = await instance.put("/barber", body);
         console.log(response);
         return response.data;
     } catch (error) {
