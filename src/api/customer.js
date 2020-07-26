@@ -355,7 +355,7 @@ async function getAvailability(date, service, body) {
         alert("customer/getFreeReservationTimes: date is invalid");
         return null;
     }
-    if (user_id.length === 0) {
+    if (service.length === 0) {
         alert("customer/getReservations: user_id is invalid");
         return null;
     }
@@ -476,6 +476,7 @@ export {
     updateReview,
     deleteReview,
     getReservations,
+    getAvailability,
     registerReservation,
     deleteReservation,
     getNeighbourhoods,

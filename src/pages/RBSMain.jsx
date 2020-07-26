@@ -17,7 +17,7 @@ class RBSMain extends Component {
 
     initializeBarbershop() {
         return {
-            ownerId: window.localStorage.getItem('id'),
+            ownerId: window.localStorage.getItem("id"),
             name: "",
             address: "",
             city: "",
@@ -29,7 +29,7 @@ class RBSMain extends Component {
             price: 0,
             photos: [],
             servicesOffered: [],
-            neighbourhood: ''
+            neighbourhood: "",
         };
     }
 
@@ -46,34 +46,36 @@ class RBSMain extends Component {
     }
 
     render() {
-        if(window.localStorage.getItem('role') !== 'OWNER') {
-            return (<Typography
-                align="center"
-                variant={"h2"}
-                style={{ "padding": "100px" }}
-            >
-                You are not authorized to view this page
-            </Typography>);
+        if (window.localStorage.getItem("role") !== "OWNER") {
+            return (
+                <Typography
+                    align="center"
+                    variant={"h2"}
+                    style={{ "padding": "100px" }}
+                >
+                    You are not authorized to view this page
+                </Typography>
+            );
         } else
-        return (
-            <Switch>
-                <Route path="/createshop/register">
-                    <RBSForm
-                        nextPage={this.addFormParameters}
-                        barbershop={this.state.barbershop}
-                    />
-                </Route>
-                <Route path="/createshop/hours">
-                    <RBSHours
-                        barbershop={this.state.barbershop}
-                        nextPage={this.addHoursParameters}
-                    />
-                </Route>
-                <Route path="/createshop/confirm">
-                    <RBSConfirm barbershop={this.state.barbershop} />
-                </Route>
-            </Switch>
-        );
+            return (
+                <Switch>
+                    <Route path="/createshop/register">
+                        <RBSForm
+                            nextPage={this.addFormParameters}
+                            barbershop={this.state.barbershop}
+                        />
+                    </Route>
+                    <Route path="/createshop/hours">
+                        <RBSHours
+                            barbershop={this.state.barbershop}
+                            nextPage={this.addHoursParameters}
+                        />
+                    </Route>
+                    <Route path="/createshop/confirm">
+                        <RBSConfirm barbershop={this.state.barbershop} />
+                    </Route>
+                </Switch>
+            );
     }
 }
 

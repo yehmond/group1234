@@ -1,107 +1,151 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
+import { useHistory } from "react-router-dom";
 import TextField from "@material-ui/core/TextField";
 import Rating from "@material-ui/lab/Rating";
 import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
+import DialogMessage from "../Dialog/Dialog";
+import { registerReview } from "../../api/customer";
+import { SERVICES_OFFERED } from "../../utils/constants";
+import { RenderSelect } from "../FormFields/FormFields";
 
 const labels = {
-    0.5: "Useless",
-    1: "Useless+",
-    1.5: "Poor",
-    2: "Poor+",
-    2.5: "Ok",
-    3: "Ok+",
-    3.5: "Good",
-    4: "Good+",
-    4.5: "Excellent",
-    5: "Excellent+",
+    1: "Useless",
+    2: "Poor",
+    3: "Ok",
+    4: "Good",
+    5: "Excellent",
 };
 
 const useStyles = makeStyles((theme) => ({
     wrapper: {
         margin: "3rem",
-        padding: "3rem",
+        display: "grid",
+        gridTemplateRows: "1fr 1fr 1fr 1fr 1fr",
+        gridRowGap: "10px",
         alignItems: "center",
         textAlign: "center",
     },
+    button: {
+        width: "200px",
+    },
     name: {
-        marginTop: "3rem",
         "& > *": {
             margin: theme.spacing(1),
             width: "25ch",
         },
     },
     text: {
-        marginBottom: "3rem",
         "& > *": {
             margin: theme.spacing(1),
             width: "100ch",
         },
     },
-    input: {
-        height: 100,
-    },
-    stars: {
-        marginLeft: "28rem",
-        marginTop: "3rem",
-        marginBottom: "3rem",
-        width: 200,
-        display: "flex",
-        alignItems: "center",
-    },
 }));
 
 export default function RatingComponent() {
-    const [value, setValue] = React.useState(2);
+    const history = useHistory();
+    const path = history.location.pathname;
+    const userID = path.split("reservations/")[1][0];
+    const search = new URLSearchParams(history.location.search);
+    const storeID = search.get("store");
+    const barberID = search.get("barber");
+    const storeName = search.get("storename");
+    const [rating, setRating] = React.useState(0);
+    const [content, setContent] = React.useState("");
+    const [service, setService] = React.useState("");
     const [hover, setHover] = React.useState(-1);
+    const [success, setSuccess] = React.useState(false);
+    const [error, setError] = React.useState(false);
     const classes = useStyles();
+
+    const handleSelectChange = (event) => {
+        setService(event.target.value);
+    };
+
+    const handleSubmit = () => {
+        registerReview(userID, storeID, barberID, content, rating, service).then(
+            (response) => {
+                if (response) setSuccess(true);
+                if (!response) setError(true);
+            }
+        );
+    };
 
     return (
         <div className={classes.wrapper}>
-            <h1>How was Tommy&apos;s Barbershop&apos;s service?</h1>
-            <form className={classes.name} noValidate autoComplete="off">
-                <TextField
-                    id="outlined-helperText"
-                    label="Your Name"
-                    variant="outlined"
+            <h1>{"How was your experience at " + storeName + "?"}</h1>
+            <div className={classes.name}>
+                <RenderSelect
+                    name="Service"
+                    required={true}
+                    label="Service Received"
+                    options={SERVICES_OFFERED}
+                    handleChange={handleSelectChange}
                 />
-            </form>
+            </div>
 
-            <div className={classes.stars}>
+            <div>
                 <Rating
                     name="hover-feedback"
-                    value={value}
-                    precision={0.5}
+                    value={rating}
+                    size="large"
+                    precision={1}
                     onChange={(event, newValue) => {
-                        setValue(newValue);
+                        setRating(newValue);
                     }}
                     onChangeActive={(event, newHover) => {
                         setHover(newHover);
                     }}
                 />
-                {value !== null && (
-                    <Box ml={2}>{labels[hover !== -1 ? hover : value]}</Box>
+                {rating !== null && (
+                    <Box ml={2}>{labels[hover !== -1 ? hover : rating]}</Box>
                 )}
             </div>
-
-            <form className={classes.text} noValidate autoComplete="off">
-                <TextField
-                    id="outlined-helperText"
-                    label="Any comments?"
-                    variant="outlined"
-                    InputProps={{
-                        className: classes.input,
-                    }}
-                />
-            </form>
+            <TextField
+                id="outlined-helperText"
+                label="Any comments?"
+                variant="outlined"
+                multiline={true}
+                rows={3}
+                onChange={(event, value) => {
+                    setContent(event.target.value);
+                }}
+                InputProps={{
+                    className: classes.input,
+                }}
+            />
 
             <div>
-                {/* TODO: submit form */}
-                <Button variant="contained" color="primary">
+                <Button
+                    className={classes.button}
+                    variant="contained"
+                    color="primary"
+                    disabled={!service || !content || !rating}
+                    onClick={() => {
+                        handleSubmit();
+                    }}
+                >
                     Submit
                 </Button>
             </div>
+            {success && (
+                <DialogMessage
+                    title={"Success!"}
+                    link={"/reservations"}
+                    text={"Thank you for sharing your experience!"}
+                />
+            )}
+            {error && (
+                <DialogMessage
+                    title={"Error!"}
+                    link={"/reservations"}
+                    text={
+                        "We weren't able to record your response. Please try again!"
+                    }
+                />
+            )}
         </div>
     );
 }
