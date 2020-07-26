@@ -175,7 +175,7 @@ export function getBarberColor(barbers) {
 export function convertReservationToEvent(barbers, reservation) {
     const colors = getBarberColor(barbers);
     return {
-        title: reservation.user_id,
+        title: reservation.user_name,
         start: new Date(reservation.from),
         end: new Date(reservation.to),
         allDay: false,

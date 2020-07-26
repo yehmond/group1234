@@ -9,6 +9,7 @@
 
 /* Include files */
 import axios from "axios";
+import { SERVICES_OFFERED } from "../utils/constants";
 
 /* Local constants */
 const instance = axios.create({
@@ -78,16 +79,10 @@ async function searchStores(count, body) {
         return null;
     }
 
-    const query = Object.keys(body)
-        .map(function (key) {
-            return key + "=" + encodeURIComponent(body[key]);
-        })
-        .join("&");
-
     try {
-        const response = await instance.get(
-            "/store/search/" + count + "/?" + query
-        );
+        const response = await instance.get("/store/search/" + count, {
+            params: body,
+        });
         console.log(response);
         return response.data;
     } catch (error) {
@@ -96,15 +91,45 @@ async function searchStores(count, body) {
     }
 }
 
+/*************
+ *
+ * Name:     getNeighbourhoods
+ *
+ * Purpose:  Get availible neighbourhoods up to a certain limit of entries
+ *
+ * Parms:    (string)     city                  - city to search in
+ *           (string)     province              - province to search in
+ *           (number)     limit                 - limit of entries to search
+ *
+ * Return:   SUCCESS            - [string]
+ *           NOT FOUND          - null
+ *           SERVER ERROR       - null
+ *
+ * Notes:
+ *
+ **************/
 async function getNeighbourhoods(city, province, limit) {
-    const params = { city, province, limit };
-    const query = Object.keys(params)
-        .map(function (key) {
-            return key + "=" + encodeURIComponent(params[key]);
-        })
-        .join("&");
+    if (city === 0) {
+        alert("customer/getNeighbourhoods: missing city");
+        return null;
+    }
+    if (province === 0) {
+        alert("customer/getNeighbourhoods: missing province");
+        return null;
+    }
+    if (limit === 0) {
+        alert("customer/getNeighbourhoods: missing limit");
+        return null;
+    }
+
+    const body = {
+        city,
+        province,
+        limit,
+    };
+
     try {
-        const response = await instance.get("/neighbourhoods?" + query);
+        const response = await instance.get("/neighbourhoods", { params: body });
         console.log(response);
         return response.data;
     } catch (error) {
@@ -306,24 +331,10 @@ async function getReservations(user_id, body) {
         return null;
     }
 
-    if ("from" in body) {
-        body.from.toISOString();
-    }
-    if ("to" in body) {
-        body.to.toISOString();
-    }
-
-    const query = Object.keys(body)
-        .map(function (key) {
-            return key + "=" + encodeURIComponent(body[key]);
-        })
-        .join("&");
-
     try {
-        // TODO add authorization header
-        const response = await instance.get(
-            "/reservation/" + user_id + "/?" + query
-        );
+        const response = await instance.get("/reservation/" + user_id, {
+            params: body,
+        });
         console.log(response);
         return response.data;
     } catch (error) {
@@ -338,38 +349,38 @@ async function getReservations(user_id, body) {
  *
  * Purpose:  Get free times for a reservation
  *
- * Parms:    (Date)   date                  - date desired
+ * Parms:    (number) store_id              - store to get availibility at
+ *           (Date)   date                  - date desired
  *           (SERVICES_OFFERED) service     - service desired
  *           (object)     body              - (optional) object body that can contain the following optional keys:
  *               (number)   barber_id       - barber desired
  *
- * Return:   SUCCESS            - {barber_id: number, barber_name: string, picture: (base64) string, available_time: [{from: Date, to: Date}]}
+ * Return:   SUCCESS            - [{barber_id: number, barber_name: string, picture: (base64) string, available_time: [{from: Date, to: Date}]}]
  *           NOT FOUND          - null
  *           OTHER ERRORS       - null
  *
  * Notes:    none
  *
  **************/
-async function getAvailability(date, service, body) {
+async function getAvailability(store_id, date, service, body) {
+    if (store_id.length === 0) {
+        alert("customer/getFreeReservationTimes: store_id is invalid");
+        return null;
+    }
     if (date.length === 0) {
         alert("customer/getFreeReservationTimes: date is invalid");
         return null;
     }
-    if (service.length === 0) {
-        alert("customer/getReservations: user_id is invalid");
+    if (service.length === 0 && !SERVICES_OFFERED.includes(service)) {
+        alert("customer/getReservations: service is invalid");
         return null;
     }
-
-    const query = Object.keys(body)
-        .map(function (key) {
-            return key + "=" + encodeURIComponent(body[key]);
-        })
-        .join("&");
+    body.store_id = store_id;
+    body.date = date;
+    body.service = service;
 
     try {
-        const response = await instance.get(
-            "/availability/" + date + "/" + service + "/?" + query
-        );
+        const response = await instance.get("/availability", { params: body });
         console.log(response);
         return response.data;
     } catch (error) {
@@ -428,7 +439,7 @@ async function registerReservation(user_id, store_id, barber_id, from, service) 
     };
 
     try {
-        const response = await instance.post("/reservation/", body);
+        const response = await instance.post("/reservation", body);
         console.log(response);
         return response.data;
     } catch (error) {
@@ -475,8 +486,8 @@ export {
     registerReview,
     updateReview,
     deleteReview,
-    getReservations,
     getAvailability,
+    getReservations,
     registerReservation,
     deleteReservation,
     getNeighbourhoods,

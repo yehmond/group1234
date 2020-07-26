@@ -29,6 +29,7 @@ class AddBarber extends Component {
             firstName: "",
             lastName: "",
             profile: "",
+            instagram: "",
             specialties: [],
             photo: null,
             timeslotValue: 0,
@@ -89,6 +90,7 @@ class AddBarber extends Component {
             this.state.firstName + " " + this.state.lastName,
             this.state.profile,
             this.state.photo,
+            this.state.instagram,
             this.specialitiesToServices(),
             [this.state.storeId],
             this.hoursToDate()
@@ -147,6 +149,14 @@ class AddBarber extends Component {
                             placeholder="Write a quick profile for your barber"
                             fieldWidth="regular"
                             multiline={true}
+                            handleChange={this.handleTextChange}
+                        />
+                        <RenderTextfield
+                            name="instagram"
+                            required={true}
+                            label="Instagram Handle"
+                            placeholder="Provide link to Instagram profile"
+                            fieldWidth="regular"
                             handleChange={this.handleTextChange}
                         />
                         <div className="two-fields-inline long">
