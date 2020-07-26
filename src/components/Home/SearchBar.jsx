@@ -61,9 +61,6 @@ const useStyles = makeStyles((theme) => ({
     location: {
         minWidth: "15rem",
     },
-    search: {
-        // marginTop: "1rem",
-    },
 }));
 
 export default function SearchBar() {
