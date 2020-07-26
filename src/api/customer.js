@@ -355,7 +355,7 @@ async function getReservations(user_id, body) {
  *           (object)     body              - (optional) object body that can contain the following optional keys:
  *               (number)   barber_id       - barber desired
  *
- * Return:   SUCCESS            - {barber_id: number, barber_name: string, picture: (base64) string, available_time: [{from: Date, to: Date}]}
+ * Return:   SUCCESS            - [{barber_id: number, barber_name: string, picture: (base64) string, available_time: [{from: Date, to: Date}]}]
  *           NOT FOUND          - null
  *           OTHER ERRORS       - null
  *
