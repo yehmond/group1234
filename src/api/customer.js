@@ -330,13 +330,6 @@ async function getReservations(user_id, body) {
         return null;
     }
 
-    if ("from" in body) {
-        body.from.toISOString();
-    }
-    if ("to" in body) {
-        body.to.toISOString();
-    }
-
     try {
         const response = await instance.get("/reservation/" + user_id, {
             params: body,
@@ -381,12 +374,12 @@ async function getAvailability(store_id, date, service, body) {
         alert("customer/getReservations: user_id is invalid");
         return null;
     }
+    body.store_id = store_id;
+    body.date = date;
+    body.service = service;
 
     try {
-        const response = await instance.get(
-            "/availability/" + store_id + "/" + date + "/" + service,
-            { params: body }
-        );
+        const response = await instance.get("/store/availability", { params: body });
         console.log(response);
         return response.data;
     } catch (error) {
