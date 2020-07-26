@@ -60,8 +60,12 @@ class RBSConfirm extends Component {
             shop.servicesOffered,
             shop.hours
         )
-            .then(() => {
-                this.setState({ isSuccess: true });
+            .then((response) => {
+                if(response) {
+                    this.setState({ isSuccess: true });
+                } else {
+                    this.setState({isError: true});
+                }
             })
             .catch(() => {
                 this.setState({ isError: true });
