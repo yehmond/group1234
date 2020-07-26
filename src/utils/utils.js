@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { CALENDAR_COLORS, DAYS_OF_WEEK_ABBR, MONTHS_OF_YEAR } from "./constants";
+import moment from "moment";
 
 export function convert24HrTo12Hr(time) {
     let hours = parseInt(time.substr(0, 2));
@@ -244,4 +245,8 @@ export function sortReservations(reservations) {
     return reservations.sort((a, b) => {
         return new Date(b.to) - new Date(a.to);
     });
+}
+
+export function convertDateToString(date) {
+    return moment(date).format("MMMM Do YYYY, h:mm a");
 }

@@ -59,6 +59,9 @@ export default function Reservations(props) {
                     </TableBody>
                 </Table>
             </TableContainer>
+            <Table>
+                <TableBody>
+                    <TableRow>
             <TablePagination
                 rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
                 colSpan={3}
@@ -72,6 +75,9 @@ export default function Reservations(props) {
                 onChangePage={handleChangePage}
                 onChangeRowsPerPage={handleChangeRowsPerPage}
             />
+                    </TableRow>
+                </TableBody>
+            </Table>
         </React.Fragment>
     );
 }
