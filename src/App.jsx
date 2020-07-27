@@ -14,7 +14,6 @@ import MyShops from "./pages/MyShops";
 import Rating from "./pages/Rating";
 import ViewShop from "./components/MyShops/ViewShop/ViewShop";
 import SignUpSuccessful from "./pages/SignUpSuccessful";
-import Confirmation from "./pages/Confirmation";
 
 function App() {
     return (
@@ -44,9 +43,6 @@ function App() {
                 </Route>
                 <Route path="/reservations/:reservationID/rate">
                     <Rating />
-                </Route>
-                <Route path="/reservations/:reservationID/confirm">
-                    <Confirmation />
                 </Route>
                 <Route path="/createshop">
                     <Redirect to="/createshop/register" />

@@ -3,19 +3,15 @@ import { useParams } from "react-router-dom";
 import { createStyles, makeStyles } from "@material-ui/core/styles";
 import { FormControl } from "@material-ui/core";
 import { InputLabel } from "@material-ui/core";
-import { Input } from "@material-ui/core";
+import Box from "@material-ui/core/Box";
+import Divider from "@material-ui/core/Divider";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
-import FormLabel from "@material-ui/core/FormLabel";
-import FormGroup from "@material-ui/core/FormGroup";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
 import { SERVICES_OFFERED } from "../../utils/constants";
 import MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
 import { registerReservation } from "../../api/customer";
 import { getStores } from "../../api/owner";
-import { validateEmail } from "../../utils/utils";
 
 const useStyles = makeStyles((theme) =>
     createStyles({
@@ -26,7 +22,7 @@ const useStyles = makeStyles((theme) =>
             textAlign: "center",
         },
         formControl: {
-            minWidth: 120,
+            minWidth: 250,
             marginTop: "2rem",
             marginBottom: "0.5rem",
         },
@@ -41,27 +37,6 @@ const useStyles = makeStyles((theme) =>
         textField: {
             marginLeft: theme.spacing(1),
             marginRight: theme.spacing(1),
-        },
-        schedule: {
-            margin: "5rem",
-            textAlign: "center",
-            backgroundColor: "rgb(239, 235, 242)",
-            padding: "3rem",
-        },
-        textInput: {
-            paddingRight: "3rem",
-            marginTop: "2rem",
-        },
-        serviceSelection: {
-            paddingBottom: "2rem",
-        },
-        confwrapper: {
-            margin: "5rem",
-            paddingLeft: "5rem",
-            paddingRight: "5rem",
-            paddingBottom: "5rem",
-            alignItems: "center",
-            textAlign: "center",
         },
         header: {
             fontFamily: "Palatino",
@@ -90,41 +65,26 @@ export default function Reservation() {
     const classes = useStyles();
 
     const [state, setState] = useState({
-        fullName: "",
-        phoneNumber: "",
-        email: "",
-        emailError: false,
-        emailHelper: "",
         store_name: "",
 
-        user_id: 2, // TODO: remove hard-coded ID
+        user_id: 2, // TODO / Given: remove hard-coded ID
         store_id: parseInt(Object.values(useParams())),
         barber_id: 0,
         start_time: "",
         service: "",
     });
 
-    const [serviceState, setServiceState] = React.useState(
-        Object.fromEntries(SERVICES_OFFERED.map((service) => [service, false]))
-    );
-
     const [barber_id, setBarber] = React.useState("");
     const [submit, setSubmit] = useState(false);
+    const [checkAvailbility, setCheckAvailbility] = useState(false);
+
+    function handleCheckAvailbility() {
+        setCheckAvailbility(true);
+    }
 
     function handleBarberChange(event) {
         setBarber(event.target.value);
         setState({ ...state, barber_id: event.target.value });
-    }
-
-    function handleServiceChange(event) {
-        const newServiceState = {
-            ...serviceState,
-            [event.target.name]: event.target.checked,
-        };
-        if (event.target.checked) {
-            setState({ ...state, service: event.target.name });
-        }
-        setServiceState(newServiceState);
     }
 
     function handleChange(event) {
@@ -141,15 +101,7 @@ export default function Reservation() {
     }
 
     function submitReservation() {
-        if (!validateEmail(state.email)) {
-            setState({
-                ...state,
-                emailError: true,
-                emailHelper: "Pleas enter a valid email",
-            });
-        } else {
-            setSubmit(true);
-        }
+        setSubmit(true);
     }
 
     // TODO: getBarbers(body)
@@ -171,111 +123,223 @@ export default function Reservation() {
                 state.barber_id,
                 state.start_time,
                 state.service
-            )
-                .then(() => {
-                    // TODO: remove hard-coded ID
-                    window.location = "/reservations/" + 65 + "/confirm";
-                })
-                .catch(() => {
-                    console.log("register reservation error");
-                });
+            ).catch(() => {
+                console.log("register reservation error");
+            });
         }
     }, [submit]);
 
-    return (
-        <div className={classes.wrapper}>
-            <div className={classes.reserveHeader}>
-                <h1>Make Your Reservation With {state.store_name}!</h1>
-            </div>
+    if (!submit && !checkAvailbility) {
+        return (
+            <div className={classes.wrapper}>
+                <div className={classes.reserveHeader}>
+                    <h1>Make Your Reservation With {state.store_name}!</h1>
+                </div>
 
-            <div className={classes.container}>
-                <FormControl id="name" className={classes.textInput}>
-                    <InputLabel htmlFor="customer_name">Full Name</InputLabel>
-                    <Input name="fullName" onChange={handleChange} />
-                </FormControl>
-                <FormControl id="phone" className={classes.textInput}>
-                    <InputLabel htmlFor="customer_phone">Phone Number</InputLabel>
-                    <Input name="phoneNumber" onChange={handleChange} />
-                </FormControl>
-                <FormControl id="email" className={classes.textInput}>
-                    <InputLabel htmlFor="customer_email">
-                        Email Address *
-                    </InputLabel>
-                    <Input name="email" onChange={handleChange} required />
-                </FormControl>
-            </div>
+                <div className={classes.container}>
+                    <FormControl className={classes.formControl}>
+                        <InputLabel id="select-barber">
+                            Please select a barber
+                        </InputLabel>
+                        <Select
+                            name="barber"
+                            labelId="select-barber"
+                            id="selected-barber"
+                            value={barber_id}
+                            onChange={handleBarberChange}
+                        >
+                            <MenuItem value={-1}>Any</MenuItem>
+                            <MenuItem value={11}>Larry David</MenuItem>
+                            <MenuItem value={12}>Jerry Seinfeld</MenuItem>
+                            <MenuItem value={13}>J.B. Smoove</MenuItem>
+                        </Select>
+                    </FormControl>
+                </div>
 
-            <div className={classes.container}>
-                <form noValidate>
-                    <TextField
-                        name="start_time"
-                        id="datetime-local"
-                        label="Available Time Slot"
-                        type="datetime-local"
-                        defaultValue="2020-06-06T10:30"
-                        className={classes.textField}
-                        InputLabelProps={{
-                            shrink: true,
-                        }}
-                        onChange={handleChange}
-                    />
-                </form>
-                <FormControl className={classes.formControl}>
-                    <InputLabel id="demo-simple-select-label">Barber</InputLabel>
-                    <Select
-                        name="barber"
-                        labelId="demo-simple-select-label"
-                        id="demo-simple-select"
-                        value={barber_id}
-                        onChange={handleBarberChange}
+                <div className={classes.container}>
+                    <form noValidate>
+                        <TextField
+                            name="start_time"
+                            id="datetime-local"
+                            label="Available Time Slot"
+                            type="datetime-local"
+                            defaultValue="2020-06-06T10:30"
+                            className={classes.textField}
+                            InputLabelProps={{
+                                shrink: true,
+                            }}
+                            onChange={handleChange}
+                        />
+                    </form>
+                </div>
+
+                <div className={classes.container}>
+                    <FormControl className={classes.formControl}>
+                        <InputLabel id="select-service">
+                            Please select a service
+                        </InputLabel>
+                        <Select
+                            name="service"
+                            labelId="select-service"
+                            id="selected-service"
+                            value={state.service}
+                            onChange={handleChange}
+                        >
+                            {SERVICES_OFFERED.map((service) => {
+                                return (
+                                    <MenuItem value={service}>{service}</MenuItem>
+                                );
+                            })}
+                        </Select>
+                    </FormControl>
+                </div>
+
+                <div>
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={handleCheckAvailbility}
                     >
-                        {/* TODO: loop to show list of barbers */}
-                        <MenuItem value={11}>Larry David</MenuItem>
-                        <MenuItem value={12}>Jerry Seinfeld</MenuItem>
-                        <MenuItem value={13}>J.B. Smoove</MenuItem>
-                    </Select>
-                </FormControl>
+                        Check Avalibatility
+                    </Button>
+                </div>
             </div>
+        );
+    } else if (!submit && checkAvailbility) {
+        // TODO: render a transition?
+        return (
+            <div className={classes.wrapper}>
+                <div className={classes.reserveHeader}>
+                    <h1>Make Your Reservation With {state.store_name}!</h1>
+                </div>
 
-            <div className={classes.serviceSelection}>
-                <FormControl component="fieldset" className={classes.formControl}>
-                    <FormLabel component="legend">
-                        Select the service(s) for this booking
-                    </FormLabel>
-                    <FormGroup>
-                        {SERVICES_OFFERED.map((service) => {
-                            return (
-                                <FormControlLabel
-                                    key={service}
-                                    control={
-                                        <Checkbox
-                                            checked={serviceState[service]}
-                                            onChange={handleServiceChange}
-                                            name={service}
-                                        />
-                                    }
-                                    label={service}
-                                />
-                            );
-                        })}
-                    </FormGroup>
-                </FormControl>
+                <div className={classes.container}>
+                    <FormControl className={classes.formControl}>
+                        <InputLabel id="select-barber">
+                            Please select a barber
+                        </InputLabel>
+                        <Select
+                            name="barber"
+                            labelId="select-barber"
+                            id="selected-barber"
+                            value={barber_id}
+                            onChange={handleBarberChange}
+                        >
+                            <MenuItem value={-1}>Any</MenuItem>
+                            <MenuItem value={11}>Larry David</MenuItem>
+                            <MenuItem value={12}>Jerry Seinfeld</MenuItem>
+                            <MenuItem value={13}>J.B. Smoove</MenuItem>
+                        </Select>
+                    </FormControl>
+                </div>
+
+                <div className={classes.container}>
+                    <form noValidate>
+                        <TextField
+                            name="start_time"
+                            id="datetime-local"
+                            label="Available Time Slot"
+                            type="datetime-local"
+                            defaultValue="2020-06-06T10:30"
+                            className={classes.textField}
+                            InputLabelProps={{
+                                shrink: true,
+                            }}
+                            onChange={handleChange}
+                        />
+                    </form>
+                </div>
+
+                <div className={classes.container}>
+                    <FormControl className={classes.formControl}>
+                        <InputLabel id="select-service">
+                            Please select a service
+                        </InputLabel>
+                        <Select
+                            name="service"
+                            labelId="select-service"
+                            id="selected-service"
+                            value={state.service}
+                            onChange={handleChange}
+                        >
+                            {SERVICES_OFFERED.map((service) => {
+                                return (
+                                    <MenuItem value={service}>{service}</MenuItem>
+                                );
+                            })}
+                        </Select>
+                    </FormControl>
+                </div>
+
+                <div>
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={submitReservation}
+                        value={730}
+                    >
+                        7:30pm
+                    </Button>
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={submitReservation}
+                        value={750}
+                    >
+                        7:50pm
+                    </Button>
+                </div>
             </div>
-
-            <div>
-                <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={submitReservation}
-                >
-                    Reserve
-                </Button>
+        );
+    } else if (submit) {
+        return (
+            <div className={classes.wrapper}>
+                <div>
+                    <h1 className={classes.header}>
+                        Thank you for booking with us!
+                    </h1>
+                </div>
+                <Divider className={classes.hLine} variant="middle" />
+                <div className={classes.textwrapper}>
+                    <div className={classes.text}>
+                        <Box
+                            className={classes.box}
+                            display="block"
+                            displayPrint="none"
+                        >
+                            User Name: {state.user_name}
+                        </Box>
+                        <Box
+                            className={classes.box}
+                            display="block"
+                            displayPrint="none"
+                        >
+                            Barbershop Name: {state.store_name}
+                        </Box>
+                        <Box
+                            className={classes.box}
+                            display="block"
+                            displayPrint="none"
+                        >
+                            Barber: {state.barber_name}
+                        </Box>
+                        <Box
+                            className={classes.box}
+                            display="block"
+                            displayPrint="none"
+                        >
+                            Start Time: {state.start_time}
+                        </Box>
+                        <Box
+                            className={classes.box}
+                            display="block"
+                            displayPrint="none"
+                        >
+                            Service: {state.service}
+                        </Box>
+                    </div>
+                </div>
             </div>
-
-            {/* <div className={classes.schedule}> */}
-            {/* TODO: show schedule */}
-            {/* <h1>Schedule Used to Reserve</h1> */}
-            {/* </div> */}
-        </div>
-    );
+        );
+    }
 }
