@@ -10,24 +10,42 @@ import Typography from "@material-ui/core/Typography";
 import EventAvailableIcon from "@material-ui/icons/EventAvailable";
 import { useHistory } from "react-router-dom";
 import salonPic from "../../images/salon.png";
+import Chip from "@material-ui/core/Chip";
+import StarRoundedIcon from "@material-ui/icons/StarRounded";
+import StarBorderRoundedIcon from "@material-ui/icons/StarBorderRounded";
+import LocationOnRoundedIcon from "@material-ui/icons/LocationOnRounded";
 
 const useStyles = makeStyles({
     root: {
         margin: "1rem 0",
         width: "100%",
     },
+    content: {
+        height: "11rem",
+    },
+    name: {
+        overflow: "hidden",
+        whiteSpace: "nowrap",
+        textOverflow: "ellipsis",
+    },
     media: {
-        height: 150,
+        height: 200,
     },
     cardAction: {
         display: "flex",
         justifyContent: "center",
         padding: 0,
     },
+    chips: {
+        height: "3.5rem",
+        margin: "0.25rem 0",
+    },
+    chip: {
+        margin: 2,
+    },
     button: {
         width: "100%",
-        height: "100%",
-        minHeight: "3rem",
+        height: "3rem",
         borderRadius: "0",
     },
 });
@@ -39,8 +57,7 @@ export default function SmallCard({
     price,
     rating,
     address,
-    city,
-    province,
+    neighbourhood,
     picture,
 }) {
     const classes = useStyles();
@@ -54,14 +71,30 @@ export default function SmallCard({
         history.push(`/reserve/${shopId}`);
     }
 
-    let dollarSigns = "";
+    const dollarSigns = [];
     for (let i = 0; i < price; i++) {
-        dollarSigns += "$";
+        dollarSigns.push(
+            <Typography variant="body2" color="textPrimary">
+                $
+            </Typography>
+        );
+    }
+    for (let i = 0; i < 5 - price; i++) {
+        dollarSigns.push(
+            <Typography variant="body2" color="textSecondary">
+                $
+            </Typography>
+        );
     }
 
-    let ratingStars = "";
+    const ratingStars = [];
     for (let i = 0; i < rating; i++) {
-        ratingStars += "⭐️";
+        ratingStars.push(<StarRoundedIcon fontSize="small" color="secondary" />);
+    }
+    for (let i = 0; i < 5 - rating; i++) {
+        ratingStars.push(
+            <StarBorderRoundedIcon fontSize="small" color="disabled" />
+        );
     }
 
     return (
@@ -72,24 +105,59 @@ export default function SmallCard({
                     image={picture || salonPic}
                     title={name}
                 />
-                <CardContent>
-                    <Typography gutterBottom variant="h5" component="h2">
+                <CardContent className={classes.content}>
+                    <Typography
+                        gutterBottom
+                        variant="h5"
+                        component="h2"
+                        className={classes.name}
+                    >
                         {name}
                     </Typography>
                     <Typography variant="body2" color="textPrimary" component="p">
+                        <div
+                            style={{
+                                display: "flex",
+                                alignItems: "center",
+                            }}
+                        >
+                            {dollarSigns}&nbsp;· {ratingStars} · {neighbourhood}
+                        </div>
+                    </Typography>
+                    <Typography
+                        variant="body2"
+                        color="textPrimary"
+                        component="p"
+                        className={classes.chips}
+                    >
                         {services.map((service, idx) => {
-                            if (idx === services.length - 1) {
-                                return service;
-                            }
-                            return service + " | ";
+                            // if (idx === services.length - 1) {
+                            //     return service;
+                            // }
+                            // return service + " | ";
+                            return (
+                                <Chip
+                                    size="small"
+                                    color="default"
+                                    key={idx}
+                                    className={classes.chip}
+                                    label={service}
+                                />
+                            );
                         })}
                     </Typography>
                     <Typography variant="body2" color="textSecondary" component="p">
-                        {dollarSigns} · {ratingStars}
-                    </Typography>
-                    <br />
-                    <Typography variant="body2" color="textSecondary" component="p">
-                        {address}, {city} {province}
+                        <div
+                            style={{
+                                display: "flex",
+                                alignItems: "center",
+                                overflow: "hidden",
+                                whiteSpace: "nowrap",
+                                textOverflow: "ellipsis",
+                            }}
+                        >
+                            <LocationOnRoundedIcon /> {address}
+                        </div>
                     </Typography>
                 </CardContent>
             </CardActionArea>
