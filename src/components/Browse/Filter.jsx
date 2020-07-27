@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
             position: "unset",
         },
         padding: "1rem",
-        minWidth: "17rem",
+        width: "18rem",
     },
     heading: {
         fontSize: theme.typography.pxToRem(15),
