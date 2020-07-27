@@ -33,7 +33,7 @@ const useStyles = makeStyles({
 });
 
 export default function SmallCard({
-    shopId,
+    id,
     name,
     services,
     price,
@@ -47,11 +47,11 @@ export default function SmallCard({
     const history = useHistory();
 
     function handleClickArea() {
-        history.push(`/view/stores/${shopId}`);
+        history.push(`/view/stores/${id}`);
     }
 
     function handleClickRequest() {
-        history.push(`/reserve/${shopId}`);
+        history.push(`/reserve/${id}`);
     }
 
     let dollarSigns = "";

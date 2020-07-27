@@ -6,6 +6,7 @@ import {
 } from "@material-ui/pickers";
 import MomentUtils from "@date-io/moment";
 import { TextField, Button, makeStyles } from "@material-ui/core";
+import ScheduleIcon from "@material-ui/icons/Schedule";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import clsx from "clsx";
 import { useHistory } from "react-router-dom";
@@ -65,7 +66,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SearchBar() {
     const [selectedDate, setDateChange] = useState(new Date());
-    const [selectedTime, setSelectedTime] = useState(new Date());
+    const [selectedTime, setSelectedTime] = useState(new moment());
     const [selectedNeighbourhood, setSelectedNeighbourhood] = useState("Any");
     const [selectedService, setSelectedService] = useState(DEFAULT_SERVICE);
     const [neighbourhoodOptions, setNeighbourhoodOptions] = useState([]);
@@ -150,7 +151,7 @@ export default function SearchBar() {
                         label="Date"
                         format="DD/MM/YYYY"
                         value={selectedDate}
-                        onChange={(date) => setDateChange(date)}
+                        onChange={setDateChange}
                     />
                 </div>
                 <div
@@ -167,7 +168,8 @@ export default function SearchBar() {
                         inputVariant="outlined"
                         label="Time"
                         mask="__:__ _M"
-                        value={selectedDate}
+                        keyboardIcon={<ScheduleIcon />}
+                        value={selectedTime}
                         onChange={setSelectedTime}
                     />
                 </div>

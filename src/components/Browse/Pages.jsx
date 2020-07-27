@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Pagination from "@material-ui/lab/Pagination";
 import { makeStyles } from "@material-ui/core/styles";
 import { useLocation, useHistory } from "react-router-dom";
-import { parseSearchURL, setQueryString } from "../../utils/utils";
+import { setQueryString } from "../../utils/utils";
 import { useSelector } from "react-redux";
 import { RESULTS_PER_PAGE } from "../../pages/Browse";
 
@@ -13,6 +13,15 @@ const useStyles = makeStyles(() => ({
         justifyContent: "center",
     },
 }));
+
+function getPagesFromUrl() {
+    const params = new URLSearchParams(window.location.search);
+    const page = Number(params.get("page"));
+    if (page) {
+        return page;
+    }
+    return null;
+}
 
 export default function Pages() {
     const classes = useStyles();
@@ -27,7 +36,7 @@ export default function Pages() {
     };
 
     useEffect(() => {
-        const { page } = parseSearchURL();
+        const page = getPagesFromUrl();
         if (page) {
             setPage(page);
         }

@@ -108,7 +108,7 @@ export default function RatingComponent() {
                 variant="outlined"
                 multiline={true}
                 rows={3}
-                onChange={(event, value) => {
+                onChange={(event) => {
                     setContent(event.target.value);
                 }}
                 InputProps={{
