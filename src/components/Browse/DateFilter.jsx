@@ -35,8 +35,14 @@ export default function DateFilter() {
     }, [location]);
 
     function handleChange(date) {
-        setDateChange(date);
-        setQueryString({ date: moment(date).format("YYYY-MM-DD") }, history, true);
+        if (moment(date).isValid()) {
+            setDateChange(date);
+            setQueryString(
+                { date: moment(date).format("YYYY-MM-DD") },
+                history,
+                true
+            );
+        }
     }
 
     return (

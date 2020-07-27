@@ -39,7 +39,7 @@ export default function TimeFilter() {
         clearTimeout(typingTimeout);
         setTypingTimeout(
             setTimeout(() => {
-                if (time.isValid()) {
+                if (time && time.isValid()) {
                     setQueryString(
                         { time: moment(time).format("HH:mm") },
                         history,
