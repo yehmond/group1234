@@ -67,7 +67,7 @@ async function getStore(store_id) {
  *              (Date)       date                   - date to inquire
  *              (Date)       time                   - time to inquire
  *              (number)     available_count        - number of available times to return per store
- *               
+ *
  *
  * Return:   SUCCESS            - {count: number, stores: [{..., available_time: [{barber_id, number, barber_name: string, from: Date}]} }]}
  *           NOT FOUND          - null

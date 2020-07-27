@@ -93,6 +93,15 @@ export function parseSearchURL() {
 
     for (const [key, value] of params) {
         switch (key) {
+            case "date":
+                queryParams.date = value;
+                break;
+            case "time":
+                queryParams.time = value;
+                break;
+            case "string":
+                queryParams.string = value;
+                break;
             case "price":
                 queryParams.price = value
                     .split(",")
@@ -106,8 +115,7 @@ export function parseSearchURL() {
                 }
                 break;
             case "rating":
-                // eslint-disable-next-line no-case-declarations
-                const rating = Number(value);
+                const rating = Number(value); // eslint-disable-line
                 if (rating >= 1 && rating <= 5) {
                     queryParams.rating = rating;
                 }

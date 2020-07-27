@@ -16,7 +16,7 @@ export default function DialogMessage(props) {
 
     const handleClose = () => {
         history.push(props.link);
-        if(history.location.pathname === props.link) {
+        if (history.location.pathname === props.link) {
             window.location.reload();
         }
     };
