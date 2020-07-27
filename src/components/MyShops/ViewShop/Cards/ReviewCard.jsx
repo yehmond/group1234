@@ -20,7 +20,7 @@ const useStyles = makeStyles({
         gridTemplateRows: "1fr 1fr",
         alignItems: "center",
         justifyItems: "center",
-    }
+    },
 });
 
 export default function ReviewCard(props) {
@@ -29,16 +29,14 @@ export default function ReviewCard(props) {
     return (
         <Card className={classes.root} variant={"outlined"}>
             <CardContent className={classes.leftPanel}>
-                    <div className={classes.iconContent}>
-                         <Typography align={"center"} variant="h6">
-                             {props.review.user_name}
-                         </Typography>
-                        <Rating name="rating" value={props.review.rating} disabled />
-                    </div>
                 <div className={classes.iconContent}>
-                    <i className="material-icons">
-                        content_cut
-                    </i>
+                    <Typography align={"center"} variant="h6">
+                        {props.review.user_name}
+                    </Typography>
+                    <Rating name="rating" value={props.review.rating} disabled />
+                </div>
+                <div className={classes.iconContent}>
+                    <i className="material-icons">content_cut</i>
                     <Typography align={"center"} variant="h6">
                         {props.review.barber_name}
                     </Typography>

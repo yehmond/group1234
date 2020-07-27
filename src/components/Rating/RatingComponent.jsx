@@ -46,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function RatingComponent() {
     const history = useHistory();
-    const userID = window.localStorage.getItem('id');
+    const userID = window.localStorage.getItem("id");
     const search = new URLSearchParams(history.location.search);
     const storeID = search.get("store");
     const barberID = search.get("barber");
