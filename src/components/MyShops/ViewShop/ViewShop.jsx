@@ -120,7 +120,7 @@ class ViewShop extends Component {
                             />
                         )}
                         {this.state.page === "REVIEWS_PAGE" && (
-                            <Reviews reviews={this.state.barbershop.reviews} />
+                            <Reviews reviews={this.state.barbershop.reviews} barbers={this.state.barbershop.barbers}/>
                         )}
                     </div>
                 )}
