@@ -59,14 +59,17 @@ async function getStore(store_id) {
  * Parms:    (number)     count                  - number of stores to return
  *           (object)     body                   - (optional) object body that can contain the following optional keys:
  *              (number)     startIndex             - index of the first store object to return
- *              (string)     name                   - name of the store
- *              (string)     city                   - city to find stores around
+ *              (string)     string                 - string to match for a store
  *              (array[string)     neighbourhood    - neighbourhoods to find stores around
  *              (array[SERVICES_OFFERED])  services - array of services offered
  *              (number)     rating                 - minimum rating
  *              (array[number])     price           - price array of prices (1-3)
+ *              (Date)       date                   - date to inquire
+ *              (Date)       time                   - time to inquire
+ *              (number)     available_count        - number of available times to return per store
  *
- * Return:   SUCCESS            - {count: number, stores: []}
+ *
+ * Return:   SUCCESS            - {count: number, stores: [{..., available_time: [{barber_id, number, barber_name: string, from: Date}]} }]}
  *           NOT FOUND          - null
  *           SERVER ERROR       - null
  *
@@ -267,7 +270,7 @@ async function updateReview(review_id, body) {
     body.review_id = review_id;
 
     try {
-        const response = await instance.put("/review", { params: body });
+        const response = await instance.put("/review", body);
         console.log(response);
         return response.data;
     } catch (error) {
