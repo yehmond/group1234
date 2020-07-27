@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core";
 import SmallCard from "./SmallCard";
+import { searchStores } from "../../api/customer";
+import Skeleton from "@material-ui/lab/Skeleton";
 
 const useStyles = makeStyles((theme) => ({
     grid: {
@@ -26,82 +28,135 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const mockShops = [];
-for (let i = 0; i < 12; i++) {
-    mockShops.push({
-        id: i + 1,
-        name: "Citrus Hair Salon",
-        services: ["Hair Salon", "Day Spa", "Waxing"],
-        price: 3,
-        rating: 5,
-        address: "123 Main St.",
-        city: "Vancouver",
-        province: "BC",
-    });
-}
-
 export default function Recommendations() {
     const classes = useStyles();
+    const [availableNowStores, setAvailableNowStores] = useState([]);
+    const [recommendedStores, setRecommendedStores] = useState([]);
+
+    useEffect(() => {
+        const availableNowQuery = {
+            date: new Date(),
+            time: new Date(),
+            available_count: 3,
+        };
+        searchStores(12, availableNowQuery).then((response) => {
+            if (response) {
+                setAvailableNowStores(response.stores);
+            }
+        });
+        const recommendedQuery = {
+            rating: 5,
+            startIndex: Math.floor(Math.random() * 3),
+        };
+        searchStores(12, recommendedQuery).then((response) => {
+            if (response) {
+                setRecommendedStores(response.stores);
+            }
+        });
+    }, []);
+
     return (
         <div className={classes.container}>
             <h1>Available Now</h1>
             <div className={classes.grid}>
-                {mockShops.map(
-                    ({
-                        id,
-                        name,
-                        services,
-                        price,
-                        rating,
-                        address,
-                        city,
-                        province,
-                    }) => {
-                        return (
-                            <SmallCard
-                                key={id}
-                                shopId={id}
-                                name={name}
-                                services={services}
-                                price={price}
-                                rating={rating}
-                                address={address}
-                                city={city}
-                                province={province}
-                            />
-                        );
-                    }
-                )}
+                {availableNowStores.length > 0
+                    ? availableNowStores.map(
+                          (
+                              {
+                                  id,
+                                  name,
+                                  services,
+                                  price,
+                                  rating,
+                                  address,
+                                  city,
+                                  province,
+                                  picture,
+                                  neighbourhood,
+                              },
+                              idx
+                          ) => {
+                              return (
+                                  <SmallCard
+                                      key={idx}
+                                      shopId={id}
+                                      name={name}
+                                      services={services}
+                                      price={price}
+                                      rating={rating}
+                                      address={address}
+                                      city={city}
+                                      province={province}
+                                      picture={picture}
+                                      neighbourhood={neighbourhood}
+                                  />
+                              );
+                          }
+                      )
+                    : [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((elem) => {
+                          return (
+                              <div key={elem}>
+                                  <Skeleton
+                                      variant="rect"
+                                      animation="wave"
+                                      height="23rem"
+                                      style={{
+                                          borderRadius: "7px",
+                                      }}
+                                  />
+                                  <Skeleton
+                                      variant="text"
+                                      animation="wave"
+                                      height="5rem"
+                                      style={{
+                                          borderRadius: "7px",
+                                          marginBottom: "2rem",
+                                      }}
+                                  />
+                              </div>
+                          );
+                      })}
             </div>
-            <h1>Recommended</h1>
-            <div className={classes.grid}>
-                {mockShops.map(
-                    ({
-                        id,
-                        name,
-                        services,
-                        price,
-                        rating,
-                        address,
-                        city,
-                        province,
-                    }) => {
-                        return (
-                            <SmallCard
-                                key={id}
-                                shopId={id}
-                                name={name}
-                                services={services}
-                                price={price}
-                                rating={rating}
-                                address={address}
-                                city={city}
-                                province={province}
-                            />
-                        );
-                    }
-                )}
-            </div>
+            {recommendedStores.length > 12 && (
+                <>
+                    <h1>Recommended</h1>
+                    <div className={classes.grid}>
+                        {recommendedStores.map(
+                            (
+                                {
+                                    id,
+                                    name,
+                                    services,
+                                    price,
+                                    rating,
+                                    address,
+                                    city,
+                                    province,
+                                    picture,
+                                    neighbourhood,
+                                },
+                                idx
+                            ) => {
+                                return (
+                                    <SmallCard
+                                        key={idx}
+                                        shopId={id}
+                                        name={name}
+                                        services={services}
+                                        price={price}
+                                        rating={rating}
+                                        address={address}
+                                        city={city}
+                                        province={province}
+                                        picture={picture}
+                                        neighbourhood={neighbourhood}
+                                    />
+                                );
+                            }
+                        )}
+                    </div>
+                </>
+            )}
         </div>
     );
 }

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { CALENDAR_COLORS, DAYS_OF_WEEK_ABBR, MONTHS_OF_YEAR } from "./constants";
+import moment from "moment";
 
 export function convert24HrTo12Hr(time) {
     let hours = parseInt(time.substr(0, 2));
@@ -92,6 +93,15 @@ export function parseSearchURL() {
 
     for (const [key, value] of params) {
         switch (key) {
+            case "date":
+                queryParams.date = value;
+                break;
+            case "time":
+                queryParams.time = value;
+                break;
+            case "string":
+                queryParams.string = value;
+                break;
             case "price":
                 queryParams.price = value
                     .split(",")
@@ -105,8 +115,7 @@ export function parseSearchURL() {
                 }
                 break;
             case "rating":
-                // eslint-disable-next-line no-case-declarations
-                const rating = Number(value);
+                const rating = Number(value); // eslint-disable-line
                 if (rating >= 1 && rating <= 5) {
                     queryParams.rating = rating;
                 }
@@ -174,7 +183,7 @@ export function getBarberColor(barbers) {
 export function convertReservationToEvent(barbers, reservation) {
     const colors = getBarberColor(barbers);
     return {
-        title: reservation.user_id,
+        title: reservation.user_name,
         start: new Date(reservation.from),
         end: new Date(reservation.to),
         allDay: false,
@@ -244,4 +253,8 @@ export function sortReservations(reservations) {
     return reservations.sort((a, b) => {
         return new Date(b.to) - new Date(a.to);
     });
+}
+
+export function convertDateToString(date) {
+    return moment(date).format("MMMM Do YYYY, h:mm a");
 }

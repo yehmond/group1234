@@ -6,8 +6,8 @@ import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import Chart from "./../components/Stats/Chart";
-import Deposits from "./../components/Stats/TotalReservations";
-import Orders from "./../components/Stats/Reservations";
+import TotalReservations from "./../components/Stats/TotalReservations";
+import Reservations from "./../components/Stats/Reservations";
 import { getStores } from "../api/owner";
 import Loading from "../components/Loading/Loading";
 import { sortReservations } from "../utils/utils";
@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
     paper: {
         padding: theme.spacing(2),
         display: "flex",
-        overflow: "auto",
+        overflow: "hidden",
         flexDirection: "column",
     },
     fixedHeight: {
@@ -81,7 +81,7 @@ export default function Stats() {
                             </Grid>
                             <Grid item xs={12} md={4} lg={3}>
                                 <Paper className={fixedHeightPaper}>
-                                    <Deposits
+                                    <TotalReservations
                                         reservations={sortReservations(
                                             store.reservations
                                         )}
@@ -90,7 +90,7 @@ export default function Stats() {
                             </Grid>
                             <Grid item xs={12}>
                                 <Paper className={classes.paper}>
-                                    <Orders
+                                    <Reservations
                                         reservations={sortReservations(
                                             store.reservations
                                         )}

@@ -3,10 +3,18 @@ import FormControl from "@material-ui/core/FormControl";
 import FormGroup from "@material-ui/core/FormGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
-import Typography from "@material-ui/core/Typography";
 import { SERVICES_OFFERED } from "../../utils/constants";
-import { parseSearchURL, setQueryString } from "../../utils/utils";
+import { setQueryString } from "../../utils/utils";
 import { useLocation, useHistory } from "react-router-dom";
+
+function getServicesFromUrl() {
+    const params = new URLSearchParams(window.location.search);
+    const services = params.get("services");
+    if (services) {
+        return services.split(",");
+    }
+    return null;
+}
 
 export default function ServiceFilter() {
     const location = useLocation();
@@ -14,7 +22,7 @@ export default function ServiceFilter() {
     const [serviceState, setServiceState] = useState([]);
 
     useEffect(() => {
-        const { services } = parseSearchURL();
+        const services = getServicesFromUrl();
         if (services) {
             setServiceState(services);
         }
@@ -33,8 +41,7 @@ export default function ServiceFilter() {
 
     return (
         <div>
-            <FormControl component="fieldset">
-                <Typography gutterBottom>Services Offered</Typography>
+            <FormControl>
                 <FormGroup>
                     {SERVICES_OFFERED.map((service) => {
                         return (

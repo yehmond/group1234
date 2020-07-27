@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import Typography from "@material-ui/core/Typography";
+import { makeStyles } from "@material-ui/core/styles";
 import Slider from "@material-ui/core/Slider";
-import { parseSearchURL, setQueryString } from "../../utils/utils";
+import { setQueryString } from "../../utils/utils";
 import { useLocation, useHistory } from "react-router-dom";
 
 const marks = [
@@ -12,13 +12,30 @@ const marks = [
     { value: 5, label: 5 },
 ];
 
+const useStyles = makeStyles(() => ({
+    container: {
+        width: "90%",
+        margin: "0 auto",
+    },
+}));
+
+function getRatingFromUrl() {
+    const params = new URLSearchParams(window.location.search);
+    const rating = Number(params.get("rating"));
+    if (rating >= 1 && rating <= 5) {
+        return rating;
+    }
+    return null;
+}
+
 export default function RatingSlider() {
+    const classes = useStyles();
     const location = useLocation();
     const history = useHistory();
     const [rating, setRating] = useState(1);
 
     useEffect(() => {
-        const { rating } = parseSearchURL();
+        const rating = getRatingFromUrl();
         if (rating) {
             setRating(rating);
         }
@@ -33,10 +50,7 @@ export default function RatingSlider() {
     }
 
     return (
-        <div>
-            <Typography id="rating-slider" gutterBottom>
-                Rating
-            </Typography>
+        <div className={classes.container}>
             <Slider
                 value={rating}
                 aria-labelledby="rating-slider"

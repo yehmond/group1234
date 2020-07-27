@@ -6,15 +6,13 @@ import {
 } from "@material-ui/pickers";
 import MomentUtils from "@date-io/moment";
 import { TextField, Button, makeStyles } from "@material-ui/core";
+import ScheduleIcon from "@material-ui/icons/Schedule";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import clsx from "clsx";
 import { useHistory } from "react-router-dom";
 import moment from "moment";
 import { SERVICES_OFFERED } from "../../utils/constants";
 import { getNeighbourhoods } from "../../api/customer";
-
-const DEFAULT_SEARCH_TEXT = "Coal Harbour";
-const DEFAULT_SERVICE = "Haircut";
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -35,8 +33,11 @@ const useStyles = makeStyles((theme) => ({
         alignItems: "center",
         justifyContent: "center",
     },
-    dateTimePicker: {
+    datePicker: {
         width: "12rem",
+    },
+    timePicker: {
+        width: "10.5rem",
     },
     pickerContainer: {
         backgroundColor: "#fff",
@@ -56,22 +57,24 @@ const useStyles = makeStyles((theme) => ({
         },
     },
     services: {
+        minWidth: "8.5rem",
+    },
+    neighbourhood: {
+        minWidth: "10rem",
+    },
+    searchText: {
         minWidth: "12rem",
-    },
-    location: {
-        minWidth: "15rem",
-    },
-    search: {
-        // marginTop: "1rem",
     },
 }));
 
 export default function SearchBar() {
     const [selectedDate, setDateChange] = useState(new Date());
-    const [selectedTime, setSelectedTime] = useState(new Date());
-    const [selectedNeighbourhood, setSelectedNeighbourhood] = useState("");
-    const [selectedService, setSelectedService] = useState(DEFAULT_SERVICE);
+    const [selectedTime, setSelectedTime] = useState(new moment());
+    const [selectedNeighbourhood, setSelectedNeighbourhood] = useState("Any");
+    const [selectedService, setSelectedService] = useState("Any");
     const [neighbourhoodOptions, setNeighbourhoodOptions] = useState([]);
+    const [string, setString] = useState("");
+
     const classes = useStyles();
     const history = useHistory();
 
@@ -80,39 +83,79 @@ export default function SearchBar() {
         getNeighbourhoods("Vancouver", "BC", 10).then((data) => {
             if (data) {
                 setNeighbourhoodOptions(data.sort());
-                setSelectedNeighbourhood(data[0]);
             }
         });
     }, []);
 
     function handleClick() {
-        const [date, time, service, neighbourhood] = getEncodedDateTimeLocation();
-        history.push(
-            `/browse?date=${date}&time=${time}&services=${service}&neighbourhoods=${neighbourhood}`
-        );
+        if (!hasValidInput()) {
+            return;
+        }
+        let query = "/browse?";
+        const filters = getEncodedFilters();
+        for (const [key, value] of Object.entries(filters)) {
+            if (value.length === 0) {
+                continue;
+            }
+            if (query.slice(-8) !== "/browse?") {
+                query += "&";
+            }
+            query += `${key}=${value}`;
+        }
+
+        history.push(query);
     }
 
-    function getEncodedDateTimeLocation() {
+    function hasValidInput() {
+        if (!moment(selectedDate).isValid()) {
+            alert("Please enter a valid date.");
+            return false;
+        }
+
+        if (!moment(selectedTime).isValid()) {
+            alert("Please enter a valid time.");
+            return false;
+        }
+
+        if (
+            !selectedService ||
+            selectedService.length === 0 ||
+            (selectedService !== "Any" &&
+                !SERVICES_OFFERED.includes(selectedService))
+        ) {
+            alert("Please enter a valid service.");
+            return false;
+        }
+
+        if (selectedNeighbourhood === null) {
+            alert("Please enter a valid neighbourhood.");
+            return false;
+        }
+
+        return true;
+    }
+
+    function getEncodedFilters() {
         const parsedData = {
             date: moment(selectedDate).format("YYYY-MM-DD"),
             time: moment(selectedTime).format("HH:mm"),
-            service: selectedService,
-            neighbourhood: selectedNeighbourhood,
+            services: selectedService === "Any" ? "" : selectedService,
+            neighbourhood:
+                selectedNeighbourhood === "Any" ? "" : selectedNeighbourhood,
+            string: string,
         };
-        return Object.keys(parsedData).map((key) =>
-            encodeURIComponent(parsedData[key])
-        );
+
+        for (const [key, value] of Object.entries(parsedData)) {
+            parsedData[key] = encodeURIComponent(value);
+        }
+
+        return parsedData;
     }
 
     return (
         <div className={classes.container}>
             <MuiPickersUtilsProvider utils={MomentUtils}>
-                <div
-                    className={clsx(
-                        classes.pickerContainer,
-                        classes.dateTimePicker
-                    )}
-                >
+                <div className={clsx(classes.pickerContainer, classes.datePicker)}>
                     <KeyboardDatePicker
                         className={`${classes.input}`}
                         disableToolbar
@@ -123,15 +166,10 @@ export default function SearchBar() {
                         label="Date"
                         format="DD/MM/YYYY"
                         value={selectedDate}
-                        onChange={(date) => setDateChange(date)}
+                        onChange={setDateChange}
                     />
                 </div>
-                <div
-                    className={clsx(
-                        classes.pickerContainer,
-                        classes.dateTimePicker
-                    )}
-                >
+                <div className={clsx(classes.pickerContainer, classes.timePicker)}>
                     <KeyboardTimePicker
                         className={classes.input}
                         disableToolbar
@@ -140,7 +178,8 @@ export default function SearchBar() {
                         inputVariant="outlined"
                         label="Time"
                         mask="__:__ _M"
-                        value={selectedDate}
+                        keyboardIcon={<ScheduleIcon />}
+                        value={selectedTime}
                         onChange={setSelectedTime}
                     />
                 </div>
@@ -151,12 +190,11 @@ export default function SearchBar() {
                         autoHighlight
                         freeSolo
                         value={selectedService}
-                        defaultValue={DEFAULT_SERVICE}
-                        options={SERVICES_OFFERED}
+                        options={["Any", ...SERVICES_OFFERED]}
                         renderInput={(params) => (
                             <TextField
                                 {...params}
-                                label="Services"
+                                label="Service"
                                 variant="outlined"
                             ></TextField>
                         )}
@@ -168,12 +206,11 @@ export default function SearchBar() {
 
                 <div className={classes.pickerContainer}>
                     <Autocomplete
-                        className={clsx(classes.input, classes.location)}
+                        className={clsx(classes.input, classes.neighbourhood)}
                         autoHighlight
                         freeSolo
-                        value={selectedNeighbourhood}
-                        defaultValue={DEFAULT_SEARCH_TEXT}
-                        options={neighbourhoodOptions}
+                        defaultValue="Any"
+                        options={["Any", ...neighbourhoodOptions]}
                         renderInput={(params) => (
                             <TextField
                                 {...params}
@@ -183,6 +220,25 @@ export default function SearchBar() {
                         )}
                         onChange={(event, value) => {
                             setSelectedNeighbourhood(value);
+                        }}
+                    />
+                </div>
+
+                <div className={classes.pickerContainer}>
+                    <TextField
+                        className={classes.input}
+                        label="Store name"
+                        placeholder="Find by store name"
+                        variant="outlined"
+                        autoFocus
+                        value={string}
+                        onChange={(event) => {
+                            setString(event.target.value);
+                        }}
+                        onKeyDown={(event) => {
+                            if (event.key === "Enter") {
+                                handleClick();
+                            }
                         }}
                     />
                 </div>

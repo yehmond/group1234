@@ -14,7 +14,8 @@ import axios from "axios";
 /* Local constants */
 const instance = axios.create({
     // TODO abstract baseURL
-    baseURL: "http://localhost:5000/api/owner",
+    baseURL:
+        (process.env.REACT_APP_BASE_URL || "http://localhost:5000") + "/api/owner",
 });
 
 /*************
@@ -68,7 +69,7 @@ async function getStores(body) {
  *           (string)  phone_number  - phone number of the store
  *           (array[string])             pictures    - array of pictures in base64 string
  *           (array[SERVICES_OFFERED])   services    - array of services
- *           (array[{isOpen: boolean, from: Date, to: Date}]) hours   - store hours array size of 7, with hours in military 0000 to 2400 format
+ *           (array[{isOpen: boolean, from: string, to: string}]) hours   - store hours array size of 7, with hours in military 0000 to 2400 format
  *
  * Return:   SUCCESS            - {store_id: number}
  *           OTHER ERRORS       - null
@@ -207,7 +208,7 @@ async function updateStore(store_id, body) {
     body.store_id = store_id;
 
     try {
-        const response = await instance.put("/store", { params: body });
+        const response = await instance.put("/store", body);
         console.log(response);
         return response.data;
     } catch (error) {
@@ -291,9 +292,10 @@ async function getBarbers(body) {
  * Parms:    (string)  name          - name of the barber
  *           (string)  description   - description of the barber
  *           (string)  picture       - picture in base64 string
+ *           (string)  instagram     - instagram URL
  *           (array[{service: SERVICES_OFFERED, duration: number}])   services    - array of services along with the duration of its service
  *           (array[number])    store_ids    - array of store_ids the barber works at
- *           (array[{from: Date, to: Date}])   schedule   - array of weekly opening hours
+ *           (array[{from: string, to: string}])   schedule   - array of weekly opening hours
  *
  * Return:   SUCCESS            - {barber_id: number}
  *           NOT FOUND          - null
@@ -306,6 +308,7 @@ async function registerBarber(
     name,
     description,
     picture,
+    instagram,
     services,
     store_ids,
     schedule
@@ -320,6 +323,10 @@ async function registerBarber(
     }
     if (picture.length === 0) {
         alert("owner/registerBarber: picture is invalid");
+        return null;
+    }
+    if (instagram.length === 0) {
+        alert("owner/registerBarber: instagram is invalid");
         return null;
     }
     if (services.length === 0) {
@@ -339,6 +346,7 @@ async function registerBarber(
         name,
         description,
         picture,
+        instagram,
         store_ids,
         services,
         schedule,
@@ -368,7 +376,7 @@ async function registerBarber(
  *               (string)  picture       - picture in base64 string
  *               (array[{service: SERVICES_OFFERED, duration: number}])   services    - array of services along with the duration of its service
  *               (array[number])    store_ids    - array of store_ids the barber works at
- *               (array[{from: Date, to: Date}])   schedule   - array of weekly opening hours
+ *               (array[{from: string, to: string}])   schedule   - array of weekly opening hours
  *
  * Return:   SUCCESS            - {barber_id: number}
  *           NOT FOUND          - null
@@ -385,7 +393,7 @@ async function updateBarber(barber_id, body) {
     body.barber_id = barber_id;
 
     try {
-        const response = await instance.put("/barber", { params: body });
+        const response = await instance.put("/barber", body);
         console.log(response);
         return response.data;
     } catch (error) {

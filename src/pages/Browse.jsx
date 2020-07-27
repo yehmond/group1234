@@ -58,6 +58,7 @@ export default function Browse() {
                 <Filters />
             </div>
             <div className={classes.cards}>
+                {/* Loading */}
                 {searchState.status !== "success" &&
                     skeletons.map((id, i) => (
                         <Skeleton
@@ -68,6 +69,7 @@ export default function Browse() {
                         />
                     ))}
 
+                {/* Have results */}
                 {searchState.status === "success" &&
                     searchState.data?.stores.length > 0 &&
                     searchState.data?.stores.map(
@@ -98,13 +100,17 @@ export default function Browse() {
                             );
                         }
                     )}
-                {searchState.data?.stores.length > 0 && <Pages />}
+
+                {/* No results */}
                 {searchState.status === "success" &&
-                    searchState.data?.stores.length == 0 && (
+                    searchState.data?.stores.length === 0 && (
                         <div className={classes.noResult}>
                             <h2>No Results...</h2>
                         </div>
                     )}
+
+                {/* Pages */}
+                {searchState.data?.stores.length > 0 && <Pages />}
             </div>
         </div>
     );

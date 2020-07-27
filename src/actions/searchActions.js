@@ -2,6 +2,7 @@ import { searchStores } from "../api/customer";
 import { RESULTS_PER_PAGE } from "../pages/Browse";
 import { parseSearchURL } from "../utils/utils";
 import { SERVICES_OFFERED } from "../utils/constants";
+import moment from "moment";
 
 export const SEARCH_LOADING = "SEARCH_LOADING";
 export const SEARCH_SUCCESS = "SEARCH_SUCCESS";
@@ -29,12 +30,31 @@ export function searchError(error) {
 
 export function search() {
     const queryObj = parseSearchURL();
-    if (queryObj.price?.length === 0) {
-        queryObj.price = [1, 2, 3];
+
+    if (queryObj.date) {
+        queryObj.date = moment(queryObj.date, "YYYY-MM-DD").toDate();
     }
 
+    if (queryObj.time) {
+        queryObj.time = moment(queryObj.time, "HH:mm").toDate();
+    }
+
+    if (queryObj.price?.length === 0) {
+        queryObj.price = String([1, 2, 3]);
+    }
+    if (queryObj.price) {
+        queryObj.price = String(queryObj.price);
+    }
+
+    if (queryObj.services) {
+        queryObj.services = String(queryObj.services);
+    }
     if (queryObj.services?.length === 0) {
-        queryObj.services = SERVICES_OFFERED;
+        queryObj.services = String(SERVICES_OFFERED);
+    }
+
+    if (queryObj.neighbourhoods) {
+        queryObj.neighbourhoods = String(queryObj.neighbourhoods);
     }
 
     if ("page" in queryObj) {
