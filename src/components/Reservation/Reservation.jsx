@@ -187,7 +187,9 @@ export default function Reservation() {
                         >
                             {SERVICES_OFFERED.map((service) => {
                                 return (
-                                    <MenuItem value={service}>{service}</MenuItem>
+                                    <MenuItem value={service} key={service}>
+                                        {service}
+                                    </MenuItem>
                                 );
                             })}
                         </Select>
@@ -264,7 +266,9 @@ export default function Reservation() {
                         >
                             {SERVICES_OFFERED.map((service) => {
                                 return (
-                                    <MenuItem value={service}>{service}</MenuItem>
+                                    <MenuItem value={service} key={service}>
+                                        {service}
+                                    </MenuItem>
                                 );
                             })}
                         </Select>
