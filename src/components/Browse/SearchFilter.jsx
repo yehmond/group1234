@@ -44,6 +44,7 @@ export default function SearchFilter() {
     return (
         <TextField
             label="Store name"
+            placeholder="Find by store name"
             variant="outlined"
             fullWidth={true}
             value={string}
