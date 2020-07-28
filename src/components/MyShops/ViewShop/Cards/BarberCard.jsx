@@ -111,7 +111,7 @@ export default function BarberCard(props) {
                             }}
                         />
                     </div>
-                    <div className={classes.buttonContainer}>
+                    <React.Fragment className={classes.buttonContainer}>
                         {role === "CUSTOMER" && (
                             <Button
                                 className={classes.button}
@@ -135,7 +135,7 @@ export default function BarberCard(props) {
                                 DELETE BARBER
                             </Button>
                         )}
-                    </div>
+                    </React.Fragment>
                 </CardContent>
             </Card>
             {deleteDialog && (
