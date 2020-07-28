@@ -50,6 +50,7 @@ class ViewShop extends Component {
                             reviews: reviews,
                             barbers: barbers,
                             reservations: reservations,
+                            owner: store.owner_id,
                         };
                         fetchedShops.push(fetchedShop);
                     }
@@ -117,6 +118,7 @@ class ViewShop extends Component {
                             <Barbers
                                 barbers={this.state.barbershop.barbers}
                                 shopID={this.state.barbershop.id}
+                                shopOwnerID={this.state.barbershop.owner}
                             />
                         )}
                         {this.state.page === "REVIEWS_PAGE" && (

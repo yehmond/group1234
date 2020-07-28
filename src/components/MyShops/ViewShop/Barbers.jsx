@@ -5,6 +5,7 @@ import Typography from "@material-ui/core/Typography";
 
 class Barbers extends Component {
     render() {
+        console.log(this.props);
         if (!this.props.barbers || this.props.barbers.length === 0) {
             return (
                 <Typography align="center" variant={"h2"}>
@@ -20,6 +21,7 @@ class Barbers extends Component {
                                 key={index}
                                 barber={barber}
                                 shopID={this.props.shopID}
+                                shopOwnerID={this.props.shopOwnerID}
                             />
                         );
                     })}
