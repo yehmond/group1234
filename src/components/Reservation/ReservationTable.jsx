@@ -10,7 +10,7 @@ const useStyles = makeStyles(() =>
             padding: "1rem 3rem",
             alignItems: "center",
             textAlign: "center",
-            ["@media (max-width:1000px)"]: {
+            ["@media (max-width:1000px)"]: { // eslint-disable-line no-useless-computed-key
                 padding: "0",
             },
         },
@@ -20,6 +20,15 @@ const useStyles = makeStyles(() =>
 export default function ReservationTable(props) {
     const options = {
         search: !isMobile(),
+        rowStyle: isMobile()
+            ? {
+                  display: "grid",
+                  gridTemplateColumns: `repeat(${props.columns.length}), auto`,
+              }
+            : null,
+        headerStyle: isMobile() ? { display: "none" } : null,
+        pageSize: isMobile() ? 3 : 5,
+        pageSizeOptions: [3, 5, 10],
     };
     const classes = useStyles();
 
@@ -30,7 +39,6 @@ export default function ReservationTable(props) {
                     title={props.tableTitle}
                     columns={props.columns}
                     data={props.data}
-                    editable={false}
                     options={options}
                     actions={[
                         {

@@ -117,7 +117,7 @@ export default function Recommendations() {
                           );
                       })}
             </div>
-            {recommendedStores.length > 12 && (
+            {recommendedStores.length >= 12 && (
                 <>
                     <h1>Recommended</h1>
                     <div className={classes.grid}>

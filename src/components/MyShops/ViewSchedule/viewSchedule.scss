@@ -1,5 +1,5 @@
 .rbc-time-view {
-    height: 800px;
+    height: 1000px;
     .rbc-event {
         display: grid !important;
         grid-template-rows: 1fr 2fr !important;
@@ -40,4 +40,21 @@
 
 .padding-top {
     padding: 50px;
+}
+
+@media only screen and (max-device-width: 1000px) {
+    .rbc-toolbar-label {
+        padding: 10px !important;
+    }
+}
+
+.split-content {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+
+    .labels {
+        display: grid;
+        grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+        place-items: flex-start;
+    }
 }

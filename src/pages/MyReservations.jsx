@@ -25,9 +25,9 @@ export default function MyReservations() {
     const classes = useStyles();
     const history = useHistory();
     const columns = [
-        { title: "Time", field: "from" },
-        { title: "Barbershop", field: "store_name" },
-        { title: "Barber Name", field: "barber_name" },
+        { title: "Time", field: "from", editable: "never" },
+        { title: "Barbershop", field: "store_name", editable: "never" },
+        { title: "Barber Name", field: "barber_name", editable: "never" },
     ];
     const [past, setPast] = React.useState(null);
     const [future, setFuture] = React.useState(null);

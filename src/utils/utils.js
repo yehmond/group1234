@@ -8,7 +8,6 @@ export function isMobile() {
     if (/Mobi|Android/i.test(navigator.userAgent)) {
         isMobile = true;
     }
-    console.log(isMobile);
     return isMobile;
 }
 

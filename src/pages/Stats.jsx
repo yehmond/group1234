@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
         margin: "0.5rem",
         paddingTop: "1.5rem",
         paddingLeft: "1rem",
-        ["@media (max-width:1000px)"]: {
+        ["@media (max-width:1000px)"]: { // eslint-disable-line no-useless-computed-key
             padding: "0",
             margin: "1rem",
         },
@@ -68,7 +68,7 @@ export default function Stats() {
         return <Loading />;
     } else {
         return (
-            <div className={classes.root}>
+            <div className={classes.root} id="stats-styling">
                 <h1 className={classes.title}>Statistics</h1>
                 <main className={classes.content}>
                     <Container maxWidth="lg" className={classes.container}>

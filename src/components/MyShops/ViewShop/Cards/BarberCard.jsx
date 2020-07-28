@@ -19,6 +19,10 @@ const useStyles = makeStyles(() => ({
         display: "grid",
         gridTemplateColumns: "auto 1fr",
         margin: "1rem 0",
+        ["@media (max-width:1000px)"]: { // eslint-disable-line no-useless-computed-key
+            gridTemplateColumns: "1fr",
+            gridTemplateRows: "1f 1fr",
+        },
     },
     media: {
         height: 300,
@@ -28,6 +32,10 @@ const useStyles = makeStyles(() => ({
         display: "grid",
         alignSelf: "center",
         justifySelf: "center",
+        ["@media (max-width:1000px)"]: { // eslint-disable-line no-useless-computed-key
+            height: 250,
+            width: 300,
+        },
     },
     content: {
         display: "grid",
@@ -107,7 +115,7 @@ export default function BarberCard(props) {
                                 component={Link}
                                 to={`/reserve/${props.shopID}`}
                             >
-                                Make Reservation
+                                RESERVE
                             </Button>
                         )}
                         {role === "OWNER" && (

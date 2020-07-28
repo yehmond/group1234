@@ -17,10 +17,12 @@ import {
     convertReservationToEvent,
     getBarberColor,
     getEarliestAndLatest,
+    isMobile,
 } from "../../../utils/utils";
 import Loading from "../../Loading/Loading";
 import Chip from "@material-ui/core/Chip";
 import Typography from "@material-ui/core/Typography";
+import EventFocused from "./EventFocused";
 
 class ViewSchedule extends Component {
     constructor(props) {
@@ -35,8 +37,12 @@ class ViewSchedule extends Component {
             eventsToShow: [],
             id: props.match.params.storeID,
             colors: getBarberColor(props.location.barbers),
+            showFocused: false,
+            focusedEvent: null,
         };
         this.handleChange = this.handleChange.bind(this);
+        this.handleClickEvent = this.handleClickEvent.bind(this);
+        this.handleCloseFocused = this.handleCloseFocused.bind(this);
         this.eventPropGetter = this.eventPropGetter.bind(this);
     }
 
@@ -93,6 +99,15 @@ class ViewSchedule extends Component {
             this.setState({ eventsToShow: eventsFiltered });
         });
     }
+
+    handleCloseFocused() {
+        this.setState({ showFocused: false, focusedEvent: null });
+    }
+
+    handleClickEvent(event) {
+        this.setState({ showFocused: true, focusedEvent: event });
+    }
+
     render() {
         if (!this.state.allEvents || !this.state.barbers) {
             return <Loading />;
@@ -104,76 +119,91 @@ class ViewSchedule extends Component {
             );
         } else {
             return (
-                <div id="view-schedule-content">
-                    <h1>View Schedule</h1>
-                    <FormControl>
-                        <InputLabel>Select a Barber to View</InputLabel>
-                        <Select
-                            MenuProps={{
-                                getContentAnchorEl: () => null,
-                            }}
-                            multiple
-                            value={this.state.selected}
-                            onChange={this.handleChange}
-                            input={<Input />}
-                            renderValue={(selected) =>
-                                _.map(selected, "name").join(", ")
-                            }
-                        >
-                            {this.state.barbers.map((barber) => (
-                                <MenuItem key={barber.barber_id} value={barber}>
-                                    <Checkbox
+                <>
+                    <div id="view-schedule-content">
+                        <h1>View Schedule</h1>
+                        <FormControl>
+                            <InputLabel>Select a Barber to View</InputLabel>
+                            <Select
+                                MenuProps={{
+                                    getContentAnchorEl: () => null,
+                                }}
+                                multiple
+                                value={this.state.selected}
+                                onChange={this.handleChange}
+                                input={<Input />}
+                                renderValue={(selected) =>
+                                    _.map(selected, "name").join(", ")
+                                }
+                            >
+                                {this.state.barbers.map((barber) => (
+                                    <MenuItem key={barber.barber_id} value={barber}>
+                                        <Checkbox
+                                            style={{
+                                                "color": this.state.colors[
+                                                    barber.barber_id
+                                                ],
+                                            }}
+                                            checked={
+                                                _.map(
+                                                    this.state.selected,
+                                                    "barber_id"
+                                                ).indexOf(barber.barber_id) > -1
+                                            }
+                                        />
+                                        <ListItemText primary={barber.name} />
+                                    </MenuItem>
+                                ))}
+                            </Select>
+                        </FormControl>
+                        <div id={"chips-container-barbers"}>
+                            {this.state.barbers.map((barber) => {
+                                return (
+                                    <Chip
+                                        label={barber.name}
+                                        key={barber.barber_id}
                                         style={{
-                                            "color": this.state.colors[
+                                            "backgroundColor": this.state.colors[
                                                 barber.barber_id
                                             ],
                                         }}
-                                        checked={
-                                            _.map(
-                                                this.state.selected,
-                                                "barber_id"
-                                            ).indexOf(barber.barber_id) > -1
-                                        }
                                     />
-                                    <ListItemText primary={barber.name} />
-                                </MenuItem>
-                            ))}
-                        </Select>
-                    </FormControl>
-                    <div id={"chips-container-barbers"}>
-                        {this.state.barbers.map((barber) => {
-                            return (
-                                <Chip
-                                    label={barber.name}
-                                    key={barber.barber_id}
-                                    style={{
-                                        "backgroundColor": this.state.colors[
-                                            barber.barber_id
-                                        ],
-                                    }}
-                                />
-                            );
-                        })}
+                                );
+                            })}
+                        </div>
+                        <Calendar
+                            localizer={this.localizer}
+                            events={this.state.eventsToShow}
+                            onSelectEvent={(event) => {
+                                this.handleClickEvent(event);
+                            }}
+                            titleAccessor={(event) => {
+                                return event.title + ": " + event.service;
+                            }}
+                            tooltipAccessor={(event) => {
+                                return event.title + ": " + event.service;
+                            }}
+                            defaultView={isMobile() ? "day" : "week"}
+                            min={this.state.minTime}
+                            max={this.state.maxTime}
+                            style={{ height: "100%" }}
+                            views={isMobile() ? ["day"] : ["day", "week"]}
+                            selector={false}
+                            eventPropGetter={(event) => ({
+                                style: {
+                                    backgroundColor: event.color,
+                                },
+                            })}
+                        />
                     </div>
-                    <Calendar
-                        localizer={this.localizer}
-                        events={this.state.eventsToShow}
-                        titleAccessor={(event) => {
-                            return event.title + ": " + event.service;
-                        }}
-                        defaultView={"week"}
-                        min={this.state.minTime}
-                        max={this.state.maxTime}
-                        style={{ height: "100%" }}
-                        views={["day", "week"]}
-                        selector={false}
-                        eventPropGetter={(event) => ({
-                            style: {
-                                backgroundColor: event.color,
-                            },
-                        })}
-                    />
-                </div>
+                    {this.state.showFocused && (
+                        <EventFocused
+                            event={this.state.focusedEvent}
+                            barbers={this.state.barbers}
+                            handleClose={this.handleCloseFocused}
+                        />
+                    )}
+                </>
             );
         }
     }
