@@ -15,9 +15,13 @@ import { sortReservations } from "../utils/utils";
 const useStyles = makeStyles((theme) => ({
     title: {
         flexGrow: 1,
-        margin: "1rem",
+        margin: "0.5rem",
         paddingTop: "1.5rem",
         paddingLeft: "1rem",
+        ["@media (max-width:1000px)"]: { // eslint-disable-line no-useless-computed-key
+            padding: "0",
+            margin: "1rem",
+        },
     },
     content: {
         flexGrow: 1,
@@ -33,8 +37,8 @@ const useStyles = makeStyles((theme) => ({
         overflow: "hidden",
         flexDirection: "column",
     },
-    fixedHeight: {
-        height: 300,
+    centerCard: {
+        placeSelf: "center",
     },
 }));
 
@@ -58,13 +62,13 @@ export default function Stats() {
     }, [location.shop, storeID]);
 
     const classes = useStyles();
-    const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
+    const fixedHeightPaper = clsx(classes.paper);
 
     if (!store) {
         return <Loading />;
     } else {
         return (
-            <div className={classes.root}>
+            <div className={classes.root} id="stats-styling">
                 <h1 className={classes.title}>Statistics</h1>
                 <main className={classes.content}>
                     <Container maxWidth="lg" className={classes.container}>
@@ -79,7 +83,13 @@ export default function Stats() {
                                     />
                                 </Paper>
                             </Grid>
-                            <Grid item xs={12} md={4} lg={3}>
+                            <Grid
+                                item
+                                xs={12}
+                                md={4}
+                                lg={3}
+                                className={classes.centerCard}
+                            >
                                 <Paper className={fixedHeightPaper}>
                                     <TotalReservations
                                         reservations={sortReservations(

@@ -22,8 +22,7 @@ const useStyles = makeStyles((theme) => ({
     wrapper: {
         margin: "3rem",
         display: "grid",
-        gridTemplateRows: "1fr 1fr 1fr 1fr 1fr",
-        gridRowGap: "10px",
+        gridRowGap: "15px",
         alignItems: "center",
         textAlign: "center",
     },

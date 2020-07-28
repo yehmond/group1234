@@ -36,7 +36,7 @@ export default function BrowseCards({
             <div style={{ margin: "1rem" }}>
                 <SmallCard
                     key={id}
-                    id={id}
+                    shopId={id}
                     name={name}
                     services={services}
                     price={price}
