@@ -9,6 +9,7 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import DialogMessage from "../components/Dialog/Dialog";
 import Loading from "../components/Loading/Loading";
 import { Tab, Tabs } from "@material-ui/core";
+import "../components/Reservation/reservation.scss";
 
 const useStyles = makeStyles(() =>
     createStyles({
@@ -79,7 +80,7 @@ export default function MyReservations() {
     if (!past || !future) return <Loading />;
 
     return (
-        <div className={classes.wrapper}>
+        <div id="my-reservations" className={classes.wrapper}>
             <h1>My Reservations</h1>
             <Tabs
                 value={showPage}

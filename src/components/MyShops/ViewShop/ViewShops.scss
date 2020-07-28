@@ -32,6 +32,8 @@
 #shop-reviews {
     .circle {
         border-radius: 10px;
+        display: grid;
+        place-items: center;
         p {
             text-align: center;
             margin: 0.5rem 0.5rem;
@@ -67,4 +69,38 @@
     grid-template-columns: 1fr 1fr;
     grid-column-gap: 20px;
     grid-row-gap: 20px;
+}
+
+@media only screen and (max-device-width: 1000px) {
+    #shop-information {
+        display: grid;
+        grid-template-rows: 1fr 1fr 1fr !important;
+        grid-template-columns: 1fr !important;
+        grid-row-gap: 10px;
+    }
+
+    #barbers-wrapper {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-column-gap: 0;
+        grid-row-gap: 10px;
+    }
+
+    #shop-reviews {
+        #avg-rating {
+            display: grid;
+            grid-template-rows: 1fr;
+            grid-template-columns: 1fr;
+            align-items: center;
+            justify-content: center;
+
+            .barber-ratings-cards {
+                display: none;
+            }
+
+            p {
+                text-align: center;
+            }
+        }
+    }
 }

@@ -2,6 +2,16 @@ import { useEffect, useState } from "react";
 import { CALENDAR_COLORS, DAYS_OF_WEEK_ABBR, MONTHS_OF_YEAR } from "./constants";
 import moment from "moment";
 
+export function isMobile() {
+    let isMobile = false; //initiate as false
+    // device detection
+    if (/Mobi|Android/i.test(navigator.userAgent)) {
+        isMobile = true;
+    }
+    console.log(isMobile);
+    return isMobile;
+}
+
 export function convert24HrTo12Hr(time) {
     let hours = parseInt(time.substr(0, 2));
     const minutes = time.substr(2);
@@ -233,13 +243,18 @@ export function getEarliestAndLatest(hours) {
 
 export function reservationDate(reservation) {
     const date = new Date(reservation.to);
-    return (
-        MONTHS_OF_YEAR[date.getMonth()] +
-        " " +
-        date.getDate() +
-        ", " +
-        date.getFullYear()
-    );
+    if (!isMobile()) {
+        return (
+            MONTHS_OF_YEAR[date.getMonth()] +
+            " " +
+            date.getDate() +
+            ", " +
+            date.getFullYear()
+        );
+    } else {
+        // for mobile, render mm/dd/yy
+        return date.getMonth() + "/" + date.getDate() + "/" + date.getFullYear();
+    }
 }
 
 export function reservationBarber(barbers, reservation) {
@@ -256,5 +271,9 @@ export function sortReservations(reservations) {
 }
 
 export function convertDateToString(date) {
-    return moment(date).format("MMMM Do YYYY, h:mm a");
+    if (!isMobile()) {
+        return moment(date).format("MMMM Do YYYY, h:mm a");
+    } else {
+        return moment(date).format("MM/DD/YY, h:mm a");
+    }
 }

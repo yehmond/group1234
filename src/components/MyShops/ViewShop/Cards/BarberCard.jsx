@@ -74,7 +74,7 @@ export default function BarberCard(props) {
             <Card className={classes.root}>
                 <CardMedia image={props.barber.picture} className={classes.media} />
                 <CardContent className={classes.content}>
-                    <Typography variant="h2">{props.barber.name}</Typography>
+                    <Typography variant="h4">{props.barber.name}</Typography>
                     <p>{props.barber.description}</p>
                     <div>
                         {props.barber.services.map((service) => {

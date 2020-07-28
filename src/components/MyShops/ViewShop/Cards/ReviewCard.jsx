@@ -7,9 +7,11 @@ import Rating from "@material-ui/lab/Rating";
 
 const useStyles = makeStyles({
     root: {
-        minWidth: 275,
         display: "grid",
         gridTemplateColumns: "0.4fr 0.6fr",
+        ["@media (max-width:1000px)"]: {
+            gridTemplateColumns: "1fr",
+        },
     },
     leftPanel: {
         display: "grid",
@@ -30,10 +32,10 @@ export default function ReviewCard(props) {
         <Card className={classes.root} variant={"outlined"}>
             <CardContent className={classes.leftPanel}>
                 <div className={classes.iconContent}>
+                    <Rating name="rating" value={props.review.rating} disabled />
                     <Typography align={"center"} variant="h6">
                         {props.review.user_name}
                     </Typography>
-                    <Rating name="rating" value={props.review.rating} disabled />
                 </div>
                 <div className={classes.iconContent}>
                     <i className="material-icons">content_cut</i>
