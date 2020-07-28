@@ -25,7 +25,10 @@
         <!-- Script to redirect for http and https -->
         <script>
             const host = "dibs-vancouver.herokuapp.com";
-            if ((host === window.location.host) && (window.location.protocol !== "https:")){
+            if (
+                host === window.location.host &&
+                window.location.protocol !== "https:"
+            ) {
                 window.location.protocol = "https";
             }
         </script>

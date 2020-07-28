@@ -1,0 +1,49 @@
+#my-reservations {
+    display: grid;
+    grid-row-gap: 20px;
+    .MuiTableCell-root {
+        padding: 0;
+    }
+    .MuiTableCell-head {
+        text-align: center;
+    }
+}
+
+@media only screen and (max-device-width: 1000px) {
+    #my-reservations {
+        display: grid;
+        grid-row-gap: 20px;
+
+        .MuiTableRow-root {
+            border: 1px solid rgba(224, 224, 224, 1);
+
+            .MuiTableCell-root {
+                width: 100% !important;
+                text-align: center;
+                display: inline;
+                place-items: center;
+                border: none;
+            }
+
+            .MuiTableCell-root:first-child {
+                grid-template-columns: 1fr;
+                display: grid;
+                place-items: center;
+            }
+
+            .MuiTableCell-root:nth-child(3):before {
+                content: "🏠 \00a0 ";
+            }
+
+            .MuiTableCell-root:nth-child(2):before {
+                content: "🕑 \00a0";
+            }
+            .MuiTableCell-root:nth-child(4):before {
+                content: "✂ \00a0";
+            }
+            .MuiTableCell-root:nth-child(3):before {
+                content: "🏠 \00a0";
+            }
+        }
+    }
+}

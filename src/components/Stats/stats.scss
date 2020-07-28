@@ -1,0 +1,26 @@
+@media only screen and (max-device-width: 1000px) {
+    #stats-styling {
+        .MuiButtonBase-root,
+        .MuiToolbar-gutters {
+            padding: 0 !important;
+        }
+
+        #reservation-stats {
+            .MuiTableBody-root {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+
+                .MuiTableRow-root {
+                    display: grid;
+                    grid-template-rows: repeat(5, auto);
+                    border-bottom: 1px solid rgba(224, 224, 224, 1);
+                    border-top: 1px solid rgba(224, 224, 224, 1);
+
+                    .MuiTableCell-root {
+                        border: none;
+                    }
+                }
+            }
+        }
+    }
+}

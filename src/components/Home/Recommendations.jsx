@@ -63,7 +63,7 @@ export default function Recommendations() {
                     ? availableNowStores.map(
                           (
                               {
-                                  id,
+                                  store_id,
                                   name,
                                   services,
                                   price,
@@ -79,7 +79,7 @@ export default function Recommendations() {
                               return (
                                   <SmallCard
                                       key={idx}
-                                      shopId={id}
+                                      shopId={store_id}
                                       name={name}
                                       services={services}
                                       price={price}
@@ -117,14 +117,14 @@ export default function Recommendations() {
                           );
                       })}
             </div>
-            {recommendedStores.length > 12 && (
+            {recommendedStores.length >= 12 && (
                 <>
                     <h1>Recommended</h1>
                     <div className={classes.grid}>
                         {recommendedStores.map(
                             (
                                 {
-                                    id,
+                                    store_id,
                                     name,
                                     services,
                                     price,
@@ -140,7 +140,7 @@ export default function Recommendations() {
                                 return (
                                     <SmallCard
                                         key={idx}
-                                        shopId={id}
+                                        shopId={store_id}
                                         name={name}
                                         services={services}
                                         price={price}

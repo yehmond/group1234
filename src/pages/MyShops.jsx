@@ -11,7 +11,6 @@ import Typography from "@material-ui/core/Typography";
 
 export default function MyShops() {
     const authState = useSelector((state) => state.authState);
-    console.log(authState);
     if (authState.role === "OWNER") {
         return (
             <UserContext.Provider value={authState.id}>
@@ -36,11 +35,7 @@ export default function MyShops() {
         );
     } else {
         return (
-            <Typography
-                align="center"
-                variant={"h2"}
-                style={{ "padding": "100px" }}
-            >
+            <Typography align="center" variant={"h2"} style={{ "padding": "5vw" }}>
                 You are not authorized to view this page
             </Typography>
         );
