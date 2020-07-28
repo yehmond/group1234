@@ -83,6 +83,7 @@ export default function ShopsList() {
                         reviews: reviews,
                         barbers: barbers,
                         reservations: reservations,
+                        shopOwnerID: store.owner_id,
                     };
                     fetchedShops.push(fetchedShop);
                 }

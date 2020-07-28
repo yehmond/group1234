@@ -10,8 +10,7 @@ const useStyles = makeStyles(() =>
             padding: "1rem 3rem",
             alignItems: "center",
             textAlign: "center",
-            ["@media (max-width:1000px)"]: {
-                // eslint-disable-line no-useless-computed-key
+            ["@media (max-width:1000px)"]: {  // eslint-disable-line no-useless-computed-key
                 padding: "0",
             },
         },

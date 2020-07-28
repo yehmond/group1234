@@ -14,6 +14,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import _ from "lodash";
 import { getStores } from "../../../api/owner";
 import {
+    checkMyStore,
     convertReservationToEvent,
     getBarberColor,
     getEarliestAndLatest,
@@ -39,6 +40,7 @@ class ViewSchedule extends Component {
             colors: getBarberColor(props.location.barbers),
             showFocused: false,
             focusedEvent: null,
+            shopOwnerID: props.location.shopOwnerID,
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleClickEvent = this.handleClickEvent.bind(this);
@@ -48,11 +50,16 @@ class ViewSchedule extends Component {
 
     componentDidMount() {
         // for a refresh, need to fetch
-        if (!this.props.location.reservations || !this.props.location.barbers) {
+        if (
+            !this.props.location.reservations ||
+            !this.props.location.barbers ||
+            !this.props.location.shopOwnerID
+        ) {
             getStores({ store_id: this.state.id }).then((response) => {
                 let reservations = null;
                 let barbers = null;
                 let hours = null;
+                let shopOwnerID = null;
                 // will only be one store
                 if (response !== null) {
                     for (let obj of response) {
@@ -64,6 +71,7 @@ class ViewSchedule extends Component {
                         });
                         barbers = obj.barbers;
                         hours = obj.store.hours;
+                        shopOwnerID = obj.store.owner_id;
                     }
                     this.setState({
                         allEvents: reservations,
@@ -71,6 +79,7 @@ class ViewSchedule extends Component {
                         colors: getBarberColor(barbers),
                         minTime: getEarliestAndLatest(hours)[0],
                         maxTime: getEarliestAndLatest(hours)[1],
+                        shopOwnerID: shopOwnerID,
                     });
                 } else {
                     // this store doesn't exist (should not be possible
@@ -109,8 +118,18 @@ class ViewSchedule extends Component {
     }
 
     render() {
-        if (!this.state.allEvents || !this.state.barbers) {
+        if (
+            !this.state.allEvents ||
+            !this.state.barbers ||
+            !this.state.shopOwnerID
+        ) {
             return <Loading />;
+        } else if (!checkMyStore(this.state.shopOwnerID)) {
+            return (
+                <Typography className="padding-top" align="center" variant={"h2"}>
+                    You are not authorized to see this page!
+                </Typography>
+            );
         } else if (this.state.allEvents.length === 0) {
             return (
                 <Typography className="padding-top" align="center" variant={"h2"}>

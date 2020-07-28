@@ -5,7 +5,6 @@ import Typography from "@material-ui/core/Typography";
 
 class Barbers extends Component {
     render() {
-        console.log(this.props);
         if (!this.props.barbers || this.props.barbers.length === 0) {
             return (
                 <Typography align="center" variant={"h2"}>

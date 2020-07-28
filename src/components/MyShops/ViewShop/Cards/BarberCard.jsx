@@ -12,15 +12,14 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import AlertBox from "../../../Dialog/Alert";
 import { deleteBarbers } from "../../../../api/owner";
-import { isMobile, refreshPage } from "../../../../utils/utils";
+import { checkMyStore, isMobile, refreshPage } from "../../../../utils/utils";
 
 const useStyles = makeStyles(() => ({
     root: {
         display: "grid",
         gridTemplateColumns: "auto 1fr",
         margin: "1rem 0",
-        ["@media (max-width:1000px)"]: {
-            // eslint-disable-line no-useless-computed-key
+        ["@media (max-width:1000px)"]: { // eslint-disable-line no-useless-computed-key
             gridTemplateColumns: "1fr",
             gridTemplateRows: "1f 1fr",
         },
@@ -33,8 +32,8 @@ const useStyles = makeStyles(() => ({
         display: "grid",
         alignSelf: "center",
         justifySelf: "center",
-        ["@media (max-width:1000px)"]: {
-            // eslint-disable-line no-useless-computed-key
+
+        ["@media (max-width:1000px)"]: { // eslint-disable-line no-useless-computed-key
             height: 250,
             width: 300,
         },
@@ -122,20 +121,18 @@ export default function BarberCard(props) {
                                 RESERVE
                             </Button>
                         )}
-                        {role === "OWNER" &&
-                            window.localStorage.getItem("id") ===
-                                props.shopOwnerID && (
-                                <Button
-                                    className={classes.button}
-                                    color="secondary"
-                                    variant="contained"
-                                    onClick={() => {
-                                        setDeleteDialog(true);
-                                    }}
-                                >
-                                    DELETE BARBER
-                                </Button>
-                            )}
+                        {role === "OWNER" && checkMyStore(props.shopOwnerID) && (
+                            <Button
+                                className={classes.button}
+                                color="secondary"
+                                variant="contained"
+                                onClick={() => {
+                                    setDeleteDialog(true);
+                                }}
+                            >
+                                DELETE BARBER
+                            </Button>
+                        )}
                     </div>
                 </CardContent>
             </Card>

@@ -61,28 +61,30 @@ class DayHoursInput extends Component {
         return (
             <div className="time-input-container">
                 <h2>{this.props.dayOfWeek}</h2>
-                <RenderTimePicker
-                    disabled={!this.state.day.isOpen}
-                    value={addColonTime(this.state.day.from)}
-                    handleChange={this.handleChangeOpen}
-                />
-                <p>To</p>
-                <RenderTimePicker
-                    disabled={!this.state.day.isOpen}
-                    handleChange={this.handleChangeClose}
-                    value={addColonTime(this.state.day.to)}
-                />
-                <FormControlLabel
-                    control={
-                        <Checkbox
-                            onChange={this.toggleClosed}
-                            name="checkedB"
-                            checked={!this.state.day.isOpen}
-                            color="primary"
-                        />
-                    }
-                    label={this.props.label}
-                />
+                <div className="time-fields">
+                    <RenderTimePicker
+                        disabled={!this.state.day.isOpen}
+                        value={addColonTime(this.state.day.from)}
+                        handleChange={this.handleChangeOpen}
+                    />
+                    <p>To</p>
+                    <RenderTimePicker
+                        disabled={!this.state.day.isOpen}
+                        handleChange={this.handleChangeClose}
+                        value={addColonTime(this.state.day.to)}
+                    />
+                    <FormControlLabel
+                        control={
+                            <Checkbox
+                                onChange={this.toggleClosed}
+                                name="checkedB"
+                                checked={!this.state.day.isOpen}
+                                color="primary"
+                            />
+                        }
+                        label={this.props.label}
+                    />
+                </div>
             </div>
         );
     }

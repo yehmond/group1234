@@ -276,3 +276,7 @@ export function convertDateToString(date) {
         return moment(date).format("MM/DD/YY, h:mm a");
     }
 }
+
+export function checkMyStore(user_id) {
+    return parseInt(user_id) === parseInt(window.localStorage.getItem("id"));
+}
