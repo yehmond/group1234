@@ -85,6 +85,9 @@ export default function Reservation() {
     function handleBarberChange(event) {
         setBarber(event.target.value);
         setState({ ...state, barber_id: event.target.value });
+        if (checkAvailbility) {
+            setCheckAvailbility(false);
+        }
     }
 
     function handleChange(event) {
@@ -92,6 +95,9 @@ export default function Reservation() {
             target: { name, value },
         } = event;
         setState({ ...state, [name]: value });
+        if (checkAvailbility && name === "start_time") {
+            setCheckAvailbility(false);
+        }
     }
 
     function getStoreName() {
