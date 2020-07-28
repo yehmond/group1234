@@ -20,7 +20,6 @@ import { makeStyles } from "@material-ui/core";
 import { signUp } from "../../api/auth";
 import Alert from "@material-ui/lab/Alert";
 
-// code taken from https://material-ui.com/getting-started/templates/
 const useStyles = makeStyles((theme) => ({
     paper: {
         marginTop: theme.spacing(8),
@@ -41,6 +40,8 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+
+// template from https://github.com/mui-org/material-ui/tree/master/docs/src/pages/getting-started/templates/sign-up
 export default function SignUp() {
     const classes = useStyles();
     const [state, setState] = useState({

@@ -86,12 +86,6 @@ export function addColonTime(time) {
     }
 }
 
-export function stringTimeToLocalTime(str) {
-    if (str === null || str === undefined || str === "" || str === " ") {
-        return "0000";
-    }
-}
-
 export function refreshPage() {
     window.location.reload();
 }

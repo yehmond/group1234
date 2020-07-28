@@ -19,8 +19,8 @@ const useStyles = makeStyles((theme) => ({
         margin: "0.5rem",
         paddingTop: "1.5rem",
         paddingLeft: "1rem",
+        // eslint-disable-next-line
         ["@media (max-width:1000px)"]: {
-            // eslint-disable-line no-useless-computed-key
             padding: "0",
             margin: "1rem",
         },
@@ -44,6 +44,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+// template taken from https://material-ui.com/getting-started/templates/dashboard/
 export default function Stats() {
     const [store, setStore] = useState(null);
     const [ownerID, setOwnerID] = useState(null);
