@@ -74,14 +74,14 @@ export default function SmallCard({
     const dollarSigns = [];
     for (let i = 0; i < price; i++) {
         dollarSigns.push(
-            <Typography variant="body2" color="textPrimary">
+            <Typography variant="body2" color="textPrimary" key={i}>
                 $
             </Typography>
         );
     }
     for (let i = 0; i < 5 - price; i++) {
         dollarSigns.push(
-            <Typography variant="body2" color="textSecondary">
+            <Typography variant="body2" color="textSecondary" key={5 - i}>
                 $
             </Typography>
         );
@@ -89,11 +89,13 @@ export default function SmallCard({
 
     const ratingStars = [];
     for (let i = 0; i < rating; i++) {
-        ratingStars.push(<StarRoundedIcon fontSize="small" color="secondary" />);
+        ratingStars.push(
+            <StarRoundedIcon fontSize="small" color="secondary" key={i} />
+        );
     }
     for (let i = 0; i < 5 - rating; i++) {
         ratingStars.push(
-            <StarBorderRoundedIcon fontSize="small" color="disabled" />
+            <StarBorderRoundedIcon fontSize="small" color="disabled" key={5 - i} />
         );
     }
 
@@ -114,27 +116,16 @@ export default function SmallCard({
                     >
                         {name}
                     </Typography>
-                    <Typography variant="body2" color="textPrimary" component="p">
-                        <div
-                            style={{
-                                display: "flex",
-                                alignItems: "center",
-                            }}
-                        >
-                            {dollarSigns}&nbsp;· {ratingStars} · {neighbourhood}
-                        </div>
-                    </Typography>
-                    <Typography
-                        variant="body2"
-                        color="textPrimary"
-                        component="p"
-                        className={classes.chips}
+                    <div
+                        style={{
+                            display: "flex",
+                            alignItems: "center",
+                        }}
                     >
+                        {dollarSigns}&nbsp;· {ratingStars} · {neighbourhood}
+                    </div>
+                    <div className={classes.chips}>
                         {services.map((service, idx) => {
-                            // if (idx === services.length - 1) {
-                            //     return service;
-                            // }
-                            // return service + " | ";
                             return (
                                 <Chip
                                     size="small"
@@ -145,20 +136,18 @@ export default function SmallCard({
                                 />
                             );
                         })}
-                    </Typography>
-                    <Typography variant="body2" color="textSecondary" component="p">
-                        <div
-                            style={{
-                                display: "flex",
-                                alignItems: "center",
-                                overflow: "hidden",
-                                whiteSpace: "nowrap",
-                                textOverflow: "ellipsis",
-                            }}
-                        >
-                            <LocationOnRoundedIcon /> {address}
-                        </div>
-                    </Typography>
+                    </div>
+                    <div
+                        style={{
+                            display: "flex",
+                            alignItems: "center",
+                            overflow: "hidden",
+                            whiteSpace: "nowrap",
+                            textOverflow: "ellipsis",
+                        }}
+                    >
+                        <LocationOnRoundedIcon /> {address}
+                    </div>
                 </CardContent>
             </CardActionArea>
             <CardActions className={classes.cardAction} disableSpacing>
