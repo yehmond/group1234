@@ -19,7 +19,8 @@ const useStyles = makeStyles(() => ({
         display: "grid",
         gridTemplateColumns: "auto 1fr",
         margin: "1rem 0",
-        ["@media (max-width:1000px)"]: { // eslint-disable-line no-useless-computed-key
+        ["@media (max-width:1000px)"]: {
+            // eslint-disable-line no-useless-computed-key
             gridTemplateColumns: "1fr",
             gridTemplateRows: "1f 1fr",
         },
@@ -33,7 +34,8 @@ const useStyles = makeStyles(() => ({
         alignSelf: "center",
         justifySelf: "center",
 
-        ["@media (max-width:1000px)"]: { // eslint-disable-line no-useless-computed-key
+        ["@media (max-width:1000px)"]: {
+            // eslint-disable-line no-useless-computed-key
             height: 250,
             width: 300,
         },

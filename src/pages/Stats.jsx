@@ -19,7 +19,8 @@ const useStyles = makeStyles((theme) => ({
         margin: "0.5rem",
         paddingTop: "1.5rem",
         paddingLeft: "1rem",
-        ["@media (max-width:1000px)"]: { // eslint-disable-line no-useless-computed-key
+        ["@media (max-width:1000px)"]: {
+            // eslint-disable-line no-useless-computed-key
             padding: "0",
             margin: "1rem",
         },
