@@ -20,8 +20,6 @@ export function RenderTextfield(props) {
             onChange={props.handleChange}
             rows={4}
             value={props.value}
-            // error={}
-            // helperText={}
             className={"field-" + props.fieldWidth}
         />
     );
@@ -40,15 +38,14 @@ export function RenderSelect(props) {
             defaultValue={""}
             id={props.id}
             value={props.value}
-            // error={}
-            // helperText={}
             className={"field-" + props.fieldWidth}
+            disabled={props.disabled || false}
         >
             {props.options &&
                 props.options.map((option) => {
                     return (
-                        <MenuItem key={option} value={option}>
-                            {option}
+                        <MenuItem key={option.name || option} value={option.value || option}>
+                            {option.name || option}
                         </MenuItem>
                     );
                 })}
@@ -108,6 +105,24 @@ export function RenderTimePicker(props) {
     );
 }
 
+export function RenderDatePicker(props) {
+    return (
+        <TextField
+            name={props.name}
+            label={props.label}
+            type="date"
+            defaultValue={props.defaultValue}
+            required
+            value={props.value}
+            onChange={props.handleChange}
+            disabled={props.disabled}
+            InputLabelProps={{
+                shrink: true,
+            }}
+        />
+    );
+}
+
 export function RenderDropzone(props) {
     const onDropHandler = (files) => {
         const file = files[0];
@@ -135,7 +150,6 @@ export function RenderDropzone(props) {
             <DropzoneArea
                 acceptedFiles={props.acceptedFiles}
                 dropzoneText={props.dropzoneText}
-                // onChange={props.handleChange}
                 initialFiles={props.value}
                 filesLimit={props.filesLimit}
                 onDrop={onDropHandler}

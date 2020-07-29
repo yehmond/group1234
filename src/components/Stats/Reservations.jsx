@@ -10,6 +10,7 @@ import TablePagination from "@material-ui/core/TablePagination";
 import TableContainer from "@material-ui/core/TableContainer";
 import "./stats.scss";
 
+// template taken from https://material-ui.com/getting-started/templates/dashboard/
 export default function Reservations(props) {
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(isMobile() ? 3 : 5);

@@ -7,7 +7,8 @@ import Reviews from "./Reviews";
 import Barbers from "./Barbers";
 import { withRouter } from "react-router-dom";
 import Loading from "../../Loading/Loading";
-import { getStores } from "../../../api/owner";
+import { getStore } from "../../../api/customer";
+import ErrorText from "../../Dialog/Error";
 
 class ViewShop extends Component {
     constructor(props) {
@@ -16,6 +17,7 @@ class ViewShop extends Component {
             page: "INFO_PAGE",
             storeId: props.match.params.storeID,
             barbershop: props.location.shop,
+            error: false,
         };
         this.handleTabChange = this.handleTabChange.bind(this);
     }
@@ -23,39 +25,38 @@ class ViewShop extends Component {
     componentDidMount() {
         // for a refresh, need to fetch
         if (!this.props.location.shop) {
-            getStores({ store_id: this.state.storeId }).then((response) => {
-                const fetchedShops = [];
+            getStore(this.state.storeId).then((response) => {
+                let fetchedShop = null;
                 // will only be one store
                 if (response !== null) {
-                    for (let obj of response) {
-                        const store = obj.store;
-                        const barbers = obj.barbers;
-                        const reservations = obj.reservations;
-                        const reviews = obj.reviews;
-                        const fetchedShop = {
-                            id: obj.store_id,
-                            name: store.name,
-                            address: store.address,
-                            lat: parseInt(store.lat),
-                            lon: parseInt(store.lon),
-                            city: store.city,
-                            province: store.province,
-                            website: store.website,
-                            phoneNumber: store.phone_number,
-                            description: store.description,
-                            servicesOffered: store.services,
-                            price: store.price,
-                            photos: store.pictures,
-                            hours: store.hours,
-                            reviews: reviews,
-                            barbers: barbers,
-                            reservations: reservations,
-                        };
-                        fetchedShops.push(fetchedShop);
-                    }
-                    this.setState({ barbershop: fetchedShops[0] });
+                    const store = response.store;
+                    const barbers = response.barbers;
+                    const reservations = response.reservations;
+                    const reviews = response.reviews;
+                    fetchedShop = {
+                        id: response.store_id,
+                        name: store.name,
+                        address: store.address,
+                        lat: parseFloat(store.lat),
+                        lon: parseFloat(store.lon),
+                        city: store.city,
+                        province: store.province,
+                        website: store.website,
+                        phoneNumber: store.phone_number,
+                        description: store.description,
+                        servicesOffered: store.services,
+                        price: store.price,
+                        photos: store.pictures,
+                        hours: store.hours,
+                        reviews: reviews,
+                        barbers: barbers,
+                        reservations: reservations,
+                        owner: store.owner_id,
+                    };
+                    this.setState({ barbershop: fetchedShop });
                 } else {
-                    // this store doesn't exist (should not be possible
+                    // this store doesn't exist (should not be possible)
+                    this.setState({ error: true });
                 }
             });
         }
@@ -74,6 +75,8 @@ class ViewShop extends Component {
     }
 
     render() {
+        if (this.state.error)
+            return <ErrorText message={"There has been an error! Sorry!"} />;
         return (
             <>
                 {!this.state.barbershop && <Loading />}
@@ -117,6 +120,7 @@ class ViewShop extends Component {
                             <Barbers
                                 barbers={this.state.barbershop.barbers}
                                 shopID={this.state.barbershop.id}
+                                shopOwnerID={this.state.barbershop.owner}
                             />
                         )}
                         {this.state.page === "REVIEWS_PAGE" && (

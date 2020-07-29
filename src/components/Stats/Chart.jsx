@@ -27,6 +27,7 @@ function round5(x) {
     return Math.ceil(x / 5) * 5;
 }
 
+// template from https://recharts.org/en-US/examples/StackedBarChart
 export default function Chart(props) {
     const data = [
         ...reservationsToDatePoints(props.reservations, props.barbers).values(),

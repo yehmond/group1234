@@ -12,8 +12,8 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Checkbox from "@material-ui/core/Checkbox";
 import ListItemText from "@material-ui/core/ListItemText";
 import _ from "lodash";
-import { getStores } from "../../../api/owner";
 import {
+    checkMyStore,
     convertReservationToEvent,
     getBarberColor,
     getEarliestAndLatest,
@@ -23,6 +23,8 @@ import Loading from "../../Loading/Loading";
 import Chip from "@material-ui/core/Chip";
 import Typography from "@material-ui/core/Typography";
 import EventFocused from "./EventFocused";
+import { getStore } from "../../../api/customer";
+import ErrorText from "../../Dialog/Error";
 
 class ViewSchedule extends Component {
     constructor(props) {
@@ -39,6 +41,8 @@ class ViewSchedule extends Component {
             colors: getBarberColor(props.location.barbers),
             showFocused: false,
             focusedEvent: null,
+            shopOwnerID: props.location.shopOwnerID,
+            error: false,
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleClickEvent = this.handleClickEvent.bind(this);
@@ -48,32 +52,38 @@ class ViewSchedule extends Component {
 
     componentDidMount() {
         // for a refresh, need to fetch
-        if (!this.props.location.reservations || !this.props.location.barbers) {
-            getStores({ store_id: this.state.id }).then((response) => {
+        if (
+            !this.props.location.reservations ||
+            !this.props.location.barbers ||
+            !this.props.location.shopOwnerID
+        ) {
+            getStore(this.state.id).then((response) => {
                 let reservations = null;
                 let barbers = null;
                 let hours = null;
+                let shopOwnerID = null;
                 // will only be one store
                 if (response !== null) {
-                    for (let obj of response) {
-                        reservations = obj.reservations.map((reservation) => {
-                            return convertReservationToEvent(
-                                obj.barbers,
-                                reservation
-                            );
-                        });
-                        barbers = obj.barbers;
-                        hours = obj.store.hours;
-                    }
+                    reservations = response.reservations.map((reservation) => {
+                        return convertReservationToEvent(
+                            response.barbers,
+                            reservation
+                        );
+                    });
+                    barbers = response.barbers;
+                    hours = response.store.hours;
+                    shopOwnerID = response.store.owner_id;
                     this.setState({
                         allEvents: reservations,
                         barbers: barbers,
                         colors: getBarberColor(barbers),
                         minTime: getEarliestAndLatest(hours)[0],
                         maxTime: getEarliestAndLatest(hours)[1],
+                        shopOwnerID: shopOwnerID,
                     });
                 } else {
                     // this store doesn't exist (should not be possible
+                    this.setState({ error: true });
                 }
             });
         }
@@ -109,14 +119,26 @@ class ViewSchedule extends Component {
     }
 
     render() {
-        if (!this.state.allEvents || !this.state.barbers) {
+        if (
+            !this.state.allEvents ||
+            !this.state.barbers ||
+            !this.state.shopOwnerID
+        ) {
             return <Loading />;
+        } else if (!checkMyStore(this.state.shopOwnerID)) {
+            return (
+                <Typography className="padding-top" align="center" variant={"h2"}>
+                    You are not authorized to see this page!
+                </Typography>
+            );
         } else if (this.state.allEvents.length === 0) {
             return (
                 <Typography className="padding-top" align="center" variant={"h2"}>
                     There are no reservations yet!
                 </Typography>
             );
+        } else if (this.state.error) {
+            return <ErrorText message={"There has been an error! Sorry!"} />;
         } else {
             return (
                 <>
