@@ -8,10 +8,10 @@ import Paper from "@material-ui/core/Paper";
 import Chart from "./../components/Stats/Chart";
 import TotalReservations from "./../components/Stats/TotalReservations";
 import Reservations from "./../components/Stats/Reservations";
-import { getStores } from "../api/owner";
 import Loading from "../components/Loading/Loading";
 import { checkMyStore, sortReservations } from "../utils/utils";
 import Typography from "@material-ui/core/Typography";
+import { getStore } from "../api/customer";
 
 const useStyles = makeStyles((theme) => ({
     title: {
@@ -52,13 +52,11 @@ export default function Stats() {
     const { storeID } = useParams();
     useEffect(() => {
         if (!location.shop) {
-            getStores({ store_id: storeID }).then((response) => {
+            getStore(storeID).then((response) => {
                 // will only be one store
                 if (response !== null) {
-                    for (let obj of response) {
-                        setStore(obj);
-                        setOwnerID(obj.store.owner_id);
-                    }
+                    setOwnerID(response.store.owner_id);
+                    setStore(response);
                 }
             });
         } else {

@@ -12,7 +12,6 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Checkbox from "@material-ui/core/Checkbox";
 import ListItemText from "@material-ui/core/ListItemText";
 import _ from "lodash";
-import { getStores } from "../../../api/owner";
 import {
     checkMyStore,
     convertReservationToEvent,
@@ -24,6 +23,8 @@ import Loading from "../../Loading/Loading";
 import Chip from "@material-ui/core/Chip";
 import Typography from "@material-ui/core/Typography";
 import EventFocused from "./EventFocused";
+import { getStore } from "../../../api/customer";
+import ErrorText from "../../Dialog/Error";
 
 class ViewSchedule extends Component {
     constructor(props) {
@@ -41,6 +42,7 @@ class ViewSchedule extends Component {
             showFocused: false,
             focusedEvent: null,
             shopOwnerID: props.location.shopOwnerID,
+            error: false,
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleClickEvent = this.handleClickEvent.bind(this);
@@ -55,24 +57,22 @@ class ViewSchedule extends Component {
             !this.props.location.barbers ||
             !this.props.location.shopOwnerID
         ) {
-            getStores({ store_id: this.state.id }).then((response) => {
+            getStore(this.state.id).then((response) => {
                 let reservations = null;
                 let barbers = null;
                 let hours = null;
                 let shopOwnerID = null;
                 // will only be one store
                 if (response !== null) {
-                    for (let obj of response) {
-                        reservations = obj.reservations.map((reservation) => {
-                            return convertReservationToEvent(
-                                obj.barbers,
-                                reservation
-                            );
-                        });
-                        barbers = obj.barbers;
-                        hours = obj.store.hours;
-                        shopOwnerID = obj.store.owner_id;
-                    }
+                    reservations = response.reservations.map((reservation) => {
+                        return convertReservationToEvent(
+                            response.barbers,
+                            reservation
+                        );
+                    });
+                    barbers = response.barbers;
+                    hours = response.store.hours;
+                    shopOwnerID = response.store.owner_id;
                     this.setState({
                         allEvents: reservations,
                         barbers: barbers,
@@ -83,6 +83,7 @@ class ViewSchedule extends Component {
                     });
                 } else {
                     // this store doesn't exist (should not be possible
+                    this.setState({ error: true });
                 }
             });
         }
@@ -136,6 +137,8 @@ class ViewSchedule extends Component {
                     There are no reservations yet!
                 </Typography>
             );
+        } else if (this.state.error) {
+            return <ErrorText message={"There has been an error! Sorry!"} />;
         } else {
             return (
                 <>
