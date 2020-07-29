@@ -27,9 +27,9 @@ export default function ReservationFocused(props) {
                         <DialogContentText>{props.barberName}</DialogContentText>
                         <DialogContentText>{props.service}</DialogContentText>
                         <DialogContentText>
-                            {convertDateToString(props.slot)}
+                            {convertDateToString(props.from)}
                         </DialogContentText>
-                        <DialogContentText>{props.duration}</DialogContentText>
+                        <DialogContentText>{props.duration + " minutes"}</DialogContentText>
                     </div>
                 </DialogContent>
                 <DialogActions>

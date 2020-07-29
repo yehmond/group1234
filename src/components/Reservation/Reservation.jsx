@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { createStyles, makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
-import { getAvailability, getStore, registerReservation } from "../../api/customer";
-import { useLocation, useHistory } from "react-router-dom";
+import { getAvailability, getStore } from "../../api/customer";
+import { useLocation } from "react-router-dom";
 import Loading from "../Loading/Loading";
 import { RenderSelect } from "../FormFields/FormFields";
 import { getEarliestAndLatest, isShopOpen } from "../../utils/utils";
@@ -18,6 +18,10 @@ const useStyles = makeStyles((theme) =>
             display: "grid",
             justifyItems: "center",
             margin: "3rem",
+            // eslint-disable-next-line
+            ["@media (max-width:1000px)"]: {
+                margin: "0.5rem"
+            },
         },
         paper: {
             width: "100%",
@@ -28,7 +32,6 @@ const useStyles = makeStyles((theme) =>
         wrapper: {
             padding: "2rem",
             display: "grid",
-            gridTemplateRows: "1fr 1fr 1fr 1fr",
             gridRowGap: "2vh",
             textAlign: "center",
         },
@@ -39,6 +42,14 @@ const useStyles = makeStyles((theme) =>
             display: "grid",
             gridTemplateColumns: "1fr 1fr",
             gridColumnGap: "50px",
+            // eslint-disable-next-line
+            ["@media (max-width:1000px)"]: {
+                gridTemplateColumns: "1fr",
+                gridTemplateRows: "1fr 1fr",
+                gridColumnGap: "0px",
+                gridRowGap: "2vh"
+            },
+
         },
         buttonContainer: {
             display: "grid",
@@ -65,7 +76,6 @@ export default function Reservation() {
     const [minTime, setMinTime] = useState(null);
     const [maxTime, setMaxTime] = useState(null);
     const [results, setResults] = useState(null);
-    const [loading, setLoading] = useState(false);
     const defaultDate = new Date();
     defaultDate.setHours(10, 0, 0, 0);
 
@@ -106,7 +116,6 @@ export default function Reservation() {
     };
 
     const checkAvailability = () => {
-        setLoading(true);
         if (selectedBarber.barber_id !== "Any")
             getAvailability(store_id, selectedDate, selectedService, {
                 barber_id: selectedBarber.barber_id,
@@ -114,22 +123,19 @@ export default function Reservation() {
                 if (response) {
                     console.log(response);
                     setResults(response);
-                    setLoading(false);
                 }
             });
         // Any barber
         else
-            getAvailability(store_id, selectedDate, selectedService).then(
+            getAvailability(store_id, selectedDate, selectedService,{}).then(
                 (response) => {
                     if (response) {
                         console.log(response);
                         setResults(response);
-                        setLoading(false);
                     }
                 }
             );
     };
-
     useEffect(() => {
         getStore(store_id).then((res) => {
             res.barbers.unshift({
@@ -138,12 +144,12 @@ export default function Reservation() {
             });
             setStore(res);
         });
-    }, []);
+    }, [user_id, store_id]);
 
-    if (!store || loading) return <Loading />;
+    if (!store) return <Loading />;
     else {
         return (
-            <div className={classes.pageContainer}>
+            <div className={classes.pageContainer} id="make-reservation-page">
                 <div className={classes.paper}>
                     <Paper elevation={2}>
                         <div className={classes.wrapper} id="reserve-form">
@@ -157,9 +163,6 @@ export default function Reservation() {
                                     name="Barber"
                                     required={true}
                                     label="Select Barber"
-                                    value={
-                                        selectedBarber && selectedBarber.barber_id
-                                    }
                                     options={store.barbers.map((barber) => {
                                         return {
                                             name: barber.name,
@@ -172,7 +175,6 @@ export default function Reservation() {
                                     name="Service"
                                     required={true}
                                     label="Select Service"
-                                    value={selectedService}
                                     options={services}
                                     disabled={!selectedBarber}
                                     handleChange={handleServiceChange}
@@ -189,7 +191,7 @@ export default function Reservation() {
                                         dateFormat="MMMM d, yyyy"
                                         onChange={(date) => setSelectedDate(date)}
                                         filterDate={isOpen}
-                                        customInput={<TextField />}
+                                        customInput={<TextField label="Select a Date" />}
                                         placeholderText={"Select a date"}
                                     />
                                 </div>
@@ -207,7 +209,7 @@ export default function Reservation() {
                                         dateFormat="h:mm aa"
                                         minTime={minTime}
                                         maxTime={maxTime}
-                                        customInput={<TextField />}
+                                        customInput={<TextField label="Select a Time"/>}
                                         placeholderText={"Select a time"}
                                     />
                                 </div>
@@ -215,7 +217,7 @@ export default function Reservation() {
                             <div className={classes.buttonContainer}>
                                 <p>
                                     Please select a time and we will find the
-                                    nearest 5 time slots.
+                                    nearest available time slots
                                 </p>
                                 <br />
                                 <Button
@@ -233,13 +235,14 @@ export default function Reservation() {
                         </div>
                     </Paper>
                     {results && (
-                        <div>
+                        <div id="results-reserve">
                             {results.map((result, index) => {
                                 return (
                                     <BarberAvailability
                                         key={index}
                                         barber={result}
                                         service={selectedService}
+                                        storeID={store_id}
                                     />
                                 );
                             })}

@@ -283,6 +283,6 @@ export function isShopOpen(dayOfWeek, hours) {
 }
 
 export function dateToTime(date) {
-    const formatted = moment(date).format("hh:mm a");
-    return moment(date).format("hh:mm a");
+    // TODO: check for timezones
+    return moment(date).local().format("hh:mm a");
 }

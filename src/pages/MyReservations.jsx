@@ -4,7 +4,7 @@ import ReservationTable from "../components/Reservation/ReservationTable";
 import GradeIcon from "@material-ui/icons/Grade";
 import { useHistory } from "react-router-dom";
 import { deleteReservation, getReservations } from "../api/customer";
-import { convertDateToString } from "../utils/utils";
+import { convertDateToString, sortReservations } from "../utils/utils";
 import DeleteIcon from "@material-ui/icons/Delete";
 import DialogMessage from "../components/Dialog/Dialog";
 import Loading from "../components/Loading/Loading";
@@ -58,6 +58,7 @@ export default function MyReservations() {
                 to: new Date(),
             });
             if (past) {
+                past.reservations = sortReservations(past.reservations);
                 for (let reservation of past.reservations) {
                     reservation.from = convertDateToString(reservation.from);
                 }
@@ -68,6 +69,7 @@ export default function MyReservations() {
                 { from: new Date() }
             );
             if (future) {
+                future.reservations = sortReservations(future.reservations);
                 for (let reservation of future.reservations) {
                     reservation.from = convertDateToString(reservation.from);
                 }

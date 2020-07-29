@@ -412,6 +412,8 @@ async function getAvailability(store_id, date, service, body) {
  *
  **************/
 async function registerReservation(user_id, store_id, barber_id, from, service) {
+    console.log(from);
+    console.log(Object.prototype.toString.call(from) === '[object Date]');
     if (user_id.length === 0) {
         alert("customer/registerReservation: user_id is invalid");
         return null;
@@ -424,7 +426,7 @@ async function registerReservation(user_id, store_id, barber_id, from, service) 
         alert("customer/registerReservation: barber_id is invalid");
         return null;
     }
-    if (typeof from !== Date) {
+    if (Object.prototype.toString.call(from) !== '[object Date]') {
         alert("customer/registerReservation: from is invalid");
         return null;
     }
