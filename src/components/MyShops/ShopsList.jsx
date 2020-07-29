@@ -69,8 +69,8 @@ export default function ShopsList() {
                         id: obj.store_id,
                         name: store.name,
                         address: store.address,
-                        lat: parseInt(store.lat),
-                        lon: parseInt(store.lon),
+                        lat: parseFloat(store.lat),
+                        lon: parseFloat(store.lon),
                         city: store.city,
                         province: store.province,
                         website: store.website,
@@ -83,6 +83,7 @@ export default function ShopsList() {
                         reviews: reviews,
                         barbers: barbers,
                         reservations: reservations,
+                        shopOwnerID: store.owner_id,
                     };
                     fetchedShops.push(fetchedShop);
                 }

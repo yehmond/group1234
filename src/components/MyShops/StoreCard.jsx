@@ -126,6 +126,7 @@ class StoreCard extends Component {
                                         ),
                                         barbers: shop.barbers,
                                         hours: shop.hours,
+                                        shopOwnerID: shop.owner_id,
                                     }}
                                 >
                                     <EventIcon className={classes.icon} />

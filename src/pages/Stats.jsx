@@ -8,9 +8,10 @@ import Paper from "@material-ui/core/Paper";
 import Chart from "./../components/Stats/Chart";
 import TotalReservations from "./../components/Stats/TotalReservations";
 import Reservations from "./../components/Stats/Reservations";
-import { getStores } from "../api/owner";
 import Loading from "../components/Loading/Loading";
-import { sortReservations } from "../utils/utils";
+import { checkMyStore, sortReservations } from "../utils/utils";
+import Typography from "@material-ui/core/Typography";
+import { getStore } from "../api/customer";
 
 const useStyles = makeStyles((theme) => ({
     title: {
@@ -18,7 +19,8 @@ const useStyles = makeStyles((theme) => ({
         margin: "0.5rem",
         paddingTop: "1.5rem",
         paddingLeft: "1rem",
-        ["@media (max-width:1000px)"]: { // eslint-disable-line no-useless-computed-key
+        // eslint-disable-next-line
+        ["@media (max-width:1000px)"]: {
             padding: "0",
             margin: "1rem",
         },
@@ -42,22 +44,24 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+// template taken from https://material-ui.com/getting-started/templates/dashboard/
 export default function Stats() {
     const [store, setStore] = useState(null);
+    const [ownerID, setOwnerID] = useState(null);
     const location = useLocation();
     const { storeID } = useParams();
     useEffect(() => {
         if (!location.shop) {
-            getStores({ store_id: storeID }).then((response) => {
+            getStore(storeID).then((response) => {
                 // will only be one store
                 if (response !== null) {
-                    for (let obj of response) {
-                        setStore(obj);
-                    }
+                    setOwnerID(response.store.owner_id);
+                    setStore(response);
                 }
             });
         } else {
             setStore(location.shop);
+            setOwnerID(location.shop.shopOwnerID);
         }
     }, [location.shop, storeID]);
 
@@ -66,6 +70,12 @@ export default function Stats() {
 
     if (!store) {
         return <Loading />;
+    } else if (!checkMyStore(ownerID)) {
+        return (
+            <Typography align="center" variant={"h2"} style={{ "padding": "5vw" }}>
+                You are not authorized to view this page
+            </Typography>
+        );
     } else {
         return (
             <div className={classes.root} id="stats-styling">

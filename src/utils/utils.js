@@ -86,12 +86,6 @@ export function addColonTime(time) {
     }
 }
 
-export function stringTimeToLocalTime(str) {
-    if (str === null || str === undefined || str === "" || str === " ") {
-        return "0000";
-    }
-}
-
 export function refreshPage() {
     window.location.reload();
 }
@@ -275,4 +269,8 @@ export function convertDateToString(date) {
     } else {
         return moment(date).format("MM/DD/YY, h:mm a");
     }
+}
+
+export function checkMyStore(user_id) {
+    return parseInt(user_id) === parseInt(window.localStorage.getItem("id"));
 }

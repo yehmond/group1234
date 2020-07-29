@@ -30,3 +30,13 @@
         }
     }
 }
+
+@media only screen and (max-device-width: 1000px) {
+    .paper-container {
+        h3 {
+            display: grid;
+            align-self: center;
+            font-size: 1rem;
+        }
+    }
+}

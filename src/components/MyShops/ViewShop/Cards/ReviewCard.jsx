@@ -9,7 +9,8 @@ const useStyles = makeStyles({
     root: {
         display: "grid",
         gridTemplateColumns: "0.4fr 0.6fr",
-        ["@media (max-width:1000px)"]: { // eslint-disable-line no-useless-computed-key
+        // eslint-disable-next-line
+        ["@media (max-width:1000px)"]: {
             gridTemplateColumns: "1fr",
         },
     },
