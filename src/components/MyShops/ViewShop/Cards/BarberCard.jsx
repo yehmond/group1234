@@ -110,7 +110,7 @@ export default function BarberCard(props) {
                             }}
                         />
                     </div>
-                    <React.Fragment className={classes.buttonContainer}>
+                    <React.Fragment>
                         {role === "CUSTOMER" && (
                             <Button
                                 className={classes.button}

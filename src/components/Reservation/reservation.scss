@@ -48,3 +48,15 @@
         }
     }
 }
+
+#reserve-form {
+    .react-datepicker-wrapper {
+        width: 100%;
+        .MuiFormControl-root {
+            width: 100%;
+        }
+    }
+    .MuiSelect-root {
+        text-align: start !important;
+    }
+}

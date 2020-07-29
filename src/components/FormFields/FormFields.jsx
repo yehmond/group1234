@@ -44,7 +44,10 @@ export function RenderSelect(props) {
             {props.options &&
                 props.options.map((option) => {
                     return (
-                        <MenuItem key={option.name || option} value={option.value || option}>
+                        <MenuItem
+                            key={option.name || option}
+                            value={option.value || option}
+                        >
                             {option.name || option}
                         </MenuItem>
                     );
@@ -100,24 +103,6 @@ export function RenderTimePicker(props) {
             }}
             inputProps={{
                 step: 1800, // 30 min increment
-            }}
-        />
-    );
-}
-
-export function RenderDatePicker(props) {
-    return (
-        <TextField
-            name={props.name}
-            label={props.label}
-            type="date"
-            defaultValue={props.defaultValue}
-            required
-            value={props.value}
-            onChange={props.handleChange}
-            disabled={props.disabled}
-            InputLabelProps={{
-                shrink: true,
             }}
         />
     );

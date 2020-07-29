@@ -276,8 +276,13 @@ export function checkMyStore(user_id) {
 }
 
 export function isShopOpen(dayOfWeek, hours) {
-    let sundayStart = dayOfWeek++;
-    if(dayOfWeek === 7) sundayStart = 0;
-    return hours[dayOfWeek].isOpen;
+    let mondayStart = dayOfWeek - 1;
+    // this is really sunday
+    if (mondayStart === -1) mondayStart = 6;
+    return hours[mondayStart].isOpen;
+}
 
+export function dateToTime(date) {
+    const formatted = moment(date).format("hh:mm a");
+    return moment(date).format("hh:mm a");
 }
