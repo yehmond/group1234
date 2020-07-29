@@ -10,6 +10,7 @@ import DialogMessage from "../components/Dialog/Dialog";
 import Loading from "../components/Loading/Loading";
 import { Tab, Tabs } from "@material-ui/core";
 import "../components/Reservation/reservation.scss";
+import ErrorText from "../components/Dialog/Error";
 
 const useStyles = makeStyles(() =>
     createStyles({
@@ -78,9 +79,9 @@ export default function MyReservations() {
         }
         fetchReservations();
     }, []);
-
+    if (window.localStorage.getItem("role") === "OWNER")
+        return <ErrorText message={"Sorry, you must register as a customer!"} />;
     if (!past || !future) return <Loading />;
-
     return (
         <div id="my-reservations" className={classes.wrapper}>
             <h1>My Reservations</h1>
@@ -118,6 +119,7 @@ export default function MyReservations() {
                     title={"Success!"}
                     link={"/reservations"}
                     text={"The reservation has been successfully deleted!"}
+                    refresh={true}
                 />
             )}
             {deleteError && (

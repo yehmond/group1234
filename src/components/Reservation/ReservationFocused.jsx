@@ -9,6 +9,10 @@ import { convertDateToString } from "../../utils/utils";
 
 export default function ReservationFocused(props) {
     const handleConfirm = () => {
+        props.handleConfirm();
+    };
+
+    const handleClose = () => {
         props.handleClose();
     };
 
@@ -29,12 +33,17 @@ export default function ReservationFocused(props) {
                         <DialogContentText>
                             {convertDateToString(props.from)}
                         </DialogContentText>
-                        <DialogContentText>{props.duration + " minutes"}</DialogContentText>
+                        <DialogContentText>
+                            {props.duration + " minutes"}
+                        </DialogContentText>
                     </div>
                 </DialogContent>
                 <DialogActions>
                     <Button autoFocus onClick={handleConfirm} color="primary">
                         CONFIRM
+                    </Button>
+                    <Button autoFocus onClick={handleClose} color="primary">
+                        CANCEL
                     </Button>
                 </DialogActions>
             </Dialog>

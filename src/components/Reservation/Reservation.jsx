@@ -5,12 +5,18 @@ import { getAvailability, getStore } from "../../api/customer";
 import { useLocation } from "react-router-dom";
 import Loading from "../Loading/Loading";
 import { RenderSelect } from "../FormFields/FormFields";
-import { getEarliestAndLatest, isShopOpen } from "../../utils/utils";
+import {
+    getEarliestAndLatest,
+    isShopOpen,
+    sortAvailabilities,
+} from "../../utils/utils";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.min.css";
 import TextField from "@material-ui/core/TextField";
 import Paper from "@material-ui/core/Paper";
 import BarberAvailability from "./BarberAvailability";
+import ErrorText from "../Dialog/Error";
+import { Error } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme) =>
     createStyles({
@@ -20,7 +26,7 @@ const useStyles = makeStyles((theme) =>
             margin: "3rem",
             // eslint-disable-next-line
             ["@media (max-width:1000px)"]: {
-                margin: "0.5rem"
+                margin: "0.5rem",
             },
         },
         paper: {
@@ -47,9 +53,8 @@ const useStyles = makeStyles((theme) =>
                 gridTemplateColumns: "1fr",
                 gridTemplateRows: "1fr 1fr",
                 gridColumnGap: "0px",
-                gridRowGap: "2vh"
+                gridRowGap: "2vh",
             },
-
         },
         buttonContainer: {
             display: "grid",
@@ -121,16 +126,28 @@ export default function Reservation() {
                 barber_id: selectedBarber.barber_id,
             }).then((response) => {
                 if (response) {
-                    console.log(response);
+                    for (let obj of response) {
+                        obj.available_time = sortAvailabilities(
+                            obj.available_time,
+                            selectedTime,
+                            selectedDate
+                        );
+                    }
                     setResults(response);
                 }
             });
         // Any barber
         else
-            getAvailability(store_id, selectedDate, selectedService,{}).then(
+            getAvailability(store_id, selectedDate, selectedService, {}).then(
                 (response) => {
                     if (response) {
-                        console.log(response);
+                        for (let obj of response) {
+                            obj.available_time = sortAvailabilities(
+                                obj.available_time,
+                                selectedTime,
+                                selectedDate
+                            );
+                        }
                         setResults(response);
                     }
                 }
@@ -147,6 +164,14 @@ export default function Reservation() {
     }, [user_id, store_id]);
 
     if (!store) return <Loading />;
+    if (!store.barbers || store.barbers.length <= 1)
+        return (
+            <ErrorText
+                message={"Sorry, this barbershop has no barbers; come back later!"}
+            />
+        );
+    if (window.localStorage.getItem("role") === "OWNER")
+        return <ErrorText message={"Sorry, you must register as a customer!"} />;
     else {
         return (
             <div className={classes.pageContainer} id="make-reservation-page">
@@ -191,7 +216,9 @@ export default function Reservation() {
                                         dateFormat="MMMM d, yyyy"
                                         onChange={(date) => setSelectedDate(date)}
                                         filterDate={isOpen}
-                                        customInput={<TextField label="Select a Date" />}
+                                        customInput={
+                                            <TextField label="Select a Date" />
+                                        }
                                         placeholderText={"Select a date"}
                                     />
                                 </div>
@@ -209,7 +236,9 @@ export default function Reservation() {
                                         dateFormat="h:mm aa"
                                         minTime={minTime}
                                         maxTime={maxTime}
-                                        customInput={<TextField label="Select a Time"/>}
+                                        customInput={
+                                            <TextField label="Select a Time" />
+                                        }
                                         placeholderText={"Select a time"}
                                     />
                                 </div>

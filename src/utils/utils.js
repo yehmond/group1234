@@ -263,6 +263,27 @@ export function sortReservations(reservations) {
     });
 }
 
+export function sortAvailabilities(avail, targetTime, targetDate) {
+    const time = new Date(targetTime);
+    const date = new Date(targetDate);
+    const target = new Date(
+        date.getFullYear(),
+        date.getMonth(),
+        date.getDate(),
+        time.getHours(),
+        time.getMinutes(),
+        time.getSeconds()
+    );
+    // filter to 1 hours on either side
+    avail = avail.filter(
+        (avail) =>
+            Math.abs(new Date(avail.from) - new Date(target)) < 60000 * 1 * 60
+    );
+    return avail.sort((a, b) => {
+        return new Date(a.from) - new Date(b.from);
+    });
+}
+
 export function convertDateToString(date) {
     if (!isMobile()) {
         return moment(date).format("MMMM Do YYYY, h:mm a");
@@ -284,5 +305,5 @@ export function isShopOpen(dayOfWeek, hours) {
 
 export function dateToTime(date) {
     // TODO: check for timezones
-    return moment(date).local().format("hh:mm a");
+    return moment(date).format("hh:mm a");
 }

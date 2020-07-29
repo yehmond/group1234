@@ -50,7 +50,6 @@
 }
 
 #make-reservation-page {
-
     #reserve-form {
         .react-datepicker-wrapper {
             width: 100%;
@@ -70,9 +69,17 @@
     }
 
     #results-reserve {
+        display: flex;
+        place-self: center;
         @media only screen and (max-device-width: 1000px) {
+            flex-direction: column;
+
             .MuiPaper-root {
                 padding: 0;
+                margin: 10px 0;
+            }
+            .MuiCardContent-root {
+                padding: 0.5rem;
             }
         }
     }

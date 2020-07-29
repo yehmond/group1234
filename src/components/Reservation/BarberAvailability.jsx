@@ -13,18 +13,19 @@ import DialogMessage from "../Dialog/Dialog";
 const useStyles = makeStyles(() => ({
     root: {
         display: "grid",
-        gridTemplateColumns: "auto 1fr",
+        gridTemplateColumns: "0.25fr 1fr",
         margin: "2rem",
-        // eslint-disable-next-line
-        ["@media (max-width:1000px)"]: {
-            gridTemplateColumns: "1fr",
-            gridTemplateRows: "1f 1fr",
-        },
+        // // eslint-disable-next-line
+        // ["@media (max-width:1000px)"]: {
+        //     gridTemplateColumns: "1fr",
+        //     gridTemplateRows: "1f 1fr",
+        // },
+        width: "350px",
     },
     media: {
         height: 150,
         width: 100,
-        margin: 5,
+        margin: "1rem",
         position: "relative",
         display: "grid",
         alignSelf: "center",
@@ -32,6 +33,7 @@ const useStyles = makeStyles(() => ({
     },
     content: {
         display: "grid",
+        placeItems: "center",
         gridRowGap: "5px",
     },
     chip: {
@@ -52,29 +54,27 @@ export default function BarberAvailability(props) {
 
     const bookReservation = () => {
         registerReservation(
-            window.localStorage.getItem('id'),
+            window.localStorage.getItem("id"),
             props.storeID,
             props.barber.barber_id,
             new Date(from),
             props.service
         ).then((response) => {
             response ? setSuccess(true) : setError(true);
-        })
-    }
-
-    useEffect(() => {
-        from ? setSelect(true) : setSelect(false);
-    },[from])
+        });
+    };
 
     return (
         <>
             <Card raised className={classes.root}>
                 <CardMedia image={props.barber.picture} className={classes.media} />
                 <CardContent className={classes.content}>
-                    <Typography align={isMobile() ? "center" : "left"} variant="h2">
-                        {props.barber.barber_name}
-                    </Typography>
+                    <Typography variant="h6">{props.barber.barber_name}</Typography>
                     <div>
+                        {props.barber.available_time &&
+                            props.barber.available_time.length === 0 && (
+                                <p>Sorry, there are no times for this criteria</p>
+                            )}
                         {props.barber.available_time.map((time, index) => {
                             return (
                                 <Chip
@@ -98,9 +98,13 @@ export default function BarberAvailability(props) {
                     duration={props.barber.duration}
                     barberName={props.barber.barber_name}
                     service={props.service}
-                    handleClose={() => {
+                    handleConfirm={() => {
                         setSelect(false);
                         bookReservation();
+                    }}
+                    handleClose={() => {
+                        setSelect(false);
+                        setFrom(null);
                     }}
                 />
             )}
