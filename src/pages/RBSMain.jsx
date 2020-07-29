@@ -51,7 +51,7 @@ class RBSMain extends Component {
                 <Typography
                     align="center"
                     variant={"h2"}
-                    style={{ "padding": "100px" }}
+                    style={{ "padding": "5vw" }}
                 >
                     You are not authorized to view this page
                 </Typography>
