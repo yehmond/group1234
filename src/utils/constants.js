@@ -25,8 +25,6 @@ export const DAYS_OF_WEEK = [
     "Sunday",
 ];
 
-export const PRICE_RANGE = [1, 2, 3];
-
 export const DAYS_OF_WEEK_ABBR = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
 export const MONTHS_OF_YEAR = [

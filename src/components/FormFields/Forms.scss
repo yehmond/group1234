@@ -28,8 +28,8 @@
     max-width: 700px;
     padding: 20px 0;
     display: grid;
-    grid-template-columns: 4fr 1fr;
-    grid-column-gap: 10px;
+    grid-template-columns: 3fr 1fr;
+    grid-column-gap: 5px;
     align-items: flex-end;
     justify-content: center;
 }
@@ -39,8 +39,8 @@
     max-width: 700px;
     padding: 20px 0;
     display: grid;
-    grid-template-columns: 4fr 1fr 1fr;
-    grid-column-gap: 10px;
+    grid-template-columns: 3fr 1fr 1fr;
+    grid-column-gap: 5px;
     align-items: flex-end;
     justify-content: center;
 }

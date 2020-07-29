@@ -1,12 +1,24 @@
+.hours-fields {
+    display: grid;
+    grid-column-gap: 5px;
+}
+
 .time-input-container {
     display: grid;
-    grid-template-columns:
-        minmax(150px, 0.5fr) minmax(100px, 0.75fr) 25px minmax(100px, 0.75fr)
-        1fr;
+    grid-template-columns: minmax(150px, 0.5fr) 1fr;
     grid-column-gap: 10px;
     align-items: center;
     justify-content: center;
     padding: 2vh 2vw;
+
+    .time-fields {
+        display: grid;
+        grid-template-columns: minmax(100px, 0.75fr) 25px minmax(100px, 0.75fr) 1fr;
+        grid-column-gap: 10px;
+        align-items: center;
+        justify-content: center;
+    }
+
     p {
         text-align: center;
     }
@@ -59,5 +71,23 @@
     .MuiRating-root {
         color: var(--primary);
         justify-self: flex-end;
+    }
+}
+
+@media only screen and (max-device-width: 1000px) {
+    .time-input-container {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 1fr;
+        p {
+            text-align: center;
+        }
+        h2 {
+            font-size: 14px;
+        }
+        .MuiInputBase-root,
+        .MuiFormControlLabel-label {
+            font-size: 0.8rem;
+        }
     }
 }

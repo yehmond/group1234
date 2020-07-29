@@ -20,6 +20,7 @@ class Barbers extends Component {
                                 key={index}
                                 barber={barber}
                                 shopID={this.props.shopID}
+                                shopOwnerID={this.props.shopOwnerID}
                             />
                         );
                     })}
