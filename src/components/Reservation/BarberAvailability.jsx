@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Typography from "@material-ui/core/Typography";
 import Card from "@material-ui/core/Card";
 import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
-import { dateToTime, isMobile } from "../../utils/utils";
+import { dateToTime } from "../../utils/utils";
 import Chip from "@material-ui/core/Chip";
 import { makeStyles } from "@material-ui/core/styles";
 import ReservationFocused from "./ReservationFocused";
@@ -15,11 +15,6 @@ const useStyles = makeStyles(() => ({
         display: "grid",
         gridTemplateColumns: "0.25fr 1fr",
         margin: "2rem",
-        // // eslint-disable-next-line
-        // ["@media (max-width:1000px)"]: {
-        //     gridTemplateColumns: "1fr",
-        //     gridTemplateRows: "1f 1fr",
-        // },
         width: "350px",
     },
     media: {
@@ -73,7 +68,7 @@ export default function BarberAvailability(props) {
                     <div>
                         {props.barber.available_time &&
                             props.barber.available_time.length === 0 && (
-                                <p>Sorry, there are no times for this criteria</p>
+                                <p>Sorry, there are no times for this barber</p>
                             )}
                         {props.barber.available_time.map((time, index) => {
                             return (

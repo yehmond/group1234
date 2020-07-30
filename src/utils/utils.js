@@ -234,6 +234,23 @@ export function getEarliestAndLatest(hours) {
     return [minTime, maxTime];
 }
 
+// returns tuple, [0] is earliest, [1] is latest
+export function getEarliestAndLatestFromDay(schedule, date) {
+    const minTime = new Date();
+    const maxTime = new Date();
+    const today = new Date(date);
+    const dayOfWeek = mondayStart(today.getDay());
+    let earliestTime = schedule[dayOfWeek].from;
+    let latestTime = schedule[dayOfWeek].to;
+    let earliestHours = parseInt(earliestTime.substring(0, 2));
+    let earliestMins = parseInt(earliestTime.substring(2));
+    let latestHours = parseInt(latestTime.substring(0, 2));
+    let latestMins = parseInt(latestTime.substring(2));
+    minTime.setHours(earliestHours, earliestMins, 0);
+    maxTime.setHours(latestHours, latestMins, 0);
+    return [minTime, maxTime];
+}
+
 export function reservationDate(reservation) {
     const date = new Date(reservation.to);
     if (!isMobile()) {
@@ -294,6 +311,13 @@ export function convertDateToString(date) {
 
 export function checkMyStore(user_id) {
     return parseInt(user_id) === parseInt(window.localStorage.getItem("id"));
+}
+
+export function mondayStart(dayOfWeek, hours) {
+    let mondayStart = dayOfWeek - 1;
+    // this is really sunday
+    if (mondayStart === -1) mondayStart = 6;
+    return mondayStart;
 }
 
 export function isShopOpen(dayOfWeek, hours) {

@@ -56,11 +56,10 @@ const useStyles = makeStyles(() => ({
         justifyContent: "center",
     },
     button: {
-        display: "block",
+        display: "grid",
         width: "80%",
-        marginLeft: "auto",
-        marginRight: "auto",
-        textAlign: "center",
+        placeSelf: "center",
+        maxWidth: "250px"
     },
     icon: {
         "&:hover": {

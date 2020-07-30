@@ -6,7 +6,7 @@ import { useLocation } from "react-router-dom";
 import Loading from "../Loading/Loading";
 import { RenderSelect } from "../FormFields/FormFields";
 import {
-    getEarliestAndLatest,
+    getEarliestAndLatest, getEarliestAndLatestFromDay,
     isShopOpen,
     sortAvailabilities,
 } from "../../utils/utils";
@@ -16,7 +16,6 @@ import TextField from "@material-ui/core/TextField";
 import Paper from "@material-ui/core/Paper";
 import BarberAvailability from "./BarberAvailability";
 import ErrorText from "../Dialog/Error";
-import { Error } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme) =>
     createStyles({
@@ -81,6 +80,7 @@ export default function Reservation() {
     const [minTime, setMinTime] = useState(null);
     const [maxTime, setMaxTime] = useState(null);
     const [results, setResults] = useState(null);
+    const [noResults, setNoResults] = useState(false);
     const defaultDate = new Date();
     defaultDate.setHours(10, 0, 0, 0);
 
@@ -103,6 +103,13 @@ export default function Reservation() {
 
     const handleServiceChange = (event) => {
         setSelectedService(event.target.value);
+    };
+
+    const handleDateChange = (date) => {
+        setSelectedDate(date);
+        const min = getEarliestAndLatestFromDay(selectedBarber.schedule, date);
+        setMinTime(min[0]);
+        setMaxTime(min[1]);
     };
 
     const isFormValid = () => {
@@ -133,7 +140,11 @@ export default function Reservation() {
                             selectedDate
                         );
                     }
+                    setNoResults(false);
                     setResults(response);
+                } else {
+                    setResults(null);
+                    setNoResults(true);
                 }
             });
         // Any barber
@@ -148,7 +159,11 @@ export default function Reservation() {
                                 selectedDate
                             );
                         }
+                        setNoResults(false);
                         setResults(response);
+                    } else {
+                        setResults(null);
+                        setNoResults(true);
                     }
                 }
             );
@@ -158,6 +173,7 @@ export default function Reservation() {
             res.barbers.unshift({
                 name: "Any",
                 barber_id: "Any",
+                schedule: res.store.hours
             });
             setStore(res);
         });
@@ -214,7 +230,7 @@ export default function Reservation() {
                                         }
                                         minDate={new Date()}
                                         dateFormat="MMMM d, yyyy"
-                                        onChange={(date) => setSelectedDate(date)}
+                                        onChange={(date) => handleDateChange(date)}
                                         filterDate={isOpen}
                                         customInput={
                                             <TextField label="Select a Date" />
@@ -226,7 +242,7 @@ export default function Reservation() {
                                     <DatePicker
                                         selected={selectedTime}
                                         disabled={
-                                            !selectedBarber || !selectedService
+                                            !selectedBarber || !selectedService || !selectedDate
                                         }
                                         onChange={(time) => setSelectedTime(time)}
                                         showTimeSelect
@@ -245,8 +261,8 @@ export default function Reservation() {
                             </div>
                             <div className={classes.buttonContainer}>
                                 <p>
-                                    Please select a time and we will find the
-                                    nearest available time slots
+                                    Please select a time and we will find timeslots
+                                    up to 1 hr ahead/behind.
                                 </p>
                                 <br />
                                 <Button
@@ -276,6 +292,9 @@ export default function Reservation() {
                                 );
                             })}
                         </div>
+                    )}
+                    {noResults && (
+                        <ErrorText message={"That search returned zero results. Try again."}/>
                     )}
                 </div>
             </div>
