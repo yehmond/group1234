@@ -59,7 +59,7 @@ const useStyles = makeStyles(() => ({
         display: "grid",
         width: "80%",
         placeSelf: "center",
-        maxWidth: "250px"
+        maxWidth: "250px",
     },
     icon: {
         "&:hover": {

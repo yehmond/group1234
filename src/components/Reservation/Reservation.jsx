@@ -6,7 +6,8 @@ import { useLocation } from "react-router-dom";
 import Loading from "../Loading/Loading";
 import { RenderSelect } from "../FormFields/FormFields";
 import {
-    getEarliestAndLatest, getEarliestAndLatestFromDay,
+    getEarliestAndLatest,
+    getEarliestAndLatestFromDay,
     isShopOpen,
     sortAvailabilities,
 } from "../../utils/utils";
@@ -173,7 +174,7 @@ export default function Reservation() {
             res.barbers.unshift({
                 name: "Any",
                 barber_id: "Any",
-                schedule: res.store.hours
+                schedule: res.store.hours,
             });
             setStore(res);
         });
@@ -242,7 +243,9 @@ export default function Reservation() {
                                     <DatePicker
                                         selected={selectedTime}
                                         disabled={
-                                            !selectedBarber || !selectedService || !selectedDate
+                                            !selectedBarber ||
+                                            !selectedService ||
+                                            !selectedDate
                                         }
                                         onChange={(time) => setSelectedTime(time)}
                                         showTimeSelect
@@ -294,7 +297,11 @@ export default function Reservation() {
                         </div>
                     )}
                     {noResults && (
-                        <ErrorText message={"That search returned zero results. Try again."}/>
+                        <ErrorText
+                            message={
+                                "That search returned zero results. Try again."
+                            }
+                        />
                     )}
                 </div>
             </div>
