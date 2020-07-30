@@ -1,18 +1,38 @@
 import React, { useState, useEffect } from "react";
 import Button from "@material-ui/core/Button";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
-import Typography from "@material-ui/core/Typography";
-import { parseSearchURL, setQueryString } from "../../utils/utils";
+import { setQueryString } from "../../utils/utils";
 import { useLocation, useHistory } from "react-router-dom";
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles(() => ({
+    container: {
+        width: "100%",
+    },
+}));
+
+function getPriceFromUrl() {
+    const params = new URLSearchParams(window.location.search);
+    const price = params.get("price");
+    if (price) {
+        return price
+            .split(",")
+            .map((str) => Number(str))
+            .filter((num) => [1, 2, 3].includes(num))
+            .sort();
+    }
+    return null;
+}
 
 export default function PriceFilter() {
+    const classes = useStyles();
     const location = useLocation();
     const history = useHistory();
     const [priceState, setPriceState] = useState([]);
 
     useEffect(() => {
-        const { price } = parseSearchURL();
-        if (price?.length > 0) {
+        const price = getPriceFromUrl();
+        if (price && price.length > 0) {
             setPriceState(price);
         }
     }, [location]);
@@ -29,10 +49,7 @@ export default function PriceFilter() {
     }
 
     return (
-        <div>
-            <Typography id="rating-slider" gutterBottom>
-                Price Range
-            </Typography>
+        <div className={classes.container}>
             <ButtonGroup
                 color="primary"
                 aria-label="outlined primary button group"

@@ -3,10 +3,18 @@ import FormControl from "@material-ui/core/FormControl";
 import FormGroup from "@material-ui/core/FormGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
-import Typography from "@material-ui/core/Typography";
-import { parseSearchURL, setQueryString } from "../../utils/utils";
+import { setQueryString } from "../../utils/utils";
 import { useLocation, useHistory } from "react-router-dom";
 import { getNeighbourhoods } from "../../api/customer";
+
+function getNeighbourhoodsFromUrl() {
+    const params = new URLSearchParams(window.location.search);
+    const neighbourhoods = params.get("neighbourhoods");
+    if (neighbourhoods && neighbourhoods.length !== 0) {
+        return neighbourhoods.split(",");
+    }
+    return null;
+}
 
 export default function NeighbourhoodFilter() {
     const location = useLocation();
@@ -15,7 +23,7 @@ export default function NeighbourhoodFilter() {
     const [options, setOptions] = useState([]);
 
     useEffect(() => {
-        const { neighbourhoods } = parseSearchURL();
+        const neighbourhoods = getNeighbourhoodsFromUrl();
         if (neighbourhoods) {
             setNeighbourhood(neighbourhoods);
         }
@@ -45,7 +53,6 @@ export default function NeighbourhoodFilter() {
     return (
         <div>
             <FormControl component="fieldset">
-                <Typography gutterBottom>Neighbourhoods</Typography>
                 <FormGroup>
                     {options.slice(0, 20).map((neighbourhood) => {
                         return (

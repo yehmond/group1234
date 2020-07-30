@@ -12,13 +12,18 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import AlertBox from "../../../Dialog/Alert";
 import { deleteBarbers } from "../../../../api/owner";
-import { refreshPage } from "../../../../utils/utils";
+import { checkMyStore, isMobile, refreshPage } from "../../../../utils/utils";
 
 const useStyles = makeStyles(() => ({
     root: {
         display: "grid",
         gridTemplateColumns: "auto 1fr",
         margin: "1rem 0",
+        // eslint-disable-next-line
+        ["@media (max-width:1000px)"]: {
+            gridTemplateColumns: "1fr",
+            gridTemplateRows: "1f 1fr",
+        },
     },
     media: {
         height: 300,
@@ -28,6 +33,11 @@ const useStyles = makeStyles(() => ({
         display: "grid",
         alignSelf: "center",
         justifySelf: "center",
+        // eslint-disable-next-line
+        ["@media (max-width:1000px)"]: {
+            height: 250,
+            width: 300,
+        },
     },
     content: {
         display: "grid",
@@ -74,7 +84,9 @@ export default function BarberCard(props) {
             <Card className={classes.root}>
                 <CardMedia image={props.barber.picture} className={classes.media} />
                 <CardContent className={classes.content}>
-                    <Typography variant="h2">{props.barber.name}</Typography>
+                    <Typography align={isMobile() ? "center" : "left"} variant="h4">
+                        {props.barber.name}
+                    </Typography>
                     <p>{props.barber.description}</p>
                     <div>
                         {props.barber.services.map((service) => {
@@ -98,7 +110,7 @@ export default function BarberCard(props) {
                             }}
                         />
                     </div>
-                    <div className={classes.buttonContainer}>
+                    <React.Fragment className={classes.buttonContainer}>
                         {role === "CUSTOMER" && (
                             <Button
                                 className={classes.button}
@@ -107,10 +119,10 @@ export default function BarberCard(props) {
                                 component={Link}
                                 to={`/reserve/${props.shopID}`}
                             >
-                                Make Reservation
+                                RESERVE
                             </Button>
                         )}
-                        {role === "OWNER" && (
+                        {role === "OWNER" && checkMyStore(props.shopOwnerID) && (
                             <Button
                                 className={classes.button}
                                 color="secondary"
@@ -122,7 +134,7 @@ export default function BarberCard(props) {
                                 DELETE BARBER
                             </Button>
                         )}
-                    </div>
+                    </React.Fragment>
                 </CardContent>
             </Card>
             {deleteDialog && (

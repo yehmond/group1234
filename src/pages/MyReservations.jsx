@@ -9,6 +9,7 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import DialogMessage from "../components/Dialog/Dialog";
 import Loading from "../components/Loading/Loading";
 import { Tab, Tabs } from "@material-ui/core";
+import "../components/Reservation/reservation.scss";
 
 const useStyles = makeStyles(() =>
     createStyles({
@@ -24,9 +25,9 @@ export default function MyReservations() {
     const classes = useStyles();
     const history = useHistory();
     const columns = [
-        { title: "Time", field: "from" },
-        { title: "Barbershop", field: "store_name" },
-        { title: "Barber Name", field: "barber_name" },
+        { title: "Time", field: "from", editable: "never" },
+        { title: "Barbershop", field: "store_name", editable: "never" },
+        { title: "Barber Name", field: "barber_name", editable: "never" },
     ];
     const [past, setPast] = React.useState(null);
     const [future, setFuture] = React.useState(null);
@@ -79,7 +80,7 @@ export default function MyReservations() {
     if (!past || !future) return <Loading />;
 
     return (
-        <div className={classes.wrapper}>
+        <div id="my-reservations" className={classes.wrapper}>
             <h1>My Reservations</h1>
             <Tabs
                 value={showPage}

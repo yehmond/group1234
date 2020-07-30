@@ -20,8 +20,6 @@ export function RenderTextfield(props) {
             onChange={props.handleChange}
             rows={4}
             value={props.value}
-            // error={}
-            // helperText={}
             className={"field-" + props.fieldWidth}
         />
     );
@@ -40,8 +38,6 @@ export function RenderSelect(props) {
             defaultValue={""}
             id={props.id}
             value={props.value}
-            // error={}
-            // helperText={}
             className={"field-" + props.fieldWidth}
         >
             {props.options &&
@@ -135,7 +131,6 @@ export function RenderDropzone(props) {
             <DropzoneArea
                 acceptedFiles={props.acceptedFiles}
                 dropzoneText={props.dropzoneText}
-                // onChange={props.handleChange}
                 initialFiles={props.value}
                 filesLimit={props.filesLimit}
                 onDrop={onDropHandler}

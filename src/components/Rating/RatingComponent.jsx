@@ -22,8 +22,7 @@ const useStyles = makeStyles((theme) => ({
     wrapper: {
         margin: "3rem",
         display: "grid",
-        gridTemplateRows: "1fr 1fr 1fr 1fr 1fr",
-        gridRowGap: "10px",
+        gridRowGap: "15px",
         alignItems: "center",
         textAlign: "center",
     },
@@ -46,8 +45,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function RatingComponent() {
     const history = useHistory();
-    const path = history.location.pathname;
-    const userID = window.localStorage.getItem('id');
+    const userID = window.localStorage.getItem("id");
     const search = new URLSearchParams(history.location.search);
     const storeID = search.get("store");
     const barberID = search.get("barber");
@@ -109,7 +107,7 @@ export default function RatingComponent() {
                 variant="outlined"
                 multiline={true}
                 rows={3}
-                onChange={(event, value) => {
+                onChange={(event) => {
                     setContent(event.target.value);
                 }}
                 InputProps={{

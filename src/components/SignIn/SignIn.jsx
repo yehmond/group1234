@@ -48,6 +48,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+// template from https://github.com/mui-org/material-ui/tree/master/docs/src/pages/getting-started/templates/sign-in
 export default function SignIn() {
     const classes = useStyles();
     const dispatch = useDispatch();

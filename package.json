@@ -8,11 +8,6 @@
         "@material-ui/icons": "^4.9.1",
         "@material-ui/lab": "^4.0.0-alpha.55",
         "@material-ui/pickers": "^3.2.10",
-        "@mdi/js": "^5.3.45",
-        "@mdi/react": "^1.4.0",
-        "@testing-library/jest-dom": "^4.2.4",
-        "@testing-library/react": "^9.3.2",
-        "@testing-library/user-event": "^7.1.2",
         "axios": "^0.19.2",
         "clsx": "^1.1.1",
         "google-maps-react": "^2.0.6",
@@ -70,7 +65,8 @@
         "eslint-plugin-react": "^7.20.0",
         "husky": "^4.2.5",
         "prettier": "^2.0.5",
-        "redux-devtools-extension": "^2.13.8"
+        "redux-devtools-extension": "^2.13.8",
+        "node-sass": "^4.14.1"
     },
     "proxy": "http://localhost:5000"
 }

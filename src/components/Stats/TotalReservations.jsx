@@ -9,6 +9,7 @@ const useStyles = makeStyles({
     },
 });
 
+// template taken from https://material-ui.com/getting-started/templates/dashboard/
 export default function TotalReservations(props) {
     const classes = useStyles();
     return (

@@ -2,6 +2,7 @@ import { searchStores } from "../api/customer";
 import { RESULTS_PER_PAGE } from "../pages/Browse";
 import { parseSearchURL } from "../utils/utils";
 import { SERVICES_OFFERED } from "../utils/constants";
+import moment from "moment";
 
 export const SEARCH_LOADING = "SEARCH_LOADING";
 export const SEARCH_SUCCESS = "SEARCH_SUCCESS";
@@ -29,6 +30,15 @@ export function searchError(error) {
 
 export function search() {
     const queryObj = parseSearchURL();
+
+    if (queryObj.date) {
+        queryObj.date = moment(queryObj.date, "YYYY-MM-DD").toDate();
+    }
+
+    if (queryObj.time) {
+        queryObj.time = moment(queryObj.time, "HH:mm").toDate();
+    }
+
     if (queryObj.price?.length === 0) {
         queryObj.price = String([1, 2, 3]);
     }
