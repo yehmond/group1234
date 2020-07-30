@@ -69,7 +69,7 @@ async function getStore(store_id) {
  *              (number)     time_frame             - number of minutes to look around the selected time, requires time and date
  *
  *
- * Return:   SUCCESS            - {count: number, stores: [{..., available_time: [{barber_id, number, barber_name: string, from: Date}]} }]}
+ * Return:   SUCCESS            - {count: number, stores: [{..., available_time: [{barber_id, number, barber_name: string, from: Date, to: Date}]} }]}
  *           NOT FOUND          - null
  *           SERVER ERROR       - null
  *
