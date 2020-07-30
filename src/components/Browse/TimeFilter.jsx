@@ -25,17 +25,24 @@ export default function TimeFilter() {
     const classes = useStyles();
     const location = useLocation();
     const history = useHistory();
-    const [selectedTime, setSelectedTime] = useState(new Date());
+    const [selectedTime, setSelectedTime] = useState(null);
     const [typingTimeout, setTypingTimeout] = useState();
 
     useEffect(() => {
         const time = getTimeFromUrl();
         if (time) {
             setSelectedTime(time);
+        } else {
+            setSelectedTime(null);
         }
     }, [location]);
 
     function handleChange(time) {
+        if (time === null) {
+            setSelectedTime(null);
+            setQueryString({ time: "" }, history, true);
+            return;
+        }
         clearTimeout(typingTimeout);
         setTypingTimeout(
             setTimeout(() => {
@@ -56,8 +63,8 @@ export default function TimeFilter() {
             <div className={classes.pickerContainer}>
                 <KeyboardTimePicker
                     className={classes.input}
-                    disableToolbar
-                    variant="inline"
+                    variant="dialogue"
+                    clearable
                     inputVariant="outlined"
                     mask="__:__ _M"
                     fullWidth={true}

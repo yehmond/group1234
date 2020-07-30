@@ -29,13 +29,27 @@ export function searchError(error) {
 }
 
 export function search() {
+    const queryParams = getQueryParams();
+    return (dispatch) => {
+        dispatch(searchLoading());
+        searchStores(RESULTS_PER_PAGE, queryParams).then((response) => {
+            if (response) {
+                dispatch(searchSuccess(response));
+            } else {
+                dispatch(searchError(response));
+            }
+        });
+    };
+}
+
+function getQueryParams() {
     const queryObj = parseSearchURL();
 
-    if (queryObj.date) {
+    if (queryObj.date && moment(queryObj.date).isValid()) {
         queryObj.date = moment(queryObj.date, "YYYY-MM-DD").toDate();
     }
 
-    if (queryObj.time) {
+    if (queryObj.time && moment(queryObj.time).isValid()) {
         queryObj.time = moment(queryObj.time, "HH:mm").toDate();
     }
 
@@ -61,14 +75,15 @@ export function search() {
         queryObj.startIndex = (queryObj.page - 1) * RESULTS_PER_PAGE;
     }
 
-    return (dispatch) => {
-        dispatch(searchLoading());
-        searchStores(RESULTS_PER_PAGE, queryObj).then((response) => {
-            if (response) {
-                dispatch(searchSuccess(response));
-            } else {
-                dispatch(searchError(response));
-            }
-        });
-    };
+    return removeEmptyParams(queryObj);
+}
+
+function removeEmptyParams(queryObj) {
+    Object.keys(queryObj).forEach((key) =>
+        queryObj[key] === undefined || queryObj[key].length === 0
+            ? delete queryObj[key]
+            : null
+    );
+
+    return queryObj;
 }

@@ -13,6 +13,8 @@ export default function BrowseCards({
     city,
     province,
     picture,
+    neighbourhood,
+    available_time,
 }) {
     const size = useWindowSize();
 
@@ -28,7 +30,9 @@ export default function BrowseCards({
                 address={address}
                 city={city}
                 province={province}
+                neighbourhood={neighbourhood}
                 picture={picture}
+                available_time={available_time}
             />
         );
     } else {
@@ -44,7 +48,9 @@ export default function BrowseCards({
                     address={address}
                     city={city}
                     province={province}
+                    neighbourhood={neighbourhood}
                     picture={picture}
+                    available_time={available_time}
                 />
             </div>
         );
