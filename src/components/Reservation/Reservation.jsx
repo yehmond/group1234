@@ -92,13 +92,8 @@ export default function Reservation() {
         setSelectedBarber(barber);
         if (event.target.value === "Any") {
             setServices(store.store.services);
-            setMinTime(getEarliestAndLatest(store.store.hours)[0]);
-            setMaxTime(getEarliestAndLatest(store.store.hours)[1]);
         } else {
-            const servicesByBarber = barber.services.map((obj) => obj.service);
-            setServices(servicesByBarber);
-            setMinTime(getEarliestAndLatest(barber.schedule)[0]);
-            setMaxTime(getEarliestAndLatest(barber.schedule)[1]);
+            setServices(barber.schedule);
         }
     };
 
