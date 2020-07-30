@@ -74,6 +74,7 @@ async function getStore(store_id) {
  *           SERVER ERROR       - null
  *
  * Notes:    for empty optional params, omit the key from the object. If no optional params, please pass an empty object
+ *           if date, time, and time_frame is selected, only the available times of the first service in the services array will be returned
  *
  **************/
 async function searchStores(count, body) {
