@@ -360,6 +360,7 @@ async function getReservations(user_id, body) {
  *               (number)   barber_id       - barber desired
  *
  * Return:   SUCCESS            - [{store_id: number, barber_id: number, barber_name: string, picture: (base64) string, available_time: [{from: Date, to: Date}]}]
+ *           NO AVAILABLE TIMES - []
  *           NOT FOUND          - null
  *           OTHER ERRORS       - null
  *
