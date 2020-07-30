@@ -65,15 +65,16 @@ async function getStore(store_id) {
  *              (number)     rating                 - minimum rating
  *              (array[number])     price           - price array of prices (1-3)
  *              (Date)       date                   - date to inquire
- *              (Date)       time                   - time to inquire
- *              (number)     available_count        - number of available times to return per store
+ *              (Date)       time                   - time to inquire, requires date and time_frame
+ *              (number)     time_frame             - number of minutes to look around the selected time, requires time and date
  *
  *
- * Return:   SUCCESS            - {count: number, stores: [{..., available_time: [{barber_id, number, barber_name: string, from: Date}]} }]}
+ * Return:   SUCCESS            - {count: number, stores: [{..., available_time: [{barber_id, number, barber_name: string, from: Date, to: Date}]} }]}
  *           NOT FOUND          - null
  *           SERVER ERROR       - null
  *
  * Notes:    for empty optional params, omit the key from the object. If no optional params, please pass an empty object
+ *           if date, time, and time_frame is selected, only the available times of the first service in the services array will be returned
  *
  **************/
 async function searchStores(count, body) {
@@ -358,7 +359,8 @@ async function getReservations(user_id, body) {
  *           (object)     body              - (optional) object body that can contain the following optional keys:
  *               (number)   barber_id       - barber desired
  *
- * Return:   SUCCESS            - [{barber_id: number, barber_name: string, picture: (base64) string, available_time: [{from: Date, to: Date}]}]
+ * Return:   SUCCESS            - [{store_id: number, barber_id: number, barber_name: string, picture: (base64) string, available_time: [{from: Date, to: Date}]}]
+ *           NO AVAILABLE TIMES - []
  *           NOT FOUND          - null
  *           OTHER ERRORS       - null
  *
