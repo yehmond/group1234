@@ -179,11 +179,12 @@ async function getReviews(user_id) {
  *
  * Purpose:  Make a new review
  *
- * Parms:    (number)     user_id     - id of the user
- *           (number)     store_id    - id of the store
- *           (number)     barber_id   - id of the barber
- *           (string)     review      - message left by reviewer
- *           (number)     rating      - rating from 1 to 5
+ * Parms:    (number)     user_id        - id of the user
+ *           (number)     store_id       - id of the store
+ *           (number)     barber_id      - id of the barber
+ *           (number)     reservation_id - id of the reservation under review
+ *           (string)     review         - message left by reviewer
+ *           (number)     rating         - rating from 1 to 5
  *           (SERVICES_OFFERED)  service   - type of service
  *
  * Return:   SUCCESS            - {review_id: string}
@@ -197,6 +198,7 @@ async function registerReview(
     user_id,
     store_id,
     barber_id,
+    reservation_id,
     review,
     rating,
     service
@@ -211,6 +213,10 @@ async function registerReview(
     }
     if (barber_id.length === 0) {
         alert("customer/registerReview: barber_id is invalid");
+        return null;
+    }
+    if (reservation_id.length === 0) {
+        alert("customer/registerReview: reservation_id is invalid");
         return null;
     }
     if (review.length === 0) {
@@ -230,6 +236,7 @@ async function registerReview(
         user_id,
         store_id,
         barber_id,
+        reservation_id,
         review,
         rating,
         service,
