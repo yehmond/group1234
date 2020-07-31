@@ -341,3 +341,4 @@ export function dateToTime(date) {
     // TODO: check for timezones
     return moment(date).format("hh:mm a");
 }
+
