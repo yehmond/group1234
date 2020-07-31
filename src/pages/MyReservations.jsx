@@ -42,7 +42,7 @@ export default function MyReservations() {
 
     const handleRate = (rowData) => {
         history.push(
-            `/reservations/${rowData.reservation_id}/rate?store=${rowData.store_id}&barber=${rowData.barber_id}&storename=${rowData.store_name}`
+            `/reservations/${rowData.reservation_id}/rate?store=${rowData.store_id}&barber=${rowData.barber_id}&storename=${rowData.store_name}&reservation=${rowData.reservation_id}`
         );
     };
 
@@ -51,6 +51,10 @@ export default function MyReservations() {
             if (response) setDeleteSuccess(true);
             if (!response) setDeleteError(true);
         });
+    };
+
+    const disableReview = (rowData) => {
+        return rowData.reviewed;
     };
 
     useEffect(() => {
@@ -107,10 +111,12 @@ export default function MyReservations() {
                 <ReservationTable
                     tableTitle="Past Details"
                     actionTooltip="Rate"
+                    disabledTooltip="Already rated"
                     data={past}
                     columns={columns}
                     actionIcon={GradeIcon}
                     actionFunction={handleRate}
+                    disabled={disableReview}
                 />
             )}
 
@@ -127,6 +133,7 @@ export default function MyReservations() {
                     title={"Error!"}
                     link={"/reservations"}
                     text={"The reservation was not deleted. Try again."}
+                    refresh={true}
                 />
             )}
         </div>

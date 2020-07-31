@@ -42,13 +42,19 @@ export default function ReservationTable(props) {
                     data={props.data}
                     options={options}
                     actions={[
-                        {
+                        (rowData) => ({
                             icon: props.actionIcon,
-                            tooltip: props.actionTooltip,
+                            tooltip:
+                                props.disabled && props.disabled(rowData) === true
+                                    ? props.disabledTooltip
+                                    : props.actionTooltip,
+                            disabled: props.disabled
+                                ? props.disabled(rowData)
+                                : false,
                             onClick: (event, rowData) => {
                                 props.actionFunction(rowData);
                             },
-                        },
+                        }),
                     ]}
                 />
             </div>

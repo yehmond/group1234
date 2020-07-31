@@ -51,6 +51,7 @@ export default function RatingComponent() {
     const storeID = search.get("store");
     const barberID = search.get("barber");
     const storeName = search.get("storename");
+    const reserveID = search.get("reservation");
     const [rating, setRating] = React.useState(0);
     const [content, setContent] = React.useState("");
     const [service, setService] = React.useState("");
@@ -64,12 +65,18 @@ export default function RatingComponent() {
     };
 
     const handleSubmit = () => {
-        registerReview(userID, storeID, barberID, content, rating, service).then(
-            (response) => {
-                if (response) setSuccess(true);
-                if (!response) setError(true);
-            }
-        );
+        registerReview(
+            userID,
+            storeID,
+            barberID,
+            reserveID,
+            content,
+            rating,
+            service
+        ).then((response) => {
+            if (response) setSuccess(true);
+            if (!response) setError(true);
+        });
     };
 
     if (window.localStorage.getItem("role") === "OWNER")
