@@ -93,7 +93,8 @@ export default function Reservation() {
         if (event.target.value === "Any") {
             setServices(store.store.services);
         } else {
-            setServices(barber.schedule);
+            let servicesMapped = barber.services.map(entry => entry.service);
+            setServices(servicesMapped);
         }
     };
 
