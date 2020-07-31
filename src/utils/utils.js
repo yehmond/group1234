@@ -246,7 +246,16 @@ export function getEarliestAndLatestFromDay(schedule, date) {
     let earliestMins = parseInt(earliestTime.substring(2));
     let latestHours = parseInt(latestTime.substring(0, 2));
     let latestMins = parseInt(latestTime.substring(2));
-    minTime.setHours(earliestHours, earliestMins, 0);
+    if (
+        today.getFullYear() === minTime.getFullYear() &&
+        today.getMonth() === minTime.getMonth() &&
+        today.getDate() === minTime.getDate()
+    ) {
+        // it is today, so return min that is past the current time
+        minTime.setHours(minTime.getHours(), minTime.getMinutes() + 5, 0);
+    } else {
+        minTime.setHours(earliestHours, earliestMins, 0);
+    }
     maxTime.setHours(latestHours, latestMins, 0);
     return [minTime, maxTime];
 }
@@ -294,7 +303,8 @@ export function sortAvailabilities(avail, targetTime, targetDate) {
     // filter to 1 hours on either side
     avail = avail.filter(
         (avail) =>
-            Math.abs(new Date(avail.from) - new Date(target)) < 60000 * 1 * 60
+            Math.abs(new Date(avail.from) - new Date(target)) < 60000 * 1 * 60 &&
+            new Date(avail.from) > new Date()
     );
     return avail.sort((a, b) => {
         return new Date(a.from) - new Date(b.from);
