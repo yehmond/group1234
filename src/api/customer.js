@@ -59,21 +59,22 @@ async function getStore(store_id) {
  * Parms:    (number)     count                  - number of stores to return
  *           (object)     body                   - (optional) object body that can contain the following optional keys:
  *              (number)     startIndex             - index of the first store object to return
- *              (string)     string                 - string to match for a store
+ *              (string)     string                 - string to match for a store (temporary)
  *              (array[string)     neighbourhood    - neighbourhoods to find stores around
  *              (array[SERVICES_OFFERED])  services - array of services offered
  *              (number)     rating                 - minimum rating
  *              (array[number])     price           - price array of prices (1-3)
  *              (Date)       date                   - date to inquire
- *              (Date)       time                   - time to inquire
- *              (number)     available_count        - number of available times to return per store
+ *              (Date)       time                   - time to inquire, requires date and time_frame
+ *              (number)     time_frame             - number of minutes to look around the selected time, requires time and date
  *
  *
- * Return:   SUCCESS            - {count: number, stores: [{..., available_time: [{barber_id, number, barber_name: string, from: Date}]} }]}
+ * Return:   SUCCESS            - {count: number, stores: [{..., available_time: [{barber_id, number, barber_name: string, from: Date, to: Date}]} }]}
  *           NOT FOUND          - null
  *           SERVER ERROR       - null
  *
  * Notes:    for empty optional params, omit the key from the object. If no optional params, please pass an empty object
+ *           if date, time, and time_frame is selected, only the available times of the first service in the services array will be returned
  *
  **************/
 async function searchStores(count, body) {
@@ -178,11 +179,12 @@ async function getReviews(user_id) {
  *
  * Purpose:  Make a new review
  *
- * Parms:    (number)     user_id     - id of the user
- *           (number)     store_id    - id of the store
- *           (number)     barber_id   - id of the barber
- *           (string)     review      - message left by reviewer
- *           (number)     rating      - rating from 1 to 5
+ * Parms:    (number)     user_id        - id of the user
+ *           (number)     store_id       - id of the store
+ *           (number)     barber_id      - id of the barber
+ *           (number)     reservation_id - id of the reservation under review
+ *           (string)     review         - message left by reviewer
+ *           (number)     rating         - rating from 1 to 5
  *           (SERVICES_OFFERED)  service   - type of service
  *
  * Return:   SUCCESS            - {review_id: string}
@@ -196,6 +198,7 @@ async function registerReview(
     user_id,
     store_id,
     barber_id,
+    reservation_id,
     review,
     rating,
     service
@@ -210,6 +213,10 @@ async function registerReview(
     }
     if (barber_id.length === 0) {
         alert("customer/registerReview: barber_id is invalid");
+        return null;
+    }
+    if (reservation_id.length === 0) {
+        alert("customer/registerReview: reservation_id is invalid");
         return null;
     }
     if (review.length === 0) {
@@ -229,6 +236,7 @@ async function registerReview(
         user_id,
         store_id,
         barber_id,
+        reservation_id,
         review,
         rating,
         service,
@@ -358,7 +366,8 @@ async function getReservations(user_id, body) {
  *           (object)     body              - (optional) object body that can contain the following optional keys:
  *               (number)   barber_id       - barber desired
  *
- * Return:   SUCCESS            - [{barber_id: number, barber_name: string, picture: (base64) string, available_time: [{from: Date, to: Date}]}]
+ * Return:   SUCCESS            - [{store_id: number, barber_id: number, barber_name: string, picture: (base64) string, available_time: [{from: Date, to: Date}]}]
+ *           NO AVAILABLE TIMES - []
  *           NOT FOUND          - null
  *           OTHER ERRORS       - null
  *
