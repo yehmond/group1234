@@ -67,7 +67,8 @@
         "husky": "^4.2.5",
         "node-sass": "^4.14.1",
         "prettier": "^2.0.5",
-        "redux-devtools-extension": "^2.13.8"
+        "redux-devtools-extension": "^2.13.8",
+        "node-sass": "^4.14.1"
     },
     "proxy": "http://localhost:5000"
 }

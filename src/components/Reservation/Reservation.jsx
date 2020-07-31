@@ -6,7 +6,6 @@ import { useLocation } from "react-router-dom";
 import Loading from "../Loading/Loading";
 import { RenderSelect } from "../FormFields/FormFields";
 import {
-    getEarliestAndLatest,
     getEarliestAndLatestFromDay,
     isShopOpen,
     sortAvailabilities,
