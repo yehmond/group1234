@@ -31,10 +31,17 @@ export default function DateFilter() {
         const date = getDateFromUrl();
         if (date) {
             setDateChange(date);
+        } else {
+            setDateChange(null);
         }
     }, [location]);
 
     function handleChange(date) {
+        if (date === null) {
+            setDateChange(null);
+            setQueryString({ date: "" }, history, true);
+            return;
+        }
         if (moment(date).isValid()) {
             setDateChange(date);
             setQueryString(
@@ -52,7 +59,8 @@ export default function DateFilter() {
                     disableToolbar
                     disablePast
                     autoOk
-                    variant="inline"
+                    variant="dialogue"
+                    clearable
                     inputVariant="outlined"
                     format="DD/MM/YYYY"
                     value={selectedDate}

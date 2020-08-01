@@ -11,6 +11,10 @@ import { useHistory } from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import EventAvailableIcon from "@material-ui/icons/EventAvailable";
 import salonPic from "../../images/salon.png";
+import StarRoundedIcon from "@material-ui/icons/StarRounded";
+import StarBorderRoundedIcon from "@material-ui/icons/StarBorderRounded";
+import LocationOnRoundedIcon from "@material-ui/icons/LocationOnRounded";
+import TimeSlotCard from "./TimeSlotCard";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -37,8 +41,13 @@ const useStyles = makeStyles((theme) => ({
             height: "7rem",
         },
     },
+    dollar: { display: "flex" },
     chip: {
         margin: theme.spacing(0.5),
+    },
+    timeSlots: {
+        display: "flex",
+        marginTop: "1rem",
     },
     button: {
         margin: "0 auto",
@@ -55,18 +64,38 @@ export default function LargeCard({
     city,
     province,
     picture,
+    neighbourhood,
+    available_time,
 }) {
     const classes = useStyles();
     const history = useHistory();
 
-    let dollarSigns = "";
+    const dollarSigns = [];
     for (let i = 0; i < price; i++) {
-        dollarSigns += "$";
+        dollarSigns.push(
+            <Typography variant="body2" color="textPrimary" key={i}>
+                $
+            </Typography>
+        );
+    }
+    for (let i = 0; i < 3 - price; i++) {
+        dollarSigns.push(
+            <Typography variant="body2" color="textSecondary" key={3 - i}>
+                $
+            </Typography>
+        );
     }
 
-    let ratingStars = "";
+    const ratingStars = [];
     for (let i = 0; i < rating; i++) {
-        ratingStars += "⭐️";
+        ratingStars.push(
+            <StarRoundedIcon fontSize="small" color="secondary" key={i} />
+        );
+    }
+    for (let i = 0; i < 5 - rating; i++) {
+        ratingStars.push(
+            <StarBorderRoundedIcon fontSize="small" color="disabled" key={5 - i} />
+        );
     }
 
     function handleClickArea() {
@@ -77,6 +106,7 @@ export default function LargeCard({
         event.stopPropagation();
         history.push(`/reserve/${id}`);
     }
+
     return (
         <Card className={classes.root}>
             <CardActionArea onClick={handleClickArea} className={classes.action}>
@@ -90,9 +120,14 @@ export default function LargeCard({
                     <Typography component="h5" variant="h5">
                         {name}
                     </Typography>
-                    <Typography variant="body2" color="textSecondary" component="p">
-                        {dollarSigns} · {ratingStars}
-                    </Typography>
+                    <div
+                        style={{
+                            display: "flex",
+                            alignItems: "center",
+                        }}
+                    >
+                        {dollarSigns}&nbsp;· {ratingStars} · {neighbourhood}
+                    </div>
                     {services.map((service, idx) => {
                         return (
                             <Chip
@@ -104,9 +139,42 @@ export default function LargeCard({
                             />
                         );
                     })}
-                    <Typography variant="body2" color="textSecondary" component="p">
-                        {address}, {city} {province}
-                    </Typography>
+                    <div
+                        style={{
+                            display: "flex",
+                            alignItems: "center",
+                            overflow: "hidden",
+                            whiteSpace: "nowrap",
+                            textOverflow: "ellipsis",
+                        }}
+                    >
+                        <LocationOnRoundedIcon />
+                        <Typography
+                            variant="body2"
+                            color="textSecondary"
+                            component="p"
+                            style={{
+                                display: "flex",
+                                alignItems: "center",
+                                overflow: "hidden",
+                                whiteSpace: "nowrap",
+                                textOverflow: "ellipsis",
+                            }}
+                        >
+                            {address}, {city} {province}
+                        </Typography>
+                    </div>
+                    <div className={classes.timeSlots}>
+                        {available_time &&
+                            available_time.map((time, idx) => {
+                                const mid = Math.floor(available_time.length / 2);
+                                if (idx <= mid + 2 && idx >= mid - 2) {
+                                    return <TimeSlotCard key={idx} time={time} />;
+                                } else {
+                                    return null;
+                                }
+                            })}
+                    </div>
                 </CardContent>
             </CardActionArea>
             <CardActions className={classes.cardAction} disableSpacing>

@@ -6,15 +6,14 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import { useHistory } from "react-router-dom";
+import { refreshPage } from "../../utils/utils";
 
 export default function DialogMessage(props) {
     const history = useHistory();
 
     const handleClose = () => {
         history.push(props.link);
-        if (history.location.pathname === props.link) {
-            window.location.reload();
-        }
+        props.refresh && refreshPage();
     };
 
     return (

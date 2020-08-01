@@ -39,12 +39,16 @@ export function RenderSelect(props) {
             id={props.id}
             value={props.value}
             className={"field-" + props.fieldWidth}
+            disabled={props.disabled || false}
         >
             {props.options &&
                 props.options.map((option) => {
                     return (
-                        <MenuItem key={option} value={option}>
-                            {option}
+                        <MenuItem
+                            key={option.name || option}
+                            value={option.value || option}
+                        >
+                            {option.name || option}
                         </MenuItem>
                     );
                 })}

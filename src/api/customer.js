@@ -433,7 +433,7 @@ async function registerReservation(user_id, store_id, barber_id, from, service) 
         alert("customer/registerReservation: barber_id is invalid");
         return null;
     }
-    if (typeof from !== Date) {
+    if (Object.prototype.toString.call(from) !== "[object Date]") {
         alert("customer/registerReservation: from is invalid");
         return null;
     }

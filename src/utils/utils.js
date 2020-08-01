@@ -234,6 +234,32 @@ export function getEarliestAndLatest(hours) {
     return [minTime, maxTime];
 }
 
+// returns tuple, [0] is earliest, [1] is latest
+export function getEarliestAndLatestFromDay(schedule, date) {
+    const minTime = new Date();
+    const maxTime = new Date();
+    const today = new Date(date);
+    const dayOfWeek = mondayStart(today.getDay());
+    let earliestTime = schedule[dayOfWeek].from;
+    let latestTime = schedule[dayOfWeek].to;
+    let earliestHours = parseInt(earliestTime.substring(0, 2));
+    let earliestMins = parseInt(earliestTime.substring(2));
+    let latestHours = parseInt(latestTime.substring(0, 2));
+    let latestMins = parseInt(latestTime.substring(2));
+    if (
+        today.getFullYear() === minTime.getFullYear() &&
+        today.getMonth() === minTime.getMonth() &&
+        today.getDate() === minTime.getDate()
+    ) {
+        // it is today, so return min that is past the current time
+        minTime.setHours(minTime.getHours(), minTime.getMinutes() + 5, 0);
+    } else {
+        minTime.setHours(earliestHours, earliestMins, 0);
+    }
+    maxTime.setHours(latestHours, latestMins, 0);
+    return [minTime, maxTime];
+}
+
 export function reservationDate(reservation) {
     const date = new Date(reservation.to);
     if (!isMobile()) {
@@ -263,6 +289,28 @@ export function sortReservations(reservations) {
     });
 }
 
+export function sortAvailabilities(avail, targetTime, targetDate) {
+    const time = new Date(targetTime);
+    const date = new Date(targetDate);
+    const target = new Date(
+        date.getFullYear(),
+        date.getMonth(),
+        date.getDate(),
+        time.getHours(),
+        time.getMinutes(),
+        time.getSeconds()
+    );
+    // filter to 1 hours on either side
+    avail = avail.filter(
+        (avail) =>
+            Math.abs(new Date(avail.from) - new Date(target)) < 60000 * 1 * 60 &&
+            new Date(avail.from) > new Date()
+    );
+    return avail.sort((a, b) => {
+        return new Date(a.from) - new Date(b.from);
+    });
+}
+
 export function convertDateToString(date) {
     if (!isMobile()) {
         return moment(date).format("MMMM Do YYYY, h:mm a");
@@ -274,3 +322,23 @@ export function convertDateToString(date) {
 export function checkMyStore(user_id) {
     return parseInt(user_id) === parseInt(window.localStorage.getItem("id"));
 }
+
+export function mondayStart(dayOfWeek, hours) {
+    let mondayStart = dayOfWeek - 1;
+    // this is really sunday
+    if (mondayStart === -1) mondayStart = 6;
+    return mondayStart;
+}
+
+export function isShopOpen(dayOfWeek, hours) {
+    let mondayStart = dayOfWeek - 1;
+    // this is really sunday
+    if (mondayStart === -1) mondayStart = 6;
+    return hours[mondayStart].isOpen;
+}
+
+export function dateToTime(date) {
+    // TODO: check for timezones
+    return moment(date).format("hh:mm a");
+}
+

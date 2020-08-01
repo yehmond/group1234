@@ -13,8 +13,19 @@ export default function BrowseCards({
     city,
     province,
     picture,
+    neighbourhood,
+    available_time,
 }) {
     const size = useWindowSize();
+    const uniqueAvailableTime = Array.from(
+        new Set(
+            available_time
+                .map((elem) => {
+                    return elem.from;
+                })
+                .sort()
+        )
+    );
 
     if (size.width > 700) {
         return (
@@ -28,7 +39,9 @@ export default function BrowseCards({
                 address={address}
                 city={city}
                 province={province}
+                neighbourhood={neighbourhood}
                 picture={picture}
+                available_time={uniqueAvailableTime}
             />
         );
     } else {
@@ -44,7 +57,9 @@ export default function BrowseCards({
                     address={address}
                     city={city}
                     province={province}
+                    neighbourhood={neighbourhood}
                     picture={picture}
+                    available_time={uniqueAvailableTime}
                 />
             </div>
         );

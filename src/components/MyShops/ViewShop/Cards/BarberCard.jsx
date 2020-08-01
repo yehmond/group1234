@@ -56,11 +56,10 @@ const useStyles = makeStyles(() => ({
         justifyContent: "center",
     },
     button: {
-        display: "block",
+        display: "grid",
         width: "80%",
-        marginLeft: "auto",
-        marginRight: "auto",
-        textAlign: "center",
+        placeSelf: "center",
+        maxWidth: "250px",
     },
     icon: {
         "&:hover": {
@@ -110,7 +109,7 @@ export default function BarberCard(props) {
                             }}
                         />
                     </div>
-                    <React.Fragment className={classes.buttonContainer}>
+                    <React.Fragment>
                         {role === "CUSTOMER" && (
                             <Button
                                 className={classes.button}
