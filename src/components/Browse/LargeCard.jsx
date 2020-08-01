@@ -167,7 +167,8 @@ export default function LargeCard({
                     <div className={classes.timeSlots}>
                         {available_time &&
                             available_time.map((time, idx) => {
-                                if (idx < 5) {
+                                const mid = Math.floor(available_time.length / 2);
+                                if (idx <= mid + 2 && idx >= mid - 2) {
                                     return <TimeSlotCard key={idx} time={time} />;
                                 } else {
                                     return null;

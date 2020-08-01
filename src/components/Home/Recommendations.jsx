@@ -38,7 +38,7 @@ function getNSkeletons(num) {
                 <Skeleton
                     variant="rect"
                     animation="wave"
-                    height="23rem"
+                    height="22rem"
                     style={{
                         borderRadius: "7px",
                     }}
@@ -61,22 +61,21 @@ function getNSkeletons(num) {
 export default function Recommendations() {
     const classes = useStyles();
     const [availableNowStores, setAvailableNowStores] = useState([]);
+    const [isLoading, setLoading] = useState(true);
     const [recommendedStores, setRecommendedStores] = useState([]);
-    const hour = new Date().getHours();
 
     useEffect(() => {
-        if (hour >= 7 && hour < 19) {
-            const availableNowQuery = {
-                date: moment().add(1, "hour").toDate(),
-                time: moment().add(1, "hour").toDate(),
-                time_frame: 60,
-            };
-            searchStores(12, availableNowQuery).then((response) => {
-                if (response) {
-                    setAvailableNowStores(response.stores);
-                }
-            });
-        }
+        const availableNowQuery = {
+            date: moment().add(1, "hour").toDate(),
+            time: moment().add(1, "hour").toDate(),
+            time_frame: 60,
+        };
+        searchStores(12, availableNowQuery).then((response) => {
+            if (response) {
+                setAvailableNowStores(response.stores);
+                setLoading(false);
+            }
+        });
 
         const recommendedQuery = {
             rating: 5,
@@ -91,53 +90,57 @@ export default function Recommendations() {
 
     return (
         <div className={classes.container}>
-            {/* Render Available Now only if time is between 7:00 and 19:00 */}
-            {hour >= 7 && hour < 19 && (
+            {isLoading && (
+                <>
+                    <h1>&nbsp;</h1>
+                    <div className={classes.grid}> {getNSkeletons(12)} </div>{" "}
+                </>
+            )}
+            {/* Render Available Now only if there are stores available now */}
+            {availableNowStores?.length > 0 && (
                 <>
                     <h1>Available Now</h1>
                     <div className={classes.grid}>
-                        {availableNowStores.length > 0
-                            ? availableNowStores.map(
-                                  (
-                                      {
-                                          store_id,
-                                          name,
-                                          services,
-                                          price,
-                                          rating,
-                                          address,
-                                          city,
-                                          province,
-                                          picture,
-                                          neighbourhood,
-                                      },
-                                      idx
-                                  ) => {
-                                      return (
-                                          <SmallCard
-                                              key={idx}
-                                              shopId={store_id}
-                                              name={name}
-                                              services={services}
-                                              price={price}
-                                              rating={rating}
-                                              address={address}
-                                              city={city}
-                                              province={province}
-                                              picture={picture}
-                                              neighbourhood={neighbourhood}
-                                          />
-                                      );
-                                  }
-                              )
-                            : getNSkeletons(NUM_SKELETONS)}
+                        {availableNowStores.map(
+                            (
+                                {
+                                    store_id,
+                                    name,
+                                    services,
+                                    price,
+                                    rating,
+                                    address,
+                                    city,
+                                    province,
+                                    picture,
+                                    neighbourhood,
+                                },
+                                idx
+                            ) => {
+                                return (
+                                    <SmallCard
+                                        key={idx}
+                                        shopId={store_id}
+                                        name={name}
+                                        services={services}
+                                        price={price}
+                                        rating={rating}
+                                        address={address}
+                                        city={city}
+                                        province={province}
+                                        picture={picture}
+                                        neighbourhood={neighbourhood}
+                                    />
+                                );
+                            }
+                        )}
                     </div>
                 </>
             )}
             <>
                 <h1>Recommended</h1>
                 <div className={classes.grid}>
-                    {recommendedStores && recommendedStores.length > 0
+                    {recommendedStores?.length > 0
                         ? recommendedStores.map(
                               (
                                   {
