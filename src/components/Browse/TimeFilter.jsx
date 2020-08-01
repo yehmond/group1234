@@ -55,7 +55,7 @@ export default function TimeFilter() {
                 }
             }, 700)
         );
-        setSelectedTime(moment(time));
+        setSelectedTime(time);
     }
 
     return (

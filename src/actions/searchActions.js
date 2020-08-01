@@ -49,7 +49,9 @@ function getQueryParams() {
         queryObj.date = moment(queryObj.date, "YYYY-MM-DD").toDate();
     }
 
-    if (queryObj.time && moment(queryObj.time).isValid()) {
+    console.log("moment date 123", moment("12:00", "HH:mm").toDate());
+
+    if (queryObj.time && moment(queryObj.time, "HH:mm").isValid()) {
         queryObj.time = moment(queryObj.time, "HH:mm").toDate();
     }
 
@@ -75,6 +77,7 @@ function getQueryParams() {
         queryObj.startIndex = (queryObj.page - 1) * RESULTS_PER_PAGE;
     }
 
+    queryObj.time_frame = 30;
     return removeEmptyParams(queryObj);
 }
 

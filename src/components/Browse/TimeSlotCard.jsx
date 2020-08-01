@@ -1,6 +1,7 @@
 import React from "react";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
+import moment from "moment";
 
 const useStyles = makeStyles(() => ({
     root: {
@@ -18,7 +19,7 @@ export default function TimeSlotCard({ time }) {
     return (
         <div className={classes.root}>
             <Typography variant="body2" color="textSecondary">
-                {time}
+                {moment(time).format("HH:mm")}
             </Typography>
         </div>
     );

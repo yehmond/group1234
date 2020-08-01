@@ -79,9 +79,9 @@ export default function SmallCard({
             </Typography>
         );
     }
-    for (let i = 0; i < 5 - price; i++) {
+    for (let i = 0; i < 3 - price; i++) {
         dollarSigns.push(
-            <Typography variant="body2" color="textSecondary" key={5 - i}>
+            <Typography variant="body2" color="textSecondary" key={3 - i}>
                 $
             </Typography>
         );

@@ -78,9 +78,9 @@ export default function LargeCard({
             </Typography>
         );
     }
-    for (let i = 0; i < 5 - price; i++) {
+    for (let i = 0; i < 3 - price; i++) {
         dollarSigns.push(
-            <Typography variant="body2" color="textSecondary" key={5 - i}>
+            <Typography variant="body2" color="textSecondary" key={3 - i}>
                 $
             </Typography>
         );
@@ -107,7 +107,6 @@ export default function LargeCard({
         history.push(`/reserve/${id}`);
     }
 
-    const mock_available_time = ["7:00", "7:15", "7:30"];
     return (
         <Card className={classes.root}>
             <CardActionArea onClick={handleClickArea} className={classes.action}>
@@ -154,16 +153,25 @@ export default function LargeCard({
                             variant="body2"
                             color="textSecondary"
                             component="p"
+                            style={{
+                                display: "flex",
+                                alignItems: "center",
+                                overflow: "hidden",
+                                whiteSpace: "nowrap",
+                                textOverflow: "ellipsis",
+                            }}
                         >
                             {address}, {city} {province}
                         </Typography>
                     </div>
                     <div className={classes.timeSlots}>
-                        {mock_available_time &&
-                            mock_available_time.map((time, idx) => {
-                                if (idx < 10) {
-                                    return <TimeSlotCard key={idx} time={time} />;
-                                }
+                        {available_time &&
+                            available_time.map((time, idx) => {
+                                // if (idx < 6) {
+                                return <TimeSlotCard key={idx} time={time} />;
+                                // } else {
+                                //     return null;
+                                // }
                             })}
                     </div>
                 </CardContent>
