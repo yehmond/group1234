@@ -75,7 +75,7 @@ function getQueryParams() {
         queryObj.startIndex = (queryObj.page - 1) * RESULTS_PER_PAGE;
     }
 
-    queryObj.time_frame = 30;
+    queryObj.time_frame = 60;
     return removeEmptyParams(queryObj);
 }
 
