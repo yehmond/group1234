@@ -48,8 +48,16 @@ export default function Browse() {
     }, [location, dispatch]);
 
     const skeletons = [];
-    for (let i = 0; i < 12; i++) {
+    for (let i = 0; i < RESULTS_PER_PAGE; i++) {
         skeletons.push(i);
+    }
+
+    function hasNoResult() {
+        return (
+            (searchState.status === "success" &&
+                searchState.data?.stores.length === 0) ||
+            searchState.status === "error"
+        );
     }
 
     return (
@@ -59,7 +67,7 @@ export default function Browse() {
             </div>
             <div className={classes.cards}>
                 {/* Loading */}
-                {searchState.status !== "success" &&
+                {searchState.status === "loading" &&
                     skeletons.map((id, i) => (
                         <Skeleton
                             key={i}
@@ -83,6 +91,8 @@ export default function Browse() {
                             city,
                             province,
                             picture,
+                            neighbourhood,
+                            available_time,
                         }) => {
                             return (
                                 <BrowseCards
@@ -96,18 +106,19 @@ export default function Browse() {
                                     city={city}
                                     province={province}
                                     picture={picture}
+                                    neighbourhood={neighbourhood}
+                                    available_time={available_time}
                                 />
                             );
                         }
                     )}
 
                 {/* No results */}
-                {searchState.status === "success" &&
-                    searchState.data?.stores.length === 0 && (
-                        <div className={classes.noResult}>
-                            <h2>No Results...</h2>
-                        </div>
-                    )}
+                {hasNoResult() && (
+                    <div className={classes.noResult}>
+                        <h2>No Results...</h2>
+                    </div>
+                )}
 
                 {/* Pages */}
                 {searchState.data?.stores.length > 0 && <Pages />}

@@ -3,7 +3,9 @@ import { makeStyles } from "@material-ui/core";
 import SmallCard from "./SmallCard";
 import { searchStores } from "../../api/customer";
 import Skeleton from "@material-ui/lab/Skeleton";
+import moment from "moment";
 
+const NUM_SKELETONS = 12;
 const useStyles = makeStyles((theme) => ({
     grid: {
         display: "grid",
@@ -28,100 +30,78 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+function getNSkeletons(num) {
+    const skeletons = [];
+    for (let i = 0; i < num; i++) {
+        skeletons.push(
+            <div key={i}>
+                <Skeleton
+                    variant="rect"
+                    animation="wave"
+                    height="22rem"
+                    style={{
+                        borderRadius: "7px",
+                    }}
+                />
+                <Skeleton
+                    variant="text"
+                    animation="wave"
+                    height="5rem"
+                    style={{
+                        borderRadius: "7px",
+                        marginBottom: "2rem",
+                    }}
+                />
+            </div>
+        );
+    }
+    return skeletons;
+}
+
 export default function Recommendations() {
     const classes = useStyles();
     const [availableNowStores, setAvailableNowStores] = useState([]);
+    const [isLoading, setLoading] = useState(true);
     const [recommendedStores, setRecommendedStores] = useState([]);
 
     useEffect(() => {
         const availableNowQuery = {
-            date: new Date(),
-            time: new Date(),
-            available_count: 3,
+            date: moment().add(1, "hour").toDate(),
+            time: moment().add(1, "hour").toDate(),
+            time_frame: 60,
         };
         searchStores(12, availableNowQuery).then((response) => {
             if (response) {
                 setAvailableNowStores(response.stores);
+                setLoading(false);
             }
         });
+
         const recommendedQuery = {
             rating: 5,
-            startIndex: Math.floor(Math.random() * 3),
+            startIndex: Math.floor(Math.random() * 2),
         };
         searchStores(12, recommendedQuery).then((response) => {
             if (response) {
                 setRecommendedStores(response.stores);
             }
         });
-    }, []);
+    }, []); //eslint-disable-line
 
     return (
         <div className={classes.container}>
-            <h1>Available Now</h1>
-            <div className={classes.grid}>
-                {availableNowStores.length > 0
-                    ? availableNowStores.map(
-                          (
-                              {
-                                  store_id,
-                                  name,
-                                  services,
-                                  price,
-                                  rating,
-                                  address,
-                                  city,
-                                  province,
-                                  picture,
-                                  neighbourhood,
-                              },
-                              idx
-                          ) => {
-                              return (
-                                  <SmallCard
-                                      key={idx}
-                                      shopId={store_id}
-                                      name={name}
-                                      services={services}
-                                      price={price}
-                                      rating={rating}
-                                      address={address}
-                                      city={city}
-                                      province={province}
-                                      picture={picture}
-                                      neighbourhood={neighbourhood}
-                                  />
-                              );
-                          }
-                      )
-                    : [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((elem) => {
-                          return (
-                              <div key={elem}>
-                                  <Skeleton
-                                      variant="rect"
-                                      animation="wave"
-                                      height="23rem"
-                                      style={{
-                                          borderRadius: "7px",
-                                      }}
-                                  />
-                                  <Skeleton
-                                      variant="text"
-                                      animation="wave"
-                                      height="5rem"
-                                      style={{
-                                          borderRadius: "7px",
-                                          marginBottom: "2rem",
-                                      }}
-                                  />
-                              </div>
-                          );
-                      })}
-            </div>
-            {recommendedStores.length >= 12 && (
+            {isLoading && (
                 <>
-                    <h1>Recommended</h1>
+                    <h1>&nbsp;</h1>
+                    <div className={classes.grid}> {getNSkeletons(12)} </div>{" "}
+                </>
+            )}
+            {/* Render Available Now only if there are stores available now */}
+            {availableNowStores?.length > 0 && (
+                <>
+                    <h1>Available Now</h1>
                     <div className={classes.grid}>
-                        {recommendedStores.map(
+                        {availableNowStores.map(
                             (
                                 {
                                     store_id,
@@ -157,6 +137,46 @@ export default function Recommendations() {
                     </div>
                 </>
             )}
+            <>
+                <h1>Recommended</h1>
+                <div className={classes.grid}>
+                    {recommendedStores?.length > 0
+                        ? recommendedStores.map(
+                              (
+                                  {
+                                      store_id,
+                                      name,
+                                      services,
+                                      price,
+                                      rating,
+                                      address,
+                                      city,
+                                      province,
+                                      picture,
+                                      neighbourhood,
+                                  },
+                                  idx
+                              ) => {
+                                  return (
+                                      <SmallCard
+                                          key={idx}
+                                          shopId={store_id}
+                                          name={name}
+                                          services={services}
+                                          price={price}
+                                          rating={rating}
+                                          address={address}
+                                          city={city}
+                                          province={province}
+                                          picture={picture}
+                                          neighbourhood={neighbourhood}
+                                      />
+                                  );
+                              }
+                          )
+                        : getNSkeletons(NUM_SKELETONS)}
+                </div>
+            </>
         </div>
     );
 }
