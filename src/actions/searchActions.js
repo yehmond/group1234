@@ -49,8 +49,6 @@ function getQueryParams() {
         queryObj.date = moment(queryObj.date, "YYYY-MM-DD").toDate();
     }
 
-    console.log("moment date 123", moment("12:00", "HH:mm").toDate());
-
     if (queryObj.time && moment(queryObj.time, "HH:mm").isValid()) {
         queryObj.time = moment(queryObj.time, "HH:mm").toDate();
     }

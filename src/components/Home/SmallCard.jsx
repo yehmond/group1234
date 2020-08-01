@@ -14,6 +14,7 @@ import Chip from "@material-ui/core/Chip";
 import StarRoundedIcon from "@material-ui/icons/StarRounded";
 import StarBorderRoundedIcon from "@material-ui/icons/StarBorderRounded";
 import LocationOnRoundedIcon from "@material-ui/icons/LocationOnRounded";
+import TimeSlotCard from "../Browse/TimeSlotCard";
 
 const useStyles = makeStyles({
     root: {
@@ -48,6 +49,10 @@ const useStyles = makeStyles({
         height: "3rem",
         borderRadius: "0",
     },
+    timeSlots: {
+        display: "flex",
+        marginTop: "1rem",
+    },
 });
 
 export default function SmallCard({
@@ -59,6 +64,7 @@ export default function SmallCard({
     address,
     neighbourhood,
     picture,
+    available_time,
 }) {
     const classes = useStyles();
     const history = useHistory();
@@ -147,6 +153,16 @@ export default function SmallCard({
                         }}
                     >
                         <LocationOnRoundedIcon /> {address}
+                    </div>
+                    <div className={classes.timeSlots}>
+                        {available_time &&
+                            available_time.map((time, idx) => {
+                                if (idx < 5) {
+                                    return <TimeSlotCard key={idx} time={time} />;
+                                } else {
+                                    return null;
+                                }
+                            })}
                     </div>
                 </CardContent>
             </CardActionArea>
