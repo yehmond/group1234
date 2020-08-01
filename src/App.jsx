@@ -53,9 +53,9 @@ function App() {
                     path="/reserve/:id"
                     component={Reservation}
                 />
-                <Route exact path="/reservations">
+                <AuthRequiredRoute exact path="/reservations">
                     <MyReservations />
-                </Route>
+                </AuthRequiredRoute>
                 <Route path="/reservations/:reservationID/rate">
                     <Rating />
                 </Route>

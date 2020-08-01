@@ -1,169 +1,305 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { createStyles, makeStyles } from "@material-ui/core/styles";
-import { FormControl } from "@material-ui/core";
-import { InputLabel } from "@material-ui/core";
-import { Input } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
+import { getAvailability, getStore } from "../../api/customer";
+import { useLocation } from "react-router-dom";
+import Loading from "../Loading/Loading";
+import { RenderSelect } from "../FormFields/FormFields";
+import {
+    getEarliestAndLatestFromDay,
+    isShopOpen,
+    sortAvailabilities,
+} from "../../utils/utils";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.min.css";
 import TextField from "@material-ui/core/TextField";
-import FormLabel from "@material-ui/core/FormLabel";
-import FormGroup from "@material-ui/core/FormGroup";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
-import { SERVICES_OFFERED } from "../../utils/constants";
-import MenuItem from "@material-ui/core/MenuItem";
-import Select from "@material-ui/core/Select";
-// import { useDispatch } from "react-redux";
-// import { setService } from "../../actions/filterActions";
+import Paper from "@material-ui/core/Paper";
+import BarberAvailability from "./BarberAvailability";
+import ErrorText from "../Dialog/Error";
 
 const useStyles = makeStyles((theme) =>
     createStyles({
-        wrapper: {
+        pageContainer: {
+            display: "grid",
+            justifyItems: "center",
             margin: "3rem",
-            padding: "3rem",
-            alignItems: "center",
+            // eslint-disable-next-line
+            ["@media (max-width:1000px)"]: {
+                margin: "0.5rem",
+            },
+        },
+        paper: {
+            width: "100%",
+            display: "grid",
+            maxWidth: "900px",
+            gridRowGap: "30px",
+        },
+        wrapper: {
+            padding: "2rem",
+            display: "grid",
+            gridRowGap: "2vh",
             textAlign: "center",
         },
-        formControl: {
-            minWidth: 120,
-            marginTop: "2rem",
-            marginBottom: "0.5rem",
+        title: {
+            maxWidth: "100%",
         },
-        container: {
-            display: "block",
-            padding: "1rem",
-            minHeight: "8rem",
-            alignItems: "center",
-            textAlign: "center",
-            paddingRight: "3rem",
+        twoFields: {
+            display: "grid",
+            gridTemplateColumns: "1fr 1fr",
+            gridColumnGap: "50px",
+            // eslint-disable-next-line
+            ["@media (max-width:1000px)"]: {
+                gridTemplateColumns: "1fr",
+                gridTemplateRows: "1fr 1fr",
+                gridColumnGap: "0px",
+                gridRowGap: "2vh",
+            },
         },
-        textField: {
-            marginLeft: theme.spacing(1),
-            marginRight: theme.spacing(1),
+        buttonContainer: {
+            display: "grid",
+            placeItems: "center",
         },
-        schedule: {
-            margin: "5rem",
-            textAlign: "center",
-            backgroundColor: "rgb(239, 235, 242)",
-            padding: "3rem",
-        },
-        textInput: {
-            paddingRight: "3rem",
-            marginTop: "2rem",
-        },
-        serviceSelection: {
-            paddingBottom: "2rem",
+        button: {
+            maxWidth: "250px",
         },
     })
 );
 
 export default function Reservation() {
     const classes = useStyles();
-
-    const [serviceState, setServiceState] = React.useState(
-        Object.fromEntries(SERVICES_OFFERED.map((service) => [service, false]))
-    );
-
-    const [barberName, setBarber] = React.useState("");
+    const location = useLocation();
+    const store_id = location.pathname.split("reserve/")[1];
+    const user_id = window.localStorage.getItem("id");
+    const [store, setStore] = useState(null);
+    // barber object
+    const [selectedBarber, setSelectedBarber] = useState(null);
+    const [services, setServices] = useState(null);
+    const [selectedService, setSelectedService] = useState(null);
+    const [selectedDate, setSelectedDate] = useState(null);
+    const [selectedTime, setSelectedTime] = useState(null);
+    const [minTime, setMinTime] = useState(null);
+    const [maxTime, setMaxTime] = useState(null);
+    const [results, setResults] = useState(null);
+    const [noResults, setNoResults] = useState(false);
+    const defaultDate = new Date();
+    defaultDate.setHours(10, 0, 0, 0);
 
     const handleBarberChange = (event) => {
-        setBarber(event.target.value);
+        const barber = store.barbers.find(
+            (barber) => barber.barber_id === event.target.value
+        );
+        setSelectedBarber(barber);
+        if (event.target.value === "Any") {
+            setServices(store.store.services);
+        } else {
+            let servicesMapped = barber.services.map((entry) => entry.service);
+            setServices(servicesMapped);
+        }
     };
 
-    const handleChange = (event) => {
-        const newServiceState = {
-            ...serviceState,
-            [event.target.name]: event.target.checked,
-        };
-        setServiceState(newServiceState);
-        // dispatch(setService(newServiceState));
+    const handleServiceChange = (event) => {
+        setSelectedService(event.target.value);
     };
 
-    return (
-        <div className={classes.wrapper}>
-            {/* TODO: this.props.shopname */}
-            <div className={classes.reserveHeader}>
-                <h1>Make Your Reservation With Tony&apos;s Barbershop!</h1>
-            </div>
+    const handleDateChange = (date) => {
+        setSelectedDate(date);
+        const min = getEarliestAndLatestFromDay(selectedBarber.schedule, date);
+        setMinTime(min[0]);
+        setMaxTime(min[1]);
+    };
 
-            <div className={classes.container}>
-                <FormControl id="name" className={classes.textInput}>
-                    <InputLabel htmlFor="customer_name">Full Name</InputLabel>
-                    <Input id="customer_name" />
-                </FormControl>
-                <FormControl id="phone" className={classes.textInput}>
-                    <InputLabel htmlFor="customer_phone">Phone Number</InputLabel>
-                    <Input id="customer_phone" />
-                </FormControl>
-                <FormControl id="email" className={classes.textInput}>
-                    <InputLabel htmlFor="customer_email">Email Address</InputLabel>
-                    <Input id="customer_email" />
-                </FormControl>
-            </div>
+    const isFormValid = () => {
+        return (
+            !selectedBarber || !selectedService || !selectedDate || !selectedTime
+        );
+    };
 
-            <div className={classes.container}>
-                <form noValidate>
-                    <TextField
-                        id="datetime-local"
-                        label="Available Time Slot"
-                        type="datetime-local"
-                        defaultValue="2020-06-06T10:30"
-                        className={classes.textField}
-                        InputLabelProps={{
-                            shrink: true,
-                        }}
-                    />
-                </form>
-                <FormControl className={classes.formControl}>
-                    <InputLabel id="demo-simple-select-label">Barber</InputLabel>
-                    <Select
-                        labelId="demo-simple-select-label"
-                        id="demo-simple-select"
-                        value={barberName}
-                        onChange={handleBarberChange}
-                    >
-                        <MenuItem value={"Tommy"}>Tommmy</MenuItem>
-                        <MenuItem value={"Diasy"}>Daisy</MenuItem>
-                        <MenuItem value={"Harry"}>Harry</MenuItem>
-                    </Select>
-                </FormControl>
-            </div>
+    const isOpen = (date) => {
+        let parsed = new Date(date);
+        if (selectedBarber.barber_id === "Any") {
+            return isShopOpen(parsed.getDay(), store.store.hours);
+        } else {
+            return isShopOpen(parsed.getDay(), selectedBarber.schedule);
+        }
+    };
 
-            <div className={classes.serviceSelection}>
-                <FormControl component="fieldset" className={classes.formControl}>
-                    <FormLabel component="legend">
-                        Select the service(s) for this booking
-                    </FormLabel>
-                    <FormGroup>
-                        {SERVICES_OFFERED.map((service) => {
-                            return (
-                                <FormControlLabel
-                                    key={service}
-                                    control={
-                                        <Checkbox
-                                            checked={serviceState[service]}
-                                            onChange={handleChange}
-                                            name={service}
-                                        />
-                                    }
-                                    label={service}
-                                />
+    const checkAvailability = () => {
+        if (selectedBarber.barber_id !== "Any")
+            getAvailability(store_id, selectedDate, selectedService, {
+                barber_id: selectedBarber.barber_id,
+            }).then((response) => {
+                if (response) {
+                    for (let obj of response) {
+                        obj.available_time = sortAvailabilities(
+                            obj.available_time,
+                            selectedTime,
+                            selectedDate
+                        );
+                    }
+                    setNoResults(false);
+                    setResults(response);
+                } else {
+                    setResults(null);
+                    setNoResults(true);
+                }
+            });
+        // Any barber
+        else
+            getAvailability(store_id, selectedDate, selectedService, {}).then(
+                (response) => {
+                    if (response) {
+                        for (let obj of response) {
+                            obj.available_time = sortAvailabilities(
+                                obj.available_time,
+                                selectedTime,
+                                selectedDate
                             );
-                        })}
-                    </FormGroup>
-                </FormControl>
-            </div>
+                        }
+                        setNoResults(false);
+                        setResults(response);
+                    } else {
+                        setResults(null);
+                        setNoResults(true);
+                    }
+                }
+            );
+    };
+    useEffect(() => {
+        getStore(store_id).then((res) => {
+            res.barbers.unshift({
+                name: "Any",
+                barber_id: "Any",
+                schedule: res.store.hours,
+            });
+            setStore(res);
+        });
+    }, [user_id, store_id]);
 
-            <div>
-                {/* TODO: submit form */}
-                <Button variant="contained" color="primary">
-                    Reserve
-                </Button>
-            </div>
+    if (!store) return <Loading />;
+    if (!store.barbers || store.barbers.length <= 1)
+        return (
+            <ErrorText
+                message={"Sorry, this barbershop has no barbers; come back later!"}
+            />
+        );
+    if (window.localStorage.getItem("role") === "OWNER")
+        return <ErrorText message={"Sorry, you must register as a customer!"} />;
+    else {
+        return (
+            <div className={classes.pageContainer} id="make-reservation-page">
+                <div className={classes.paper}>
+                    <Paper elevation={2}>
+                        <div className={classes.wrapper} id="reserve-form">
+                            <div className={classes.title}>
+                                <h1>Make Your Reservation With</h1>
+                                <h1>{store.store.name}!</h1>
+                            </div>
 
-            <div className={classes.schedule}>
-                {/* TODO: show schedule */}
-                <h1>Schedule Used to Reserve</h1>
+                            <div className={classes.twoFields}>
+                                <RenderSelect
+                                    name="Barber"
+                                    required={true}
+                                    label="Select Barber"
+                                    options={store.barbers.map((barber) => {
+                                        return {
+                                            name: barber.name,
+                                            value: barber.barber_id,
+                                        };
+                                    })}
+                                    handleChange={handleBarberChange}
+                                />
+                                <RenderSelect
+                                    name="Service"
+                                    required={true}
+                                    label="Select Service"
+                                    options={services}
+                                    disabled={!selectedBarber}
+                                    handleChange={handleServiceChange}
+                                />
+                            </div>
+                            <div className={classes.twoFields}>
+                                <div>
+                                    <DatePicker
+                                        selected={selectedDate}
+                                        disabled={
+                                            !selectedBarber || !selectedService
+                                        }
+                                        minDate={new Date()}
+                                        dateFormat="MMMM d, yyyy"
+                                        onChange={(date) => handleDateChange(date)}
+                                        filterDate={isOpen}
+                                        customInput={
+                                            <TextField label="Select a Date" />
+                                        }
+                                        placeholderText={"Select a date"}
+                                    />
+                                </div>
+                                <div>
+                                    <DatePicker
+                                        selected={selectedTime}
+                                        disabled={
+                                            !selectedBarber ||
+                                            !selectedService ||
+                                            !selectedDate
+                                        }
+                                        onChange={(time) => setSelectedTime(time)}
+                                        showTimeSelect
+                                        showTimeSelectOnly
+                                        timeIntervals={15}
+                                        timeCaption="Time"
+                                        dateFormat="h:mm aa"
+                                        minTime={minTime}
+                                        maxTime={maxTime}
+                                        customInput={
+                                            <TextField label="Select a Time" />
+                                        }
+                                        placeholderText={"Select a time"}
+                                    />
+                                </div>
+                            </div>
+                            <div className={classes.buttonContainer}>
+                                <p>
+                                    Please select a time and we will find timeslots
+                                    up to 1 hr ahead/behind.
+                                </p>
+                                <br />
+                                <Button
+                                    className={classes.button}
+                                    variant="contained"
+                                    color="primary"
+                                    disabled={isFormValid()}
+                                    onClick={() => {
+                                        checkAvailability();
+                                    }}
+                                >
+                                    Check Availability
+                                </Button>
+                            </div>
+                        </div>
+                    </Paper>
+                    {results && (
+                        <div id="results-reserve">
+                            {results.map((result, index) => {
+                                return (
+                                    <BarberAvailability
+                                        key={index}
+                                        barber={result}
+                                        service={selectedService}
+                                        storeID={store_id}
+                                    />
+                                );
+                            })}
+                        </div>
+                    )}
+                    {noResults && (
+                        <ErrorText
+                            message={
+                                "That search returned zero results. Try again."
+                            }
+                        />
+                    )}
+                </div>
             </div>
-        </div>
-    );
+        );
+    }
 }

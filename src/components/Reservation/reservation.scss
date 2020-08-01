@@ -48,3 +48,49 @@
         }
     }
 }
+
+#make-reservation-page {
+    #reserve-form {
+        .react-datepicker-wrapper {
+            width: 100%;
+
+            .MuiFormControl-root {
+                width: 100%;
+            }
+        }
+
+        .MuiSelect-root {
+            text-align: start !important;
+        }
+
+        p {
+            font-size: 0.85rem;
+        }
+    }
+
+    #results-reserve {
+        display: flex;
+        place-self: center;
+        @media only screen and (max-device-width: 1000px) {
+            flex-direction: column;
+
+            .MuiPaper-root {
+                padding: 0;
+                margin: 10px 0;
+            }
+            .MuiCardContent-root {
+                padding: 0.5rem;
+            }
+        }
+    }
+
+    @media only screen and (max-device-width: 1000px) {
+        h1 {
+            font-size: 1rem;
+        }
+        h2 {
+            font-size: 1rem;
+            font-weight: bold;
+        }
+    }
+}

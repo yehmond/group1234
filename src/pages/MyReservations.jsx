@@ -4,12 +4,13 @@ import ReservationTable from "../components/Reservation/ReservationTable";
 import GradeIcon from "@material-ui/icons/Grade";
 import { useHistory } from "react-router-dom";
 import { deleteReservation, getReservations } from "../api/customer";
-import { convertDateToString } from "../utils/utils";
+import { convertDateToString, sortReservations } from "../utils/utils";
 import DeleteIcon from "@material-ui/icons/Delete";
 import DialogMessage from "../components/Dialog/Dialog";
 import Loading from "../components/Loading/Loading";
 import { Tab, Tabs } from "@material-ui/core";
 import "../components/Reservation/reservation.scss";
+import ErrorText from "../components/Dialog/Error";
 
 const useStyles = makeStyles(() =>
     createStyles({
@@ -41,7 +42,7 @@ export default function MyReservations() {
 
     const handleRate = (rowData) => {
         history.push(
-            `/reservations/${rowData.reservation_id}/rate?store=${rowData.store_id}&barber=${rowData.barber_id}&storename=${rowData.store_name}`
+            `/reservations/${rowData.reservation_id}/rate?store=${rowData.store_id}&barber=${rowData.barber_id}&storename=${rowData.store_name}&reservation=${rowData.reservation_id}`
         );
     };
 
@@ -52,12 +53,17 @@ export default function MyReservations() {
         });
     };
 
+    const disableReview = (rowData) => {
+        return rowData.reviewed;
+    };
+
     useEffect(() => {
         async function fetchReservations() {
             const past = await getReservations(window.localStorage.getItem("id"), {
                 to: new Date(),
             });
             if (past) {
+                past.reservations = sortReservations(past.reservations);
                 for (let reservation of past.reservations) {
                     reservation.from = convertDateToString(reservation.from);
                 }
@@ -68,6 +74,7 @@ export default function MyReservations() {
                 { from: new Date() }
             );
             if (future) {
+                future.reservations = sortReservations(future.reservations);
                 for (let reservation of future.reservations) {
                     reservation.from = convertDateToString(reservation.from);
                 }
@@ -76,9 +83,9 @@ export default function MyReservations() {
         }
         fetchReservations();
     }, []);
-
+    if (window.localStorage.getItem("role") === "OWNER")
+        return <ErrorText message={"Sorry, you must register as a customer!"} />;
     if (!past || !future) return <Loading />;
-
     return (
         <div id="my-reservations" className={classes.wrapper}>
             <h1>My Reservations</h1>
@@ -104,10 +111,12 @@ export default function MyReservations() {
                 <ReservationTable
                     tableTitle="Past Details"
                     actionTooltip="Rate"
+                    disabledTooltip="Already rated"
                     data={past}
                     columns={columns}
                     actionIcon={GradeIcon}
                     actionFunction={handleRate}
+                    disabled={disableReview}
                 />
             )}
 
@@ -116,6 +125,7 @@ export default function MyReservations() {
                     title={"Success!"}
                     link={"/reservations"}
                     text={"The reservation has been successfully deleted!"}
+                    refresh={true}
                 />
             )}
             {deleteError && (
@@ -123,6 +133,7 @@ export default function MyReservations() {
                     title={"Error!"}
                     link={"/reservations"}
                     text={"The reservation was not deleted. Try again."}
+                    refresh={true}
                 />
             )}
         </div>
