@@ -57,6 +57,7 @@ class Reviews extends Component {
                             </div>
                             <div className="barber-ratings-cards">
                                 {this.state.barberRatings.map((value, index) => {
+                                    console.log(value);
                                     return (
                                         <div
                                             key={index}
@@ -66,12 +67,12 @@ class Reviews extends Component {
                                                 align="center"
                                                 variant={"h4"}
                                             >
-                                                {(
+                                                {value.count > 0 ? (
                                                     Math.round(
                                                         (value.sum * 10.0) /
                                                             value.count
                                                     ) / 10
-                                                ).toFixed(1)}
+                                                ).toFixed(1) : 'N/A'}
                                             </Typography>
                                             <p>{value.name}</p>
                                             <Rating
