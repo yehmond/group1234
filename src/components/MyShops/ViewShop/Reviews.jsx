@@ -57,7 +57,6 @@ class Reviews extends Component {
                             </div>
                             <div className="barber-ratings-cards">
                                 {this.state.barberRatings.map((value, index) => {
-                                    console.log(value);
                                     return (
                                         <div
                                             key={index}

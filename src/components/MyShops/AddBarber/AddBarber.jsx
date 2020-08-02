@@ -19,6 +19,8 @@ import UserContext from "../../../pages/UserContext";
 import { withRouter } from "react-router-dom";
 import DialogMessage from "../../Dialog/Dialog";
 import { registerBarber } from "../../../api/owner";
+import { getStore } from "../../../api/customer";
+import Loading from "../../Loading/Loading";
 
 class AddBarber extends Component {
     static contextType = UserContext;
@@ -37,6 +39,8 @@ class AddBarber extends Component {
             storeId: this.props.match.params.storeID,
             submitSuccess: false,
             submitError: false,
+            services: SERVICES_OFFERED,
+            loading: true
         };
         this.isFormValid = this.isFormValid.bind(this);
         this.handleTextChange = this.handleTextChange.bind(this);
@@ -44,6 +48,18 @@ class AddBarber extends Component {
         this.handleDropZoneChange = this.handleDropZoneChange.bind(this);
         this.handleDropZoneDelete = this.handleDropZoneDelete.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    componentDidMount() {
+        getStore(this.props.match.params.storeID).then((response) => {
+            if(response) {
+                for(let day of response.store.hours) {
+                    day.locked = !day.isOpen;
+                }
+                this.setState({services: response.store.services, hours: response.store.hours})
+                this.setState({loading: false})
+            }
+        })
     }
 
     handleTextChange(event) {
@@ -75,7 +91,8 @@ class AddBarber extends Component {
 
     hoursToDate() {
         let newHrs = [];
-        for (let day in this.state.hours) {
+        for (let day of this.state.hours) {
+            delete day.locked;
             if (!day.isOpen) {
                 newHrs.push({ from: "0000", to: "0000" });
             } else {
@@ -108,10 +125,10 @@ class AddBarber extends Component {
             !_.some(
                 _.omit(
                     this.state,
-                    "photo",
                     "timeslotValue",
                     "submitSuccess",
-                    "submitError"
+                    "submitError",
+                    "loading"
                 ),
                 _.isEmpty
             ) && this.state.timeslotValue !== 0
@@ -119,6 +136,7 @@ class AddBarber extends Component {
     }
 
     render() {
+        if(this.state.loading) return <Loading/>;
         return (
             <div className="page-content">
                 <h1> Add Barber</h1>
@@ -163,7 +181,7 @@ class AddBarber extends Component {
                             <RenderAutocomplete
                                 label="specialities"
                                 placeholder="Specialties"
-                                options={SERVICES_OFFERED}
+                                options={this.state.services}
                                 fieldWidth="medium"
                                 handleChange={this.handleAutoCompleteChange}
                             />
