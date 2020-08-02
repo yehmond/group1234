@@ -75,7 +75,7 @@ class RBSForm extends Component {
     }
 
     isFormValid() {
-        return _.some(_.omit(this.state, "photos"), _.isEmpty);
+        return _.some(this.state, _.isEmpty);
     }
 
     render() {
