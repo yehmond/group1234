@@ -78,11 +78,21 @@ export function hoursToString(hours) {
 
 export function addColonTime(time) {
     if (time.length !== 4) {
-        return "";
+        return time;
     } else {
         const hours = time.substring(0, 2);
         const minutes = time.substring(2);
         return hours + ":" + minutes;
+    }
+}
+
+export function removeColon(time) {
+    if (time.indexOf(':') < 0) {
+        return time;
+    } else {
+        const hours = time.split(':')[0];
+        const minutes = time.split(':')[1];
+        return hours.toString() + minutes.toString();
     }
 }
 
@@ -338,7 +348,6 @@ export function isShopOpen(dayOfWeek, hours) {
 }
 
 export function dateToTime(date) {
-    // TODO: check for timezones
     return moment(date).format("hh:mm a");
 }
 

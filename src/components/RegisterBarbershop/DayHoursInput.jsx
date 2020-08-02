@@ -3,7 +3,7 @@ import "../FormFields/Fields.scss";
 import { RenderTimePicker } from "../FormFields/FormFields";
 import { Checkbox, FormControlLabel } from "@material-ui/core";
 import { DEFAULT_FROM, DEFAULT_TO } from "../../utils/constants";
-import { addColonTime } from "../../utils/utils";
+import { addColonTime, extractTime, removeColon, timeStringToDate } from "../../utils/utils";
 
 class DayHoursInput extends Component {
     constructor(props) {
@@ -39,14 +39,14 @@ class DayHoursInput extends Component {
 
     handleChangeOpen(event) {
         this.setState(
-            { day: { ...this.state.day, from: event.target.value } },
+            { day: { ...this.state.day, from: removeColon(event.target.value) } },
             this.bindStateToProps
         );
     }
 
     handleChangeClose(event) {
         this.setState(
-            { day: { ...this.state.day, to: event.target.value } },
+            { day: { ...this.state.day, to: removeColon(event.target.value) } },
             this.bindStateToProps
         );
     }
@@ -76,6 +76,7 @@ class DayHoursInput extends Component {
                     <FormControlLabel
                         control={
                             <Checkbox
+                                disabled={this.state.day.locked}
                                 onChange={this.toggleClosed}
                                 name="checkedB"
                                 checked={!this.state.day.isOpen}
