@@ -52,7 +52,7 @@ export default function Stats() {
     const { storeID } = useParams();
     useEffect(() => {
         if (!location.shop) {
-            getStore(storeID).then((response) => {
+            getStore(storeID, true).then((response) => {
                 // will only be one store
                 if (response !== null) {
                     setOwnerID(response.store.owner_id);

@@ -87,11 +87,11 @@ export function addColonTime(time) {
 }
 
 export function removeColon(time) {
-    if (time.indexOf(':') < 0) {
+    if (time.indexOf(":") < 0) {
         return time;
     } else {
-        const hours = time.split(':')[0];
-        const minutes = time.split(':')[1];
+        const hours = time.split(":")[0];
+        const minutes = time.split(":")[1];
         return hours.toString() + minutes.toString();
     }
 }
@@ -350,4 +350,3 @@ export function isShopOpen(dayOfWeek, hours) {
 export function dateToTime(date) {
     return moment(date).format("hh:mm a");
 }
-

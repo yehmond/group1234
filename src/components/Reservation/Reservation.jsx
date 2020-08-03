@@ -165,7 +165,7 @@ export default function Reservation() {
             );
     };
     useEffect(() => {
-        getStore(store_id).then((res) => {
+        getStore(store_id, true).then((res) => {
             res.barbers.unshift({
                 name: "Any",
                 barber_id: "Any",

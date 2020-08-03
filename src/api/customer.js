@@ -25,7 +25,8 @@ const instance = axios.create({
  *
  * Purpose:  Return all store information needed for specific store page
  *
- * Parms:    (number)     store_id    - store_id of the store to be returned
+ * Parms:    (number)     store_id                  - store_id of the store to be returned
+ *           (boolean)    noPictures[OPTIONAL]      - whether to omit images in the response; default to false
  *
  * Return:   SUCCESS            - {store_id: number, store: {}, reservations: [], reviews: [], barbers: []}
  *           NOT FOUND          - null
@@ -34,14 +35,17 @@ const instance = axios.create({
  * Notes:    none
  *
  **************/
-async function getStore(store_id) {
+async function getStore(store_id, noPictures) {
+    console.log(noPictures);
     if (store_id.length === 0) {
         alert("customer/getStore: store_id is invalid");
         return null;
     }
 
     try {
-        const response = await instance.get("/store/" + store_id);
+        const response = await instance.get("/store/" + store_id, {
+            params: { noPictures: noPictures },
+        });
         console.log(response);
         return response.data;
     } catch (error) {
