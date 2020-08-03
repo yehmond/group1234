@@ -79,7 +79,6 @@ export default function Recommendations() {
 
         const recommendedQuery = {
             rating: 5,
-            startIndex: Math.floor(Math.random() * 2),
         };
         searchStores(12, recommendedQuery).then((response) => {
             if (response) {
