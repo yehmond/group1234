@@ -12,7 +12,6 @@ import axios from "axios";
 
 /* Local constants */
 const instance = axios.create({
-    // TODO abstract baseURL
     baseURL:
         (process.env.REACT_APP_BASE_URL || "http://localhost:5000") + "/api/auth",
     withCredentials: true,
@@ -63,6 +62,6 @@ export async function signUp(
         return response.data;
     } catch (err) {
         console.error(err?.response);
-        throw Error(err);
+        throw err;
     }
 }
