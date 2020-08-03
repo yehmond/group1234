@@ -13,6 +13,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { signOutAsync } from "../../actions/authActions";
 import { Link } from "react-router-dom";
 import NavDrawer from "./NavDrawer";
+import logo from "../../images/scissors.png";
 
 const useStyles = makeStyles((theme) => {
     return createStyles({
@@ -21,6 +22,9 @@ const useStyles = makeStyles((theme) => {
         },
         title: {
             flexGrow: 1,
+        },
+        image: {
+            height: "25px"
         },
         menuButton: {
             display: "none",
@@ -38,6 +42,11 @@ const useStyles = makeStyles((theme) => {
             textDecoration: "none",
             color: theme.palette.common.white,
         },
+        logo: {
+            display: "grid",
+            gridTemplateColumns: "35px 40px",
+            alignItems: "center"
+        }
     });
 });
 
@@ -94,11 +103,17 @@ export default function MenuAppBar() {
                     >
                         <MenuIcon />
                     </IconButton>
-                    <Typography variant="h6" className={classes.title}>
+                    <div className={classes.title}>
                         <Link to="/" className={classes.link}>
-                            Dibs
+                            <div className={classes.logo}>
+                            <img className={classes.image} src={logo} alt={"Logo"}/>
+                            <Typography variant="h6">
+                             Dibs
+                            </Typography>
+                            </div>
+
                         </Link>
-                    </Typography>
+                    </div>
                     {Object.keys(displayedLinks).map((text, idx) => {
                         if (text === "Sign up") {
                             return (
