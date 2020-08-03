@@ -30,7 +30,7 @@ export default function NeighbourhoodFilter() {
     }, [location]);
 
     useEffect(() => {
-        getNeighbourhoods("Vancouver", "BC", 10).then((data) => {
+        getNeighbourhoods("Vancouver", "BC", 100).then((data) => {
             if (data) {
                 setOptions(data);
             }

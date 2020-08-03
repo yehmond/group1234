@@ -56,6 +56,7 @@ export default function SignUp() {
         showPassword: false,
     });
     const [submit, setSubmit] = useState(false);
+    const [emailTakenError, setEmailTakenError] = useState(false);
     const [signUpError, setSignUpError] = useState(false);
 
     function handleChange(event) {
@@ -82,6 +83,8 @@ export default function SignUp() {
                 "passwordError",
                 "emailError",
                 "emailHelper",
+                "phoneNumberHelper",
+                "phoneNumberError",
                 "showPassword"
             ),
             _.isEmpty
@@ -99,7 +102,7 @@ export default function SignUp() {
         }
 
         // if any fields are invalid return
-        return validateEmail(state.email) && isValidPassword();
+        return validateEmail(state.email) && isValidPassword() && isValidPhoneNum();
     }
 
     function isValidPassword() {
@@ -116,6 +119,19 @@ export default function SignUp() {
                     MIN_PASSWORD_LENGTH +
                     " characters with at least one letter and one digit",
                 passwordError: true,
+            });
+            return false;
+        }
+        return true;
+    }
+
+    function isValidPhoneNum() {
+        const currPhoneNum = state.phoneNumber;
+        if (isNaN(currPhoneNum)) {
+            setState({
+                ...state,
+                phoneNumberHelper: "Please enter a valid numeric phone number",
+                phoneNumberError: true,
             });
             return false;
         }
@@ -155,8 +171,14 @@ export default function SignUp() {
                 .then(() => {
                     window.location = "/signup/success";
                 })
-                .catch(() => {
-                    setSignUpError(true);
+                .catch((err) => {
+                    if (err.response && err.response.status === 409) {
+                        setEmailTakenError(true);
+                        setSignUpError(false);
+                    } else {
+                        setSignUpError(true);
+                        setEmailTakenError(false);
+                    }
                     setSubmit(false);
                 });
         }
@@ -166,10 +188,13 @@ export default function SignUp() {
         <Container component="main" maxWidth="xs">
             <CssBaseline />
             <div className={classes.paper}>
-                {signUpError && (
+                {emailTakenError && (
                     <Alert severity="error">
                         Email already taken. Please try again.
                     </Alert>
+                )}
+                {signUpError && (
+                    <Alert severity="error">Unknown error. Please try again.</Alert>
                 )}
                 <Avatar className={classes.avatar}>
                     <Add />
@@ -211,6 +236,8 @@ export default function SignUp() {
                                 label="Phone Number"
                                 name="phoneNumber"
                                 autoComplete="phone number"
+                                helperText={state.phoneNumberHelper}
+                                error={state.phoneNumberError}
                             />
                         </Grid>
                         <Grid item xs={12}>
