@@ -57,7 +57,7 @@ class ViewSchedule extends Component {
             !this.props.location.barbers ||
             !this.props.location.shopOwnerID
         ) {
-            getStore(this.state.id).then((response) => {
+            getStore(this.state.id, true).then((response) => {
                 let reservations = null;
                 let barbers = null;
                 let hours = null;

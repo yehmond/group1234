@@ -40,7 +40,7 @@ class AddBarber extends Component {
             submitSuccess: false,
             submitError: false,
             services: SERVICES_OFFERED,
-            loading: true
+            loading: true,
         };
         this.isFormValid = this.isFormValid.bind(this);
         this.handleTextChange = this.handleTextChange.bind(this);
@@ -52,14 +52,17 @@ class AddBarber extends Component {
 
     componentDidMount() {
         getStore(this.props.match.params.storeID).then((response) => {
-            if(response) {
-                for(let day of response.store.hours) {
+            if (response) {
+                for (let day of response.store.hours) {
                     day.locked = !day.isOpen;
                 }
-                this.setState({services: response.store.services, hours: response.store.hours})
-                this.setState({loading: false})
+                this.setState({
+                    services: response.store.services,
+                    hours: response.store.hours,
+                });
+                this.setState({ loading: false });
             }
-        })
+        });
     }
 
     handleTextChange(event) {
@@ -136,7 +139,7 @@ class AddBarber extends Component {
     }
 
     render() {
-        if(this.state.loading) return <Loading/>;
+        if (this.state.loading) return <Loading />;
         return (
             <div className="page-content">
                 <h1> Add Barber</h1>
