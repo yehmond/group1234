@@ -98,10 +98,8 @@ export function RenderTimePicker(props) {
             value={props.value}
             onChange={props.handleChange}
             disabled={props.disabled}
-
             InputLabelProps={{
                 shrink: true,
-
             }}
             inputProps={{
                 step: 1800, // 30 min increment

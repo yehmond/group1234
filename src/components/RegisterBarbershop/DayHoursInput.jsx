@@ -3,7 +3,7 @@ import "../FormFields/Fields.scss";
 import { RenderTimePicker } from "../FormFields/FormFields";
 import { Checkbox, FormControlLabel } from "@material-ui/core";
 import { DEFAULT_FROM, DEFAULT_TO } from "../../utils/constants";
-import { addColonTime, extractTime, removeColon, timeStringToDate } from "../../utils/utils";
+import { addColonTime, removeColon } from "../../utils/utils";
 
 class DayHoursInput extends Component {
     constructor(props) {
