@@ -39,13 +39,13 @@ export function signInError(msg) {
     };
 }
 
-export function signInAsync(email, password) {
+export function signInAsync(email, password, from) {
     return (dispatch) => {
         dispatch(signInLoading());
         signIn(email, password)
             .then((res) => {
                 dispatch(signInSuccess(res.email, res.role, res.id));
-                window.location = "/";
+                window.location = from;
                 window.localStorage.setItem("role", res.role);
                 window.localStorage.setItem("email", res.email);
                 window.localStorage.setItem("id", res.id);

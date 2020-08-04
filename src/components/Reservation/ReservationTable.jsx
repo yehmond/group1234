@@ -34,8 +34,12 @@ export default function ReservationTable(props) {
     };
     const classes = useStyles();
 
-    if(props.data && props.data.length === 0){
-        return <ErrorText message={"Sorry, you have no reservations in this category!"}/>
+    if (props.data && props.data.length === 0) {
+        return (
+            <ErrorText
+                message={"Sorry, you have no reservations in this category!"}
+            />
+        );
     }
 
     return (
