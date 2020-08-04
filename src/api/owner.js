@@ -350,7 +350,6 @@ async function registerBarber(
         services,
         schedule,
     };
-    console.log("here");
 
     try {
         const response = await instance.post("/barber", body);

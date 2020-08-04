@@ -11,7 +11,7 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core";
 import cover from "../../images/home-cover2.jpg";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { signInAsync } from "../../actions/authActions";
 
@@ -53,6 +53,8 @@ export default function SignIn() {
     const classes = useStyles();
     const dispatch = useDispatch();
     const authState = useSelector((state) => state.authState);
+    const location = useLocation();
+    const { from } = location.state || { from: { pathname: "/" } };
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
@@ -67,7 +69,7 @@ export default function SignIn() {
     function handleSubmit(event) {
         event.preventDefault();
         if (email.length > 0 && password.length > 0) {
-            dispatch(signInAsync(email, password));
+            dispatch(signInAsync(email, password, from.pathname));
         }
     }
 

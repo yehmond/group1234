@@ -35,7 +35,6 @@ const instance = axios.create({
  *
  **************/
 async function getStore(store_id, noPictures) {
-    console.log(noPictures);
     if (store_id.length === 0) {
         alert("customer/getStore: store_id is invalid");
         return null;
