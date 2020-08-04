@@ -333,7 +333,7 @@ export function checkMyStore(user_id) {
     return parseInt(user_id) === parseInt(window.localStorage.getItem("id"));
 }
 
-export function mondayStart(dayOfWeek, hours) {
+export function mondayStart(dayOfWeek) {
     let mondayStart = dayOfWeek - 1;
     // this is really sunday
     if (mondayStart === -1) mondayStart = 6;

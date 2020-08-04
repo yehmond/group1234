@@ -13,7 +13,6 @@ import axios from "axios";
 
 /* Local constants */
 const instance = axios.create({
-    // TODO abstract baseURL
     baseURL:
         (process.env.REACT_APP_BASE_URL || "http://localhost:5000") + "/api/owner",
 });

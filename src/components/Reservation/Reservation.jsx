@@ -17,7 +17,7 @@ import Paper from "@material-ui/core/Paper";
 import BarberAvailability from "./BarberAvailability";
 import ErrorText from "../Dialog/Error";
 
-const useStyles = makeStyles((theme) =>
+const useStyles = makeStyles(() =>
     createStyles({
         pageContainer: {
             display: "grid",
