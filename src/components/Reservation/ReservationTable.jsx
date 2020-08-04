@@ -3,6 +3,7 @@ import MaterialTable from "material-table";
 import "./reservation.scss";
 import { createStyles, makeStyles } from "@material-ui/core/styles";
 import { isMobile } from "../../utils/utils";
+import ErrorText from "../Dialog/Error";
 
 const useStyles = makeStyles(() =>
     createStyles({
@@ -32,6 +33,10 @@ export default function ReservationTable(props) {
         pageSizeOptions: [3, 5, 10],
     };
     const classes = useStyles();
+
+    if(props.data && props.data.length === 0){
+        return <ErrorText message={"Sorry, you have no reservations in this category!"}/>
+    }
 
     return (
         <div className={classes.wrapper}>
