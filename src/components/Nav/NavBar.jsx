@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => {
             flexGrow: 1,
         },
         image: {
-            height: "25px"
+            height: "25px",
         },
         menuButton: {
             display: "none",
@@ -45,8 +45,8 @@ const useStyles = makeStyles((theme) => {
         logo: {
             display: "grid",
             gridTemplateColumns: "35px 40px",
-            alignItems: "center"
-        }
+            alignItems: "center",
+        },
     });
 });
 
@@ -106,12 +106,13 @@ export default function MenuAppBar() {
                     <div className={classes.title}>
                         <Link to="/" className={classes.link}>
                             <div className={classes.logo}>
-                            <img className={classes.image} src={logo} alt={"Logo"}/>
-                            <Typography variant="h6">
-                             Dibs
-                            </Typography>
+                                <img
+                                    className={classes.image}
+                                    src={logo}
+                                    alt={"Logo"}
+                                />
+                                <Typography variant="h6">Dibs</Typography>
                             </div>
-
                         </Link>
                     </div>
                     {Object.keys(displayedLinks).map((text, idx) => {

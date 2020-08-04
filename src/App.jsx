@@ -47,11 +47,9 @@ function App() {
                 <Route exact path="/signup/success">
                     <SignUpSuccessful />
                 </Route>
-                <AuthRequiredRoute
-                    exact
-                    path="/reserve/:id"
-                    component={Reservation}
-                />
+                <AuthRequiredRoute exact path="/reserve/:id">
+                    <Reservation />
+                </AuthRequiredRoute>
                 <AuthRequiredRoute exact path="/reservations">
                     <MyReservations />
                 </AuthRequiredRoute>
