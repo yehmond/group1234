@@ -116,7 +116,13 @@ export default function Browse() {
                 {/* No results */}
                 {hasNoResult() && (
                     <div className={classes.noResult}>
-                        <h2>No Results...</h2>
+                        <h2>
+                            <span role="img" aria-label="sad-face">
+                                😞
+                            </span>{" "}
+                            No results...Please try again with a different search
+                            parameter
+                        </h2>
                     </div>
                 )}
 
