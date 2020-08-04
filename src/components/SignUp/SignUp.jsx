@@ -56,6 +56,18 @@ export default function SignUp() {
         showPassword: false,
     });
     const [submit, setSubmit] = useState(false);
+    const [passwordValidation, setPasswordValidation] = useState({
+        passwordError: false,
+        passwordHelper: "",
+    });
+    const [emailValidation, setEmailValidation] = useState({
+        emailError: false,
+        emailHelper: "",
+    });
+    const [phoneNumValidation, setPhoneNumValidation] = useState({
+        phoneNumError: false,
+        phoneNumlHelper: "",
+    });
     const [emailTakenError, setEmailTakenError] = useState(false);
     const [signUpError, setSignUpError] = useState(false);
 
@@ -92,17 +104,31 @@ export default function SignUp() {
     }
 
     function areFieldsValid() {
-        // validate email
+        const isValid = [
+            isValidEmail(),
+            isValidPassword(),
+            isValidPhoneNum(),
+        ].reduce((acc, curr) => {
+            return curr && acc;
+        }, true);
+
+        return isValid;
+    }
+
+    function isValidEmail() {
         if (!validateEmail(state.email)) {
-            setState({
-                ...state,
+            setEmailValidation({
                 emailError: true,
-                emailHelper: "Pleas enter a valid email",
+                emailHelper: "Please enter a valid email",
             });
+            return false;
         }
 
-        // if any fields are invalid return
-        return validateEmail(state.email) && isValidPassword() && isValidPhoneNum();
+        setEmailValidation({
+            emailError: false,
+            emailHelper: "",
+        });
+        return true;
     }
 
     function isValidPassword() {
@@ -112,8 +138,7 @@ export default function SignUp() {
             currPassword.search(/[a-z]/i) < 0 ||
             currPassword.search(/[0-9]/) < 0
         ) {
-            setState({
-                ...state,
+            setPasswordValidation({
                 passwordHelper:
                     "Your password must be at least " +
                     MIN_PASSWORD_LENGTH +
@@ -122,19 +147,28 @@ export default function SignUp() {
             });
             return false;
         }
+
+        setPasswordValidation({
+            passwordError: false,
+            passwordHelper: "",
+        });
         return true;
     }
 
     function isValidPhoneNum() {
         const currPhoneNum = state.phoneNumber;
         if (isNaN(currPhoneNum)) {
-            setState({
-                ...state,
-                phoneNumberHelper: "Please enter a valid numeric phone number",
+            setPhoneNumValidation({
                 phoneNumberError: true,
+                phoneNumberHelper: "Please enter a valid numeric phone number",
             });
             return false;
         }
+
+        setPhoneNumValidation({
+            phoneNumberError: false,
+            phoneNumberHelper: "",
+        });
         return true;
     }
 
@@ -236,8 +270,8 @@ export default function SignUp() {
                                 label="Phone Number"
                                 name="phoneNumber"
                                 autoComplete="phone number"
-                                helperText={state.phoneNumberHelper}
-                                error={state.phoneNumberError}
+                                helperText={phoneNumValidation.phoneNumberHelper}
+                                error={phoneNumValidation.phoneNumberError}
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -249,8 +283,8 @@ export default function SignUp() {
                                 label="Email Address"
                                 name="email"
                                 autoComplete="email"
-                                helperText={state.emailHelper}
-                                error={state.emailError}
+                                helperText={emailValidation.emailHelper}
+                                error={emailValidation.emailError}
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -263,8 +297,8 @@ export default function SignUp() {
                                 label="Password"
                                 type={state.showPassword ? "text" : "password"}
                                 autoComplete="current-password"
-                                helperText={state.passwordHelper}
-                                error={state.passwordError}
+                                helperText={passwordValidation.passwordHelper}
+                                error={passwordValidation.passwordError}
                                 InputProps={{
                                     endAdornment: showPasswordIcon(),
                                 }}

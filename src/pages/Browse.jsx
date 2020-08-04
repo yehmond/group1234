@@ -120,7 +120,7 @@ export default function Browse() {
                             <span role="img" aria-label="sad-face">
                                 😞
                             </span>{" "}
-                            No results...Please try again with a different search
+                            No results... Please try again with a different search
                             parameter
                         </h2>
                     </div>
