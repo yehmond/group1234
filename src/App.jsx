@@ -44,10 +44,9 @@ function App() {
                 <Route exact path="/signup">
                     <SignUpPage />
                 </Route>
-                <AuthRequiredRoute
-                    path="/signup/success"
-                    component={SignUpSuccessful}
-                />
+                <Route exact path="/signup/success">
+                    <SignUpSuccessful />
+                </Route>
                 <AuthRequiredRoute
                     exact
                     path="/reserve/:id"

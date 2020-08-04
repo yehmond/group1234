@@ -24,6 +24,7 @@ export default function BrowseCards({
                     return elem.from;
                 })
                 .sort()
+                .filter((time) => new Date(time) > new Date())
         )
     );
 
