@@ -140,7 +140,7 @@ export default function SearchBar() {
             date: moment(selectedDate).format("YYYY-MM-DD"),
             time: moment(selectedTime).format("HH:mm"),
             services: selectedService === "Any" ? "" : selectedService,
-            neighbourhood:
+            neighbourhoods:
                 selectedNeighbourhood === "Any" ? "" : selectedNeighbourhood,
             string: string,
         };
@@ -161,7 +161,7 @@ export default function SearchBar() {
                         disableToolbar
                         disablePast
                         autoOk
-                        variant="inline"
+                        variant="dialogue"
                         inputVariant="outlined"
                         label="Date"
                         format="DD/MM/YYYY"
@@ -172,9 +172,8 @@ export default function SearchBar() {
                 <div className={clsx(classes.pickerContainer, classes.timePicker)}>
                     <KeyboardTimePicker
                         className={classes.input}
-                        disableToolbar
-                        autoOk
-                        variant="inline"
+                        clearable
+                        variant="dialogue"
                         inputVariant="outlined"
                         label="Time"
                         mask="__:__ _M"
