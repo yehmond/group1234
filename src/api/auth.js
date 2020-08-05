@@ -21,7 +21,6 @@ export async function signIn(email, password) {
     const body = { email, password };
     try {
         const response = await instance.post("/signin/", body);
-        console.log(response);
         return response.data;
     } catch (err) {
         console.error(err);
@@ -32,10 +31,8 @@ export async function signIn(email, password) {
 export async function signOut() {
     try {
         const response = await instance.get("/signout/");
-        console.log(response);
         return response.data;
     } catch (err) {
-        console.error(err);
         throw Error(err);
     }
 }

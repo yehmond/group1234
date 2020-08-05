@@ -51,7 +51,6 @@ export function signInAsync(email, password, from) {
                 window.localStorage.setItem("id", res.id);
             })
             .catch((err) => {
-                console.log(err);
                 dispatch(signInError(err));
             });
     };
@@ -87,7 +86,6 @@ export function signOutAsync() {
                 window.localStorage.removeItem("id");
             })
             .catch((err) => {
-                console.log(err);
                 dispatch(signOutError(err));
             });
     };
