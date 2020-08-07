@@ -42,10 +42,8 @@ async function getStores(body) {
 
     try {
         const response = await instance.get("/store", { params: body });
-        console.log(response);
         return response.data;
     } catch (error) {
-        console.log(error);
         return null;
     }
 }
@@ -162,10 +160,8 @@ async function registerStore(
 
     try {
         const response = await instance.post("/store", body);
-        console.log(response);
         return response.data;
     } catch (error) {
-        console.log(error);
         return null;
     }
 }
@@ -208,10 +204,8 @@ async function updateStore(store_id, body) {
 
     try {
         const response = await instance.put("/store", body);
-        console.log(response);
         return response.data;
     } catch (error) {
-        console.log(error);
         return null;
     }
 }
@@ -241,10 +235,8 @@ async function deleteStores(body) {
 
     try {
         const response = await instance.delete("/store", { params: body });
-        console.log(response);
         return response.data;
     } catch (error) {
-        console.log(error);
         return null;
     }
 }
@@ -274,10 +266,8 @@ async function getBarbers(body) {
 
     try {
         const response = await instance.get("/barber", { params: body });
-        console.log(response);
         return response.data;
     } catch (error) {
-        console.log(error);
         return null;
     }
 }
@@ -353,10 +343,8 @@ async function registerBarber(
 
     try {
         const response = await instance.post("/barber", body);
-        console.log(response);
         return response.data;
     } catch (error) {
-        console.log(error);
         return null;
     }
 }
@@ -392,10 +380,8 @@ async function updateBarber(barber_id, body) {
 
     try {
         const response = await instance.put("/barber", body);
-        console.log(response);
         return response.data;
     } catch (error) {
-        console.log(error);
         return null;
     }
 }
@@ -425,10 +411,8 @@ async function deleteBarbers(body) {
 
     try {
         const response = await instance.delete("/barber", { params: body });
-        console.log(response);
         return response.data;
     } catch (error) {
-        console.log(error);
         return null;
     }
 }

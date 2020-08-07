@@ -44,10 +44,8 @@ async function getStore(store_id, noPictures) {
         const response = await instance.get("/store/" + store_id, {
             params: { noPictures: noPictures },
         });
-        console.log(response);
         return response.data;
     } catch (error) {
-        console.log(error);
         return null;
     }
 }
@@ -89,10 +87,8 @@ async function searchStores(count, body) {
         const response = await instance.get("/store/search/" + count, {
             params: body,
         });
-        console.log(response);
         return response.data;
     } catch (error) {
-        console.log(error);
         return null;
     }
 }
@@ -136,10 +132,8 @@ async function getNeighbourhoods(city, province, limit) {
 
     try {
         const response = await instance.get("/neighbourhoods", { params: body });
-        console.log(response);
         return response.data;
     } catch (error) {
-        console.log(error);
         return null;
     }
 }
@@ -167,10 +161,8 @@ async function getReviews(user_id) {
 
     try {
         const response = await instance.get("/review/" + user_id);
-        console.log(response);
         return response.data;
     } catch (error) {
-        console.log(error);
         return null;
     }
 }
@@ -246,10 +238,8 @@ async function registerReview(
 
     try {
         const response = await instance.post("/review", body);
-        console.log(response);
         return response.data;
     } catch (error) {
-        console.log(error);
         return null;
     }
 }
@@ -281,10 +271,8 @@ async function updateReview(review_id, body) {
 
     try {
         const response = await instance.put("/review", body);
-        console.log(response);
         return response.data;
     } catch (error) {
-        console.log(error);
         return null;
     }
 }
@@ -312,10 +300,8 @@ async function deleteReview(review_id) {
 
     try {
         const response = await instance.delete("/review/" + review_id);
-        console.log(response);
         return response.data;
     } catch (error) {
-        console.log(error);
         return null;
     }
 }
@@ -348,10 +334,8 @@ async function getReservations(user_id, body) {
         const response = await instance.get("/reservation/" + user_id, {
             params: body,
         });
-        console.log(response);
         return response.data;
     } catch (error) {
-        console.log(error);
         return null;
     }
 }
@@ -395,10 +379,8 @@ async function getAvailability(store_id, date, service, body) {
 
     try {
         const response = await instance.get("/availability", { params: body });
-        console.log(response);
         return response.data;
     } catch (error) {
-        console.log(error);
         return null;
     }
 }
@@ -454,10 +436,8 @@ async function registerReservation(user_id, store_id, barber_id, from, service) 
 
     try {
         const response = await instance.post("/reservation", body);
-        console.log(response);
         return response.data;
     } catch (error) {
-        console.log(error);
         return null;
     }
 }
@@ -485,10 +465,8 @@ async function deleteReservation(reservation_id) {
 
     try {
         const response = await instance.delete("/reservation/" + reservation_id);
-        console.log(response);
         return response.data;
     } catch (error) {
-        console.log(error);
         return null;
     }
 }
